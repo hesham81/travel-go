@@ -19,7 +19,7 @@ class SocialMediaLogin extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           color: AppColors.blackColor,
-          width: 0.4,
+          width: 0.7,
         ),
         color: AppColors.alabasterWhiteColor,
         borderRadius: BorderRadius.circular(20),

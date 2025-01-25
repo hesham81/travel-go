@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import '/core/theme/app_colors.dart';
 
+typedef Validator = String? Function(String? value);
+
 class CustomTextFormField extends StatefulWidget {
   final String hintText;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final bool? isPassword;
+  final Validator? validation;
+  final TextEditingController? controller;
 
   const CustomTextFormField({
     super.key,
@@ -13,6 +17,8 @@ class CustomTextFormField extends StatefulWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.isPassword,
+    this.validation,
+    this.controller,
   });
 
   @override
@@ -25,6 +31,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
+      validator: widget.validation,
       obscureText: visible,
       obscuringCharacter: "*",
       decoration: InputDecoration(

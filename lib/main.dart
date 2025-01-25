@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       routes: {
         FirstScreen.routeName: (context) => const FirstScreen(),
-        SignIn.routeName: (context) => const SignIn(),
+        SignIn.routeName: (context) =>  SignIn(),
       },
     );
   }
