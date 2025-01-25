@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_go/core/validations/validations.dart';
+import '../../../core/utils/firebase_services.dart';
+import '../../first_screen/pages/first_screen.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
@@ -76,12 +79,11 @@ class SignIn extends StatelessWidget {
                     ).hPadding(0.04.width),
                     0.01.height.hSpace,
                     CustomTextFormField(
-                      hintText: "Password",
-                      isPassword: true,
+                        hintText: "Password",
+                        isPassword: true,
                         validation: (value) {
                           return Validations.validatePassword(value);
-                        }
-                    ),
+                        }),
                     CustomTextButton(
                       onPressed: () {},
                       text: 'Forgot Password?',
@@ -89,9 +91,22 @@ class SignIn extends StatelessWidget {
                     0.01.height.hSpace,
                     CustomElevatedButton(
                       text: "Sign in",
-                      onPressed: () {
+                      onPressed: () async {
                         if (formKey.currentState!.validate()) {
-                          print("Done");
+                          UserCredential? userCredential =
+                              await FirebaseServices.signIn(
+                            emailController.text,
+                            passwordController.text,
+                          );
+                          if (userCredential != null) {
+                            Navigator.pushNamed(context, FirstScreen.routeName);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Invalid email or password'),
+                              ),
+                            );
+                          }
                         }
                       },
                       padding: EdgeInsets.symmetric(

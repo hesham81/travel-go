@@ -1,0 +1,124 @@
+{
+  "project_info": {
+    "project_number": "561387972473",
+    "project_id": "tamohy-b7d82",
+    "storage_bucket": "tamohy-b7d82.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561387972473:android:b496d771f7c4bb744cf1a8",
+        "android_client_info": {
+          "package_name": "com.TravelGo.android.travel_go"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNj4MXkZOoeBwqttrD7Ps0wWuUCEoB7l4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561387972473:android:70b1cd4848f4276f4cf1a8",
+        "android_client_info": {
+          "package_name": "com.example.tamohy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNj4MXkZOoeBwqttrD7Ps0wWuUCEoB7l4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561387972473:android:6feed563b0c8a6104cf1a8",
+        "android_client_info": {
+          "package_name": "com.example.test_fire_base"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNj4MXkZOoeBwqttrD7Ps0wWuUCEoB7l4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561387972473:android:24b75cb7bee2c0124cf1a8",
+        "android_client_info": {
+          "package_name": "com.example.tour_travel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNj4MXkZOoeBwqttrD7Ps0wWuUCEoB7l4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561387972473:android:c24fa7dd8e0f6b964cf1a8",
+        "android_client_info": {
+          "package_name": "com.example.travel_go"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNj4MXkZOoeBwqttrD7Ps0wWuUCEoB7l4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561387972473:android:0fa028068ad988234cf1a8",
+        "android_client_info": {
+          "package_name": "com.finals.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNj4MXkZOoeBwqttrD7Ps0wWuUCEoB7l4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
