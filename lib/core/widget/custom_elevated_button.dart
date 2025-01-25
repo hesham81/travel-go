@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
+import '/core/theme/app_colors.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final String text;
