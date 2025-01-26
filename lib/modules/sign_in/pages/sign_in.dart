@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:travel_go/core/services/bot_toast.dart';
 import 'package:travel_go/core/validations/validations.dart';
 import 'package:travel_go/modules/forget_password/pages/forget_password.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/home.dart';
 import '../../../core/utils/firebase_services.dart';
-import '../../first_screen/pages/first_screen.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
@@ -28,7 +28,7 @@ class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Form(
         key: formKey,
         child: Column(
@@ -108,7 +108,7 @@ class SignIn extends StatelessWidget {
                             BotToastServices.showSuccessMessage(
                               "Welcome ${emailController.text}",
                             );
-                            Navigator.pushNamed(context, FirstScreen.routeName);
+                            Navigator.pushNamed(context, Home.routeName);
                           } else {
                             BotToastServices.showErrorMessage(
                               "Email Or Password invalid",

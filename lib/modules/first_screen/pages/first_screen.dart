@@ -24,25 +24,24 @@ class FirstScreen extends StatelessWidget {
             text: "Sign Up",
             onPressed: () {
               Navigator.pushNamed(context, SignUp.routeName);
-
             },
             padding: EdgeInsets.symmetric(
-              horizontal: 0.02.height,
+              horizontal: 0.008.width,
+              vertical: 0.001.height,
             ),
           ).hPadding(0.07.width),
-          0.2.hSpace,
-          SafeArea(
-            child: CustomElevatedButton(
-              text: "Sign in",
-              onPressed: () {
-                Navigator.pushNamed(context, SignIn.routeName);
-              },
-              padding: EdgeInsets.symmetric(
-                horizontal: 0.02.height,
-              ),
-            ).hPadding(0.07.width),
-          ),
-          0.18.hSpace,
+          0.05.height.hSpace,
+          CustomElevatedButton(
+            text: "Sign in",
+            onPressed: () {
+              Navigator.pushNamed(context, SignIn.routeName);
+            },
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.008.width,
+              vertical: 0.001.height,
+            ),
+          ).hPadding(0.07.width),
+          0.08.height.hSpace,
         ],
       ),
     );

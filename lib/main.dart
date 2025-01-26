@@ -5,7 +5,7 @@ import 'core/theme/app_theme.dart';
 
 import 'modules/first_screen/pages/first_screen.dart';
 import 'modules/forget_password/pages/forget_password.dart';
-import 'modules/layout/pages/user/pages/home.dart';
+import 'modules/layout/pages/user/pages/home/pages/home.dart';
 import 'modules/otp/pages/otp.dart';
 import 'modules/sign_in/pages/sign_in.dart';
 import 'modules/sign_up/pages/sign_up.dart';

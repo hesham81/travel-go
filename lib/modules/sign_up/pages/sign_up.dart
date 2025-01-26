@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/constant/app_assets.dart';
-import 'package:travel_go/core/services/bot_toast.dart';
-import 'package:travel_go/core/utils/firebase_services.dart';
-import 'package:travel_go/core/widget/custom_elevated_button.dart';
-import 'package:travel_go/core/widget/custom_text_button.dart';
-import 'package:travel_go/core/widget/custom_text_form_field.dart';
-import 'package:travel_go/core/widget/dividers_word.dart';
-import 'package:travel_go/modules/first_screen/widget/check_widget.dart';
+import '/core/constant/app_assets.dart';
+import '/core/services/bot_toast.dart';
+import '/core/utils/firebase_services.dart';
+import '/core/widget/custom_elevated_button.dart';
+import '/core/widget/custom_text_button.dart';
+import '/core/widget/custom_text_form_field.dart';
+import '/core/widget/dividers_word.dart';
+import '/modules/first_screen/widget/check_widget.dart';
 import '../../../core/validations/validations.dart';
 import '../../../core/widget/label.dart';
 import '../../sign_in/pages/sign_in.dart';
@@ -67,6 +67,7 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
                 child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   child: Form(
                     key: key,
                     child: Column(
@@ -118,7 +119,9 @@ class SignUp extends StatelessWidget {
                           isPassword: true,
                           validation: (value) {
                             return Validations.validateConfirmPassword(
-                                value, passwordController.text);
+                              value,
+                              passwordController.text,
+                            );
                           },
                         ),
                         0.005.height.hSpace,
@@ -135,12 +138,16 @@ class SignUp extends StatelessWidget {
                               );
                               if (userCredential != null) {
                                 BotToastServices.showSuccessMessage(
-                                    "Account Created Succefully");
+                                  "Account Created Succefully",
+                                );
                                 Navigator.pushReplacementNamed(
-                                    context, SignIn.routeName);
+                                  context,
+                                  SignIn.routeName,
+                                );
                               } else {
                                 BotToastServices.showErrorMessage(
-                                    "Error While Creating Account");
+                                  "Error While Creating Account",
+                                );
                               }
                             }
                             //   SuperPassword1!
@@ -153,6 +160,7 @@ class SignUp extends StatelessWidget {
                         ),
                         0.02.height.hSpace,
                         DividersWord(text: ' or sign up with'),
+                        0.02.height.hSpace,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
