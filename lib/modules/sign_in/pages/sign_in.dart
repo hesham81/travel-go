@@ -126,6 +126,7 @@ class SignIn extends StatelessWidget {
                     0.02.height.hSpace,
                     Expanded(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: SocialMediaLogin(

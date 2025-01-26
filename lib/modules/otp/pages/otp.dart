@@ -28,13 +28,13 @@ class Otp extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          0.03.height.vSpace,
+          0.03.height.hSpace,
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Label(text: "Verification Code"),
-              0.02.height.vSpace,
+              0.02.height.hSpace,
               Label(
                 text:
                     "We have sent the verification \ncode to your email address",
@@ -44,7 +44,7 @@ class Otp extends StatelessWidget {
               ),
             ],
           ).hPadding(0.08.width),
-          0.08.height.vSpace,
+          0.08.height.hSpace,
           Form(
             key: formKey,
             child: Row(
@@ -107,7 +107,7 @@ class Otp extends StatelessWidget {
               ],
             ).hPadding(0.03.width),
           ),
-          0.08.height.vSpace,
+          0.08.height.hSpace,
           CustomElevatedButton(
             onPressed: () {
               if (formKey.currentState!.validate()) {
