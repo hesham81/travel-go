@@ -2,10 +2,10 @@ import 'package:flutter/widgets.dart';
 
 extension gapSpace on num {
   Widget get hSpace => SizedBox(
-        height: toDouble(),
+        width: toDouble(),
       );
 
   Widget get vSpace => SizedBox(
-        width: toDouble(),
+        height: toDouble(),
       );
 }
