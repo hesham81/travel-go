@@ -1,12 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_go/core/constant/app_assets.dart';
+import 'package:travel_go/core/services/bot_toast.dart';
+import 'package:travel_go/core/utils/firebase_services.dart';
 import 'package:travel_go/core/widget/custom_elevated_button.dart';
 import 'package:travel_go/core/widget/custom_text_button.dart';
 import 'package:travel_go/core/widget/custom_text_form_field.dart';
 import 'package:travel_go/core/widget/dividers_word.dart';
 import 'package:travel_go/modules/first_screen/widget/check_widget.dart';
+import '../../../core/validations/validations.dart';
 import '../../../core/widget/label.dart';
-import '../../../core/widget/social_media_login.dart';
 import '../../sign_in/pages/sign_in.dart';
 import '/core/extensions/extensions.dart';
 
@@ -15,11 +18,15 @@ import '../../../core/widget/back_leading_widget.dart';
 
 class SignUp extends StatelessWidget {
   static const routeName = '/sign-up';
+  var nameController = TextEditingController();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
 
-  const SignUp({super.key});
+  SignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var key = GlobalKey<FormState>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -60,75 +67,116 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
                 child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Label(
-                        text: 'Full Name',
-                      ).hPadding(0.03.width),
-                      0.01.height.hSpace,
-                      CustomTextFormField(hintText: "Enter Full Name"),
-                      0.02.height.hSpace,
-                      Label(
-                        text: 'Email',
-                      ).hPadding(0.03.width),
-                      0.01.height.hSpace,
-                      CustomTextFormField(hintText: "Enter Email"),
-                      0.02.height.hSpace,
-                      Label(
-                        text: 'Password',
-                      ).hPadding(0.03.width),
-                      0.01.height.hSpace,
-                      CustomTextFormField(
-                        hintText: "Enter Password",
-                        isPassword: true,
-                      ),
-                      0.02.height.hSpace,
-                      Label(
-                        text: 'Confirm Password',
-                      ).hPadding(0.03.width),
-                      0.01.height.hSpace,
-                      CustomTextFormField(
-                        hintText: "Confirm Password",
-                        isPassword: true,
-                      ),
-                      0.005.height.hSpace,
-                      CheckWidget(),
-                      0.02.height.hSpace,
-                      CustomElevatedButton(
-                        text: "Sign Up",
-                        onPressed: () {},
-                        borderRadius: 20,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 0.02.height,
-                          vertical: 0,
+                  child: Form(
+                    key: key,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Label(
+                          text: 'Full Name',
+                        ).hPadding(0.03.width),
+                        0.01.height.hSpace,
+                        CustomTextFormField(
+                          hintText: "Enter Full Name",
+                          controller: nameController,
+                          validation: (value) {
+                            return Validations.validateName(value);
+                          },
                         ),
-                      ),
-                      0.02.height.hSpace,
-                      DividersWord(text: ' or sign up with'),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            AppAssets.googleICN,
-                            height: 35,
-                            width: 35,
+                        0.02.height.hSpace,
+                        Label(
+                          text: 'Email',
+                        ).hPadding(0.03.width),
+                        0.01.height.hSpace,
+                        CustomTextFormField(
+                          hintText: "Enter Email",
+                          controller: emailController,
+                          validation: (value) {
+                            return Validations.validateEmail(value);
+                          },
+                        ),
+                        0.02.height.hSpace,
+                        Label(
+                          text: 'Password',
+                        ).hPadding(0.03.width),
+                        0.01.height.hSpace,
+                        CustomTextFormField(
+                          hintText: "Enter Password",
+                          isPassword: true,
+                          controller: passwordController,
+                          validation: (value) {
+                            return Validations.validatePassword(value);
+                          },
+                        ),
+                        0.02.height.hSpace,
+                        Label(
+                          text: 'Confirm Password',
+                        ).hPadding(0.03.width),
+                        0.01.height.hSpace,
+                        CustomTextFormField(
+                          hintText: "Confirm Password",
+                          isPassword: true,
+                          validation: (value) {
+                            return Validations.validateConfirmPassword(
+                                value, passwordController.text);
+                          },
+                        ),
+                        0.005.height.hSpace,
+                        CheckWidget(),
+                        0.02.height.hSpace,
+                        CustomElevatedButton(
+                          text: "Sign Up",
+                          onPressed: () async {
+                            if (key.currentState!.validate()) {
+                              UserCredential? userCredential =
+                                  await FirebaseServices.signUp(
+                                emailController.text,
+                                passwordController.text,
+                              );
+                              if (userCredential != null) {
+                                BotToastServices.showSuccessMessage(
+                                    "Account Created Succefully");
+                                Navigator.pushReplacementNamed(
+                                    context, SignIn.routeName);
+                              } else {
+                                BotToastServices.showErrorMessage(
+                                    "Error While Creating Account");
+                              }
+                            }
+                            //   SuperPassword1!
+                          },
+                          borderRadius: 20,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 0.02.height,
+                            vertical: 0,
                           ),
-                          Image.asset(
-                            AppAssets.twitterICN,
-                            height: 35,
-                            width: 35,
-                          ),
-                          Image.asset(
-                            AppAssets.facebookICN,
-                            height: 35,
-                            width: 35,
-                          ),
-                        ],
-                      ).hPadding(0.08.width)
-                    ],
-                  ).hPadding(0.07.width).vPadding(0.02.height),
+                        ),
+                        0.02.height.hSpace,
+                        DividersWord(text: ' or sign up with'),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              AppAssets.googleICN,
+                              height: 35,
+                              width: 35,
+                            ),
+                            Image.asset(
+                              AppAssets.twitterICN,
+                              height: 35,
+                              width: 35,
+                            ),
+                            Image.asset(
+                              AppAssets.facebookICN,
+                              height: 35,
+                              width: 35,
+                            ),
+                          ],
+                        ).hPadding(0.08.width)
+                      ],
+                    ).hPadding(0.07.width).vPadding(0.02.height),
+                  ),
                 ),
               ),
             ),

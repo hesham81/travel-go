@@ -33,4 +33,13 @@ abstract class Validations {
     }
     return null;
   }
+  static String? validateConfirmPassword(String? value, String? password) {
+    if (value == null || value.isEmpty) {
+      return 'Confirm Password is required';
+    }
+    if (value != password) {
+      return 'Passwords do not match';
+    }
+    return null;
+  }
 }

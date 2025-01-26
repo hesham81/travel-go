@@ -20,18 +20,16 @@ class _CheckWidgetState extends State<CheckWidget> {
           value: isChecked,
           side: BorderSide(color: AppColors.azureBlueColor),
           fillColor: WidgetStateProperty.resolveWith<Color>(
-                (states) {
+            (states) {
               if (states.contains(WidgetState.selected)) {
-                return AppColors
-                    .skyBlueColor; // Fill color when checked
+                return AppColors.skyBlueColor; // Fill color when checked
               }
-              return AppColors
-                  .whiteColor; // Fill color when unchecked
+              return AppColors.whiteColor; // Fill color when unchecked
             },
           ),
           onChanged: (bool? newValue) {
             setState(
-                  () {
+              () {
                 isChecked = newValue ?? false;
               },
             );
