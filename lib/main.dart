@@ -1,9 +1,11 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'core/theme/app_theme.dart';
 
 import 'modules/first_screen/pages/first_screen.dart';
 import 'modules/sign_in/pages/sign_in.dart';
+import 'modules/sign_up/pages/sign_up.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,9 +25,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       navigatorKey: navigationKey,
       theme: AppTheme.lightTheme,
+      builder: BotToastInit(),
       routes: {
         FirstScreen.routeName: (context) => const FirstScreen(),
-        SignIn.routeName: (context) =>  SignIn(),
+        SignIn.routeName: (context) => SignIn(),
+        SignUp.routeName: (context) =>  SignUp(),
       },
     );
   }

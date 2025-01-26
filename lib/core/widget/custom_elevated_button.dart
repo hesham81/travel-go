@@ -9,6 +9,7 @@ class CustomElevatedButton extends StatelessWidget {
   final double? borderWidth;
   final EdgeInsets? padding;
   final double textSize;
+  final double borderRadius;
   final FontWeight textWeight;
   final Function() onPressed;
 
@@ -23,6 +24,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.textSize = 48,
     this.textWeight = FontWeight.w600,
     required this.onPressed,
+    this.borderRadius = 50 ,
   });
 
   @override
@@ -38,7 +40,7 @@ class CustomElevatedButton extends StatelessWidget {
             width: borderWidth ?? 0,
           ),
           borderRadius: BorderRadius.circular(
-            50,
+            borderRadius,
           ),
         ),
       ),

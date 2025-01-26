@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/services/bot_toast.dart';
 import 'package:travel_go/core/validations/validations.dart';
 import '../../../core/utils/firebase_services.dart';
 import '../../first_screen/pages/first_screen.dart';
@@ -72,6 +73,7 @@ class SignIn extends StatelessWidget {
                       validation: (value) {
                         return Validations.validateEmail(value);
                       },
+                      controller: emailController,
                     ),
                     0.02.height.hSpace,
                     Label(
@@ -81,6 +83,7 @@ class SignIn extends StatelessWidget {
                     CustomTextFormField(
                         hintText: "Password",
                         isPassword: true,
+                        controller: passwordController,
                         validation: (value) {
                           return Validations.validatePassword(value);
                         }),
@@ -99,12 +102,13 @@ class SignIn extends StatelessWidget {
                             passwordController.text,
                           );
                           if (userCredential != null) {
+                            BotToastServices.showSuccessMessage(
+                              "Welcome ${emailController.text}",
+                            );
                             Navigator.pushNamed(context, FirstScreen.routeName);
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Invalid email or password'),
-                              ),
+                            BotToastServices.showErrorMessage(
+                              "Email Or Password invalid",
                             );
                           }
                         }

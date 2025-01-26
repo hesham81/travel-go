@@ -18,6 +18,7 @@ abstract class AppAssets
   static const String flightLanding = "assets/icons/landing_flights.png";
   static const String flightTakeOff = "assets/icons/flight_takeoff.png";
   static const String dahabTwo = "assets/images/places/dahab2.jpg";
+  static const String smaileSucessLottieFile = "assets/icons/smile.json";
 
   static const String lockICN = "assets/icons/lock.png";
   static const String eyeICN = "assets/icons/eye.png";
