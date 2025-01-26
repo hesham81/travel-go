@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_go/core/services/bot_toast.dart';
 import 'package:travel_go/core/validations/validations.dart';
+import 'package:travel_go/modules/forget_password/pages/forget_password.dart';
 import '../../../core/utils/firebase_services.dart';
 import '../../first_screen/pages/first_screen.dart';
 import '/core/constant/app_assets.dart';
@@ -88,7 +89,9 @@ class SignIn extends StatelessWidget {
                           return Validations.validatePassword(value);
                         }),
                     CustomTextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, ForgetPassword.routeName);
+                      },
                       text: 'Forgot Password?',
                     ).alignRight(),
                     0.01.height.hSpace,
