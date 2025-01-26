@@ -104,6 +104,7 @@ class SignIn extends StatelessWidget {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text('Invalid email or password'),
+
                               ),
                             );
                           }

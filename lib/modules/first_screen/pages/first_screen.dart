@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/modules/sign_up/pages/sign_up.dart';
 import '/modules/sign_in/pages/sign_in.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/extensions.dart';
@@ -21,7 +22,10 @@ class FirstScreen extends StatelessWidget {
           Spacer(),
           CustomElevatedButton(
             text: "Sign Up",
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, SignUp.routeName);
+
+            },
             padding: EdgeInsets.symmetric(
               horizontal: 0.02.height,
             ),

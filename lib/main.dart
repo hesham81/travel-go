@@ -4,6 +4,7 @@ import 'core/theme/app_theme.dart';
 
 import 'modules/first_screen/pages/first_screen.dart';
 import 'modules/sign_in/pages/sign_in.dart';
+import 'modules/sign_up/pages/sign_up.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       routes: {
         FirstScreen.routeName: (context) => const FirstScreen(),
-        SignIn.routeName: (context) =>  SignIn(),
+        SignIn.routeName: (context) => SignIn(),
+        SignUp.routeName: (context) => const SignUp(),
       },
     );
   }
