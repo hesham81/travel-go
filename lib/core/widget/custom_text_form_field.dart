@@ -10,6 +10,9 @@ class CustomTextFormField extends StatefulWidget {
   final bool? isPassword;
   final Validator? validation;
   final TextEditingController? controller;
+  final Color borderColor;
+
+  final TextStyle? hintStyle;
 
   const CustomTextFormField({
     super.key,
@@ -19,6 +22,8 @@ class CustomTextFormField extends StatefulWidget {
     this.isPassword,
     this.validation,
     this.controller,
+    this.borderColor = AppColors.blackColor,
+    this.hintStyle,
   });
 
   @override
@@ -38,21 +43,21 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide(
-            color: AppColors.blackColor,
+            color: widget.borderColor,
             width: 1.05,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide(
-            color: AppColors.blackColor,
+            color: widget.borderColor,
             width: 1.05,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide(
-            color: AppColors.blackColor,
+            color: widget.borderColor,
             width: 1.05,
           ),
         ),
@@ -64,6 +69,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           ),
         ),
         hintText: widget.hintText,
+        hintStyle: widget.hintStyle,
         suffixIcon: (widget.isPassword != null)
             ? (visible)
                 ? IconButton(
