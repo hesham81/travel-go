@@ -7,7 +7,7 @@ class CustomTextFormField extends StatefulWidget {
   final String hintText;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
-  final bool? isPassword;
+  final bool isPassword;
   final Validator? validation;
   final TextEditingController? controller;
   final Color borderColor;
@@ -19,7 +19,7 @@ class CustomTextFormField extends StatefulWidget {
     required this.hintText,
     this.prefixIcon,
     this.suffixIcon,
-    this.isPassword,
+    this.isPassword = false,
     this.validation,
     this.controller,
     this.borderColor = AppColors.blackColor,
@@ -31,13 +31,14 @@ class CustomTextFormField extends StatefulWidget {
 }
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
-  bool visible = false;
+  bool visible = true;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       validator: widget.validation,
-      obscureText: visible,
+      controller: widget.controller,
+      obscureText: widget.isPassword ? visible : false,
       obscuringCharacter: "*",
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -70,7 +71,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         ),
         hintText: widget.hintText,
         hintStyle: widget.hintStyle,
-        suffixIcon: (widget.isPassword != null)
+        suffixIcon: (widget.isPassword ==true)
             ? (visible)
                 ? IconButton(
                     onPressed: () {

@@ -1,88 +1,88 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import '/core/extensions/alignment.dart';
 import '/core/extensions/extensions.dart';
-import '/core/constant/app_assets.dart';
-import '/core/theme/app_colors.dart';
 
 abstract class BotToastServices {
-  static void showSuccessMessage(String message) {
+  static showSuccessMessage(String msg) {
     BotToast.showCustomNotification(
-      toastBuilder: (context) {
+      toastBuilder: (builder) {
         return Container(
-          alignment: Alignment.topCenter,
           width: double.maxFinite,
-          height: 180,
+          height: 0.1.height,
+          padding: const EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: AppColors.successColor,
-            borderRadius: BorderRadius.circular(20),
+            color: Colors.green,
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Expanded(
             child: Row(
               children: [
                 Lottie.asset(
-                  AppAssets.smaileSucessLottieFile,
+                  "assets/icons/smile.json",
+                  reverse: true,
                 ),
-                15.vSpace,
-                VerticalDivider(
-                  thickness: 1,
-                  color: AppColors.errorColor,
+                VerticalDivider(),
+                SizedBox(
+                  width: 20,
                 ),
                 Text(
-                  "Account Created Succefully",
+                  msg,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    fontStyle: FontStyle.italic,
                   ),
-                ),
+                ).centerRightWidget(),
               ],
-            ).vPadding(0.3.height).hPadding(0.3.width),
+            ),
           ),
-        ).hPadding(0.01.height).vPadding(0.03.width);
+        ).centerTopWidget();
       },
-      duration: Duration(seconds: 4),
-      dismissDirections: [DismissDirection.endToStart],
+      duration: Duration(seconds: 3),
+      dismissDirections: [
+        DismissDirection.endToStart,
+      ],
     );
   }
 
-  static void showErrorMessage(String message) {
+  static showErrorMessage(String msg) {
     BotToast.showCustomNotification(
-      toastBuilder: (context) {
+      toastBuilder: (builder) {
         return Container(
-          alignment: Alignment.topCenter,
           width: double.maxFinite,
-          height: 180,
+          height: 0.1.height,
+          padding: const EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: AppColors.errorColor,
-            borderRadius: BorderRadius.circular(20),
+            color: Colors.redAccent.withAlpha(180),
+            borderRadius: BorderRadius.circular(10),
           ),
-          child: Row(
-            children: [
-              Lottie.asset(
-                AppAssets.smaileSucessLottieFile,
-              ),
-              15.vSpace,
-              VerticalDivider(
-                thickness: 1,
-                color: AppColors.errorColor,
-              ),
-              Text(
-                message,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  fontStyle: FontStyle.italic,
+          child: Expanded(
+            child: Row(
+              children: [
+                Lottie.asset(
+                  "assets/icons/sad.json",
+                  reverse: true,
                 ),
-              ),
-            ],
-          ).vPadding(0.3.height).hPadding(0.3.width),
-        );
+                VerticalDivider(),
+                SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  msg,
+                  style: TextStyle(
+                      color: Colors.white, overflow: TextOverflow.ellipsis),
+                ).centerRightWidget(),
+              ],
+            ),
+          ),
+        ).centerTopWidget();
       },
-      duration: Duration(seconds: 4),
-      dismissDirections: [DismissDirection.endToStart],
+      duration: Duration(seconds: 3),
+      dismissDirections: [
+        DismissDirection.endToStart,
+      ],
     );
   }
 }

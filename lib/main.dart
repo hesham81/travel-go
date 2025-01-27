@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'core/theme/app_theme.dart';
 
 import 'modules/first_screen/pages/first_screen.dart';
@@ -28,14 +29,18 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       navigatorKey: navigationKey,
       theme: AppTheme.lightTheme,
-      builder: BotToastInit(),
+      builder: EasyLoading.init(
+        builder: EasyLoading.init(
+          builder: BotToastInit(),
+        ),
+      ),
       routes: {
         FirstScreen.routeName: (context) => const FirstScreen(),
         SignIn.routeName: (context) => SignIn(),
-        SignUp.routeName: (context) =>  SignUp(),
-        ForgetPassword.routeName: (context) =>  ForgetPassword(),
-        Otp.routeName: (context) =>  Otp(),
-        Home.routeName: (context) =>  Home(),
+        SignUp.routeName: (context) => SignUp(),
+        ForgetPassword.routeName: (context) => ForgetPassword(),
+        Otp.routeName: (context) => Otp(),
+        Home.routeName: (context) => Home(),
       },
     );
   }

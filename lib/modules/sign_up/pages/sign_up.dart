@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '/core/constant/app_assets.dart';
 import '/core/services/bot_toast.dart';
 import '/core/utils/firebase_services.dart';
@@ -21,11 +22,14 @@ class SignUp extends StatelessWidget {
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+  var confirmPasswordController = TextEditingController();
+
 
   SignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     var key = GlobalKey<FormState>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -81,7 +85,9 @@ class SignUp extends StatelessWidget {
                           hintText: "Enter Full Name",
                           controller: nameController,
                           validation: (value) {
-                            return Validations.validateName(value);
+                            print(nameController.text);
+                            return Validations.isNameValid(nameController.text);
+
                           },
                         ),
                         0.02.height.hSpace,
@@ -93,7 +99,7 @@ class SignUp extends StatelessWidget {
                           hintText: "Enter Email",
                           controller: emailController,
                           validation: (value) {
-                            return Validations.validateEmail(value);
+                            return Validations.isEmailValid(emailController.text);
                           },
                         ),
                         0.02.height.hSpace,
@@ -106,7 +112,7 @@ class SignUp extends StatelessWidget {
                           isPassword: true,
                           controller: passwordController,
                           validation: (value) {
-                            return Validations.validatePassword(value);
+                            return Validations.isPasswordValid(passwordController.text);
                           },
                         ),
                         0.02.height.hSpace,
@@ -117,9 +123,10 @@ class SignUp extends StatelessWidget {
                         CustomTextFormField(
                           hintText: "Confirm Password",
                           isPassword: true,
+                          controller: confirmPasswordController,
                           validation: (value) {
-                            return Validations.validateConfirmPassword(
-                              value,
+                            return Validations.rePasswordValid(
+                              confirmPasswordController.text,
                               passwordController.text,
                             );
                           },
@@ -131,12 +138,15 @@ class SignUp extends StatelessWidget {
                           text: "Sign Up",
                           onPressed: () async {
                             if (key.currentState!.validate()) {
+                              EasyLoading.show();
                               UserCredential? userCredential =
                                   await FirebaseServices.signUp(
                                 emailController.text,
                                 passwordController.text,
-                              );
-                              if (userCredential != null) {
+                              ).then((onValue){
+                                EasyLoading.dismiss();
+                                  });
+                              if (userCredential == null) {
                                 BotToastServices.showSuccessMessage(
                                   "Account Created Succefully",
                                 );
