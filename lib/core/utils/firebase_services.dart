@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:travel_go/core/utils/firestore_services.dart';
 
-abstract class FirebaseServices {
+abstract class FirebaseAuthServices {
   static bool validation = false;
+  static String? role;
 
-  static Future<UserCredential?> signUp(String email, String password) async {
+  static Future<UserCredential?> signUp(
+      String email, String password, String name) async {
     try {
       final UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -11,7 +14,19 @@ abstract class FirebaseServices {
         password: password,
       );
       validation = true;
-      return userCredential; // Return UserCredential for further actions
+
+      return (FirestoreServices.RoleBasedSignUp(
+        email: email,
+        password: password,
+        uid: userCredential.user!.uid,
+        createdAt: DateTime.now(),
+        phoneNumber: "",
+        address: "",
+        name: name,
+      ))
+          ? userCredential
+          : null;
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       handleFirebaseAuthException(e);
       validation = false;
@@ -27,24 +42,21 @@ abstract class FirebaseServices {
     }
   }
 
-  static Future<UserCredential?> signIn(String email, String password) async {
+  static  signIn(String email, String password) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       validation = true;
-
-      return userCredential; // Return UserCredential for further actions
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       handleFirebaseAuthException(e);
       validation = false;
-
-      return null; // Indicate failure
     } catch (e) {
       validation = false;
 
-      print(e); // Log other unexpected errors
-      return null;
+      print(e);
     }
+    return null;
   }
 
   static forgetPassword(String email) async {

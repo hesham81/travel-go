@@ -104,26 +104,20 @@ class SignIn extends StatelessWidget {
                       text: "Sign in",
                       onPressed: () async {
                         if (formKey.currentState!.validate()) {
-                          EasyLoading.show();
-                          UserCredential? userCredential =
-                              await FirebaseServices.signIn(
-                            emailController.text,
-                            passwordController.text,
-                          ).then((v) {
+                          EasyLoading.show(status: "Loading...");
+                          var status = await FirebaseAuthServices.signIn(
+                                  emailController.text, passwordController.text)
+                              .then((v) {
                             EasyLoading.dismiss();
                           });
-                          if (userCredential == null) {
-                            BotToastServices.showSuccessMessage(
-                              "Welcome ${emailController.text}",
-                            );
-                            Navigator.pushNamed(
+                          if (FirebaseAuthServices.validation) {
+                            Navigator.pushReplacementNamed(
                               context,
                               Home.routeName,
                             );
                           } else {
                             BotToastServices.showErrorMessage(
-                              "Email Or Password invalid",
-                            );
+                                "Invalid Username Or Password");
                           }
                         }
                       },

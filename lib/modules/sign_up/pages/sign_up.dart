@@ -24,12 +24,10 @@ class SignUp extends StatelessWidget {
   var passwordController = TextEditingController();
   var confirmPasswordController = TextEditingController();
 
-
   SignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     var key = GlobalKey<FormState>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -87,7 +85,6 @@ class SignUp extends StatelessWidget {
                           validation: (value) {
                             print(nameController.text);
                             return Validations.isNameValid(nameController.text);
-
                           },
                         ),
                         0.02.height.hSpace,
@@ -99,7 +96,8 @@ class SignUp extends StatelessWidget {
                           hintText: "Enter Email",
                           controller: emailController,
                           validation: (value) {
-                            return Validations.isEmailValid(emailController.text);
+                            return Validations.isEmailValid(
+                                emailController.text);
                           },
                         ),
                         0.02.height.hSpace,
@@ -112,7 +110,8 @@ class SignUp extends StatelessWidget {
                           isPassword: true,
                           controller: passwordController,
                           validation: (value) {
-                            return Validations.isPasswordValid(passwordController.text);
+                            return Validations.isPasswordValid(
+                                passwordController.text);
                           },
                         ),
                         0.02.height.hSpace,
@@ -140,12 +139,13 @@ class SignUp extends StatelessWidget {
                             if (key.currentState!.validate()) {
                               EasyLoading.show();
                               UserCredential? userCredential =
-                                  await FirebaseServices.signUp(
+                                  await FirebaseAuthServices.signUp(
                                 emailController.text,
                                 passwordController.text,
-                              ).then((onValue){
+                                nameController.text,
+                              ).then((onValue) {
                                 EasyLoading.dismiss();
-                                  });
+                              });
                               if (userCredential == null) {
                                 BotToastServices.showSuccessMessage(
                                   "Account Created Succefully",

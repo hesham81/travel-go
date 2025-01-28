@@ -12,7 +12,12 @@
           "package_name": "com.TravelGo.android.travel_go"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "561387972473-dqh9q6l6623oc2dndc7g23jefd5ivmdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBNj4MXkZOoeBwqttrD7Ps0wWuUCEoB7l4"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561387972473-dqh9q6l6623oc2dndc7g23jefd5ivmdk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "561387972473-2bu6m1tn6ni8g6ka2jp06fm718gj1srk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tourTravel"
+              }
+            }
+          ]
         }
       }
     },
@@ -31,7 +48,12 @@
           "package_name": "com.example.tamohy"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "561387972473-dqh9q6l6623oc2dndc7g23jefd5ivmdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBNj4MXkZOoeBwqttrD7Ps0wWuUCEoB7l4"
@@ -39,7 +61,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561387972473-dqh9q6l6623oc2dndc7g23jefd5ivmdk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "561387972473-2bu6m1tn6ni8g6ka2jp06fm718gj1srk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tourTravel"
+              }
+            }
+          ]
         }
       }
     },
@@ -50,7 +84,12 @@
           "package_name": "com.example.test_fire_base"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "561387972473-dqh9q6l6623oc2dndc7g23jefd5ivmdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBNj4MXkZOoeBwqttrD7Ps0wWuUCEoB7l4"
@@ -58,7 +97,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561387972473-dqh9q6l6623oc2dndc7g23jefd5ivmdk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "561387972473-2bu6m1tn6ni8g6ka2jp06fm718gj1srk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tourTravel"
+              }
+            }
+          ]
         }
       }
     },
@@ -69,7 +120,12 @@
           "package_name": "com.example.tour_travel"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "561387972473-dqh9q6l6623oc2dndc7g23jefd5ivmdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBNj4MXkZOoeBwqttrD7Ps0wWuUCEoB7l4"
@@ -77,7 +133,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561387972473-dqh9q6l6623oc2dndc7g23jefd5ivmdk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "561387972473-2bu6m1tn6ni8g6ka2jp06fm718gj1srk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tourTravel"
+              }
+            }
+          ]
         }
       }
     },
@@ -88,7 +156,12 @@
           "package_name": "com.example.travel_go"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "561387972473-dqh9q6l6623oc2dndc7g23jefd5ivmdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBNj4MXkZOoeBwqttrD7Ps0wWuUCEoB7l4"
@@ -96,7 +169,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561387972473-dqh9q6l6623oc2dndc7g23jefd5ivmdk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "561387972473-2bu6m1tn6ni8g6ka2jp06fm718gj1srk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tourTravel"
+              }
+            }
+          ]
         }
       }
     },
@@ -107,7 +192,12 @@
           "package_name": "com.finals.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "561387972473-dqh9q6l6623oc2dndc7g23jefd5ivmdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBNj4MXkZOoeBwqttrD7Ps0wWuUCEoB7l4"
@@ -115,7 +205,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561387972473-dqh9q6l6623oc2dndc7g23jefd5ivmdk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "561387972473-2bu6m1tn6ni8g6ka2jp06fm718gj1srk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tourTravel"
+              }
+            }
+          ]
         }
       }
     }
