@@ -20,27 +20,38 @@ class FirstScreen extends StatelessWidget {
             AppAssets.firstScreenIMG,
           ),
           Spacer(),
-          CustomElevatedButton(
-            text: "Sign Up",
-            onPressed: () {
-              Navigator.pushNamed(context, SignUp.routeName);
-            },
-            padding: EdgeInsets.symmetric(
-              horizontal: 0.008.width,
-              vertical: 0.001.height,
-            ),
-          ).hPadding(0.07.width),
+          SizedBox(
+            height: 0.064.height,
+            child: CustomElevatedButton(
+              text: "Sign Up",
+              textSize: 35,
+              onPressed: () {
+                Navigator.pushNamed(context, SignUp.routeName);
+              },
+              padding: EdgeInsets.symmetric(
+                horizontal: 0.008.width,
+                vertical: 0.001.height,
+              ),
+            ).hPadding(0.07.width),
+          ),
           0.05.height.hSpace,
-          CustomElevatedButton(
-            text: "Sign in",
-            onPressed: () {
-              Navigator.pushNamed(context, SignIn.routeName);
-            },
-            padding: EdgeInsets.symmetric(
-              horizontal: 0.008.width,
-              vertical: 0.001.height,
-            ),
-          ).hPadding(0.07.width),
+          SizedBox(
+            height: 0.064.height,
+            child: CustomElevatedButton(
+              text: "Sign in",
+              textSize: 35,
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  SignIn.routeName,
+                );
+              },
+              padding: EdgeInsets.symmetric(
+                horizontal: 0.008.width,
+                vertical: 0.001.height,
+              ),
+            ).hPadding(0.07.width),
+          ),
           0.08.height.hSpace,
         ],
       ),

@@ -27,7 +27,24 @@ class _HomeState extends State<Home> {
       price: 3000,
     ),
     TripModel(
-      id: '2',
+      id: '5',
+      imageUrl: AppAssets.dahabaIMG,
+      title: 'Dynamo Kiev',
+      startDateTime: DateTime(2024, 10, 12),
+      endDateTime: DateTime(2024, 10, 15),
+      price: 1800,
+      currency: "USD"
+    ),
+    TripModel(
+      id: '6',
+      imageUrl: AppAssets.sharmIMG,
+      title: 'Aswan',
+      startDateTime: DateTime(2024, 10, 12),
+      endDateTime: DateTime(2024, 10, 15),
+      price: 800,
+    ),
+    TripModel(
+      id: '4',
       imageUrl: AppAssets.dahabaIMG,
       title: 'Sharm',
       startDateTime: DateTime(2025, 3, 12),

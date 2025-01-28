@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/services/bot_toast.dart';
-import 'package:travel_go/core/validations/validations.dart';
-import 'package:travel_go/modules/forget_password/pages/forget_password.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/home.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import '/core/services/bot_toast.dart';
+import '/core/services/easy_loading.dart';
+import '/core/validations/validations.dart';
+import '/modules/forget_password/pages/forget_password.dart';
+import '/modules/layout/pages/user/pages/home/pages/home.dart';
 import '../../../core/utils/firebase_services.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/align.dart';
@@ -19,17 +21,18 @@ import '/core/widget/social_media_login.dart';
 
 class SignIn extends StatelessWidget {
   static const routeName = '/sign-in';
-  var formKey = GlobalKey<FormState>();
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
 
   SignIn({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var formKey = GlobalKey<FormState>();
+    var emailController = TextEditingController();
+    var passwordController = TextEditingController();
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: Form(
+        autovalidateMode: AutovalidateMode.onUnfocus,
         key: formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -72,7 +75,7 @@ class SignIn extends StatelessWidget {
                       hintText: 'email',
                       suffixIcon: Icons.email_outlined,
                       validation: (value) {
-                        return Validations.validateEmail(value);
+                        return Validations.isEmailValid(emailController.text);
                       },
                       controller: emailController,
                     ),
@@ -86,11 +89,13 @@ class SignIn extends StatelessWidget {
                         isPassword: true,
                         controller: passwordController,
                         validation: (value) {
-                          return Validations.validatePassword(value);
+                          return Validations.isPasswordValid(
+                              passwordController.text);
                         }),
                     CustomTextButton(
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, ForgetPassword.routeName);
+                        Navigator.pushReplacementNamed(
+                            context, ForgetPassword.routeName);
                       },
                       text: 'Forgot Password?',
                     ).alignRight(),
@@ -99,20 +104,20 @@ class SignIn extends StatelessWidget {
                       text: "Sign in",
                       onPressed: () async {
                         if (formKey.currentState!.validate()) {
-                          UserCredential? userCredential =
-                              await FirebaseServices.signIn(
-                            emailController.text,
-                            passwordController.text,
-                          );
-                          if (userCredential != null) {
-                            BotToastServices.showSuccessMessage(
-                              "Welcome ${emailController.text}",
+                          EasyLoading.show(status: "Loading...");
+                          var status = await FirebaseAuthServices.signIn(
+                                  emailController.text, passwordController.text)
+                              .then((v) {
+                            EasyLoading.dismiss();
+                          });
+                          if (FirebaseAuthServices.validation) {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              Home.routeName,
                             );
-                            Navigator.pushNamed(context, Home.routeName);
                           } else {
                             BotToastServices.showErrorMessage(
-                              "Email Or Password invalid",
-                            );
+                                "Invalid Username Or Password");
                           }
                         }
                       },

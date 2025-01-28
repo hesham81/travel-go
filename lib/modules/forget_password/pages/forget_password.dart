@@ -48,8 +48,8 @@ class ForgetPassword extends StatelessWidget {
                   ),
                   0.04.height.hSpace,
                   CustomTextFormField(
-                    validation: (value){
-                      return Validations.validateEmail(value);
+                    validation: (value) {
+                      return Validations.isEmailValid(emailController.text);
                     },
                     hintText: "Email Or Phone Number",
                     controller: emailController,
@@ -62,7 +62,7 @@ class ForgetPassword extends StatelessWidget {
                   CustomElevatedButton(
                     text: "Continue",
                     onPressed: () {
-                      if(formKey.currentState!.validate()){
+                      if (formKey.currentState!.validate()) {
                         Navigator.pushNamed(context, Otp.routeName);
                       }
                     },
