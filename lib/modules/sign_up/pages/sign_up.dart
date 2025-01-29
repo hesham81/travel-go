@@ -20,7 +20,6 @@ import '../../../core/widget/back_leading_widget.dart';
 class SignUp extends StatefulWidget {
   static const routeName = '/sign-up';
 
-
   SignUp({super.key});
 
   @override
@@ -33,9 +32,9 @@ class _SignUpState extends State<SignUp> {
   var passwordController = TextEditingController();
   var confirmPasswordController = TextEditingController();
   var key = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -90,7 +89,6 @@ class _SignUpState extends State<SignUp> {
                           hintText: "Enter Full Name",
                           controller: nameController,
                           validation: (value) {
-                            print(nameController.text);
                             return Validations.isNameValid(nameController.text);
                           },
                         ),
@@ -103,8 +101,10 @@ class _SignUpState extends State<SignUp> {
                           hintText: "Enter Email",
                           controller: emailController,
                           validation: (value) {
+                            print(emailController.text);
                             return Validations.isEmailValid(
-                                emailController.text);
+                              emailController.text,
+                            );
                           },
                         ),
                         0.02.height.hSpace,
@@ -148,26 +148,18 @@ class _SignUpState extends State<SignUp> {
                             onPressed: () async {
                               if (key.currentState!.validate()) {
                                 EasyLoading.show();
-                                UserCredential? userCredential =
-                                    await FirebaseAuthServices.signUp(
+                                var user = await FirebaseAuthServices.signUp(
                                   emailController.text,
                                   passwordController.text,
                                   nameController.text,
-                                ).then((onValue) {
-                                  EasyLoading.dismiss();
-                                });
-                                if (userCredential == null) {
+                                );
+                                EasyLoading.dismiss();
+                                if (user != null) {
                                   BotToastServices.showSuccessMessage(
-                                    "Account Created Succefully",
-                                  );
-                                  Navigator.pushReplacementNamed(
-                                    context,
-                                    SignIn.routeName,
+                                    "Sign Up Successfully",
                                   );
                                 } else {
-                                  BotToastServices.showErrorMessage(
-                                    "Error While Creating Account",
-                                  );
+                                  BotToastServices.showErrorMessage("Error");
                                 }
                               }
                               //   SuperPassword1!

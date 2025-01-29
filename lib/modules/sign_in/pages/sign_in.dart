@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '/core/services/bot_toast.dart';
@@ -114,21 +117,20 @@ class _SignInState extends State<SignIn> {
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             EasyLoading.show(status: "Loading...");
-                            var status = await FirebaseAuthServices.signIn(
-                                    emailController.text,
-                                    passwordController.text)
-                                .then((v) {
-                              EasyLoading.dismiss();
-                            });
-                            if (FirebaseAuthServices.validation) {
-                              Navigator.pushReplacementNamed(
-                                context,
-                                Home.routeName,
-                              );
-                            } else {
-                              BotToastServices.showErrorMessage(
-                                  "Invalid Username Or Password");
+                            var role = await FirebaseAuthServices.signIn(
+                              emailController.text,
+                              passwordController.text,
+                            );
+                            EasyLoading.dismiss();
+                            if (role != null) {
+                              (role == 'admin')
+                                  ? BotToastServices.showSuccessMessage("Admin")
+                                  : BotToastServices.showSuccessMessage("User");
                             }
+                            else
+                              {
+                                BotToastServices.showErrorMessage("Invalid Username Or Password");
+                              }
                           }
                         },
                         borderRadius: 20,

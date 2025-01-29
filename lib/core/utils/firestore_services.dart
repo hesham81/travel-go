@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class FirestoreServices {
@@ -31,25 +33,15 @@ abstract class FirestoreServices {
   }
 
   static RoleBasedSignIn({
-    required userCredential,
+    required id,
   }) async {
     try {
-      print(userCredential.user!.uid);
-      _fireStore
-          .collection('users')
-          .doc(userCredential.user!.uid)
-          .get()
-          .then((DocumentSnapshot snapshot) {
-            return snapshot;
-        // if (snapshot.exists) {
-        //   print(snapshot.get('role'));
-        //   return snapshot.get('role');
-        // } else {
-        //   return null;
-        // }
-      });
+      var data = await _fireStore.collection("users").doc(id).get();
+      var role = data['role'];
+      return role ;
     } catch (error) {
-      return error;
+       print(error);
     }
+    return null ;
   }
 }

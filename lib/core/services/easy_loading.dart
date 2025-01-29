@@ -5,14 +5,14 @@ import '/core/theme/app_colors.dart';
 void showLoading() {
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 2000)
-    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..indicatorType = EasyLoadingIndicatorType.cubeGrid
     ..loadingStyle = EasyLoadingStyle.dark
     ..indicatorSize = 45.0
     ..radius = 10.0
     ..progressColor = Colors.yellow
-    ..backgroundColor = Colors.green
-    ..indicatorColor = Colors.yellow
-    ..textColor = AppColors.primaryColor
+    ..backgroundColor = AppColors.dodgurBlueColor
+    ..indicatorColor = AppColors.whiteColor
+    ..textColor = AppColors.blackColor
     ..maskColor = Colors.blue.withOpacity(0.5)
     ..userInteractions = true
     ..dismissOnTap = false;

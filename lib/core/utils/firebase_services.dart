@@ -1,58 +1,54 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:travel_go/core/services/bot_toast.dart';
 import 'package:travel_go/core/utils/firestore_services.dart';
 
 abstract class FirebaseAuthServices {
-  static bool validation = false;
+  static bool validation = true;
   static String? role;
 
   static Future<UserCredential?> signUp(
-      String email, String password, String name) async {
+    String email,
+    String password,
+    String name,
+  ) async {
     try {
-      final UserCredential userCredential =
+      UserCredential? user =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      validation = true;
-
-      return (FirestoreServices.RoleBasedSignUp(
-        email: email,
-        password: password,
-        uid: userCredential.user!.uid,
-        createdAt: DateTime.now(),
-        phoneNumber: "",
-        address: "",
-        name: name,
-      ))
-          ? userCredential
-          : null;
-      return userCredential;
-    } on FirebaseAuthException catch (e) {
-      handleFirebaseAuthException(e);
-      validation = false;
-
-      return null;
-
-    } catch (e) {
-      validation = false;
-
-      print(e); // Log other unexpected errors
-      return null;
+      await FirestoreServices.RoleBasedSignUp(
+          email: email,
+          password: password,
+          uid: user.user!.uid,
+          createdAt: DateTime.now(),
+          phoneNumber: "",
+          address: "",
+          name: name);
+      return Future.value(user);
+    } on FirebaseAuthException catch (error) {
+      handleFirebaseAuthException(error);
+    } catch (error) {
+      BotToastServices.showErrorMessage(error.toString());
     }
+    return null;
   }
 
-  static  signIn(String email, String password) async {
+  static signIn(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      validation = true;
-      return userCredential;
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      role = await FirestoreServices.RoleBasedSignIn(
+        id: userCredential.user!.uid,
+      );
+      return role;
     } on FirebaseAuthException catch (e) {
       handleFirebaseAuthException(e);
-      validation = false;
+      print(e.message);
     } catch (e) {
-      validation = false;
-
       print(e);
     }
     return null;
@@ -70,15 +66,18 @@ abstract class FirebaseAuthServices {
 
   static void handleFirebaseAuthException(FirebaseAuthException e) {
     if (e.code == 'weak-password') {
-      print('The password provided is too weak.');
+      BotToastServices.showErrorMessage('The password provided is too weak.');
     } else if (e.code == 'email-already-in-use') {
-      print('The account already exists for that email.');
+      BotToastServices.showErrorMessage(
+          'The account already exists for that email.');
     } else if (e.code == 'user-not-found') {
-      print('No user found for that email.');
+      BotToastServices.showErrorMessage('No user found for that email.');
     } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
+      BotToastServices.showErrorMessage(
+          'Wrong password provided for that user.');
     } else {
-      print('An unexpected Firebase error occurred: ${e.code}');
+      BotToastServices.showErrorMessage(
+          'An unexpected Firebase error occurred: ${e.code}');
     }
   }
 }

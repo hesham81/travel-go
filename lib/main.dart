@@ -2,10 +2,12 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/core/services/easy_loading.dart';
 import 'core/theme/app_theme.dart';
 
 import 'modules/first_screen/pages/first_screen.dart';
 import 'modules/forget_password/pages/forget_password.dart';
+import 'modules/layout/pages/admin/pages/admin_home.dart';
 import 'modules/layout/pages/user/pages/home/pages/home.dart';
 import 'modules/otp/pages/otp.dart';
 import 'modules/sign_in/pages/sign_in.dart';
@@ -14,6 +16,7 @@ import 'modules/sign_up/pages/sign_up.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  showLoading();
   runApp(const MyApp());
 }
 
@@ -41,6 +44,7 @@ class MyApp extends StatelessWidget {
         ForgetPassword.routeName: (context) => ForgetPassword(),
         Otp.routeName: (context) => Otp(),
         Home.routeName: (context) => Home(),
+        AdminHome.routeName: (context) => AdminHome(),
       },
     );
   }
