@@ -33,7 +33,6 @@ abstract class FirebaseAuthServices {
 
       return null;
 
-      // Indicate failure
     } catch (e) {
       validation = false;
 

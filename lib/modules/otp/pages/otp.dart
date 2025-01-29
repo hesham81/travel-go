@@ -7,23 +7,34 @@ import '/modules/otp/widget/otp_form_widget.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widget/custom_elevated_button.dart';
 
-class Otp extends StatelessWidget {
+class Otp extends StatefulWidget {
   static const routeName = '/otp';
-  var controller1 = TextEditingController();
-  var controller2 = TextEditingController();
-  var controller3 = TextEditingController();
-  var controller4 = TextEditingController();
-  var controller5 = TextEditingController();
-  var controller6 = TextEditingController();
-  var formKey = GlobalKey<FormState>();
 
   Otp({super.key});
+
+  @override
+  State<Otp> createState() => _OtpState();
+}
+
+class _OtpState extends State<Otp> {
+  var controller1 = TextEditingController();
+
+  var controller2 = TextEditingController();
+
+  var controller3 = TextEditingController();
+
+  var controller4 = TextEditingController();
+
+  var controller5 = TextEditingController();
+
+  var controller6 = TextEditingController();
+
+  var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
       appBar: AppBar(
         backgroundColor: Colors.transparent,
       ),
@@ -123,10 +134,11 @@ class Otp extends StatelessWidget {
                   );
                 }
               },
-              text: "Confirm",
+              text: "     Confirm     ",
+              borderRadius: 20,
               padding: EdgeInsets.symmetric(
-                horizontal: 0.2.width,
-                vertical: 0.01.height,
+                horizontal: 0.02.height,
+                vertical: 0,
               ),
               textWeight: FontWeight.w500,
               textSize: 32,

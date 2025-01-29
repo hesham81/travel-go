@@ -17,18 +17,25 @@ import '/core/extensions/extensions.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widget/back_leading_widget.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   static const routeName = '/sign-up';
-  var nameController = TextEditingController();
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
-  var confirmPasswordController = TextEditingController();
+
 
   SignUp({super.key});
 
   @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  var nameController = TextEditingController();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  var confirmPasswordController = TextEditingController();
+  var key = GlobalKey<FormState>();
+  @override
   Widget build(BuildContext context) {
-    var key = GlobalKey<FormState>();
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -133,39 +140,43 @@ class SignUp extends StatelessWidget {
                         0.005.height.hSpace,
                         CheckWidget(),
                         0.02.height.hSpace,
-                        CustomElevatedButton(
-                          text: "Sign Up",
-                          onPressed: () async {
-                            if (key.currentState!.validate()) {
-                              EasyLoading.show();
-                              UserCredential? userCredential =
-                                  await FirebaseAuthServices.signUp(
-                                emailController.text,
-                                passwordController.text,
-                                nameController.text,
-                              ).then((onValue) {
-                                EasyLoading.dismiss();
-                              });
-                              if (userCredential == null) {
-                                BotToastServices.showSuccessMessage(
-                                  "Account Created Succefully",
-                                );
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  SignIn.routeName,
-                                );
-                              } else {
-                                BotToastServices.showErrorMessage(
-                                  "Error While Creating Account",
-                                );
+                        SizedBox(
+                          height: 0.06.height,
+                          child: CustomElevatedButton(
+                            textSize: 30,
+                            text: "Sign Up",
+                            onPressed: () async {
+                              if (key.currentState!.validate()) {
+                                EasyLoading.show();
+                                UserCredential? userCredential =
+                                    await FirebaseAuthServices.signUp(
+                                  emailController.text,
+                                  passwordController.text,
+                                  nameController.text,
+                                ).then((onValue) {
+                                  EasyLoading.dismiss();
+                                });
+                                if (userCredential == null) {
+                                  BotToastServices.showSuccessMessage(
+                                    "Account Created Succefully",
+                                  );
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    SignIn.routeName,
+                                  );
+                                } else {
+                                  BotToastServices.showErrorMessage(
+                                    "Error While Creating Account",
+                                  );
+                                }
                               }
-                            }
-                            //   SuperPassword1!
-                          },
-                          borderRadius: 20,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 0.02.height,
-                            vertical: 0,
+                              //   SuperPassword1!
+                            },
+                            borderRadius: 20,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 0.02.height,
+                              vertical: 0,
+                            ),
                           ),
                         ),
                         0.02.height.hSpace,
