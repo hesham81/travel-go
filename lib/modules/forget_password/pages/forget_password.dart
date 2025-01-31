@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/core/utils/email_services.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
@@ -21,9 +23,9 @@ class ForgetPassword extends StatefulWidget {
 class _ForgetPasswordState extends State<ForgetPassword> {
   var emailController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Expanded(
@@ -72,6 +74,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         text: "Continue",
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
+                            EasyLoading.show();
+                            EmailServices.init();
+                            EmailServices.sendOTP(emailController.text);
+                            EasyLoading.dismiss();
+
                             Navigator.pushNamed(context, Otp.routeName);
                           }
                         },

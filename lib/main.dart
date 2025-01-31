@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:travel_go/core/services/easy_loading.dart';
+import 'package:travel_go/modules/new_password/pages/new_password.dart';
 import 'core/theme/app_theme.dart';
 
 import 'modules/first_screen/pages/first_screen.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         Otp.routeName: (context) => Otp(),
         Home.routeName: (context) => Home(),
         AdminHome.routeName: (context) => AdminHome(),
+        NewPassword.routeName: (context) => NewPassword(),
       },
     );
   }
