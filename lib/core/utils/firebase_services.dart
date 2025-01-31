@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:travel_go/core/services/bot_toast.dart';
 import 'package:travel_go/core/utils/firestore_services.dart';
 
@@ -32,6 +33,24 @@ abstract class FirebaseAuthServices {
       BotToastServices.showErrorMessage(error.toString());
     }
     return null;
+  }
+
+  static updatePassword({required newPassword})
+  async {
+    try
+        {
+          await FirebaseAuth.instance.currentUser!.updatePassword(newPassword);
+          return true ;
+        }
+        on FirebaseAuthException catch (e)
+        {
+          handleFirebaseAuthException(e);
+          return null ;
+        }
+    catch (e)
+    {
+      return null ;
+    }
   }
 
   static signIn(String email, String password) async {

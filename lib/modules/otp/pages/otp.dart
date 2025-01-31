@@ -1,4 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/core/services/bot_toast.dart';
+import 'package:travel_go/core/utils/email_services.dart';
+import 'package:travel_go/core/utils/firebase_services.dart';
+import 'package:travel_go/modules/new_password/pages/new_password.dart';
 import '/core/extensions/extensions.dart';
 import '/core/widget/label.dart';
 import '../../layout/pages/user/pages/home/pages/home.dart';
@@ -128,10 +135,18 @@ class _OtpState extends State<Otp> {
             CustomElevatedButton(
               onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  Navigator.pushNamed(
-                    context,
-                    Home.routeName,
-                  );
+                  EasyLoading.show();
+                  String otpCode =
+                      "${controller1.text}${controller2.text}${controller3.text}${controller4.text}${controller5.text}${controller6.text}";
+                  var result = EmailServices.verifyOTP(otpCode);
+                  EasyLoading.dismiss();
+                  if (result == true) {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, NewPassword.routeName, (_) => false);
+                  }
+                } else {
+                  BotToastServices.showErrorMessage("Otp is not valid");
+                  Navigator.pop(context);
                 }
               },
               text: "     Confirm     ",

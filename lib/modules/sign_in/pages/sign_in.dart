@@ -1,11 +1,7 @@
-import 'dart:math';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/admin_home.dart';
 import '/core/services/bot_toast.dart';
-import '/core/services/easy_loading.dart';
 import '/core/validations/validations.dart';
 import '/modules/forget_password/pages/forget_password.dart';
 import '/modules/layout/pages/user/pages/home/pages/home.dart';
@@ -113,7 +109,7 @@ class _SignInState extends State<SignIn> {
                       height: 0.06.height,
                       child: CustomElevatedButton(
                         textSize: 30,
-                        text: "         Sign in          ",
+                        text: "          Sign in          ",
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             EasyLoading.show(status: "Loading...");
@@ -123,14 +119,24 @@ class _SignInState extends State<SignIn> {
                             );
                             EasyLoading.dismiss();
                             if (role != null) {
+                              BotToastServices.showSuccessMessage(
+                                "Sign In Successfully",
+                              );
                               (role == 'admin')
-                                  ? BotToastServices.showSuccessMessage("Admin")
-                                  : BotToastServices.showSuccessMessage("User");
+                                  ? Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      AdminHome.routeName,
+                                      (route) => false,
+                                    )
+                                  : Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      Home.routeName,
+                                      (route) => false,
+                                    );
+                            } else {
+                              BotToastServices.showErrorMessage(
+                                  "Invalid Credentials");
                             }
-                            else
-                              {
-                                BotToastServices.showErrorMessage("Invalid Username Or Password");
-                              }
                           }
                         },
                         borderRadius: 20,
