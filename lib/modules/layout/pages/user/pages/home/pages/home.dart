@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/trips/selected_trip/selected_trip.dart';
 import '/modules/layout/pages/user/pages/home/widget/trip_card_widget.dart';
 import '/core/constant/app_assets.dart';
 import '/models/trip_model.dart';
@@ -27,14 +30,13 @@ class _HomeState extends State<Home> {
       price: 3000,
     ),
     TripModel(
-      id: '5',
-      imageUrl: AppAssets.dahabaIMG,
-      title: 'Dynamo Kiev',
-      startDateTime: DateTime(2024, 10, 12),
-      endDateTime: DateTime(2024, 10, 15),
-      price: 1800,
-      currency: "USD"
-    ),
+        id: '5',
+        imageUrl: AppAssets.dahabaIMG,
+        title: 'Dynamo Kiev',
+        startDateTime: DateTime(2024, 10, 12),
+        endDateTime: DateTime(2024, 10, 15),
+        price: 1800,
+        currency: "USD"),
     TripModel(
       id: '6',
       imageUrl: AppAssets.sharmIMG,
@@ -99,8 +101,17 @@ class _HomeState extends State<Home> {
               ),
               child: Expanded(
                 child: ListView.separated(
-                  itemBuilder: (context, index) => TripCardWidget(
-                    tripModel: tripList[index],
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        SelectedTrip.routeName,
+                        arguments: tripList[index],
+                      );
+                    },
+                    child: TripCardWidget(
+                      tripModel: tripList[index],
+                    ),
                   ),
                   separatorBuilder: (index, context) => 0.02.height.hSpace,
                   itemCount: tripList.length,
@@ -127,24 +138,29 @@ class _HomeState extends State<Home> {
           .toLowerCase()
           .contains(searchQueryText.toLowerCase())) {
         searchList.add(trip);
-      }
-      else if (trip.price.toString(
-        ).toLowerCase().contains(searchQueryText.toLowerCase())) {
+      } else if (trip.price
+          .toString()
+          .toLowerCase()
+          .contains(searchQueryText.toLowerCase())) {
+        searchList.add(trip);
+      } else if (trip.startDateTime.year
+          .toString()
+          .toLowerCase()
+          .contains(searchQueryText.toLowerCase())) {
+        searchList.add(trip);
+      } else if (trip.endDateTime.day
+          .toString()
+          .toLowerCase()
+          .contains(searchQueryText.toLowerCase())) {
+        searchList.add(trip);
+      } else if (trip.endDateTime.month
+          .toString()
+          .toLowerCase()
+          .contains(searchQueryText.toLowerCase())) {
+        searchList.add(trip);
+      } else if (trip.price.toString() == searchQueryText) {
         searchList.add(trip);
       }
-      else if (trip.startDateTime.year.toString().toLowerCase().contains(searchQueryText.toLowerCase())) {
-        searchList.add(trip);
-      }
-      else if (trip.endDateTime.day.toString().toLowerCase().contains(searchQueryText.toLowerCase())) {
-        searchList.add(trip);
-      }
-      else if (trip.endDateTime.month.toString().toLowerCase().contains(searchQueryText.toLowerCase())) {
-        searchList.add(trip);
-      }
-      else if (trip.price.toString() == searchQueryText) {
-        searchList.add(trip);
-      }
-
     }
     setState(() {});
   }

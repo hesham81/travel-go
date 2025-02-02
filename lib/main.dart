@@ -2,8 +2,9 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/core/services/easy_loading.dart';
-import 'package:travel_go/modules/new_password/pages/new_password.dart';
+import '/core/services/easy_loading.dart';
+import '/modules/layout/pages/user/pages/trips/selected_trip/selected_trip.dart';
+import '/modules/new_password/pages/new_password.dart';
 import 'core/theme/app_theme.dart';
 
 import 'modules/first_screen/pages/first_screen.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         Home.routeName: (context) => Home(),
         AdminHome.routeName: (context) => AdminHome(),
         NewPassword.routeName: (context) => NewPassword(),
+        SelectedTrip.routeName : (context) => SelectedTrip(),
       },
     );
   }
