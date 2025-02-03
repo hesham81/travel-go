@@ -92,8 +92,17 @@ class _HomeState extends State<Home> {
               visible: searchList.isEmpty,
               replacement: Expanded(
                 child: ListView.separated(
-                  itemBuilder: (context, index) => TripCardWidget(
-                    tripModel: searchList[index],
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        SelectedTrip.routeName,
+                        arguments: searchList[index],
+                      );
+                    },
+                    child: TripCardWidget(
+                      tripModel: searchList[index],
+                    ),
                   ),
                   separatorBuilder: (index, context) => 0.02.height.hSpace,
                   itemCount: searchList.length,

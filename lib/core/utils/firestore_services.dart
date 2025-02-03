@@ -1,6 +1,7 @@
-import 'dart:math';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:travel_go/models/trip.dart';
 
 abstract class FirestoreServices {
   static final _fireStore = FirebaseFirestore.instance;
@@ -38,10 +39,23 @@ abstract class FirestoreServices {
     try {
       var data = await _fireStore.collection("users").doc(id).get();
       var role = data['role'];
-      return role ;
+      return role;
     } catch (error) {
-       print(error);
+      print(error);
     }
-    return null ;
+    return null;
+  }
+
+  static getAllTripData() async {
+    QuerySnapshot<Map<String, dynamic>> colRef =
+        await _fireStore.collection("Trip").get();
+    List<Map<String, dynamic>> tripList =
+        colRef.docs.map((doc) => doc.data()).toList();
+    List<Trip> trips = []  ;
+    tripList.map((element){
+      trips.add(Trip.fromMap(element));
+    });
+    log(tripList.toString());
+    return trips;
   }
 }
