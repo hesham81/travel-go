@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/utils/firestore_services.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/trips/selected_trip/selected_trip.dart';
 import '/modules/layout/pages/user/pages/home/widget/trip_card_widget.dart';
 import '/core/constant/app_assets.dart';
@@ -18,6 +19,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  var allList =  FirestoreServices.getAllTripData();
   var searchController = TextEditingController();
   List<TripModel> searchList = [];
   List<TripModel> tripList = [
@@ -77,21 +79,23 @@ class _HomeState extends State<Home> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SafeArea(
-        child: Column(
-          children: [
-            SearchWidget(
-              controller: searchController,
-              search: (value) {
-                searchQueryText = value;
-                searchQuery();
-                setState(() {});
-              },
-            ).vPadding(0.01.height).hPadding(0.09.width),
-            0.02.height.hSpace,
-            Visibility(
-              visible: searchList.isEmpty,
-              replacement: Expanded(
-                child: ListView.separated(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SearchWidget(
+                controller: searchController,
+                search: (value) {
+                  searchQueryText = value;
+                  searchQuery();
+                  setState(() {});
+                },
+              ).vPadding(0.01.height).hPadding(0.09.width),
+              0.02.height.hSpace,
+              Visibility(
+                visible: searchList.isEmpty,
+                replacement: ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) => GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(
@@ -107,9 +111,9 @@ class _HomeState extends State<Home> {
                   separatorBuilder: (index, context) => 0.02.height.hSpace,
                   itemCount: searchList.length,
                 ),
-              ),
-              child: Expanded(
                 child: ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) => GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(
@@ -125,9 +129,9 @@ class _HomeState extends State<Home> {
                   separatorBuilder: (index, context) => 0.02.height.hSpace,
                   itemCount: tripList.length,
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

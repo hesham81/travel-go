@@ -1,10 +1,11 @@
-class Trip {
+import 'package:travel_go/models/trip_model.dart';
+
+class Trip extends TripModel {
   final String currency;
   final String destination;
   final String hotelId;
   final int noOfDays;
   final String source;
-  final double tripPrice;
 
   Trip({
     required this.currency,
@@ -12,7 +13,12 @@ class Trip {
     required this.hotelId,
     required this.noOfDays,
     required this.source,
-    required this.tripPrice,
+    required super.id,
+    required super.imageUrl,
+    required super.title,
+    required super.startDateTime,
+    required super.endDateTime,
+    required super.price,
   });
 
   Map<String, dynamic> toMap() {
@@ -22,7 +28,12 @@ class Trip {
       'hotelId': hotelId,
       'noOfDays': noOfDays,
       'source': source,
-      'tripPrice': tripPrice,
+      'id': id,
+      'imageUrl': imageUrl,
+      'title': title,
+      'startDateTime': startDateTime.toIso8601String(),
+      'endDateTime': endDateTime.toIso8601String(),
+      'price': price,
     };
   }
 
@@ -34,7 +45,25 @@ class Trip {
       hotelId: map['hotelId'],
       noOfDays: map['noOfDays'],
       source: map['source'],
-      tripPrice: map['tripPrice'],
+      id: map['id'],
+      imageUrl: map['imageUrl'],
+      title: map['title'],
+      startDateTime: DateTime.parse(map['startDateTime']),
+      endDateTime: DateTime.parse(map['endDateTime']),
+      price: map['price'],
     );
   }
+//   tripMap = {
+//     'currency': 'EGP',
+//     'destination': 'Cairo',
+//     'hotelId': '/Hotel/K35oO9Avssk04uuKhecp',
+//     'noOfDays': 3,
+//     'source': 'Sharm El Sheikh',
+//     'id': 'trip123',
+//     'imageUrl': 'https://ulmlgjxomyybsvsjesuv.supabase.co/storage/v1/object/sign/trip/sharm/dahab.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0cmlwL3NoYXJtL2RhaGFiLnBuZyIsImlhdCI6MTczODYyMDMyMSwiZXhwIjoxNzcwMTU2MzIxfQ.OXBFOIOybFO9FQs19GLg0DYASGOetLwPqHhvox4Ovb8',
+//     'title': 'Cairo Adventure',
+//     'startDateTime': '2023-10-01T00:00:00.000',
+//     'endDateTime': '2023-10-04T00:00:00.000',
+//     'price': 350,
+//   };
 }
