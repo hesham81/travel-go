@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/trips/pages/edit_trip.dart';
+import '/modules/layout/pages/admin/pages/programs/pages/edit_programs.dart';
+import '/modules/layout/pages/admin/pages/trips/pages/edit_trip.dart';
 import '/modules/first_screen/pages/first_screen.dart';
 import '/modules/layout/pages/admin/pages/profile/profile.dart';
 import '/core/extensions/extensions.dart';
@@ -22,6 +23,7 @@ class _AdminHomeState extends State<AdminHome> {
   List<Widget> pages = [
     EditTrip(),
     EditHotels(),
+    EditPrograms(),
   ];
   int selectedIndex = 0;
   User user = FirebaseAuthServices.getCurrentUserData();
@@ -178,7 +180,7 @@ class _AdminHomeState extends State<AdminHome> {
                   textAlign: TextAlign.center,
                 ),
                 onTap: () {
-                  selectedIndex == 0;
+                  selectedIndex =2;
                   setState(() {});
                 },
               ),

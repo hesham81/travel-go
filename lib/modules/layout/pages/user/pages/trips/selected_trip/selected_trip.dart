@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import '/core/utils/firestore_services.dart';
-import '/models/hotel_model.dart';
-import '../../../../../../../models/trip.dart';
 import '/models/trip_model.dart';
 
 class SelectedTrip extends StatefulWidget {

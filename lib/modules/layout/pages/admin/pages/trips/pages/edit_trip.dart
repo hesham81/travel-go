@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import '/modules/layout/pages/admin/pages/trips/pages/selected_trip.dart';
 import '/core/extensions/center.dart';
 import '/core/extensions/extensions.dart';
 import '/core/utils/trip_db.dart';
@@ -40,12 +39,7 @@ class _EditTripState extends State<EditTrip> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          TripDB.addNewTrip(
-            context,
-            trip: trip,
-          );
-        },
+        onPressed: () {},
         backgroundColor: AppColors.primaryColor.withOpacity(0.8),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -111,20 +105,42 @@ class _EditTripState extends State<EditTrip> {
                 ).toList();
                 return Visibility(
                   visible: searchQueryText.isEmpty,
-                  replacement: ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) => TripCart(
-                      model: searchTrip[index],
+                  replacement: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        SelectedAdminTrip.routeName,
+                      );
+                    },
+                    child: ListView.separated(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => GestureDetector(
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          SelectedAdminTrip.routeName,
+                          arguments: searchTrip[index],
+                        ),
+                        child: TripCart(
+                          model: searchTrip[index],
+                        ),
+                      ),
+                      separatorBuilder: (context, _) => 0.01.height.hSpace,
+                      itemCount: searchTrip.length,
                     ),
-                    separatorBuilder: (context, _) => 0.01.height.hSpace,
-                    itemCount: searchTrip.length,
                   ),
                   child: ListView.separated(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemBuilder: (context, index) => TripCart(
-                      model: trips[index],
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        SelectedAdminTrip.routeName,
+                        arguments: trips[index],
+                      ),
+                      child: TripCart(
+                        model: trips[index],
+                      ),
                     ),
                     separatorBuilder: (context, _) => 0.01.height.hSpace,
                     itemCount: trips.length,
@@ -158,11 +174,9 @@ class _EditTripState extends State<EditTrip> {
           .toLowerCase()
           .contains(searchQueryText.toLowerCase())) {
         searchTrip.add(trip);
-      }
-      else if (trip.startDateTime.year.toString() == (searchQueryText)) {
+      } else if (trip.startDateTime.year.toString() == (searchQueryText)) {
         searchTrip.add(trip);
-      }
-      else if (trip.startDateTime.month.toString() == (searchQueryText)) {
+      } else if (trip.startDateTime.month.toString() == (searchQueryText)) {
         searchTrip.add(trip);
       }
     }

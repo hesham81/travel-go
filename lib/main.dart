@@ -5,6 +5,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/edit_hotels.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/add_hotel.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/profile/profile.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trips/pages/selected_trip.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trips/pages/selected_trip.dart';
 import '/core/services/easy_loading.dart';
 import '/modules/layout/pages/user/pages/trips/selected_trip/selected_trip.dart';
 import '/modules/new_password/pages/new_password.dart';
@@ -55,6 +57,7 @@ class MyApp extends StatelessWidget {
         EditHotels.routeName : (context) => EditHotels(),
         Profile.routeName : (context) => Profile(),
         AddHotel.routeName : (context) => AddHotel(),
+        SelectedAdminTrip.routeName : (context) => SelectedAdminTrip(),
       },
     );
   }
