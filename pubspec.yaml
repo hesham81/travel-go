@@ -43,6 +43,7 @@ dependencies:
   email_otp: ^3.0.2
   lottie: ^3.3.1
   google_sign_in: ^6.2.2
+  phone_form_field: ^10.0.4
 
 dev_dependencies:
   flutter_test:

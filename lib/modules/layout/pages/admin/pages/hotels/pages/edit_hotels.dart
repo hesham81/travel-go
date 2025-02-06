@@ -45,6 +45,7 @@ class _EditHotelsState extends State<EditHotels> {
         child: Column(
           children: [
             SearchWidget(
+              borderRadius: 10,
               controller: searchController,
               search: (value) {
                 searchQuery = value;
@@ -70,7 +71,7 @@ class _EditHotelsState extends State<EditHotels> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.error,
+                        Icons.replay,
                         color: AppColors.errorColor,
                       ),
                       0.01.width.hSpace,
@@ -99,9 +100,7 @@ class _EditHotelsState extends State<EditHotels> {
                     itemBuilder: (context, index) => CustomViewWidget(
                       model: searchList[index],
                     ),
-                    separatorBuilder: (context, _) => Divider(
-                      color: AppColors.blackColor,
-                    ).allPadding(0.01.width),
+                    separatorBuilder: (context, _) => 0.01.height.hSpace,
                     itemCount: searchList.length,
                   ),
                   child: ListView.separated(
@@ -110,9 +109,7 @@ class _EditHotelsState extends State<EditHotels> {
                     itemBuilder: (context, index) => CustomViewWidget(
                       model: hotels[index],
                     ),
-                    separatorBuilder: (context, _) => Divider(
-                      color: AppColors.blackColor,
-                    ).allPadding(0.01.width),
+                    separatorBuilder: (context, _) => 0.01.height.hSpace,
                     itemCount: hotels.length,
                   ),
                 );

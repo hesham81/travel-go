@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trips/pages/edit_trip.dart';
 import '/modules/first_screen/pages/first_screen.dart';
 import '/modules/layout/pages/admin/pages/profile/profile.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/firebase_auth_services.dart';
-import '/modules/layout/pages/admin/pages/edit_hotels.dart';
+import 'hotels/pages/edit_hotels.dart';
 
 class AdminHome extends StatefulWidget {
   static const routeName = '/admin-home';
@@ -19,8 +20,8 @@ class AdminHome extends StatefulWidget {
 
 class _AdminHomeState extends State<AdminHome> {
   List<Widget> pages = [
+    EditTrip(),
     EditHotels(),
-    Profile(),
   ];
   int selectedIndex = 0;
   User user = FirebaseAuthServices.getCurrentUserData();
@@ -77,7 +78,7 @@ class _AdminHomeState extends State<AdminHome> {
                   textAlign: TextAlign.center,
                 ),
                 onTap: () {
-                  selectedIndex == 0;
+                  selectedIndex = 0;
                   setState(() {});
                 },
               ),
@@ -117,7 +118,7 @@ class _AdminHomeState extends State<AdminHome> {
                   textAlign: TextAlign.center,
                 ),
                 onTap: () {
-                  selectedIndex == 0;
+                  selectedIndex = 1;
                   setState(() {});
                 },
               ),
@@ -234,7 +235,7 @@ class _AdminHomeState extends State<AdminHome> {
           ),
         ),
       ),
-      body: pages[0],
+      body: pages[selectedIndex],
     );
   }
 }

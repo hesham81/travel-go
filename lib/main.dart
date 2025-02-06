@@ -2,7 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/edit_hotels.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/edit_hotels.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/add_hotel.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/profile/profile.dart';
 import '/core/services/easy_loading.dart';
