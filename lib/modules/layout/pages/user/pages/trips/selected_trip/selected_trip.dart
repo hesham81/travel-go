@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/utils/firestore_services.dart';
-import 'package:travel_go/models/hotel_model.dart';
+import '/core/utils/firestore_services.dart';
+import '/models/hotel_model.dart';
 import '../../../../../../../models/trip.dart';
 import '/models/trip_model.dart';
 

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/core/extensions/align.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
-import 'package:travel_go/core/utils/firebase_services.dart';
-import 'package:travel_go/modules/sign_in/pages/sign_in.dart';
-
+import '/core/extensions/align.dart';
+import '/core/extensions/extensions.dart';
+import '/modules/sign_in/pages/sign_in.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/validations/validations.dart';
-import '../../../core/widget/back_leading_widget.dart';
 import '../../../core/widget/custom_elevated_button.dart';
 import '../../../core/widget/custom_text_form_field.dart';
 import '../../../core/widget/label.dart';

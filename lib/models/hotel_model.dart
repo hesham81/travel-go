@@ -1,14 +1,15 @@
-import 'package:travel_go/core/utils/firestore_services.dart';
-import 'package:travel_go/core/utils/hotels_db.dart';
-
+import 'dart:developer';
 class Hotel {
   final int availableRooms;
   final String hotelLocation;
   final String hotelName;
   final double hotelRating;
   final int totalRooms;
+  final String imageUrl;
+  static List<Hotel> hotels = [];
 
   Hotel({
+    required this.imageUrl,
     required this.availableRooms,
     required this.hotelLocation,
     required this.hotelName,
@@ -16,31 +17,38 @@ class Hotel {
     required this.totalRooms,
   });
 
-  // Convert the Hotel object to a Map
   Map<String, dynamic> toMap() {
     return {
-      'availableRooms': availableRooms,
-      'hotelLocation': hotelLocation,
-      'hotelName': hotelName,
-      'hotelRating': hotelRating,
-      'totalRooms': totalRooms,
+      'AvailableRooms': availableRooms,
+      'HotelLocation': hotelLocation,
+      'HotelName': hotelName,
+      'HotelRating': hotelRating,
+      'TotalRooms': totalRooms,
+      'imageUrl': imageUrl,
     };
   }
 
-  // Create a Hotel object from a Map
+  static truncateHotelsList() {
+    hotels.clear();
+  }
+
+  static addNewHotel(Hotel hotel) {
+    log("Hotel Added Successfully");
+    hotels.add(hotel);
+  }
+
+  static List<Hotel> getAllHotels() {
+    return hotels;
+  }
+
   factory Hotel.fromMap(Map<String, dynamic> map) {
     return Hotel(
-      availableRooms: map['availableRooms'],
-      hotelLocation: map['hotelLocation'],
-      hotelName: map['hotelName'],
-      hotelRating: map['hotelRating'],
-      totalRooms: map['totalRooms'],
+      availableRooms: map['AvailableRooms '],
+      hotelLocation: map['HotelLocation '],
+      hotelName: map['HotelName '],
+      hotelRating: map['HotelRating '],
+      totalRooms: map['TotalRooms '],
+      imageUrl: map['imageUrl'],
     );
-  }
-  static allHotels(){
-    Future<List<Hotel>> hotels = HotelsDB.getAllHotels();
-    hotels.then((hotel){
-      print(hotel.length);
-    });
   }
 }

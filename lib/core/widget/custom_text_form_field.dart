@@ -11,6 +11,7 @@ class CustomTextFormField extends StatefulWidget {
   final Validator? validation;
   final TextEditingController? controller;
   final Color borderColor;
+  final isReadOnly;
 
   final TextStyle? hintStyle;
 
@@ -24,6 +25,7 @@ class CustomTextFormField extends StatefulWidget {
     this.controller,
     this.borderColor = AppColors.blackColor,
     this.hintStyle,
+    this.isReadOnly = false ,
   });
 
   @override
@@ -36,6 +38,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: widget.isReadOnly,
       validator: widget.validation,
       controller: widget.controller,
       obscureText: widget.isPassword ? visible : false,
@@ -71,7 +74,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         ),
         hintText: widget.hintText,
         hintStyle: widget.hintStyle,
-        suffixIcon: (widget.isPassword ==true)
+        suffixIcon: (widget.isPassword == true)
             ? (visible)
                 ? IconButton(
                     onPressed: () {

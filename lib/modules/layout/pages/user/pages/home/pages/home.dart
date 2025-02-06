@@ -19,7 +19,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  var allList =  FirestoreServices.getAllTripData();
   var searchController = TextEditingController();
   List<TripModel> searchList = [];
   List<TripModel> tripList = [
