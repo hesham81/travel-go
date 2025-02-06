@@ -82,7 +82,14 @@ abstract class FirebaseAuthServices {
       print(e); // Log other unexpected errors
     }
   }
-
+  static getCurrentUserData()
+  {
+    return FirebaseAuth.instance.currentUser;
+  }
+static logout()
+{
+  FirebaseAuth.instance.signOut();
+}
   static void handleFirebaseAuthException(FirebaseAuthException e) {
     if (e.code == 'weak-password') {
       BotToastServices.showErrorMessage('The password provided is too weak.');

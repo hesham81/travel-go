@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/core/utils/social_auth_services.dart';
 import '/core/constant/app_assets.dart';
 import '/core/services/bot_toast.dart';
-import '/core/utils/firebase_services.dart';
+import '/core/utils/firebase_auth_services.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/core/widget/custom_text_button.dart';
 import '/core/widget/custom_text_form_field.dart';
@@ -13,14 +13,13 @@ import '../../../core/validations/validations.dart';
 import '../../../core/widget/label.dart';
 import '../../sign_in/pages/sign_in.dart';
 import '/core/extensions/extensions.dart';
-
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widget/back_leading_widget.dart';
 
 class SignUp extends StatefulWidget {
   static const routeName = '/sign-up';
 
-  SignUp({super.key});
+  const SignUp({super.key});
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -101,7 +100,6 @@ class _SignUpState extends State<SignUp> {
                           hintText: "Enter Email",
                           controller: emailController,
                           validation: (value) {
-                            print(emailController.text);
                             return Validations.isEmailValid(
                               emailController.text,
                             );
@@ -178,10 +176,15 @@ class _SignUpState extends State<SignUp> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              AppAssets.googleICN,
-                              height: 35,
-                              width: 35,
+                            GestureDetector(
+                              onTap: (){
+                                SocialAuthServices.loginWithGoogle(context);
+                              },
+                              child: Image.asset(
+                                AppAssets.googleICN,
+                                height: 35,
+                                width: 35,
+                              ),
                             ),
                             Image.asset(
                               AppAssets.twitterICN,

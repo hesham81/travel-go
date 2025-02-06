@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/admin_home.dart';
+import '/core/utils/social_auth_services.dart';
+import '/modules/layout/pages/admin/pages/admin_home.dart';
 import '/core/services/bot_toast.dart';
 import '/core/validations/validations.dart';
 import '/modules/forget_password/pages/forget_password.dart';
 import '/modules/layout/pages/user/pages/home/pages/home.dart';
-import '../../../core/utils/firebase_services.dart';
+import '../../../core/utils/firebase_auth_services.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
@@ -135,7 +136,8 @@ class _SignInState extends State<SignIn> {
                                     );
                             } else {
                               BotToastServices.showErrorMessage(
-                                  "Invalid Credentials");
+                                "Invalid Credentials",
+                              );
                             }
                           }
                         },
@@ -155,6 +157,10 @@ class _SignInState extends State<SignIn> {
                         children: [
                           Expanded(
                             child: SocialMediaLogin(
+                              onTap: (){
+                                SocialAuthServices.loginWithGoogle(context);
+
+                              },
                               text: 'Continue With Google',
                               imagePath: AppAssets.googleICN,
                             ),
