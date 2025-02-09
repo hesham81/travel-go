@@ -2,8 +2,8 @@
 
 ## this is Graduation Project for Team Work
 
-#Menna Ibrahim Samy Mohamed Rahmo
-#Hisham Aymen Atia Mohamed Badr
+Menna Ibrahim Samy Mohamed Rahmo
+Hisham Aymen Atia Mohamed Badr
 Rana Awad Ahmed Hassan
 Ahmed Mohamed Magdy Tamohy
 Menna Medhat Al-dieab
@@ -22,9 +22,24 @@ Php
 Mysql
 ## services
 
+
+
+
 google maps
 booking hotels
 booking trips
 booking flight
 
-## more information
+## setup connection with firebase  
+	firebase login
+ choose firebase account and login 
+ ## goto project and write
+ 	flutterfire configure
+and complete all steps to install the data 
+## setup firebase core 
+	flutter pub add firebase_core
+## and then pub get 
+	flutter pub get 
+## reconfigure again 
+	flutterfire configure 
+ 
