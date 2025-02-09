@@ -2,8 +2,8 @@
 
 ## this is Graduation Project for Team Work
 
-Menna Ibrahim Samy Mohamed Rahmo
-Hisham Aymen Atia Mohamed Badr
+#Menna Ibrahim Samy Mohamed Rahmo
+#Hisham Aymen Atia Mohamed Badr
 Rana Awad Ahmed Hassan
 Ahmed Mohamed Magdy Tamohy
 Menna Medhat Al-dieab
