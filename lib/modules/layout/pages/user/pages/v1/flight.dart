@@ -142,7 +142,7 @@ class DahabTripScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Program Line', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                Text('Program Line', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,color: Colors.black)),
                 SizedBox(height: 10),
                 buildDetailRow('ID:', id),
                 buildDetailRow('Day:', day),
@@ -173,13 +173,13 @@ class DahabTripScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Attraction Details', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+            Text('Attraction Details', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,color: Colors.black)),
             SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: [
-                  Text('ID: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text('ID: ', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black)),
                   Text(attractionId),
                 ],
               ),
@@ -188,7 +188,7 @@ class DahabTripScreen extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: [
-                  Text('Name: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text('Name: ', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black)),
                   Text(attractionName),
                 ],
               ),
@@ -197,7 +197,7 @@ class DahabTripScreen extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: [
-                  Text('Location: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text('Location: ', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black)),
                   Text(location),
                 ],
               ),
@@ -206,7 +206,7 @@ class DahabTripScreen extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: [
-                  Text('Activity: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text('Activity: ', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black)),
                   Text(activities.join(', ')),
                 ],
               ),
@@ -221,7 +221,8 @@ class DahabTripScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 8.0),
                       child: Column(
                         children: [
-                          Text(activity, style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(activity, style: TextStyle(fontWeight: FontWeight.bold
+                          ,color: Colors.black)),
                           SizedBox(height: 8),
                           Image.network(
                             _getActivityImageUrl(activity),
@@ -266,7 +267,8 @@ class DahabTripScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold,
+          color: Colors.black)),
           Text(value),
         ],
       ),

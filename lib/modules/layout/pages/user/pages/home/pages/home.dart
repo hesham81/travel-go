@@ -179,6 +179,7 @@
 // }
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/v1/flight.dart';
 
 
 
@@ -263,9 +264,9 @@ class Home extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildCategoryButton('Trip', Colors.grey[300]!),
-                _buildCategoryButton('Flight', Colors.white),
-                _buildCategoryButton('Hotel', Colors.white),
+                _buildCategoryButton('Trip', Colors.grey[300]!, context),
+                _buildCategoryButton('Flight', Colors.white, context),
+                _buildCategoryButton('Hotel', Colors.white, context),
               ],
             ),
           ),
@@ -336,7 +337,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryButton(String label, Color backgroundColor) {
+  Widget _buildCategoryButton(String label, Color backgroundColor, BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor,
@@ -346,7 +347,10 @@ class Home extends StatelessWidget {
         ),
         side: BorderSide(color: Colors.black12),
       ),
-      onPressed: () {},
+      onPressed: (
+          ) {
+        Navigator.push(context,MaterialPageRoute(builder: (context)=>DahabTripScreen()),);
+      },
       child: Text(label),
     );
   }
