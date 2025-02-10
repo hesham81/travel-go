@@ -179,6 +179,11 @@ class _EditTripState extends State<EditTrip> {
       } else if (trip.startDateTime.month.toString() == (searchQueryText)) {
         searchTrip.add(trip);
       }
+      else if (trip.currency.toLowerCase() == (searchQueryText.toLowerCase()))
+      {
+        searchTrip.add(trip);
+      }
+
     }
     setState(() {});
   }

@@ -43,7 +43,7 @@ class TripCart extends StatelessWidget {
                     ),
                     Text(
                       overflow: TextOverflow.ellipsis,
-                      "${model.destination} Airport",
+                      model.destination,
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -61,7 +61,7 @@ class TripCart extends StatelessWidget {
                     ),
                     0.02.width.hSpace,
                     Text(
-                      "${model.source} Airport",
+                      model.source,
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,

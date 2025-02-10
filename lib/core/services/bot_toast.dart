@@ -7,7 +7,7 @@ class BotToastServices {
     BotToast.showCustomNotification(
       toastBuilder: (void Function() cancelFunc) {
         return Material(
-          color: Colors.white,
+          color: Colors.transparent,
           child: Container(
             width: double.maxFinite,
             height: msg.length > 80 ? 100 : 75,
@@ -176,7 +176,7 @@ class BotToastServices {
     BotToast.showCustomNotification(
       toastBuilder: (void Function() cancelFunc) {
         return Material(
-          color: Colors.white,
+          color: Colors.transparent,
           child: Container(
             width: double.maxFinite,
             height: msg.length > 80 ? 110 : 85,

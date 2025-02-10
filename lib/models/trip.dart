@@ -53,17 +53,4 @@ class Trip extends TripModel {
       price: map['price'],
     );
   }
-//   tripMap = {
-//     'currency': 'EGP',
-//     'destination': 'Cairo',
-//     'hotelId': '/Hotel/K35oO9Avssk04uuKhecp',
-//     'noOfDays': 3,
-//     'source': 'Sharm El Sheikh',
-//     'id': 'trip123',
-//     'imageUrl': 'https://ulmlgjxomyybsvsjesuv.supabase.co/storage/v1/object/sign/trip/sharm/dahab.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0cmlwL3NoYXJtL2RhaGFiLnBuZyIsImlhdCI6MTczODYyMDMyMSwiZXhwIjoxNzcwMTU2MzIxfQ.OXBFOIOybFO9FQs19GLg0DYASGOetLwPqHhvox4Ovb8',
-//     'title': 'Cairo Adventure',
-//     'startDateTime': '2023-10-01T00:00:00.000',
-//     'endDateTime': '2023-10-04T00:00:00.000',
-//     'price': 350,
-//   };
 }
