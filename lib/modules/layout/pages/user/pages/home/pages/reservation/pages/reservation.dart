@@ -1,160 +1,211 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/payment/pages/credit.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/trip_confirm.dart';
+// Import for date formatting
 
-
-class ReservationScreen extends StatefulWidget {
-  const ReservationScreen({super.key});
-
+class Reservation extends StatefulWidget {
   @override
-  _ReservationScreenState createState() => _ReservationScreenState();
+  _ReservationState createState() => _ReservationState();
 }
 
-class _ReservationScreenState extends State<ReservationScreen> {
-  int numberOfGuests = 1;
+class _ReservationState extends State<Reservation> {
+  int numberOfGuests = 0;
+  int ID = 0;
+  DateTime timeOfReservation = DateTime.now();
+  int guestID = 0;
+  int nationalID = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Ensure timeOfReservation stores only date part
+    timeOfReservation = DateTime(timeOfReservation.year, timeOfReservation.month, timeOfReservation.day);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffB7E0F2),
       appBar: AppBar(
-        backgroundColor: Colors.white, // White background for the app bar
-        elevation: 4, // Subtle shadow for a modern look
+        backgroundColor: Color(0xffB7E0F2),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black), // Black back icon
           onPressed: () {
             Navigator.pop(context);
           },
+          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
         ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Reservation Details',
-              style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold), // Black text
-            ),
-            Spacer(),
-            Text(
-              'Travel go',
-              style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600), // Black text
-            ),
-          ],
+        title: Text(
+          'Reservation Details',
+          style: TextStyle(
+            fontFamily: "Poppins-SemiBold",
+            color: Colors.black,
+            fontSize: 28,
+          ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Section 1: ID Details
-            buildSection(
-              title: 'ID:',
-              value: '878',
-            ),
-
-            // Section 2: Number of Guests
-            buildSection(
-              title: 'Number of Guests:',  // The title here will be aligned to the left
-              value: '$numberOfGuests',
-              customWidget: Row(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Container(
+              height: 350,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  IconButton(
-                    icon: Icon(Icons.remove_circle_outline, color: Colors.black54),
-                    onPressed: () {
-                      setState(() {
-                        if (numberOfGuests > 1) numberOfGuests--;
-                      });
-                    },
-                  ),
-                  Text('$numberOfGuests', style: TextStyle(fontSize: 16)),
-                  IconButton(
-                    icon: Icon(Icons.add_circle_outline, color: Colors.black54),
-                    onPressed: () {
-                      setState(() {
-                        numberOfGuests++;
-                      });
-                    },
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Container(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'ID',
+                                style: TextStyle(
+                                  fontFamily: "Poppins-SemiBold",
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Text(
+                                'Number of guests',
+                                style: TextStyle(
+                                  fontFamily: "Poppins-SemiBold",
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Text(
+                                'Date of Reservation:',
+                                style: TextStyle(
+                                  fontFamily: "Poppins-SemiBold",
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Text(
+                                'Guest ID',
+                                style: TextStyle(
+                                  fontFamily: "Poppins-SemiBold",
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Text(
+                                'National ID',
+                                style: TextStyle(
+                                  fontFamily: "Poppins-SemiBold",
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                ID.toString(),
+                                style: TextStyle(
+                                  fontFamily: "Poppins-SemiBold",
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        numberOfGuests++;
+                                      });
+                                    },
+                                    child: Icon(Icons.add_circle_outline_outlined, color: Colors.black),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    numberOfGuests.toString(),
+                                    style: TextStyle(
+                                      fontFamily: "Poppins-SemiBold",
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 18),
+                              // ✅ Store and display only the date part
+                              Text(
+                                DateFormat('dd-MM-yyyy').format(timeOfReservation),
+                                style: TextStyle(
+                                  fontFamily: "Poppins-SemiBold",
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              SizedBox(height: 18),
+                              Text(
+                                guestID.toString(),
+                                style: TextStyle(
+                                  fontFamily: "Poppins-SemiBold",
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              SizedBox(height: 18),
+                              Text(
+                                nationalID.toString(),
+                                style: TextStyle(
+                                  fontFamily: "Poppins-SemiBold",
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-
-            // Section 3: Time of Reservation
-            buildSection(
-              title: 'Time of Reservation:',
-              value: '20/8/2025',
-            ),
-
-            // Section 4: Guest ID
-            buildSection(
-              title: 'Guest ID:',
-              value: '5',
-            ),
-
-            // Section 5: National ID
-            buildSection(
-              title: 'National ID:',
-              value: '2730811',
-            ),
-
-            Spacer(),
-
-            // Continue Button with black text color
-            Center(
-              child: SizedBox(
-                width: 250, // Set a fixed width for the button
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Handle reservation logic
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white, // White background
-                    padding: EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10), // Rounded corners
-                    ),
-                    elevation: 5, // Add subtle shadow for the button
-                  ),
-                  child: Text(
-                    'CONTINUE',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black, // Set the text color to black
-                    ),
-                  ),
+          ),
+          SizedBox(height: 33),
+          InkWell(
+            onTap: () {
+Navigator.push(context, MaterialPageRoute(builder: (context)=>TripConfirmedScreen()),);            },
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                'Continue',
+                style: TextStyle(
+                  fontFamily: "Poppins-SemiBold",
+                  color: Colors.black,
+                  fontSize: 26,
                 ),
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildSection({required String title, required String value, Widget? customWidget}) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 16), // Add margin between sections
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black,
-            blurRadius: 4,
-            offset: Offset(0, 2),
           ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-          ),
-          customWidget ??
-              Text(
-                value,
-                style: TextStyle(fontSize: 16),
-              ),
         ],
       ),
     );

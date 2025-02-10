@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/reservation.dart';
 
 
 
@@ -56,13 +57,13 @@ class DahabTripScreen extends StatelessWidget {
                   children: [
                     Text(
                       'About',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,color: Colors.black),
                     ),
                     SizedBox(height: 10),
                     Text(
                       'Dahab is a small Egyptian town on the southeast coast of the Sinai Peninsula in Egypt, approximately 80 km (50 mi) northeast of Sharm el-Sheikh.\n\n'
                           'Dahab can be divided into three major parts. Masbat, which includes the Bedouin village of Asalah, is in the north. South of Masbat is Mashraba, which is more touristic and has considerably more hotels. In the southwest is Medina, which includes the Laguna area, famous for its excellent shallow-water kite- and windsurfing.',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16,color: Colors.black),
                     ),
                   ],
                 ),
@@ -75,7 +76,7 @@ class DahabTripScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Trip Details', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                    Text('Trip Details', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,color: Colors.black)),
                     SizedBox(height: 10),
                     buildDetailRow('Destination:', 'Dahab'),
                     buildDetailRow('Price:', '5000 LE'),
@@ -92,9 +93,9 @@ class DahabTripScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Trip Departure', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                    Text('Trip Departure', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,color: Colors.black)),
                     SizedBox(height: 10),
-                    buildDetailRow('Start Date:', '10/10/2025'),
+                    buildDetailRow( 'Start Date:', '10/10/2025, '),
                     buildDetailRow('End Date:', '12/10/2025'),
                   ],
                 ),
@@ -109,7 +110,7 @@ class DahabTripScreen extends StatelessWidget {
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                  onPressed: () {
+                  onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context)=>Reservation()),);
                     // Add your reserve action here
                   },
                   child: Text('Reserve', style: TextStyle(color: Colors.black)),

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 
-
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({super.key});
-
   @override
   _PaymentScreenState createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  String selectedPayment = "VISA Classic";
+  String selectedPayment = "Debit/Credit Card";
 
   @override
   Widget build(BuildContext context) {
@@ -18,31 +15,45 @@ class _PaymentScreenState extends State<PaymentScreen> {
       appBar: AppBar(
         backgroundColor: Color(0xffB7E0F2),
         elevation: 0,
-        title: Text("Payment Details", style: TextStyle(color: Colors.black)),
+        title: Text(
+          "Payment Details",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: Column(
           children: [
-            SizedBox(height: 40,),
-            Text("Payment Method",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
+            Text(
+              "Payment Method",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 12),
             Expanded(
               child: ListView(
                 children: [
-                  buildPaymentOption("Debit/Credit Card", "**** **** **** 7291",
-                      "assets/Visa-Mastercard.png",80,80),
-                  SizedBox(height: 15),
-                  buildPaymentOption("Apple Pay", "**** **** **** 5638",
-                      "assets/apple_pay.png",70,70), // Add MasterCard image
-                  SizedBox(height: 15),
-
+                  buildPaymentOption(
+                      title: "Debit/Credit Card",
+                      subtitle: "**** **** **** 7291",
+                      imagePath: "assets/images/Visa-Mastercard.png",
+                      width: 70,
+                      height: 50),
+                  SizedBox(height: 12),
+                  buildPaymentOption(
+                      title: "Apple Pay",
+                      subtitle: "**** **** **** 5638",
+                      imagePath: "assets/images/apple_pay.png",
+                      width: 60,
+                      height: 50),
+                  SizedBox(height: 20),
                   buildPriceDetails(),
                 ],
               ),
@@ -54,13 +65,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-  Widget buildPaymentOption(String title, String subtitle, String image,double width_value,double height_value) {
+  Widget buildPaymentOption({
+    required String title,
+    required String subtitle,
+    required String imagePath,
+    required double width,
+    required double height,
+  }) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(11)
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
       ),
-
       child: RadioListTile(
         title: Row(
           children: [
@@ -72,12 +89,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ],
             ),
             Spacer(),
-            Image.asset(image, width: width_value, height: height_value), // Payment logo
-
+            Image.asset(imagePath, width: width, height: height),
           ],
         ),
         value: title,
         groupValue: selectedPayment,
+        activeColor: Colors.blue,
         onChanged: (value) {
           setState(() {
             selectedPayment = value.toString();
@@ -109,12 +126,24 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   Widget buildPriceRow(String title, String amount, {bool isBold = false}) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: 6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: TextStyle(fontWeight: FontWeight.bold )),
-          Text(amount, style: TextStyle(fontWeight: FontWeight.bold )),
+          Text(
+            title,
+            style: TextStyle(
+              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+              fontSize: 16,
+            ),
+          ),
+          Text(
+            amount,
+            style: TextStyle(
+              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+              fontSize: 16,
+            ),
+          ),
         ],
       ),
     );
@@ -136,7 +165,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
               borderRadius: BorderRadius.circular(30),
             ),
           ),
-          child: Text("Pay Now", style: TextStyle(fontSize: 18, color: Colors.white)),
+          child: Text(
+            "Pay Now",
+            style: TextStyle(fontSize: 18, color: Colors.white),
+          ),
         ),
       ),
     );
