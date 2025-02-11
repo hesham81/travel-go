@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:travel_go/core/utils/firestore_services.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/trips/selected_trip/selected_trip.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/v1/flight.dart';
 import '/modules/layout/pages/user/pages/home/widget/trip_card_widget.dart';
 import '/core/constant/app_assets.dart';
 import '/models/trip_model.dart';
@@ -97,10 +98,12 @@ class _HomeState extends State<Home> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) => GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(
+                      log('Clicked');
+                      Navigator.push(
                         context,
-                        SelectedTrip.routeName,
-                        arguments: searchList[index],
+                          MaterialPageRoute(builder: (context) => DahabTripScreen())
+                        // DahabTripScreen.routeName,
+                        // arguments: searchList[index],
                       );
                     },
                     child: TripCardWidget(
@@ -115,10 +118,12 @@ class _HomeState extends State<Home> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) => GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(
+                      Navigator.push(
                         context,
-                        SelectedTrip.routeName,
-                        arguments: tripList[index],
+                        // DahabTripScreen.routeName,
+                          MaterialPageRoute(builder: (context) => DahabTripScreen())
+
+                        // arguments: tripList[index],
                       );
                     },
                     child: TripCardWidget(
