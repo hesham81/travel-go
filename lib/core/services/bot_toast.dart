@@ -2,12 +2,12 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-abstract class BotToastServices {
+class BotToastServices {
   static void showSuccessMessage(String msg) {
     BotToast.showCustomNotification(
       toastBuilder: (void Function() cancelFunc) {
         return Material(
-          color: Colors.white,
+          color: Colors.transparent,
           child: Container(
             width: double.maxFinite,
             height: msg.length > 80 ? 100 : 75,
@@ -40,7 +40,7 @@ abstract class BotToastServices {
                 Expanded(
                   flex: 1,
                   child: Lottie.asset(
-                    "assets/icons/smile.json",
+                    "assets/icons/face_success_icon.json",
                     repeat: false,
                     height: 250,
                     width: 250,
@@ -176,7 +176,7 @@ abstract class BotToastServices {
     BotToast.showCustomNotification(
       toastBuilder: (void Function() cancelFunc) {
         return Material(
-          color: Colors.white,
+          color: Colors.transparent,
           child: Container(
             width: double.maxFinite,
             height: msg.length > 80 ? 110 : 85,
@@ -208,7 +208,7 @@ abstract class BotToastServices {
                 Expanded(
                   flex: 1,
                   child: Lottie.asset(
-                    "assets/icons/sad.json",
+                    "assets/icons/face_wrong_icon.json",
                     repeat: true,
                     height: 250,
                     width: 250,

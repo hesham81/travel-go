@@ -2,10 +2,14 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/core/services/easy_loading.dart';
-import 'package:travel_go/modules/new_password/pages/new_password.dart';
+import '/modules/layout/pages/admin/pages/hotels/pages/edit_hotels.dart';
+import '/modules/layout/pages/admin/pages/hotels/pages/add_hotel.dart';
+import '/modules/layout/pages/admin/pages/profile/profile.dart';
+import '/modules/layout/pages/admin/pages/trips/pages/selected_trip.dart';
+import '/core/services/easy_loading.dart';
+import '/modules/layout/pages/user/pages/trips/selected_trip/selected_trip.dart';
+import '/modules/new_password/pages/new_password.dart';
 import 'core/theme/app_theme.dart';
-
 import 'modules/first_screen/pages/first_screen.dart';
 import 'modules/forget_password/pages/forget_password.dart';
 import 'modules/layout/pages/admin/pages/admin_home.dart';
@@ -47,6 +51,11 @@ class MyApp extends StatelessWidget {
         Home.routeName: (context) => Home(),
         AdminHome.routeName: (context) => AdminHome(),
         NewPassword.routeName: (context) => NewPassword(),
+        SelectedTrip.routeName : (context) => SelectedTrip(),
+        EditHotels.routeName : (context) => EditHotels(),
+        Profile.routeName : (context) => Profile(),
+        AddHotel.routeName : (context) => AddHotel(),
+        SelectedAdminTrip.routeName : (context) => SelectedAdminTrip(),
       },
     );
   }

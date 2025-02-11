@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:travel_go/core/services/bot_toast.dart';
-import 'package:travel_go/core/utils/firestore_services.dart';
+import '/core/services/bot_toast.dart';
+import '/core/utils/firestore_services.dart';
 
 abstract class FirebaseAuthServices {
   static bool validation = true;
@@ -82,7 +82,14 @@ abstract class FirebaseAuthServices {
       print(e); // Log other unexpected errors
     }
   }
-
+  static getCurrentUserData()
+  {
+    return FirebaseAuth.instance.currentUser;
+  }
+static logout()
+{
+  FirebaseAuth.instance.signOut();
+}
   static void handleFirebaseAuthException(FirebaseAuthException e) {
     if (e.code == 'weak-password') {
       BotToastServices.showErrorMessage('The password provided is too weak.');

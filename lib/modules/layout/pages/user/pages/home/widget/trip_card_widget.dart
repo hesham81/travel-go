@@ -17,48 +17,53 @@ class TripCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.maxFinite,
-      height: 0.2.height,
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Row(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Label(
-                text: tripModel.title,
-                textSize: 20,
-                textWeight: FontWeight.w500,
+      child: Expanded(
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Label(
+                    text: tripModel.title,
+                    textSize: 20,
+                    textWeight: FontWeight.w500,
+                  ),
+                  15.hSpace,
+                  Label(
+                    text:
+                        "Start Date : ${tripModel.startDateTime.day}/${tripModel.startDateTime.month}/${tripModel.startDateTime.year} ",
+                    textSize: 18,
+                    textWeight: FontWeight.w400,
+                  ),
+                  15.hSpace,
+                  Label(
+                    text:
+                        "End Date : ${tripModel.endDateTime.day}/${tripModel.endDateTime.month}/${tripModel.endDateTime.year} ",
+                    textSize: 18,
+                    textWeight: FontWeight.w400,
+                  ),
+                  15.hSpace,
+                  Label(
+                    text: "Price : ${tripModel.price} ${tripModel.currency}",
+                    textSize: 18,
+                    textWeight: FontWeight.w400,
+                  ),
+                ],
               ),
-              15.hSpace,
-              Label(
-                text:
-                    "Start Date : ${tripModel.startDateTime.day}/${tripModel.startDateTime.month}/${tripModel.startDateTime.year} ",
-                textSize: 18,
-                textWeight: FontWeight.w400,
-              ),
-              15.hSpace,
-              Label(
-                text:
-                    "End Date : ${tripModel.endDateTime.day}/${tripModel.endDateTime.month}/${tripModel.endDateTime.year} ",
-                textSize: 18,
-                textWeight: FontWeight.w400,
-              ),
-              15.hSpace,
-              Label(
-                text:
-                "Price : ${tripModel.price} ${tripModel.currency}",
-                textSize: 18,
-                textWeight: FontWeight.w400,
-              ),
-            ],
-          ),
-          Spacer(),
-          Image.asset(tripModel.imageUrl)
-        ],
-      ).allPadding(10),
+            ),
+            Expanded(
+              flex: 1,
+              child: Image.asset(tripModel.imageUrl),
+            ),
+          ],
+        ).allPadding(10),
+      ),
     ).hPadding(0.04.width);
   }
 }

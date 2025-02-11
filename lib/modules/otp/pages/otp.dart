@@ -1,16 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/core/services/bot_toast.dart';
-import 'package:travel_go/core/utils/email_services.dart';
-import 'package:travel_go/core/utils/firebase_services.dart';
-import 'package:travel_go/modules/new_password/pages/new_password.dart';
+import '/core/services/bot_toast.dart';
+import '/core/utils/email_services.dart';
+import '/modules/new_password/pages/new_password.dart';
 import '/core/extensions/extensions.dart';
 import '/core/widget/label.dart';
-import '../../layout/pages/user/pages/home/pages/home.dart';
 import '/modules/otp/widget/otp_form_widget.dart';
-
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widget/custom_elevated_button.dart';
 
