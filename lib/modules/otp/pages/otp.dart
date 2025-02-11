@@ -1,29 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import '/core/services/bot_toast.dart';
+import '/core/utils/email_services.dart';
+import '/modules/new_password/pages/new_password.dart';
 import '/core/extensions/extensions.dart';
 import '/core/widget/label.dart';
-import '../../layout/pages/user/pages/home/pages/home.dart';
 import '/modules/otp/widget/otp_form_widget.dart';
-
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widget/custom_elevated_button.dart';
 
-class Otp extends StatelessWidget {
+class Otp extends StatefulWidget {
   static const routeName = '/otp';
-  var controller1 = TextEditingController();
-  var controller2 = TextEditingController();
-  var controller3 = TextEditingController();
-  var controller4 = TextEditingController();
-  var controller5 = TextEditingController();
-  var controller6 = TextEditingController();
-  var formKey = GlobalKey<FormState>();
 
   Otp({super.key});
+
+  @override
+  State<Otp> createState() => _OtpState();
+}
+
+class _OtpState extends State<Otp> {
+  var controller1 = TextEditingController();
+
+  var controller2 = TextEditingController();
+
+  var controller3 = TextEditingController();
+
+  var controller4 = TextEditingController();
+
+  var controller5 = TextEditingController();
+
+  var controller6 = TextEditingController();
+
+  var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
       appBar: AppBar(
         backgroundColor: Colors.transparent,
       ),
@@ -117,16 +130,25 @@ class Otp extends StatelessWidget {
             CustomElevatedButton(
               onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  Navigator.pushNamed(
-                    context,
-                    Home.routeName,
-                  );
+                  EasyLoading.show();
+                  String otpCode =
+                      "${controller1.text}${controller2.text}${controller3.text}${controller4.text}${controller5.text}${controller6.text}";
+                  var result = EmailServices.verifyOTP(otpCode);
+                  EasyLoading.dismiss();
+                  if (result == true) {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, NewPassword.routeName, (_) => false);
+                  }
+                } else {
+                  BotToastServices.showErrorMessage("Otp is not valid");
+                  Navigator.pop(context);
                 }
               },
-              text: "Confirm",
+              text: "     Confirm     ",
+              borderRadius: 20,
               padding: EdgeInsets.symmetric(
-                horizontal: 0.2.width,
-                vertical: 0.01.height,
+                horizontal: 0.02.height,
+                vertical: 0,
               ),
               textWeight: FontWeight.w500,
               textSize: 32,

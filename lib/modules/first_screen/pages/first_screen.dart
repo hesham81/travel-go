@@ -24,7 +24,7 @@ class FirstScreen extends StatelessWidget {
             height: 0.064.height,
             child: CustomElevatedButton(
               text: "Sign Up",
-              textSize: 35,
+              textSize: 30,
               onPressed: () {
                 Navigator.pushNamed(context, SignUp.routeName);
               },
@@ -39,7 +39,7 @@ class FirstScreen extends StatelessWidget {
             height: 0.064.height,
             child: CustomElevatedButton(
               text: "Sign in",
-              textSize: 35,
+              textSize: 30,
               onPressed: () {
                 Navigator.pushNamed(
                   context,

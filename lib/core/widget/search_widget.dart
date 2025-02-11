@@ -6,12 +6,15 @@ typedef searchQuery = String? Function(String value);
 
 class SearchWidget extends StatefulWidget {
   final TextEditingController controller;
-  final searchQuery? search ;
+  final searchQuery? search;
+
+  final double borderRadius;
 
   const SearchWidget({
     super.key,
     required this.controller,
     this.search,
+    this.borderRadius = 2,
   });
 
   @override
@@ -28,19 +31,19 @@ class _SearchWidgetState extends State<SearchWidget> {
       onChanged: widget.search,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(2),
+          borderRadius: BorderRadius.circular(widget.borderRadius),
           borderSide: BorderSide(
             color: AppColors.whiteColor,
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(2),
+          borderRadius: BorderRadius.circular(widget.borderRadius),
           borderSide: BorderSide(
             color: AppColors.whiteColor,
           ),
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(2),
+          borderRadius: BorderRadius.circular(widget.borderRadius),
           borderSide: BorderSide(
             color: AppColors.whiteColor,
           ),

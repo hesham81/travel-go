@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import '/core/utils/email_services.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
@@ -9,74 +11,91 @@ import '/modules/otp/pages/otp.dart';
 
 import '../../../core/validations/validations.dart';
 
-class ForgetPassword extends StatelessWidget {
+class ForgetPassword extends StatefulWidget {
   static const routeName = '/forget-password';
-  var emailController = TextEditingController();
-  var formKey = GlobalKey<FormState>();
 
   ForgetPassword({super.key});
 
   @override
+  State<ForgetPassword> createState() => _ForgetPasswordState();
+}
+
+class _ForgetPasswordState extends State<ForgetPassword> {
+  var emailController = TextEditingController();
+  var formKey = GlobalKey<FormState>();
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Image.asset(
-              AppAssets.firstScreenIMG,
-            ),
-            0.07.height.hSpace,
-            Form(
-              key: formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Label(
-                    text: "OTP Verification",
-                    textWeight: FontWeight.w700,
-                  ),
-                  0.04.height.hSpace,
-                  Label(
-                    text:
-                        "Enter email and phone number to \nsend one time Password",
-                    textColor: AppColors.dodgurBlueColor,
-                    textWeight: FontWeight.w500,
-                  ),
-                  0.04.height.hSpace,
-                  CustomTextFormField(
-                    validation: (value) {
-                      return Validations.isEmailValid(emailController.text);
-                    },
-                    hintText: "Email Or Phone Number",
-                    controller: emailController,
-                    borderColor: AppColors.dodgurBlueColor,
-                    hintStyle: TextStyle(
-                      color: AppColors.dodgurBlueColor,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Image.asset(
+                AppAssets.firstScreenIMG,
+              ),
+              0.07.height.hSpace,
+              Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Label(
+                      text: "OTP Verification",
+                      textWeight: FontWeight.w700,
                     ),
-                  ),
-                  0.04.height.hSpace,
-                  CustomElevatedButton(
-                    text: "Continue",
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        Navigator.pushNamed(context, Otp.routeName);
-                      }
-                    },
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 0.02.width,
-                      vertical: 0.01.height,
+                    0.04.height.hSpace,
+                    Label(
+                      text:
+                          "Enter email and phone number to \nsend one time Password",
+                      textColor: AppColors.dodgurBlueColor,
+                      textWeight: FontWeight.w500,
                     ),
-                    textWeight: FontWeight.w600,
-                    textSize: 32,
-                  ),
-                ],
-              ).hPadding(0.08.width),
-            )
-          ],
+                    0.04.height.hSpace,
+                    CustomTextFormField(
+                      validation: (value) {
+                        return Validations.isEmailValid(emailController.text);
+                      },
+                      hintText: "Email Or Phone Number",
+                      controller: emailController,
+                      borderColor: AppColors.dodgurBlueColor,
+                      hintStyle: TextStyle(
+                        color: AppColors.dodgurBlueColor,
+                      ),
+                    ),
+                    0.04.height.hSpace,
+                    SizedBox(
+                      height: 0.057.height,
+                      child: CustomElevatedButton(
+                        text: "Continue",
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            EasyLoading.show();
+                            EmailServices.init();
+                            EmailServices.sendOTP(emailController.text);
+                            EasyLoading.dismiss();
+
+                            Navigator.pushNamed(context, Otp.routeName);
+                          }
+                        },
+                        borderRadius: 20,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 0.02.height,
+                          vertical: 0,
+                        ),
+                        textWeight: FontWeight.w600,
+                        textSize: 28,
+                      ),
+                    ),
+                  ],
+                ).hPadding(0.08.width),
+              )
+            ],
+          ),
         ),
       ),
     );

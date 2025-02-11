@@ -1,12 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import '/core/utils/social_auth_services.dart';
+import '/modules/layout/pages/admin/pages/admin_home.dart';
 import '/core/services/bot_toast.dart';
-import '/core/services/easy_loading.dart';
 import '/core/validations/validations.dart';
 import '/modules/forget_password/pages/forget_password.dart';
 import '/modules/layout/pages/user/pages/home/pages/home.dart';
-import '../../../core/utils/firebase_services.dart';
+import '../../../core/utils/firebase_auth_services.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
@@ -19,18 +19,24 @@ import '/core/widget/dividers_word.dart';
 import '/core/widget/label.dart';
 import '/core/widget/social_media_login.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
   static const routeName = '/sign-in';
 
   SignIn({super.key});
 
   @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  var formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    var formKey = GlobalKey<FormState>();
-    var emailController = TextEditingController();
-    var passwordController = TextEditingController();
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Form(
         autovalidateMode: AutovalidateMode.onUnfocus,
         key: formKey,
@@ -100,32 +106,48 @@ class SignIn extends StatelessWidget {
                       text: 'Forgot Password?',
                     ).alignRight(),
                     0.01.height.hSpace,
-                    CustomElevatedButton(
-                      text: "Sign in",
-                      onPressed: () async {
-                        if (formKey.currentState!.validate()) {
-                          EasyLoading.show(status: "Loading...");
-                          var status = await FirebaseAuthServices.signIn(
-                                  emailController.text, passwordController.text)
-                              .then((v) {
-                            EasyLoading.dismiss();
-                          });
-                          if (FirebaseAuthServices.validation) {
-                            Navigator.pushReplacementNamed(
-                              context,
-                              Home.routeName,
+                    SizedBox(
+                      height: 0.06.height,
+                      child: CustomElevatedButton(
+                        textSize: 30,
+                        text: "          Sign in          ",
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            EasyLoading.show(status: "Loading...");
+                            var role = await FirebaseAuthServices.signIn(
+                              emailController.text,
+                              passwordController.text,
                             );
-                          } else {
-                            BotToastServices.showErrorMessage(
-                                "Invalid Username Or Password");
+                            EasyLoading.dismiss();
+                            if (role != null) {
+                              BotToastServices.showSuccessMessage(
+                                "Sign In Successfully",
+                              );
+                              (role == 'admin')
+                                  ? Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      AdminHome.routeName,
+                                      (route) => false,
+                                    )
+                                  : Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      Home.routeName,
+                                      (route) => false,
+                                    );
+                            } else {
+                              BotToastServices.showErrorMessage(
+                                "Invalid Credentials",
+                              );
+                            }
                           }
-                        }
-                      },
-                      padding: EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 0.15.width,
-                      ),
-                    ).center,
+                        },
+                        borderRadius: 20,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 0.02.height,
+                          vertical: 0,
+                        ),
+                      ).center,
+                    ),
                     0.02.height.hSpace,
                     DividersWord(text: "or sign in with"),
                     0.02.height.hSpace,
@@ -135,6 +157,10 @@ class SignIn extends StatelessWidget {
                         children: [
                           Expanded(
                             child: SocialMediaLogin(
+                              onTap: (){
+                                SocialAuthServices.loginWithGoogle(context);
+
+                              },
                               text: 'Continue With Google',
                               imagePath: AppAssets.googleICN,
                             ),

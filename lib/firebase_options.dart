@@ -63,6 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '561387972473',
     projectId: 'tamohy-b7d82',
     storageBucket: 'tamohy-b7d82.firebasestorage.app',
+    androidClientId: '561387972473-h4ea8ebd0fdp867qh987buphltcc5ol5.apps.googleusercontent.com',
+    iosClientId: '561387972473-fbgj6qt5ektq1aqjrsr62kokge9bggl9.apps.googleusercontent.com',
     iosBundleId: 'com.example.travelGo',
   );
 
