@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/widget/custom_text_form_field.dart';
-import 'package:travel_go/core/widget/search_widget.dart';
-import 'package:travel_go/models/hotel_model.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/add_hotel.dart';
+import '/core/widget/search_widget.dart';
+import '/models/hotel_model.dart';
+import '/modules/layout/pages/admin/pages/hotels/pages/add_hotel.dart';
 import '/core/extensions/center.dart';
 import '/core/extensions/extensions.dart';
 import '/core/utils/hotels_db.dart';

@@ -1,9 +1,11 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/core/utils/id_generator.dart';
 import 'package:travel_go/models/hotel_model.dart';
+
+import '../services/bot_toast.dart';
 
 abstract class HotelsDB {
   static final _firestore = FirebaseFirestore.instance;
@@ -40,21 +42,30 @@ abstract class HotelsDB {
     return null;
   }
 
-  static Stream<QuerySnapshot<Hotel>>? getStreamHotelsData()  {
+  static Stream<QuerySnapshot<Hotel>>? getStreamHotelsData() {
     try {
       var colRef = collectionRef();
       return colRef.snapshots();
     } catch (error) {
       print(error.toString());
     }
-    return null ;
+    return null;
   }
 
-  static addHotel({required Hotel hotel}) {
+  static Future<void> addHotel({required Hotel hotel}) async {
     try {
-      _firestore.collection("Hotel").add(hotel.toMap());
-    } catch (error) {
-      return null;
+      String id = IdGenerator.generateId(
+        value1: hotel.hotelName,
+        value2: hotel.hotelLocation,
+      );
+
+      await _firestore.collection("Hotel").doc(id).set(hotel.toMap());
+      BotToastServices.showSuccessMessage(
+        "Hotel Added",
+      );
+    } catch (error, stackTrace) {
+      log("Error adding hotel: $error", stackTrace: stackTrace);
+      BotToastServices.showErrorMessage("error");
     }
   }
 }

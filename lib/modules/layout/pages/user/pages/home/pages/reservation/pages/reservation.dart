@@ -149,7 +149,6 @@ class _ReservationState extends State<Reservation> {
                                 ],
                               ),
                               SizedBox(height: 18),
-                              // ✅ Store and display only the date part
                               Text(
                                 DateFormat('dd-MM-yyyy').format(timeOfReservation),
                                 style: TextStyle(
