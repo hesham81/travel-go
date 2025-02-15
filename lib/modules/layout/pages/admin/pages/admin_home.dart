@@ -30,6 +30,7 @@ class _AdminHomeState extends State<AdminHome> {
   int selectedIndex = 0;
   User user = FirebaseAuthServices.getCurrentUserData();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,6 +126,7 @@ class _AdminHomeState extends State<AdminHome> {
                 ),
                 onTap: () {
                   selectedIndex = 1;
+                  Navigator.pop(context);
                   setState(() {});
                 },
               ),
@@ -144,7 +146,8 @@ class _AdminHomeState extends State<AdminHome> {
                   textAlign: TextAlign.center,
                 ),
                 onTap: () {
-                  selectedIndex == 0;Navigator.pop(context);
+                  selectedIndex == 0;
+                  Navigator.pop(context);
                   setState(() {});
                 },
               ),
@@ -185,7 +188,7 @@ class _AdminHomeState extends State<AdminHome> {
                   textAlign: TextAlign.center,
                 ),
                 onTap: () {
-                  selectedIndex =2;
+                  selectedIndex = 2;
                   Navigator.pop(context);
                   setState(() {});
                 },
