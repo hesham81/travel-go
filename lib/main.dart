@@ -2,6 +2,8 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import '/core/constant/supabase_key.dart';
 import '/modules/layout/pages/admin/pages/hotels/pages/edit_hotels.dart';
 import '/modules/layout/pages/admin/pages/hotels/pages/add_hotel.dart';
 import '/modules/layout/pages/admin/pages/profile/profile.dart';
@@ -22,6 +24,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   showLoading();
+  Supabase.initialize(
+    url: SupabaseKeys.url,
+    anonKey: SupabaseKeys.anonKey,
+
+  );
   runApp(const MyApp());
 }
 
@@ -32,6 +39,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //supabase
+    //https://snkdebzdhsftylikqzlh.supabase.co url
+    //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNua2RlYnpkaHNmdHlsaWtxemxoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkyNTI1MDUsImV4cCI6MjA1NDgyODUwNX0.QfyXn1jHrlK-TTxCnulz4dfNrAqfKbR9nCrkqFjWTMU
+    //this is the key
+
     return MaterialApp(
       initialRoute: FirstScreen.routeName,
       debugShowCheckedModeBanner: false,
@@ -51,11 +63,11 @@ class MyApp extends StatelessWidget {
         Home.routeName: (context) => Home(),
         AdminHome.routeName: (context) => AdminHome(),
         NewPassword.routeName: (context) => NewPassword(),
-        SelectedTrip.routeName : (context) => SelectedTrip(),
-        EditHotels.routeName : (context) => EditHotels(),
-        Profile.routeName : (context) => Profile(),
-        AddHotel.routeName : (context) => AddHotel(),
-        SelectedAdminTrip.routeName : (context) => SelectedAdminTrip(),
+        SelectedTrip.routeName: (context) => SelectedTrip(),
+        EditHotels.routeName: (context) => EditHotels(),
+        Profile.routeName: (context) => Profile(),
+        AddHotel.routeName: (context) => AddHotel(),
+        SelectedAdminTrip.routeName: (context) => SelectedAdminTrip(),
       },
     );
   }

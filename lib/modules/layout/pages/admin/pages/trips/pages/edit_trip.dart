@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/selected_trip.dart';
 import '/core/extensions/center.dart';
 import '/core/extensions/extensions.dart';
@@ -34,6 +35,7 @@ class _EditTripState extends State<EditTrip> {
   var trips = [];
   var searchQueryText = "";
   var searchTrip = [];
+  bool isLoading = false ;
 
   @override
   Widget build(BuildContext context) {
@@ -121,8 +123,11 @@ class _EditTripState extends State<EditTrip> {
                           SelectedAdminTrip.routeName,
                           arguments: searchTrip[index],
                         ),
-                        child: TripCart(
-                          model: searchTrip[index],
+                        child: Skeletonizer(
+                          enabled: isLoading,
+                          child: TripCart(
+                            model: searchTrip[index],
+                          ),
                         ),
                       ),
                       separatorBuilder: (context, _) => 0.01.height.hSpace,
@@ -138,8 +143,11 @@ class _EditTripState extends State<EditTrip> {
                         SelectedAdminTrip.routeName,
                         arguments: trips[index],
                       ),
-                      child: TripCart(
-                        model: trips[index],
+                      child: Skeletonizer(
+                        enabled: isLoading,
+                        child: TripCart(
+                          model: trips[index],
+                        ),
                       ),
                     ),
                     separatorBuilder: (context, _) => 0.01.height.hSpace,
@@ -178,12 +186,10 @@ class _EditTripState extends State<EditTrip> {
         searchTrip.add(trip);
       } else if (trip.startDateTime.month.toString() == (searchQueryText)) {
         searchTrip.add(trip);
-      }
-      else if (trip.currency.toLowerCase() == (searchQueryText.toLowerCase()))
-      {
+      } else if (trip.currency.toLowerCase() ==
+          (searchQueryText.toLowerCase())) {
         searchTrip.add(trip);
       }
-
     }
     setState(() {});
   }

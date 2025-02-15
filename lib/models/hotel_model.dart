@@ -19,11 +19,11 @@ class Hotel {
 
   Map<String, dynamic> toMap() {
     return {
-      'AvailableRooms': availableRooms,
-      'HotelLocation': hotelLocation,
-      'HotelName': hotelName,
-      'HotelRating': hotelRating,
-      'TotalRooms': totalRooms,
+      'AvailableRooms ': availableRooms,
+      'HotelLocation ': hotelLocation,
+      'HotelName ': hotelName,
+      'HotelRating ': hotelRating,
+      'TotalRooms ': totalRooms,
       'imageUrl': imageUrl,
     };
   }

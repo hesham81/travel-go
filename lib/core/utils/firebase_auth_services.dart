@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import '/core/services/bot_toast.dart';
 import '/core/utils/firestore_services.dart';
 
@@ -35,25 +36,22 @@ abstract class FirebaseAuthServices {
     return null;
   }
 
-  static updatePassword({required newPassword})
-  async {
-    try
-        {
-          await FirebaseAuth.instance.currentUser!.updatePassword(newPassword);
-          return true ;
-        }
-        on FirebaseAuthException catch (e)
-        {
-          handleFirebaseAuthException(e);
-          return null ;
-        }
-    catch (e)
-    {
-      return null ;
+  static updatePassword({required newPassword}) async {
+    try {
+      await FirebaseAuth.instance.currentUser!.updatePassword(newPassword);
+      return true;
+    } on FirebaseAuthException catch (e) {
+      handleFirebaseAuthException(e);
+      return null;
+    } catch (e) {
+      return null;
     }
   }
 
-  static signIn(String email, String password) async {
+  static signIn(
+    String email,
+    String password,
+  ) async {
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -82,14 +80,15 @@ abstract class FirebaseAuthServices {
       print(e); // Log other unexpected errors
     }
   }
-  static getCurrentUserData()
-  {
+
+  static getCurrentUserData() {
     return FirebaseAuth.instance.currentUser;
   }
-static logout()
-{
-  FirebaseAuth.instance.signOut();
-}
+
+  static logout() {
+    FirebaseAuth.instance.signOut();
+  }
+
   static void handleFirebaseAuthException(FirebaseAuthException e) {
     if (e.code == 'weak-password') {
       BotToastServices.showErrorMessage('The password provided is too weak.');
