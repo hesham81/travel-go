@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/widget/custom_text_form_field.dart';
-import 'package:travel_go/core/widget/search_widget.dart';
-import 'package:travel_go/models/hotel_model.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/add_hotel.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/selected_hotel.dart';
+import '/core/widget/search_widget.dart';
+import '/models/hotel_model.dart';
+import '/modules/layout/pages/admin/pages/hotels/pages/add_hotel.dart';
 import '/core/extensions/center.dart';
 import '/core/extensions/extensions.dart';
 import '/core/utils/hotels_db.dart';
@@ -23,13 +26,17 @@ class _EditHotelsState extends State<EditHotels> {
   TextEditingController searchController = TextEditingController();
   String searchQuery = "";
   List<Hotel> searchList = [];
+  bool endLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, AddHotel.routeName);
+          Navigator.pushNamed(
+            context,
+            AddHotel.routeName,
+          );
         },
         backgroundColor: AppColors.primaryColor.withOpacity(0.8),
         shape: RoundedRectangleBorder(
@@ -40,7 +47,6 @@ class _EditHotelsState extends State<EditHotels> {
           color: AppColors.blackColor,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -64,7 +70,17 @@ class _EditHotelsState extends State<EditHotels> {
                   ).centerWidget();
                 }
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return Skeletonizer(
+                    child: ListView.separated(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => CustomViewWidget(
+                        model: hotels[index],
+                      ),
+                      separatorBuilder: (context, _) => 0.01.height.hSpace,
+                      itemCount: hotels.length,
+                    ),
+                  );
                 }
                 if (snapshot.connectionState == ConnectionState.none) {
                   return Row(
@@ -86,32 +102,32 @@ class _EditHotelsState extends State<EditHotels> {
                     ],
                   );
                 }
+                if (snapshot.connectionState == ConnectionState.done) {
+                  endLoading = true;
+                  setState() {}
+                  ;
+                }
 
                 hotels = snapshot.data!.docs.map(
                   (data) {
                     return data.data();
                   },
                 ).toList();
-                return Visibility(
-                  visible: searchList.isEmpty,
-                  replacement: ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) => CustomViewWidget(
-                      model: searchList[index],
-                    ),
-                    separatorBuilder: (context, _) => 0.01.height.hSpace,
-                    itemCount: searchList.length,
-                  ),
-                  child: ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) => CustomViewWidget(
+                return ListView.separated(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () {
+                      log("message");
+                      Navigator.pushNamed(context, SelectedHotel.routeName,
+                          arguments: hotels[index]);
+                    },
+                    child: CustomViewWidget(
                       model: hotels[index],
                     ),
-                    separatorBuilder: (context, _) => 0.01.height.hSpace,
-                    itemCount: hotels.length,
                   ),
+                  separatorBuilder: (context, _) => 0.01.height.hSpace,
+                  itemCount: hotels.length,
                 );
               },
             ),

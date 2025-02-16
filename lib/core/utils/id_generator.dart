@@ -7,6 +7,6 @@ abstract class IdGenerator {
     String value3 = "${date.year}${date.month}${date.day}";
     return value1.substring(0, 3).trim() +
         value3 +
-        value2.substring(0, 8).trim();
+        value2.substring(0, 5).trim();
   }
 }

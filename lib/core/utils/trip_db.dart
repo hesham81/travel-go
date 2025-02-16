@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/core/utils/id_generator.dart';
-import 'package:travel_go/models/trip.dart';
+import '/core/utils/id_generator.dart';
+import '/models/trip.dart';
 
 abstract class TripDB {
   static final _firestore = FirebaseFirestore.instance;
@@ -31,6 +33,7 @@ abstract class TripDB {
   static Stream<QuerySnapshot<Trip>>? getStreamTripData()  {
     try {
       var colRef = collectionRef();
+      log("Data Returned");
       return colRef.snapshots();
     } catch (error) {
       print(error.toString());

@@ -34,7 +34,7 @@ class CustomViewWidget extends StatelessWidget {
                     color: AppColors.blackColor,
                   ),
                 ),
-                0.02.height.hSpace,
+                0.01.height.hSpace,
                 Row(
                   children: [
                     Icon(
@@ -42,9 +42,9 @@ class CustomViewWidget extends StatelessWidget {
                     ),
                     0.02.width.hSpace,
                     Text(
-                      model.hotelLocation,
+                      model.hotelLocation.split(",").last.trim(),
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 13,
                         fontWeight: FontWeight.bold,
                         color: AppColors.blackColor,
                       ),

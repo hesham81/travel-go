@@ -1,7 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/theme/app_colors.dart';
+import 'package:travel_go/core/utils/firebase_auth_services.dart';
 import 'package:travel_go/core/utils/firestore_services.dart';
+import 'package:travel_go/modules/first_screen/pages/first_screen.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/widget/filter_widget.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/widget/my_drawer.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/trips/selected_trip/selected_trip.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/v1/flight.dart';
 import '/modules/layout/pages/user/pages/home/widget/trip_card_widget.dart';
@@ -20,6 +25,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  _openBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => FilterWidget(),
+      isDismissible: true,
+      enableDrag: true,
+    );
+  }
+
   var searchController = TextEditingController();
   List<TripModel> searchList = [];
   List<TripModel> tripList = [
@@ -32,13 +46,14 @@ class _HomeState extends State<Home> {
       price: 3000,
     ),
     TripModel(
-        id: '5',
-        imageUrl: AppAssets.dahabaIMG,
-        title: 'Dynamo Kiev',
-        startDateTime: DateTime(2024, 10, 12),
-        endDateTime: DateTime(2024, 10, 15),
-        price: 1800,
-        currency: "USD"),
+      id: '5',
+      imageUrl: AppAssets.dahabaIMG,
+      title: 'Dynamo Kiev',
+      startDateTime: DateTime(2024, 10, 12),
+      endDateTime: DateTime(2024, 10, 15),
+      price: 1800,
+      currency: "USD",
+    ),
     TripModel(
       id: '6',
       imageUrl: AppAssets.sharmIMG,
@@ -78,16 +93,56 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        title: Text(
+          "Travel Go",
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.notifications,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              FirebaseAuthServices.logout();
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                FirstScreen.routeName,
+                (route) => false,
+              );
+            },
+            icon: Icon(
+              Icons.logout,
+              color: AppColors.errorColor,
+            ),
+          ),
+        ],
+      ),
+      drawer: MyDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
               SearchWidget(
                 controller: searchController,
+                suffixIcon: searchQueryText != ""
+                    ? IconButton(
+                        onPressed: () {
+                          _openBottomSheet(context);
+                        },
+                        icon: Icon(
+                          Icons.filter_list,
+                        ),
+                      )
+                    : null,
                 search: (value) {
                   searchQueryText = value;
                   searchQuery();
-                  setState(() {});
+                  setState(
+                    () {},
+                  );
                 },
               ).vPadding(0.01.height).hPadding(0.09.width),
               0.02.height.hSpace,
@@ -101,9 +156,9 @@ class _HomeState extends State<Home> {
                       log('Clicked');
                       Navigator.push(
                         context,
-                          MaterialPageRoute(builder: (context) => DahabTripScreen())
-                        // DahabTripScreen.routeName,
-                        // arguments: searchList[index],
+                        MaterialPageRoute(
+                          builder: (context) => DahabTripScreen(),
+                        ),
                       );
                     },
                     child: TripCardWidget(
@@ -119,12 +174,13 @@ class _HomeState extends State<Home> {
                   itemBuilder: (context, index) => GestureDetector(
                     onTap: () {
                       Navigator.push(
-                        context,
-                        // DahabTripScreen.routeName,
-                          MaterialPageRoute(builder: (context) => DahabTripScreen())
+                          context,
+                          // DahabTripScreen.routeName,
+                          MaterialPageRoute(
+                              builder: (context) => DahabTripScreen())
 
-                        // arguments: tripList[index],
-                      );
+                          // arguments: tripList[index],
+                          );
                     },
                     child: TripCardWidget(
                       tripModel: tripList[index],

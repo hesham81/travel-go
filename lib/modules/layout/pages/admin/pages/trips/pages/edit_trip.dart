@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+import 'package:travel_go/models/hotel_model.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/selected_trip.dart';
 import '/core/extensions/center.dart';
 import '/core/extensions/extensions.dart';
 import '/core/utils/trip_db.dart';
 import '/core/widget/search_widget.dart';
-import '../../../../../../../core/theme/app_colors.dart';
-import '../../../../../../../models/trip.dart';
+import '/core/theme/app_colors.dart';
+import '/models/trip.dart';
 import '../widget/trip_cart.dart';
 
 class EditTrip extends StatefulWidget {
@@ -34,6 +36,7 @@ class _EditTripState extends State<EditTrip> {
   var trips = [];
   var searchQueryText = "";
   var searchTrip = [];
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -69,82 +72,22 @@ class _EditTripState extends State<EditTrip> {
             StreamBuilder(
               stream: TripDB.getStreamTripData(),
               builder: (context, snapshot) {
-                if (snapshot.hasData == false) {
-                  return Icon(
-                    Icons.error,
-                    color: AppColors.errorColor,
-                  ).centerWidget();
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                }
-                if (snapshot.connectionState == ConnectionState.none) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.replay,
-                        color: AppColors.errorColor,
-                      ),
-                      0.01.width.hSpace,
-                      Text(
-                        "No Internet Connection",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.errorColor,
-                        ),
-                      ),
-                    ],
-                  );
-                }
-                trips = snapshot.data!.docs.map(
-                  (data) {
-                    return data.data();
+                snapshot.data!.docs.map(
+                  (element) {
+                    trips.add(element.data());
+                    print(element.data().source);
                   },
-                ).toList();
-                return Visibility(
-                  visible: searchQueryText.isEmpty,
-                  replacement: GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        SelectedAdminTrip.routeName,
-                      );
-                    },
-                    child: ListView.separated(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) => GestureDetector(
-                        onTap: () => Navigator.pushNamed(
-                          context,
-                          SelectedAdminTrip.routeName,
-                          arguments: searchTrip[index],
-                        ),
-                        child: TripCart(
-                          model: searchTrip[index],
-                        ),
-                      ),
-                      separatorBuilder: (context, _) => 0.01.height.hSpace,
-                      itemCount: searchTrip.length,
-                    ),
+                );
+                print("Length ${trips.length}");
+
+                return ListView.separated(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) => TripCart(
+                    model: trips[index],
                   ),
-                  child: ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) => GestureDetector(
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        SelectedAdminTrip.routeName,
-                        arguments: trips[index],
-                      ),
-                      child: TripCart(
-                        model: trips[index],
-                      ),
-                    ),
-                    separatorBuilder: (context, _) => 0.01.height.hSpace,
-                    itemCount: trips.length,
-                  ),
+                  separatorBuilder: (context, _) => 0.01.height.hSpace,
+                  itemCount: trips.length,
                 );
               },
             ),
@@ -178,12 +121,10 @@ class _EditTripState extends State<EditTrip> {
         searchTrip.add(trip);
       } else if (trip.startDateTime.month.toString() == (searchQueryText)) {
         searchTrip.add(trip);
-      }
-      else if (trip.currency.toLowerCase() == (searchQueryText.toLowerCase()))
-      {
+      } else if (trip.currency.toLowerCase() ==
+          (searchQueryText.toLowerCase())) {
         searchTrip.add(trip);
       }
-
     }
     setState(() {});
   }

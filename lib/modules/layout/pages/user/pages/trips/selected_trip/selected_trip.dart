@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/models/hotel_model.dart';
 import '/modules/layout/pages/user/pages/home/pages/hotels/pages/hotel.dart';
-import '/modules/layout/pages/user/pages/home/pages/hotels/pages/hotel_details_screen.dart';
 import '/models/trip_model.dart';
 
 class SelectedTrip extends StatefulWidget {
