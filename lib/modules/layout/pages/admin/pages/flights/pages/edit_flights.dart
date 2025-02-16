@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travel_go/core/extensions/align.dart';
 import 'package:travel_go/core/extensions/extensions.dart';
 import 'package:travel_go/core/widget/loading_image_network_widget.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/flights/pages/selected_airline.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/flights/widget/flight_cart_widget.dart';
 
 import '../../../../../../../models/flight_airlines.dart';
@@ -97,6 +98,11 @@ class _EditFlightsState extends State<EditFlights> {
                 height: 0.3.height,
                 child: GestureDetector(
                   onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      SelectedAirline.routeName,
+                      arguments: flightAirlines[index],
+                    );
                   },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
