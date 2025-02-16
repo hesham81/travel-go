@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:travel_go/core/services/storage.dart';
+import '/core/services/storage.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
@@ -152,6 +152,7 @@ class _AddHotelState extends State<AddHotel> {
                     },
                   ).center,
                   0.01.height.hSpace,
+
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -192,6 +193,7 @@ class _AddHotelState extends State<AddHotel> {
                             ).then((_) {
                               EasyLoading.dismiss();
                             });
+                            Navigator.pop(context);
                           }
                         },
                       ),

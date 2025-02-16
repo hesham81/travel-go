@@ -17,6 +17,9 @@ abstract class AppTheme {
     textTheme: TextTheme(
       bodyMedium: TextStyle(
         color: AppColors.whiteColor,
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Poppins',
       ),
     ),
   );

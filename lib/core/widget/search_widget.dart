@@ -7,6 +7,7 @@ typedef searchQuery = String? Function(String value);
 class SearchWidget extends StatefulWidget {
   final TextEditingController controller;
   final searchQuery? search;
+  final Widget? suffixIcon;
 
   final double borderRadius;
 
@@ -14,7 +15,8 @@ class SearchWidget extends StatefulWidget {
     super.key,
     required this.controller,
     this.search,
-    this.borderRadius = 2,
+    this.borderRadius = 15,
+    this.suffixIcon,
   });
 
   @override
@@ -56,16 +58,7 @@ class _SearchWidgetState extends State<SearchWidget> {
             Icons.search,
           ),
         ),
-        suffixIcon: (empty == false)
-            ? IconButton(
-                onPressed: () {
-                  widget.controller.clear();
-                  empty = true;
-                  setState(() {});
-                },
-                icon: Icon(Icons.clear),
-              )
-            : null,
+        suffixIcon: widget.suffixIcon,
       ),
     );
   }

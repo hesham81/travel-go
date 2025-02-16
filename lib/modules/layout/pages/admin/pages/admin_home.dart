@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/flights/pages/edit_flights.dart';
+import '/modules/layout/pages/admin/pages/flights/pages/edit_flights.dart';
 import '/modules/layout/pages/admin/pages/programs/pages/edit_programs.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/edit_trip.dart';
 import '/modules/first_screen/pages/first_screen.dart';
@@ -21,6 +21,7 @@ class AdminHome extends StatefulWidget {
 }
 
 class _AdminHomeState extends State<AdminHome> {
+  User currentUser = FirebaseAuthServices.getCurrentUserData();
   List<Widget> pages = [
     EditTrip(),
     EditHotels(),
@@ -50,9 +51,18 @@ class _AdminHomeState extends State<AdminHome> {
                   },
                   child: Column(
                     children: [
-                      CircleAvatar(
-                        radius: 55,
-                        backgroundColor: AppColors.dodgurBlueColor,
+                      SafeArea(
+                        child: CircleAvatar(
+                          radius: 60,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.network(
+                              currentUser.photoURL ??
+                                  "https://i.pinimg.com/474x/2e/d4/09/2ed409f40d20ad2eb8ff068621d29904.jpg",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
                       0.01.height.hSpace,
                       Text(
@@ -95,7 +105,7 @@ class _AdminHomeState extends State<AdminHome> {
               ListTile(
                 style: ListTileStyle.drawer,
                 title: Text(
-                  "Flights",
+                  "Programs",
                   style: TextStyle(
                     color: AppColors.dodgurBlueColor,
                     fontSize: 20,
@@ -103,7 +113,7 @@ class _AdminHomeState extends State<AdminHome> {
                   textAlign: TextAlign.center,
                 ),
                 onTap: () {
-                  selectedIndex = 3;
+                  selectedIndex = 0;
                   Navigator.pop(context);
                   setState(() {});
                 },
@@ -125,6 +135,7 @@ class _AdminHomeState extends State<AdminHome> {
                 ),
                 onTap: () {
                   selectedIndex = 1;
+                  Navigator.pop(context);
                   setState(() {});
                 },
               ),
@@ -137,26 +148,6 @@ class _AdminHomeState extends State<AdminHome> {
                 style: ListTileStyle.drawer,
                 title: Text(
                   "Attractions",
-                  style: TextStyle(
-                    color: AppColors.dodgurBlueColor,
-                    fontSize: 20,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                onTap: () {
-                  selectedIndex == 0;Navigator.pop(context);
-                  setState(() {});
-                },
-              ),
-              0.01.height.hSpace,
-              Divider(
-                color: AppColors.dodgurBlueColor,
-              ),
-              0.01.height.hSpace,
-              ListTile(
-                style: ListTileStyle.drawer,
-                title: Text(
-                  "Reservations",
                   style: TextStyle(
                     color: AppColors.dodgurBlueColor,
                     fontSize: 20,
@@ -177,7 +168,7 @@ class _AdminHomeState extends State<AdminHome> {
               ListTile(
                 style: ListTileStyle.drawer,
                 title: Text(
-                  "Programs",
+                  "Flights",
                   style: TextStyle(
                     color: AppColors.dodgurBlueColor,
                     fontSize: 20,
@@ -185,7 +176,7 @@ class _AdminHomeState extends State<AdminHome> {
                   textAlign: TextAlign.center,
                 ),
                 onTap: () {
-                  selectedIndex =2;
+                  selectedIndex = 3;
                   Navigator.pop(context);
                   setState(() {});
                 },
@@ -199,6 +190,27 @@ class _AdminHomeState extends State<AdminHome> {
                 style: ListTileStyle.drawer,
                 title: Text(
                   "Reports",
+                  style: TextStyle(
+                    color: AppColors.dodgurBlueColor,
+                    fontSize: 20,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                onTap: () {
+                  selectedIndex == 0;
+                  Navigator.pop(context);
+                  setState(() {});
+                },
+              ),
+              0.01.height.hSpace,
+              Divider(
+                color: AppColors.dodgurBlueColor,
+              ),
+              0.01.height.hSpace,
+              ListTile(
+                style: ListTileStyle.drawer,
+                title: Text(
+                  "Settings",
                   style: TextStyle(
                     color: AppColors.dodgurBlueColor,
                     fontSize: 20,
