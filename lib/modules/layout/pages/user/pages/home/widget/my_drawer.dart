@@ -1,11 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/constant/app_constants.dart';
-import 'package:travel_go/core/extensions/align.dart';
-import 'package:travel_go/core/extensions/dimensions.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
-import 'package:travel_go/core/utils/firebase_auth_services.dart';
+import '/core/constant/app_constants.dart';
+import '/core/extensions/align.dart';
+import '/core/extensions/extensions.dart';
+import '/core/theme/app_colors.dart';
+import '/core/utils/firebase_auth_services.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key});

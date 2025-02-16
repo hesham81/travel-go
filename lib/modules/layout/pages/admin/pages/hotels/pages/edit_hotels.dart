@@ -33,7 +33,10 @@ class _EditHotelsState extends State<EditHotels> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, AddHotel.routeName);
+          Navigator.pushNamed(
+            context,
+            AddHotel.routeName,
+          );
         },
         backgroundColor: AppColors.primaryColor.withOpacity(0.8),
         shape: RoundedRectangleBorder(
@@ -44,7 +47,6 @@ class _EditHotelsState extends State<EditHotels> {
           color: AppColors.blackColor,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
         child: Column(
           children: [
