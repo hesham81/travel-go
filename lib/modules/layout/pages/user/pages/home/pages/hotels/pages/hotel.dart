@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/payment/pages/credit.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/v1/flight.dart';
 
 import 'hotel_details_screen.dart';
 class Hotels extends StatelessWidget {

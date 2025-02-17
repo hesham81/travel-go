@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:travel_go/models/hotel_model.dart';
-import '/modules/layout/pages/admin/pages/trips/pages/selected_trip.dart';
-import '/core/extensions/center.dart';
 import '/core/extensions/extensions.dart';
 import '/core/utils/trip_db.dart';
 import '/core/widget/search_widget.dart';

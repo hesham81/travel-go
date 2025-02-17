@@ -3,11 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:travel_go/core/theme/app_colors.dart';
 import 'package:travel_go/core/utils/firebase_auth_services.dart';
-import 'package:travel_go/core/utils/firestore_services.dart';
 import 'package:travel_go/modules/first_screen/pages/first_screen.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/widget/filter_widget.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/widget/my_drawer.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/trips/selected_trip/selected_trip.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/v1/flight.dart';
 import '/modules/layout/pages/user/pages/home/widget/trip_card_widget.dart';
 import '/core/constant/app_assets.dart';
@@ -143,6 +141,7 @@ class _HomeState extends State<Home> {
                   setState(
                     () {},
                   );
+                  return null;
                 },
               ).vPadding(0.01.height).hPadding(0.09.width),
               0.02.height.hSpace,

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:country_state_city_picker/country_state_city_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -11,12 +9,9 @@ import '/core/widget/loading_image_network_widget.dart';
 import '/models/hotel_model.dart';
 import '/core/extensions/align.dart';
 import '/core/widget/custom_elevated_button.dart';
-import '/core/widget/custom_rating_widget.dart';
-import '/core/extensions/alignment.dart';
 import '/core/extensions/extensions.dart';
 import '/core/utils/hotels_db.dart';
 import '/core/widget/custom_text_form_field.dart';
-import '/core/widget/label.dart';
 import '/core/theme/app_colors.dart';
 
 class BottomNavSheet extends StatefulWidget {

@@ -57,6 +57,7 @@ class _EditHotelsState extends State<EditHotels> {
                 searchQuery = value;
                 searchQueryFunc();
                 setState(() {});
+                return null;
               },
             ),
             0.01.height.hSpace,
@@ -104,8 +105,7 @@ class _EditHotelsState extends State<EditHotels> {
                 }
                 if (snapshot.connectionState == ConnectionState.done) {
                   endLoading = true;
-                  setState() {}
-                  ;
+
                 }
 
                 hotels = snapshot.data!.docs.map(

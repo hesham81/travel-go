@@ -1,7 +1,5 @@
-import 'package:country_state_city_picker/country_state_city_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:travel_go/core/services/bot_toast.dart';
 import 'package:travel_go/core/widget/custom_rating_widget.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/widgets/bottom_nav_sheet.dart';

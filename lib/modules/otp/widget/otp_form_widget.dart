@@ -62,6 +62,5 @@ class OtpFormWidget extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }
