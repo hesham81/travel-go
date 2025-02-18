@@ -59,11 +59,49 @@ class _MyDrawerState extends State<MyDrawer> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
+                Icons.home_outlined,
+              ),
+              0.01.width.vSpace,
+              Text(
+                "Home",
+                style: theme.titleMedium,
+              ),
+            ],
+          ),
+
+          0.02.height.hSpace,
+          Divider(
+            thickness: 1.1,
+          ),
+          0.02.height.hSpace,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
                 Icons.card_travel_sharp,
               ),
               0.01.width.vSpace,
               Text(
-                "My Trips",
+                "Bookings",
+                style: theme.titleMedium,
+              ),
+            ],
+          ),
+
+          0.02.height.hSpace,
+          Divider(
+            thickness: 1.1,
+          ),
+          0.02.height.hSpace,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.favorite_outline,
+              ),
+              0.01.width.vSpace,
+              Text(
+                "Favourite",
                 style: theme.titleMedium,
               ),
             ],
@@ -95,47 +133,11 @@ class _MyDrawerState extends State<MyDrawer> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.favorite_outline,
-              ),
-              0.01.width.vSpace,
-              Text(
-                "Favourite",
-                style: theme.titleMedium,
-              ),
-            ],
-          ),
-          0.02.height.hSpace,
-          Divider(
-            thickness: 1.1,
-          ),
-          0.02.height.hSpace,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.security,
-              ),
-              0.01.width.vSpace,
-              Text(
-                "Security Settings",
-                style: theme.titleMedium,
-              ),
-            ],
-          ),
-          0.02.height.hSpace,
-          Divider(
-            thickness: 1.1,
-          ),
-          0.02.height.hSpace,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
                 Icons.settings,
               ),
               0.01.width.vSpace,
               Text(
-                "App Settings",
+                "Settings",
                 style: theme.titleMedium,
               ),
             ],

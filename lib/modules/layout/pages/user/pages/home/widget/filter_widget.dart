@@ -1,9 +1,9 @@
 import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:travel_go/core/extensions/align.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
-import 'package:travel_go/core/widget/custom_elevated_button.dart';
+import '/core/extensions/align.dart';
+import '/core/theme/app_colors.dart';
+import '/core/widget/custom_elevated_button.dart';
 import '/core/extensions/extensions.dart';
 
 class FilterWidget extends StatefulWidget {
@@ -15,7 +15,6 @@ class FilterWidget extends StatefulWidget {
 
 class _FilterWidgetState extends State<FilterWidget> {
   List<String> generalOptions = [
-    "A-Z",
     "Start Date",
     "End Date",
   ];
@@ -47,10 +46,10 @@ class _FilterWidgetState extends State<FilterWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              "Filter",
-              style: theme.titleLarge,
-            ),
+            // Text(
+            //   "Filter",
+            //   style: theme.titleLarge,
+            // ),
             ChipsChoice<String>.multiple(
               value: selectedGeneral,
               wrapped: true,
@@ -77,7 +76,7 @@ class _FilterWidgetState extends State<FilterWidget> {
             ),
             0.01.height.hSpace,
             Text(
-              "Filter By Location",
+              "Location",
               style: theme.titleSmall,
             ),
             ChipsChoice<String>.multiple(
@@ -106,7 +105,7 @@ class _FilterWidgetState extends State<FilterWidget> {
             ),
             0.01.height.hSpace,
             Text(
-              "Filter By Price",
+              "Price",
               style: theme.titleSmall,
             ),
             SliderTheme(
@@ -143,7 +142,7 @@ class _FilterWidgetState extends State<FilterWidget> {
             ),
             0.01.height.hSpace,
             Text(
-              "Filter By Location",
+              "availability",
               style: theme.titleSmall,
             ),
             ChipsChoice<String>.multiple(
@@ -174,7 +173,7 @@ class _FilterWidgetState extends State<FilterWidget> {
             ),
             0.01.height.hSpace,
             Text(
-              "Filter By Rating",
+              "Rating",
               style: theme.titleSmall,
             ),
             0.01.height.hSpace,

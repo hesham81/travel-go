@@ -1,14 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
-import 'package:travel_go/core/utils/firebase_auth_services.dart';
-import 'package:travel_go/core/utils/firestore_services.dart';
-import 'package:travel_go/modules/first_screen/pages/first_screen.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/widget/filter_widget.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/widget/my_drawer.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/trips/selected_trip/selected_trip.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/v1/flight.dart';
+import '/core/widget/custom_elevated_button.dart';
+import '/core/theme/app_colors.dart';
+import '/core/utils/firebase_auth_services.dart';
+import '/modules/first_screen/pages/first_screen.dart';
+import '/modules/layout/pages/user/pages/home/widget/filter_widget.dart';
+import '/modules/layout/pages/user/pages/home/widget/my_drawer.dart';
+import '/modules/layout/pages/user/pages/v1/flight.dart';
 import '/modules/layout/pages/user/pages/home/widget/trip_card_widget.dart';
 import '/core/constant/app_assets.dart';
 import '/models/trip_model.dart';
@@ -123,74 +122,115 @@ class _HomeState extends State<Home> {
       drawer: MyDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SearchWidget(
-                controller: searchController,
-                suffixIcon: searchQueryText != ""
-                    ? IconButton(
-                        onPressed: () {
-                          _openBottomSheet(context);
-                        },
-                        icon: Icon(
-                          Icons.filter_list,
-                        ),
-                      )
-                    : null,
-                search: (value) {
-                  searchQueryText = value;
-                  searchQuery();
-                  setState(
-                    () {},
-                  );
-                },
-              ).vPadding(0.01.height).hPadding(0.09.width),
-              0.02.height.hSpace,
-              Visibility(
-                visible: searchList.isEmpty,
-                replacement: ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () {
-                      log('Clicked');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DahabTripScreen(),
-                        ),
-                      );
-                    },
-                    child: TripCardWidget(
-                      tripModel: searchList[index],
+          child: DefaultTabController(
+            length: 3,
+            child: Column(
+              children: [
+                SearchWidget(
+                  controller: searchController,
+                  suffixIcon: searchQueryText != ""
+                      ? IconButton(
+                          onPressed: () {
+                            _openBottomSheet(context);
+                          },
+                          icon: Icon(
+                            Icons.filter_list,
+                          ),
+                        )
+                      : null,
+                  search: (value) {
+                    searchQueryText = value;
+                    searchQuery();
+                    setState(
+                      () {},
+                    );
+                  },
+                ).vPadding(0.01.height).hPadding(0.09.width),
+                0.01.height.hSpace,
+                TabBar(
+                  onTap: (index) {},
+                  dividerColor: Colors.transparent,
+                  indicatorColor: Colors.transparent,
+                  tabs: [
+                    CustomElevatedButton(
+                      text: "Trip",
+                      onPressed: () {
+                        btnColor:
+                        Colors.grey.withAlpha(80);
+                      },
+                      borderRadius: 15,
+                      textSize: 12,
+                      borderColor: AppColors.dodgurBlueColor,
+                      btnColor: Colors.grey.withAlpha(80),
+                      textColor: AppColors.blackColor,
                     ),
-                  ),
-                  separatorBuilder: (index, context) => 0.02.height.hSpace,
-                  itemCount: searchList.length,
-                ),
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () {
-                      Navigator.push(
+                    CustomElevatedButton(
+                      text: "Flight",
+                      onPressed: () {
+                        btnColor:
+                        Colors.grey.withAlpha(80);
+                      },
+                      borderRadius: 15,
+                      textSize: 12,
+                      btnColor: AppColors.dodgurBlueColor,
+                      textColor: AppColors.whiteColor,
+                    ),
+                    CustomElevatedButton(
+                      text: "Hotel",
+                      onPressed: () {
+                        btnColor:
+                        Colors.grey.withAlpha(80);
+                      },
+                      borderRadius: 15,
+                      textSize: 12,
+                      btnColor: AppColors.dodgurBlueColor,
+                      textColor: AppColors.whiteColor,
+                    ),
+                  ],
+                ).hPadding(0.03.width),
+                0.02.height.hSpace,
+                Visibility(
+                  visible: searchList.isEmpty,
+                  replacement: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () {
+                        log('Clicked');
+                        Navigator.push(
                           context,
-                          // DahabTripScreen.routeName,
                           MaterialPageRoute(
-                              builder: (context) => DahabTripScreen())
-
-                          // arguments: tripList[index],
-                          );
-                    },
-                    child: TripCardWidget(
-                      tripModel: tripList[index],
+                            builder: (context) => DahabTripScreen(),
+                          ),
+                        );
+                      },
+                      child: TripCardWidget(
+                        tripModel: searchList[index],
+                      ),
                     ),
+                    separatorBuilder: (index, context) => 0.02.height.hSpace,
+                    itemCount: searchList.length,
                   ),
-                  separatorBuilder: (index, context) => 0.02.height.hSpace,
-                  itemCount: tripList.length,
-                ),
-              )
-            ],
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DahabTripScreen()));
+                      },
+                      child: TripCardWidget(
+                        tripModel: tripList[index],
+                      ),
+                    ),
+                    separatorBuilder: (index, context) => 0.02.height.hSpace,
+                    itemCount: tripList.length,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -238,183 +278,3 @@ class _HomeState extends State<Home> {
     setState(() {});
   }
 }
-// import 'package:flutter/material.dart';
-// import 'package:travel_go/modules/layout/pages/user/pages/v1/flight.dart';
-//
-//
-//
-// class Home extends StatelessWidget {
-//   static const String routeName = 'home';
-//   final List<Map<String, dynamic>> destinations = [
-//     {
-//       'name': 'Dahab',
-//       'startDate': '12/10/2024',
-//       'endDate': '15/10/2024',
-//       'price': '5,000 LE',
-//       'image':'https://media.digitalnomads.world/wp-content/uploads/2021/03/20120536/dahab-digital-nomads-1024x683.jpg',},
-//     {
-//       'name': 'Hurghada',
-//       'startDate': '20/10/2024',
-//       'endDate': '25/10/2024',
-//       'price': '4,000 LE',
-//       'image':
-// 'https://media.tacdn.com/media/attractions-splice-spp-674x446/0a/56/9e/29.jpg'    },
-//     {
-//       'name': 'Istanbul',
-//       'startDate': '01/11/2024',
-//       'endDate': '07/11/2024',
-//       'price': '8,000 LE',
-//       'image':
-// 'https://www.etbtoursegypt.com/storage/849/conversions/istanbul-sightseeing-webp.webp'    },
-//     {
-//       'name': 'Alexandria',
-//       'startDate': '10/12/2024',
-//       'endDate': '12/12/2024',
-//       'price': '2,000 LE',
-//       'image':
-// 'https://sempretravelegypt.com/wp-content/uploads/2021/08/Ausflug-nach-Kairo-und-Alexandria-2-Tage-ab-El-Gouna-870x555-3-800x600.jpg'    },
-//   ];
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Color(0xFFEAF7FD),
-//       appBar: AppBar(
-//         backgroundColor: Color(0xFF68B0E2),
-//         elevation: 0,
-//         title: Text(
-//           'Travel go',
-//           style: TextStyle(
-//
-//             color: Colors.white,
-//             fontSize: 20,
-//             fontWeight: FontWeight.bold,
-//             fontStyle: FontStyle.italic,
-//           ),
-//         ),
-//         actions: [
-//           IconButton(
-//             icon: Icon(Icons.menu),
-//             onPressed: () {
-//
-//             },
-//           ),
-//         ],
-//       ),
-//       body: Column(
-//         children: [
-//           // Search Bar
-//           Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-//             child: TextField(
-//               decoration: InputDecoration(
-//                 hintText: 'Search trip', // Updated to "Search trip"
-//                 prefixIcon: Icon(Icons.search),
-//                 filled: true,
-//                 fillColor: Colors.white,
-//                 border: OutlineInputBorder(
-//                   borderRadius: BorderRadius.circular(20),
-//                   borderSide: BorderSide.none,
-//                 ),
-//               ),
-//             ),
-//           ),
-//           // Category Buttons
-//           Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//               children: [
-//                 _buildCategoryButton('Trip', Colors.grey[300]!, context),
-//                 _buildCategoryButton('Flight', Colors.white, context),
-//                 _buildCategoryButton('Hotel', Colors.white, context),
-//               ],
-//             ),
-//           ),
-//           // List of Destinations
-//           Expanded(
-//             child: ListView.builder(
-//               itemCount: destinations.length,
-//               itemBuilder: (context, index) {
-//                 final destination = destinations[index];
-//                 return Padding(
-//                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-//                   child: Container(
-//                     decoration: BoxDecoration(
-//                       color: Colors.white,
-//                       borderRadius: BorderRadius.circular(15),
-//                       boxShadow: [
-//                         BoxShadow(
-//                           color: Colors.black26,
-//                           blurRadius: 5,
-//                           offset: Offset(0, 3),
-//                         ),
-//                       ],
-//                     ),
-//                     child: Row(
-//                       children: [
-//                         ClipRRect(
-//                           borderRadius: BorderRadius.only(
-//                             topLeft: Radius.circular(15),
-//                             bottomLeft: Radius.circular(15),
-//                           ),
-//                           child: Image.network(
-//                             destination['image'],
-//                             width: 100,
-//                             height: 100,
-//                             fit: BoxFit.cover,
-//                           ),
-//                         ),
-//                         Expanded(
-//                           child: Padding(
-//                             padding: const EdgeInsets.all(10.0),
-//                             child: Column(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 Text(
-//                                   destination['name'],
-//                                   style: TextStyle(
-//                                     fontSize: 18,
-//                                     fontWeight: FontWeight.bold,
-//                                   ),
-//                                 ),
-//                                 SizedBox(height: 5),
-//                                 Text('Start date: ${destination['startDate']}'),
-//                                 Text('End date: ${destination['endDate']}'),
-//                                 Text('Price: ${destination['price']}'),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 );
-//               },
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-//
-//   Widget _buildCategoryButton(String label, Color backgroundColor, BuildContext context) {
-//     return ElevatedButton(
-//
-//       style: ElevatedButton.styleFrom(
-//         backgroundColor: backgroundColor,
-//         foregroundColor: Colors.black,
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(20),
-//         ),
-//         side: BorderSide(color: Colors.black12),
-//       ),
-//       onPressed: (
-//
-//           ) {
-//         Navigator.push(context,MaterialPageRoute(builder: (context)=>DahabTripScreen()),);
-//       },
-//       child: Text(label),
-//     );
-//   }
-// }
