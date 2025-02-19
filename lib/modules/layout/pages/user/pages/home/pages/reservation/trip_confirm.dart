@@ -8,14 +8,11 @@ class TripConfirmedScreen extends StatelessWidget {
       backgroundColor: Color(0xffB7E0F2), // Light blue background
       body: Center(
         child: Column(
-          
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              
               "Trip Confirmed !",
               style: TextStyle(
-                
                 color: Colors.black,
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
@@ -23,7 +20,6 @@ class TripConfirmedScreen extends StatelessWidget {
             ),
             SizedBox(height: 50),
             Container(
-
               width: 80,
               height: 80,
               decoration: BoxDecoration(
@@ -48,7 +44,12 @@ class TripConfirmedScreen extends StatelessWidget {
             SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-         Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentScreen()),);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Payment(),
+                  ),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xffB7E0F2),
@@ -60,7 +61,10 @@ class TripConfirmedScreen extends StatelessWidget {
               ),
               child: Text(
                 "Payment",
-                style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ],

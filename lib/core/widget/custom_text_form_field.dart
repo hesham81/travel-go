@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '/core/theme/app_colors.dart';
 
 typedef Validator = String? Function(String? value);
@@ -12,8 +13,11 @@ class CustomTextFormField extends StatefulWidget {
   final TextEditingController? controller;
   final Color borderColor;
   final isReadOnly;
+  final TextInputType? keyboardType;
 
+  final Validator? onChanged;
   final TextStyle? hintStyle;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomTextFormField({
     super.key,
@@ -25,7 +29,10 @@ class CustomTextFormField extends StatefulWidget {
     this.controller,
     this.borderColor = AppColors.blackColor,
     this.hintStyle,
-    this.isReadOnly = false ,
+    this.isReadOnly = false,
+    this.onChanged,
+    this.keyboardType,
+    this.inputFormatters,
   });
 
   @override
@@ -38,6 +45,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      inputFormatters: widget.inputFormatters,
+      keyboardType: widget.keyboardType,
+      onChanged: widget.onChanged,
       readOnly: widget.isReadOnly,
       validator: widget.validation,
       controller: widget.controller,

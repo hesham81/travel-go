@@ -88,7 +88,7 @@ class AddFlight extends StatelessWidget {
                   Expanded(
                     child: CustomElevatedButton(
                       text: "Submit",
-                      onPressed: () {},
+                      onPressed: () => Navigator.pop(context),
                       textSize: 15,
                       borderRadius: 10,
                     ),

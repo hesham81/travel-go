@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/accomdations/pages/hotel_accomdation.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/edit_attractions.dart';
 import '/modules/layout/pages/admin/pages/flights/pages/edit_flights.dart';
 import '/modules/layout/pages/admin/pages/programs/pages/edit_programs.dart';
@@ -29,6 +30,7 @@ class _AdminHomeState extends State<AdminHome> {
     EditPrograms(),
     EditFlights(),
     EditAttractions(),
+    AccommodationScreen(),
   ];
   int selectedIndex = 0;
   User user = FirebaseAuthServices.getCurrentUserData();
@@ -83,10 +85,11 @@ class _AdminHomeState extends State<AdminHome> {
                 color: AppColors.dodgurBlueColor,
               ),
               0.01.height.hSpace,
+
               ListTile(
                 style: ListTileStyle.drawer,
                 title: Text(
-                  "Trips",
+                  "Flights",
                   style: TextStyle(
                     color: AppColors.dodgurBlueColor,
                     fontSize: 20,
@@ -94,34 +97,11 @@ class _AdminHomeState extends State<AdminHome> {
                   textAlign: TextAlign.center,
                 ),
                 onTap: () {
-                  selectedIndex = 0;
-                  Navigator.pop(context);
-                  setState(
-                    () {},
-                  );
-                },
-              ),
-              0.01.height.hSpace,
-              Divider(
-                color: AppColors.dodgurBlueColor,
-              ),
-              0.01.height.hSpace,
-              ListTile(
-                style: ListTileStyle.drawer,
-                title: Text(
-                  "Programs",
-                  style: TextStyle(
-                    color: AppColors.dodgurBlueColor,
-                    fontSize: 20,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                onTap: () {
-                  selectedIndex = 0;
+                  selectedIndex = 3;
                   Navigator.pop(context);
                   setState(() {});
                 },
-              ),
+              ), // trips
               0.01.height.hSpace,
               Divider(
                 color: AppColors.dodgurBlueColor,
@@ -142,12 +122,81 @@ class _AdminHomeState extends State<AdminHome> {
                   Navigator.pop(context);
                   setState(() {});
                 },
-              ),
+              ), // hotels
+
               0.01.height.hSpace,
               Divider(
                 color: AppColors.dodgurBlueColor,
               ),
               0.01.height.hSpace,
+              ListTile(
+                style: ListTileStyle.drawer,
+                title: Text(
+                  "Accomdations",
+                  style: TextStyle(
+                    color: AppColors.dodgurBlueColor,
+                    fontSize: 20,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                onTap: () {
+                  selectedIndex = 5;
+                  Navigator.pop(context);
+                  setState(() {});
+                },
+              ),
+
+              0.01.height.hSpace,
+              Divider(
+                color: AppColors.dodgurBlueColor,
+              ),
+              0.01.height.hSpace,
+              ListTile(
+                style: ListTileStyle.drawer,
+                title: Text(
+                  "Trips",
+                  style: TextStyle(
+                    color: AppColors.dodgurBlueColor,
+                    fontSize: 20,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                onTap: () {
+                  selectedIndex = 0;
+                  Navigator.pop(context);
+                  setState(
+                    () {},
+                  );
+                },
+              ), //trips
+
+              0.01.height.hSpace,
+              Divider(
+                color: AppColors.dodgurBlueColor,
+              ),
+              0.01.height.hSpace,
+              ListTile(
+                style: ListTileStyle.drawer,
+                title: Text(
+                  "Programs",
+                  style: TextStyle(
+                    color: AppColors.dodgurBlueColor,
+                    fontSize: 20,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                onTap: () {
+                  selectedIndex = 0;
+                  Navigator.pop(context);
+                  setState(() {});
+                },
+              ), // programs
+              0.01.height.hSpace,
+              Divider(
+                color: AppColors.dodgurBlueColor,
+              ),
+              0.01.height.hSpace,
+
               ListTile(
                 style: ListTileStyle.drawer,
                 title: Text(
@@ -163,28 +212,7 @@ class _AdminHomeState extends State<AdminHome> {
                   Navigator.pop(context);
                   setState(() {});
                 },
-              ),
-              0.01.height.hSpace,
-              Divider(
-                color: AppColors.dodgurBlueColor,
-              ),
-              0.01.height.hSpace,
-              ListTile(
-                style: ListTileStyle.drawer,
-                title: Text(
-                  "Flights",
-                  style: TextStyle(
-                    color: AppColors.dodgurBlueColor,
-                    fontSize: 20,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                onTap: () {
-                  selectedIndex = 3;
-                  Navigator.pop(context);
-                  setState(() {});
-                },
-              ),
+              ), //attractions// accomdations // programs
               0.01.height.hSpace,
               Divider(
                 color: AppColors.dodgurBlueColor,
@@ -205,7 +233,7 @@ class _AdminHomeState extends State<AdminHome> {
                   Navigator.pop(context);
                   setState(() {});
                 },
-              ),
+              ), // reports
               0.01.height.hSpace,
               Divider(
                 color: AppColors.dodgurBlueColor,
@@ -226,7 +254,7 @@ class _AdminHomeState extends State<AdminHome> {
                   Navigator.pop(context);
                   setState(() {});
                 },
-              ),
+              ), // setting
               0.01.height.hSpace,
               Divider(
                 color: AppColors.dodgurBlueColor,
@@ -251,7 +279,7 @@ class _AdminHomeState extends State<AdminHome> {
                     FirstScreen.routeName,
                   );
                 },
-              ),
+              ), // log out
               0.01.height.hSpace,
               Divider(
                 color: AppColors.dodgurBlueColor,

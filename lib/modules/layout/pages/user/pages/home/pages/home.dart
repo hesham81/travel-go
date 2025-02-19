@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/utils/credit_card_db.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/firebase_auth_services.dart';
@@ -35,6 +36,7 @@ class _HomeState extends State<Home> {
 
   var searchController = TextEditingController();
   List<TripModel> searchList = [];
+
   List<TripModel> tripList = [
     TripModel(
       id: '1',

@@ -1,175 +1,136 @@
+import 'package:debit_credit_card_widget/debit_credit_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_multi_formatter/formatters/credit_card_number_input_formatter.dart';
+import 'package:travel_go/core/services/bot_toast.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/home.dart';
+import '/core/utils/credit_card_db.dart';
+import '/core/utils/firebase_auth_services.dart';
+import '/core/widget/custom_elevated_button.dart';
+import '/models/credit_card_model.dart';
+import '/core/extensions/extensions.dart';
+import '/core/widget/custom_text_form_field.dart';
+import '/core/widget/label.dart';
 
-class PaymentScreen extends StatefulWidget {
+class Payment extends StatefulWidget {
+  const Payment({super.key});
+
   @override
-  _PaymentScreenState createState() => _PaymentScreenState();
+  State<Payment> createState() => _PaymentState();
 }
 
-class _PaymentScreenState extends State<PaymentScreen> {
-  String selectedPayment = "Debit/Credit Card";
+class _PaymentState extends State<Payment> {
+  TextEditingController cardHoldNumber = TextEditingController();
+  TextEditingController cardNumber = TextEditingController();
+  TextEditingController cardDate = TextEditingController();
+  TextEditingController cardCvv = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var cNumber = cardNumber.text;
     return Scaffold(
-      backgroundColor: Color(0xffB7E0F2),
       appBar: AppBar(
-        backgroundColor: Color(0xffB7E0F2),
-        elevation: 0,
-        title: Text(
-          "Payment Details",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        title: Text('Payment'),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
-            Text(
-              "Payment Method",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            DebitCreditCardWidget(
+              cardExpiry: cardDate.text,
+              cardHolderName: cardHoldNumber.text,
+              cardNumber: cardNumber.text.isEmpty
+                  ? "**** **** **** ****"
+                  : cardNumber.text,
+              cardBrand: CardBrand.mastercard,
+              showNFC: true,
+              cardType: CardType.custom,
             ),
-            SizedBox(height: 12),
-            Expanded(
-              child: ListView(
-                children: [
-                  buildPaymentOption(
-                      title: "Debit/Credit Card",
-                      subtitle: "**** **** **** 7291",
-                      imagePath: "assets/images/Visa-Mastercard.png",
-                      width: 70,
-                      height: 50),
-                  SizedBox(height: 12),
-                  buildPaymentOption(
-                      title: "Apple Pay",
-                      subtitle: "**** **** **** 5638",
-                      imagePath: "assets/images/apple_pay.png",
-                      width: 60,
-                      height: 50),
-                  SizedBox(height: 20),
-                  buildPriceDetails(),
-                ],
-              ),
+            0.01.height.hSpace,
+            Label(
+              text: "Card Number ",
+              style: theme.textTheme.titleMedium,
             ),
-            buildPayNowButton(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildPaymentOption({
-    required String title,
-    required String subtitle,
-    required String imagePath,
-    required double width,
-    required double height,
-  }) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: RadioListTile(
-        title: Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-                Text(subtitle, style: TextStyle(color: Colors.grey)),
+            0.01.height.hSpace,
+            CustomTextFormField(
+              hintText: "Card Number ",
+              controller: cardNumber,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                CreditCardNumberInputFormatter(
+                  useSeparators: true,
+                ),
               ],
             ),
-            Spacer(),
-            Image.asset(imagePath, width: width, height: height),
+            0.01.height.hSpace,
+            Label(
+              text: "Expire Date ",
+              style: theme.textTheme.titleMedium,
+            ),
+            0.01.height.hSpace,
+            CustomTextFormField(
+              hintText: "MM/YY",
+              controller: cardDate,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(4), // Limits input to 4 digits
+                FilteringTextInputFormatter.digitsOnly, // Allows only numbers
+              ],
+            ),
+            0.01.height.hSpace,
+            Label(
+              text: "Holder Name ",
+              style: theme.textTheme.titleMedium,
+            ),
+            0.01.height.hSpace,
+            CustomTextFormField(
+              hintText: "name",
+              controller: cardHoldNumber,
+            ),
+            0.03.height.hSpace,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                CustomElevatedButton(
+                  text: "Pay",
+                  textSize: 17,
+                  borderRadius: 10,
+                  onPressed: () async {
+                    EasyLoading.show();
+                    bool response = await CreditCardDB.checkIfDataValidOrNot(
+                      CreditCardModel(
+                        creditNumber: cardNumber.text,
+                        cardHolder: cardHoldNumber.text,
+                        cvv: "123",
+                        expiryDate: cardDate.text,
+                        userId: FirebaseAuthServices.getCurrentUserData()!
+                            .uid
+                            .toString(),
+                      ),
+                    ).then(
+                      (value) => value,
+                    );
+                    EasyLoading.dismiss();
+                    if (response) {
+                      BotToastServices.showSuccessMessage("Payment Success");
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        Home.routeName,
+                        (route) => false,
+                      );
+                    } else {
+                      BotToastServices.showErrorMessage("Payment Failed");
+                    }
+                  },
+                ),
+              ],
+            )
           ],
         ),
-        value: title,
-        groupValue: selectedPayment,
-        activeColor: Colors.blue,
-        onChanged: (value) {
-          setState(() {
-            selectedPayment = value.toString();
-          });
-        },
-      ),
-    );
-  }
-
-  Widget buildPriceDetails() {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildPriceRow("Trip to Dahab", "5000 LE"),
-          buildPriceRow("1 Guest", "5000 LE"),
-          Divider(thickness: 1),
-          buildPriceRow("Subtotal", "10000 LE"),
-          buildPriceRow("Total", "10000 LE", isBold: true),
-        ],
-      ),
-    );
-  }
-
-  Widget buildPriceRow(String title, String amount, {bool isBold = false}) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              fontSize: 16,
-            ),
-          ),
-          Text(
-            amount,
-            style: TextStyle(
-              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              fontSize: 16,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildPayNowButton() {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 20),
-      child: SizedBox(
-        width: double.infinity,
-        child: ElevatedButton(
-          onPressed: () {
-            // Handle payment logic
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
-            padding: EdgeInsets.symmetric(vertical: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-          ),
-          child: Text(
-            "Pay Now",
-            style: TextStyle(fontSize: 18, color: Colors.white),
-          ),
-        ),
+      ).hPadding(
+        0.03.width,
       ),
     );
   }

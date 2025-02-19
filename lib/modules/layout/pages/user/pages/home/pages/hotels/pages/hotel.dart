@@ -158,7 +158,7 @@ class Hotels extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>PaymentScreen(),
+              builder: (context) =>Payment(),
             ),
           );
         },
