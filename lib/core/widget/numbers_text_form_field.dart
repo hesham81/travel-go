@@ -79,6 +79,9 @@ class _NumbersTextFormFieldState extends State<NumbersTextFormField> {
         ),
         hintText: widget.hintText,
         hintStyle: widget.hintStyle,
+        suffixIcon: Icon(
+          widget.suffixIcon,
+        ),
       ),
     );
   }

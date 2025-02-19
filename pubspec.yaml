@@ -53,6 +53,10 @@ dependencies:
   dropdown_button2: ^2.3.9
   country_state_city_picker: ^1.2.8
   chips_choice: ^3.0.1
+  country_picker: ^2.0.27
+  flutter_awesome_select_clone: ^7.5.0
+  easy_stepper: ^0.8.5+1
+  roundcheckbox: ^2.0.5
 
 dev_dependencies:
   flutter_test:

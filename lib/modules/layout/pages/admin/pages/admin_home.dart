@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import '/modules/layout/pages/admin/pages/attractions/pages/edit_attractions.dart';
 import '/modules/layout/pages/admin/pages/flights/pages/edit_flights.dart';
 import '/modules/layout/pages/admin/pages/programs/pages/edit_programs.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/edit_trip.dart';
@@ -27,6 +28,7 @@ class _AdminHomeState extends State<AdminHome> {
     EditHotels(),
     EditPrograms(),
     EditFlights(),
+    EditAttractions(),
   ];
   int selectedIndex = 0;
   User user = FirebaseAuthServices.getCurrentUserData();
@@ -94,7 +96,9 @@ class _AdminHomeState extends State<AdminHome> {
                 onTap: () {
                   selectedIndex = 0;
                   Navigator.pop(context);
-                  setState(() {});
+                  setState(
+                    () {},
+                  );
                 },
               ),
               0.01.height.hSpace,
@@ -155,7 +159,7 @@ class _AdminHomeState extends State<AdminHome> {
                   textAlign: TextAlign.center,
                 ),
                 onTap: () {
-                  selectedIndex == 0;
+                  selectedIndex = 4;
                   Navigator.pop(context);
                   setState(() {});
                 },

@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/flight_seat_accomdations/pages/flight_seat_accommodation.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/flight_seat_accomdations/pages/flight_seat_accommodation.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/flights/pages/selected_airline.dart';
 import '/modules/layout/pages/admin/pages/hotels/pages/selected_hotel.dart';
 import '/core/constant/supabase_key.dart';
@@ -71,6 +73,8 @@ class MyApp extends StatelessWidget {
         SelectedAdminTrip.routeName: (context) => SelectedAdminTrip(),
         SelectedHotel.routeName: (context) => SelectedHotel(),
         SelectedAirline.routeName: (context) => SelectedAirline(),
+        FlightSeatAccommodation.routeName: (context) =>
+            FlightSeatAccommodation(),
       },
     );
   }

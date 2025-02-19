@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:travel_go/models/hotel_model.dart';
-import '/modules/layout/pages/admin/pages/trips/pages/selected_trip.dart';
-import '/core/extensions/center.dart';
+import 'package:travel_go/core/extensions/align.dart';
+import 'package:travel_go/core/widget/loading_image_network_widget.dart';
 import '/core/extensions/extensions.dart';
 import '/core/utils/trip_db.dart';
 import '/core/widget/search_widget.dart';
@@ -52,7 +51,7 @@ class _EditTripState extends State<EditTrip> {
           color: AppColors.blackColor,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -72,6 +71,12 @@ class _EditTripState extends State<EditTrip> {
             StreamBuilder(
               stream: TripDB.getStreamTripData(),
               builder: (context, snapshot) {
+                if (snapshot.hasData == false) {
+                  print("object");
+                  return Icon(
+                    Icons.data_exploration,
+                  );
+                }
                 snapshot.data!.docs.map(
                   (element) {
                     trips.add(element.data());

@@ -7,25 +7,28 @@ class Label extends StatelessWidget {
   final Color textColor;
   final double textSize;
   final FontWeight textWeight;
+  final TextStyle? style;
 
   const Label({
     super.key,
     required this.text,
-     this.textColor = AppColors.blackColor,
-     this.textSize = 20 ,
-     this.textWeight = FontWeight.w600,
+    this.textColor = AppColors.blackColor,
+    this.textSize = 20,
+    this.textWeight = FontWeight.w600,
+    this.style,
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
-        color: textColor,
-        fontWeight: textWeight,
-        fontSize: textSize,
-        fontFamily: 'Poppins',
-      ),
+      style: style ??
+          TextStyle(
+            color: textColor,
+            fontWeight: textWeight,
+            fontSize: textSize,
+            fontFamily: 'Poppins',
+          ),
     );
   }
 }

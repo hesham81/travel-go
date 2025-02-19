@@ -2,9 +2,9 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/core/services/storage.dart';
-import 'package:travel_go/core/utils/id_generator.dart';
-import 'package:travel_go/models/hotel_model.dart';
+import '/core/services/storage.dart';
+import '/core/utils/id_generator.dart';
+import '/models/hotel_model.dart';
 
 import '../services/bot_toast.dart';
 
