@@ -5,10 +5,8 @@ import '/core/services/bot_toast.dart';
 import '/core/utils/firestore_services.dart';
 
 abstract class FirebaseAuthServices {
-  static bool validation = true;
-  static String? role;
-
   static Future<UserCredential?> signUp(
+    BuildContext context,
     String email,
     String password,
     String name,
@@ -20,28 +18,27 @@ abstract class FirebaseAuthServices {
         password: password,
       );
       await FirestoreServices.RoleBasedSignUp(
-          email: email,
-          password: password,
-          uid: user.user!.uid,
-          createdAt: DateTime.now(),
-          phoneNumber: "",
-          address: "",
-          name: name);
+        email: email,
+        uid: user.user!.uid,
+      );
+      BotToastServices.showSuccessMessage(
+        "Login Successfully",
+      );
       return Future.value(user);
     } on FirebaseAuthException catch (error) {
-      handleFirebaseAuthException(error);
+      handleFirebaseAuthException(error, context);
     } catch (error) {
       BotToastServices.showErrorMessage(error.toString());
     }
     return null;
   }
 
-  static updatePassword({required newPassword}) async {
+  static updatePassword(BuildContext context, {required newPassword}) async {
     try {
       await FirebaseAuth.instance.currentUser!.updatePassword(newPassword);
       return true;
     } on FirebaseAuthException catch (e) {
-      handleFirebaseAuthException(e);
+      handleFirebaseAuthException(e, context);
       return null;
     } catch (e) {
       return null;
@@ -49,10 +46,12 @@ abstract class FirebaseAuthServices {
   }
 
   static signIn(
+    BuildContext context,
     String email,
     String password,
   ) async {
     try {
+      String role = "";
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
@@ -63,19 +62,21 @@ abstract class FirebaseAuthServices {
       );
       return role;
     } on FirebaseAuthException catch (e) {
-      handleFirebaseAuthException(e);
-      print(e.message);
+      handleFirebaseAuthException(e, context);
     } catch (e) {
-      print(e);
+      BotToastServices.showErrorMessage(e.toString());
     }
     return null;
   }
 
-  static forgetPassword(String email) async {
+  static forgetPassword(
+    String email,
+    BuildContext context,
+  ) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
-      handleFirebaseAuthException(e);
+      handleFirebaseAuthException(e, context);
     } catch (e) {
       print(e); // Log other unexpected errors
     }
@@ -89,7 +90,8 @@ abstract class FirebaseAuthServices {
     FirebaseAuth.instance.signOut();
   }
 
-  static void handleFirebaseAuthException(FirebaseAuthException e) {
+  static void handleFirebaseAuthException(
+      FirebaseAuthException e, BuildContext context) {
     if (e.code == 'weak-password') {
       BotToastServices.showErrorMessage('The password provided is too weak.');
     } else if (e.code == 'email-already-in-use') {

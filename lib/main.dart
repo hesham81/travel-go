@@ -3,7 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/flights/pages/selected_airline.dart';
+import 'package:travel_go/modules/splash_screen/pages/splash_screen.dart';
+import '/modules/layout/pages/admin/pages/flights/pages/selected_airline.dart';
 import '/modules/layout/pages/admin/pages/hotels/pages/selected_hotel.dart';
 import '/core/constant/supabase_key.dart';
 import '/modules/layout/pages/admin/pages/hotels/pages/edit_hotels.dart';
@@ -40,13 +41,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //supabase
-    //https://snkdebzdhsftylikqzlh.supabase.co url
-    //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNua2RlYnpkaHNmdHlsaWtxemxoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkyNTI1MDUsImV4cCI6MjA1NDgyODUwNX0.QfyXn1jHrlK-TTxCnulz4dfNrAqfKbR9nCrkqFjWTMU
-    //this is the key
-
     return MaterialApp(
-      initialRoute: FirstScreen.routeName,
+      initialRoute: SplashScreen.routeName,
       debugShowCheckedModeBanner: false,
       navigatorKey: navigationKey,
       theme: AppTheme.lightTheme,
@@ -56,6 +52,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
+        SplashScreen.routeName :(context) => const SplashScreen(),
         FirstScreen.routeName: (context) => const FirstScreen(),
         SignIn.routeName: (context) => SignIn(),
         SignUp.routeName: (context) => SignUp(),

@@ -21,10 +21,10 @@ class CustomElevatedButton extends StatelessWidget {
     this.borderColor,
     this.borderWidth,
     this.padding,
-    this.textSize = 48,
+    this.textSize = 15,
     this.textWeight = FontWeight.w600,
     required this.onPressed,
-    this.borderRadius = 50 ,
+    this.borderRadius = 15 ,
   });
 
   @override

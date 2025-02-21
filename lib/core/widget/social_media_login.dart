@@ -20,6 +20,10 @@ class SocialMediaLogin extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        width: double.maxFinite,
+        padding: EdgeInsets.symmetric(
+          vertical: 0.01.height,
+        ),
         decoration: BoxDecoration(
           border: Border.all(
             color: AppColors.blackColor,
@@ -30,8 +34,10 @@ class SocialMediaLogin extends StatelessWidget {
         ),
         child: Expanded(
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              0.07.width.vSpace,
+              0.09.width.vSpace,
               Image.asset(
                 imagePath,
                 height: 35,
