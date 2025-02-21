@@ -68,6 +68,7 @@ class MyApp extends StatelessWidget {
         SelectedAdminTrip.routeName: (context) => SelectedAdminTrip(),
         SelectedHotel.routeName: (context) => SelectedHotel(),
         SelectedAirline.routeName: (context) => SelectedAirline(),
+        Profile.routeName: (context) => Profile(),
       },
     );
   }

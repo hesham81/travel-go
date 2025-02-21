@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/extensions/align.dart';
+import 'package:travel_go/core/extensions/alignment.dart';
+import 'package:travel_go/core/services/bot_toast.dart';
+import 'package:travel_go/core/widget/custom_rating_widget.dart';
+import 'package:travel_go/core/widget/loading_image_network_widget.dart';
 import '/core/extensions/extensions.dart';
 import '/core/widget/label.dart';
 import '/models/trip_model.dart';
 
 import '../../../../../../../core/theme/app_colors.dart';
 
-class TripCardWidget extends StatelessWidget {
+class TripCardWidget extends StatefulWidget {
   final TripModel tripModel;
 
   const TripCardWidget({
@@ -14,59 +19,87 @@ class TripCardWidget extends StatelessWidget {
   });
 
   @override
+  State<TripCardWidget> createState() => _TripCardWidgetState();
+}
+
+class _TripCardWidgetState extends State<TripCardWidget> {
+  @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Container(
       width: double.maxFinite,
-      decoration: BoxDecoration(
-        color: AppColors.whiteColor,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: AppColors.newBlueColor,
-        )
-      ),
-      child: Expanded(
-        child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Label(
-                    text: tripModel.title,
-                    textSize: 20,
-                    textWeight: FontWeight.w500,
+      height: 0.2.height,
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: LoadingImageNetworkWidget(
+              imageUrl: widget.tripModel.imageUrl,
+            ),
+          ),
+          widget.tripModel.isFavorite == true
+              ? IconButton(
+                  onPressed: () {
+                    widget.tripModel.isFavorite = !widget.tripModel.isFavorite;
+                    BotToastServices.showSuccessMessage(
+                      "${widget.tripModel.title} Removed From favourite",
+                    );
+                    setState(() {});
+                  },
+                  icon: Icon(
+                    Icons.favorite,
+                    color: AppColors.newBlueColor,
                   ),
-                  15.hSpace,
-                  Label(
-                    text:
-                        "Start Date : ${tripModel.startDateTime.day}/${tripModel.startDateTime.month}/${tripModel.startDateTime.year} ",
-                    textSize: 18,
-                    textWeight: FontWeight.w400,
+                ).alignTopRight()
+              : IconButton(
+                  onPressed: () {
+                    widget.tripModel.isFavorite = !widget.tripModel.isFavorite;
+                    BotToastServices.showSuccessMessage(
+                      "${widget.tripModel.title} Added To favourite",
+                    );
+                    setState(() {});
+                  },
+                  icon: Icon(
+                    Icons.favorite_outline,
+                    color: AppColors.newBlueColor,
                   ),
-                  15.hSpace,
-                  Label(
-                    text:
-                        "End Date : ${tripModel.endDateTime.day}/${tripModel.endDateTime.month}/${tripModel.endDateTime.year} ",
-                    textSize: 18,
-                    textWeight: FontWeight.w400,
-                  ),
-                  15.hSpace,
-                  Label(
-                    text: "Price : ${tripModel.price} ${tripModel.currency}",
-                    textSize: 18,
-                    textWeight: FontWeight.w400,
-                  ),
-                ],
+                ).alignTopRight(),
+          Text(
+            widget.tripModel.title,
+            style: theme.textTheme.bodyMedium!.copyWith(
+              color: AppColors.whiteColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ).centerTopWidget(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${widget.tripModel.endDateTime.difference(widget.tripModel.startDateTime).inDays} Days",
               ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Image.asset(tripModel.imageUrl),
-            ),
-          ],
-        ).allPadding(10),
+              0.01.height.hSpace,
+              Text(
+                "${widget.tripModel.price} ${widget.tripModel.currency}",
+                style: theme.textTheme.bodyMedium!.copyWith(
+                  color: AppColors.whiteColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              Spacer(),
+              CustomRatingWidget(
+                initialRating: 3.5,
+                tapOnlyMode: true,
+                minRating: 3.5,
+                itemSize: 20,
+                mainColor: AppColors.newBlueColor,
+              ),
+              0.01.height.hSpace,
+            ],
+          ).allPadding(10),
+        ],
       ),
-    ).hPadding(0.04.width);
+    );
   }
 }

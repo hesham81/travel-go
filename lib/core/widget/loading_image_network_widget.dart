@@ -11,6 +11,7 @@ class LoadingImageNetworkWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.network(
+      width: double.maxFinite,
       imageUrl,
       fit: BoxFit.cover,
       loadingBuilder: (context, child, loadingProgress) {

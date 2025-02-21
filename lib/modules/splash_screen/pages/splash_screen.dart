@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/extensions/align.dart';
-import 'package:travel_go/core/routes/route_names.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
+import '/core/extensions/align.dart';
+import '/core/routes/route_names.dart';
+import '/core/theme/app_colors.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = "/splash";
@@ -30,13 +30,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FadeInUpBig(
+          FadeInLeftBig(
             duration: Duration(seconds: 3),
             child: Image.asset(
               "assets/images/logo2.jpg",

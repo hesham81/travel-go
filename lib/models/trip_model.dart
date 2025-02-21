@@ -8,8 +8,10 @@ class TripModel {
   final DateTime endDateTime;
   final double price;
   final String currency;
+  bool isFavorite;
 
   TripModel({
+    this.isFavorite = false,
     this.currency = "LE",
     required this.id,
     required this.imageUrl,
