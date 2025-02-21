@@ -30,7 +30,7 @@ class OtpFormWidget extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
             borderSide: BorderSide(
-              color: AppColors.blackColor,
+              color: AppColors.newBlueColor,
               width: 1,
             ),
           ),
@@ -44,7 +44,7 @@ class OtpFormWidget extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
             borderSide: BorderSide(
-              color: AppColors.blackColor,
+              color: AppColors.newBlueColor,
               width: 1,
             ),
           ),

@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/core/utils/social_auth_services.dart';
-import 'package:travel_go/core/widget/social_media_login.dart';
+import '/core/widget/social_media_login.dart';
 import '/core/constant/app_assets.dart';
-import '/core/services/bot_toast.dart';
 import '/core/utils/firebase_auth_services.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/core/widget/custom_text_button.dart';
 import '/core/widget/custom_text_form_field.dart';
 import '/core/widget/dividers_word.dart';
-import '/modules/first_screen/widget/check_widget.dart';
-import '../../../core/validations/validations.dart';
-import '../../../core/widget/label.dart';
-import '../../sign_in/pages/sign_in.dart';
+import '/core/validations/validations.dart';
 import '/core/extensions/extensions.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/widget/back_leading_widget.dart';
+import '/core/theme/app_colors.dart';
 
 class SignUp extends StatefulWidget {
   static const routeName = '/sign-up';
@@ -43,8 +37,20 @@ class _SignUpState extends State<SignUp> {
       appBar: AppBar(
         title: Text(
           "Create Account",
+          style: theme.textTheme.titleLarge!.copyWith(
+            color: AppColors.whiteColor,
+          ),
         ),
-        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.whiteColor,
+          ),
+        ),
+        backgroundColor: AppColors.newBlueColor,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -111,7 +117,6 @@ class _SignUpState extends State<SignUp> {
                 Navigator.pop(context);
               },
             ),
-            0.01.height.hSpace,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

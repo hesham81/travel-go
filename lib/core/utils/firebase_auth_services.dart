@@ -68,7 +68,7 @@ abstract class FirebaseAuthServices {
     } on FirebaseAuthException catch (e) {
       handleFirebaseAuthException(e, context);
     } catch (e) {
-      BotToastServices.showErrorMessage(e.toString());
+      BotToastServices.showErrorMessage("Error");
     }
     return null;
   }
@@ -82,7 +82,7 @@ abstract class FirebaseAuthServices {
     } on FirebaseAuthException catch (e) {
       handleFirebaseAuthException(e, context);
     } catch (e) {
-      print(e); // Log other unexpected errors
+      print(e);
     }
   }
 
@@ -95,20 +95,20 @@ abstract class FirebaseAuthServices {
   }
 
   static void handleFirebaseAuthException(
-      FirebaseAuthException e, BuildContext context) {
+    FirebaseAuthException e,
+    BuildContext context,
+  ) {
     if (e.code == 'weak-password') {
       BotToastServices.showErrorMessage('The password provided is too weak.');
     } else if (e.code == 'email-already-in-use') {
-      BotToastServices.showErrorMessage(
-          'The account already exists for that email.');
+      BotToastServices.showErrorMessage('Account Already Exist');
     } else if (e.code == 'user-not-found') {
       BotToastServices.showErrorMessage('No user found for that email.');
     } else if (e.code == 'wrong-password') {
-      BotToastServices.showErrorMessage(
-          'Wrong password provided for that user.');
+      BotToastServices.showErrorMessage('User Name Or Password is Invalid');
     } else {
       BotToastServices.showErrorMessage(
-          'An unexpected Firebase error occurred: ${e.code}');
+          e.code);
     }
   }
 }

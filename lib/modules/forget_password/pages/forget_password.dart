@@ -26,8 +26,28 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
+      backgroundColor: AppColors.whiteColor,
+      appBar: AppBar(
+        title: Text(
+          "Forget Password",
+          style: theme.textTheme.titleLarge!.copyWith(
+            color: AppColors.whiteColor,
+          ),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.whiteColor,
+          ),
+        ),
+        backgroundColor: AppColors.newBlueColor,
+      ),
       body: Expanded(
         child: SingleChildScrollView(
           child: Column(
@@ -35,7 +55,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Image.asset(
-                AppAssets.firstScreenIMG,
+                AppAssets.forgetPassword,
               ),
               0.07.height.hSpace,
               Form(
@@ -45,27 +65,19 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Label(
-                      text: "OTP Verification",
-                      textWeight: FontWeight.w700,
-                    ),
-                    0.04.height.hSpace,
-                    Label(
                       text:
                           "Enter email and phone number to \nsend one time Password",
-                      textColor: AppColors.dodgurBlueColor,
+                      textColor: AppColors.blackColor,
                       textWeight: FontWeight.w500,
                     ),
                     0.04.height.hSpace,
                     CustomTextFormField(
+                      hintText: "Email",
+                      suffixIcon: Icons.email_outlined,
+                      controller: emailController,
                       validation: (value) {
                         return Validations.isEmailValid(emailController.text);
                       },
-                      hintText: "Email Or Phone Number",
-                      controller: emailController,
-                      borderColor: AppColors.dodgurBlueColor,
-                      hintStyle: TextStyle(
-                        color: AppColors.dodgurBlueColor,
-                      ),
                     ),
                     0.04.height.hSpace,
                     SizedBox(

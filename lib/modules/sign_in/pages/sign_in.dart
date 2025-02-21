@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/modules/forget_password/pages/forget_password.dart';
 import '/core/services/bot_toast.dart';
 import '/core/utils/firebase_auth_services.dart';
 import '/modules/layout/pages/user/pages/home/pages/home.dart';
@@ -63,7 +64,12 @@ class _SignInState extends State<SignIn> {
               },
             ),
             CustomTextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  ForgetPassword.routeName,
+                );
+              },
               textColor: AppColors.newBlueColor,
               text: "Forget Password",
             ).rightBottomWidget(),

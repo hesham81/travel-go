@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/core/constant/app_assets.dart';
 import '/core/services/bot_toast.dart';
 import '/core/utils/email_services.dart';
 import '/modules/new_password/pages/new_password.dart';
@@ -35,29 +36,47 @@ class _OtpState extends State<Otp> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
+      backgroundColor: AppColors.whiteColor,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        title: Text(
+          "Verification Code",
+          style: theme.textTheme.titleLarge!.copyWith(
+            color: AppColors.whiteColor,
+          ),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.whiteColor,
+          ),
+        ),
+        backgroundColor: AppColors.newBlueColor,
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             0.03.height.hSpace,
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Label(
-                  text: "Verification Code",
+                Image.asset(
+                  AppAssets.otpImage,
                 ),
                 0.02.height.hSpace,
                 Label(
                   text:
                       "We have sent the verification \ncode to your email address",
-                  textColor: AppColors.dodgurBlueColor,
+                  textColor: AppColors.blackColor,
                   textSize: 18,
                   textWeight: FontWeight.w500,
                 ),
@@ -144,8 +163,8 @@ class _OtpState extends State<Otp> {
                   Navigator.pop(context);
                 }
               },
-              text: "     Confirm     ",
-              borderRadius: 20,
+              text: "Confirm",
+              borderRadius: 12,
               padding: EdgeInsets.symmetric(
                 horizontal: 0.02.height,
                 vertical: 0,
@@ -154,7 +173,7 @@ class _OtpState extends State<Otp> {
               textSize: 32,
             ),
           ],
-        ),
+        ).hPadding(0.03.width),
       ),
     );
   }

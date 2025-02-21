@@ -20,6 +20,8 @@ abstract class AppAssets
   static const String smaileSucessLottieFile = "assets/icons/smile.json";
   static const String uploadImage = "assets/images/upload.jpeg";
   static const String logo = "assets/images/logo2.jpg";
+  static const String forgetPassword = "assets/images/forget_password.jpg";
+  static const String otpImage = "assets/images/otp.jpg";
 
   static const String lockICN = "assets/icons/lock.png";
   static const String eyeICN = "assets/icons/eye.png";
