@@ -10,6 +10,7 @@ abstract class FirebaseAuthServices {
     String email,
     String password,
     String name,
+    String nationalId,
   ) async {
     try {
       UserCredential? user =
@@ -20,10 +21,13 @@ abstract class FirebaseAuthServices {
       await FirestoreServices.RoleBasedSignUp(
         email: email,
         uid: user.user!.uid,
+        nationalId: nationalId,
       );
       BotToastServices.showSuccessMessage(
-        "Login Successfully",
+        "Account Created Successfully",
       );
+      user.user!.updateDisplayName(name);
+      user.user!.reload();
       return Future.value(user);
     } on FirebaseAuthException catch (error) {
       handleFirebaseAuthException(error, context);

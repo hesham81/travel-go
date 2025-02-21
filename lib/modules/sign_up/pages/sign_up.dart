@@ -38,12 +38,11 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
         title: Text(
           "Create Account",
-
         ),
         backgroundColor: Colors.transparent,
       ),
@@ -99,7 +98,18 @@ class _SignUpState extends State<SignUp> {
             0.03.height.hSpace,
             CustomElevatedButton(
               text: "Create Account",
-              onPressed: () {},
+              onPressed: () async {
+                EasyLoading.show();
+                await FirebaseAuthServices.signUp(
+                  context,
+                  emailController.text,
+                  passwordController.text,
+                  nameController.text,
+                  nationalIdController.text,
+                );
+                EasyLoading.dismiss();
+                Navigator.pop(context);
+              },
             ),
             0.01.height.hSpace,
             Row(
@@ -111,7 +121,6 @@ class _SignUpState extends State<SignUp> {
                 ),
                 CustomTextButton(
                   textColor: AppColors.newBlueColor,
-
                   textSize: 14,
                   onPressed: () {
                     Navigator.pop(context);

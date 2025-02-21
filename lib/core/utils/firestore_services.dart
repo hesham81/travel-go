@@ -9,6 +9,7 @@ abstract class FirestoreServices {
   static RoleBasedSignUp({
     required String email,
     required String uid,
+    required String nationalId,
     bool isAdmin = false,
   }) async {
     try {
@@ -16,6 +17,7 @@ abstract class FirestoreServices {
         'email': email,
         'uid': uid,
         'role': (isAdmin) ? 'admin' : 'user',
+        'nationalId': nationalId,
       });
       return null;
     } catch (error) {
