@@ -53,6 +53,8 @@ dependencies:
   dropdown_button2: ^2.3.9
   country_state_city_picker: ^1.2.8
   chips_choice: ^3.0.1
+  searchfield: ^1.2.4
+  animate_do: ^4.1.1
 
 dev_dependencies:
   flutter_test:

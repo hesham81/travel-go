@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:travel_go/core/services/bot_toast.dart';
 import 'package:travel_go/main.dart';
 
 import '../../modules/layout/pages/user/pages/home/pages/home.dart';
@@ -26,6 +27,9 @@ abstract class SocialAuthServices {
       context,
       Home.routeName,
       (route) => false,
+    );
+    BotToastServices.showSuccessMessage(
+      "Welcome Back",
     );
   }
 }

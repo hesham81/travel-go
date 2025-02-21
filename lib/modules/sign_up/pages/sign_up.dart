@@ -151,6 +151,7 @@ class _SignUpState extends State<SignUp> {
                 ),
               ],
             ),
+            0.02.height.hSpace,
           ],
         ).hPadding(0.03.width),
       ),

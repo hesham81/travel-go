@@ -41,6 +41,7 @@ class _EditTripState extends State<EditTrip> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteColor,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: AppColors.primaryColor.withOpacity(0.8),

@@ -35,23 +35,21 @@ class _SearchWidgetState extends State<SearchWidget> {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(widget.borderRadius),
           borderSide: BorderSide(
-            color: AppColors.whiteColor,
+            color: AppColors.newBlueColor,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(widget.borderRadius),
           borderSide: BorderSide(
-            color: AppColors.whiteColor,
+            color: AppColors.newBlueColor,
           ),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(widget.borderRadius),
           borderSide: BorderSide(
-            color: AppColors.whiteColor,
+            color: AppColors.newBlueColor,
           ),
         ),
-        fillColor: AppColors.whiteColor,
-        filled: true,
         prefixIcon: IconButton(
           onPressed: () {},
           icon: Icon(

@@ -14,7 +14,7 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  User currentUser = FirebaseAuthServices.getCurrentUserData();
+  final User currentUser = FirebaseAuthServices.getCurrentUserData();
 
   @override
   Widget build(BuildContext context) {

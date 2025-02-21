@@ -1,6 +1,10 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/widget/custom_text_button.dart';
+import 'package:travel_go/core/widget/loading_image_network_widget.dart';
+import 'package:travel_go/modules/sign_in/pages/sign_in.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/firebase_auth_services.dart';
@@ -24,6 +28,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  var user = FirebaseAuthServices.getCurrentUserData();
+
   _openBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -31,6 +37,11 @@ class _HomeState extends State<Home> {
       isDismissible: true,
       enableDrag: true,
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   var searchController = TextEditingController();
@@ -90,148 +101,100 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        title: Text(
-          "Travel Go",
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.notifications,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              FirebaseAuthServices.logout();
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                FirstScreen.routeName,
-                (route) => false,
-              );
-            },
-            icon: Icon(
-              Icons.logout,
-              color: AppColors.errorColor,
-            ),
-          ),
-        ],
-      ),
-      drawer: MyDrawer(),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: DefaultTabController(
-            length: 3,
-            child: Column(
-              children: [
-                SearchWidget(
-                  controller: searchController,
-                  suffixIcon: searchQueryText != ""
-                      ? IconButton(
-                          onPressed: () {
-                            _openBottomSheet(context);
-                          },
-                          icon: Icon(
-                            Icons.filter_list,
+      backgroundColor: AppColors.whiteColor,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Image.asset(
+                    AppAssets.logo,
+                    height: 60,
+                    width: 60,
+                    fit: BoxFit.cover,
+                  ),
+                  Text(
+                    "Travel Go",
+                    style: theme.textTheme.titleSmall!.copyWith(
+                      color: AppColors.newBlueColor,
+                    ),
+                  ).hPadding(0.03.width),
+                  Spacer(),
+                  user.photoURL == null
+                      ? Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                AppAssets.noProfileImage,
+                              ),
+                            ),
+                            shape: BoxShape.circle,
                           ),
+                          height: 70,
+                          width: 70,
                         )
-                      : null,
-                  search: (value) {
-                    searchQueryText = value;
-                    searchQuery();
-                    setState(
-                      () {},
-                    );
-                  },
-                ).vPadding(0.01.height).hPadding(0.09.width),
-                0.01.height.hSpace,
-                TabBar(
-                  onTap: (index) {},
-                  dividerColor: Colors.transparent,
-                  indicatorColor: Colors.transparent,
-                  tabs: [
-                    CustomElevatedButton(
-                      text: "Trip",
-                      onPressed: () {
-                        btnColor:
-                        Colors.grey.withAlpha(80);
-                      },
-                      borderRadius: 15,
-                      textSize: 12,
-                      borderColor: AppColors.dodgurBlueColor,
-                      btnColor: Colors.grey.withAlpha(80),
-                      textColor: AppColors.blackColor,
-                    ),
-                    CustomElevatedButton(
-                      text: "Flight",
-                      onPressed: () {
-                        btnColor:
-                        Colors.grey.withAlpha(80);
-                      },
-                      borderRadius: 15,
-                      textSize: 12,
-                      btnColor: AppColors.dodgurBlueColor,
-                      textColor: AppColors.whiteColor,
-                    ),
-                    CustomElevatedButton(
-                      text: "Hotel",
-                      onPressed: () {
-                        btnColor:
-                        Colors.grey.withAlpha(80);
-                      },
-                      borderRadius: 15,
-                      textSize: 12,
-                      btnColor: AppColors.dodgurBlueColor,
-                      textColor: AppColors.whiteColor,
-                    ),
-                  ],
-                ).hPadding(0.03.width),
-                0.02.height.hSpace,
-                Visibility(
-                  visible: searchList.isEmpty,
-                  replacement: ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => GestureDetector(
-                      onTap: () {
-                        log('Clicked');
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DahabTripScreen(),
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: LoadingImageNetworkWidget(
+                            imageUrl: user.photoURL!,
                           ),
-                        );
-                      },
-                      child: TripCardWidget(
-                        tripModel: searchList[index],
+                        ),
+                  0.01.width.vSpace,
+                ],
+              ),
+              0.02.height.hSpace,
+              Row(
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        "Hi , ${user!.displayName}",
+                        style: theme.textTheme.titleLarge!.copyWith(
+                          color: AppColors.blackColor,
+                        ),
                       ),
-                    ),
-                    separatorBuilder: (index, context) => 0.02.height.hSpace,
-                    itemCount: searchList.length,
-                  ),
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DahabTripScreen()));
-                      },
-                      child: TripCardWidget(
-                        tripModel: tripList[index],
+                      0.01.height.hSpace,
+                      Text(
+                        "Let's explore the world!",
+                        style: theme.textTheme.titleMedium!.copyWith(
+                          color: AppColors.newBlueColor,
+                        ),
                       ),
-                    ),
-                    separatorBuilder: (index, context) => 0.02.height.hSpace,
-                    itemCount: tripList.length,
+                    ],
                   ),
-                )
-              ],
-            ),
-          ),
+                  Spacer(),
+                  CircleAvatar(
+                    backgroundColor: AppColors.newBlueColor,
+                    radius: 20,
+                    child: Icon(
+                      Icons.search,
+                      color: AppColors.whiteColor,
+                    ),
+                  ),
+                  0.01.width.vSpace,
+                ],
+              ),
+              0.01.height.hSpace,
+              Row(
+                children: [
+                  Text(
+                    "Special For You",
+                    style: theme.textTheme.titleMedium!.copyWith(
+                      color: AppColors.blackColor,
+                    ),
+                  ),
+                  Spacer(),
+                  CustomTextButton(
+                    onPressed: () {},
+                    text: "Discover More",
+                  ),
+                ],
+              ),
+            ],
+          ).hPadding(0.03.width),
         ),
       ),
     );

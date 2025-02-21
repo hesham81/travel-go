@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/modules/sign_in/pages/sign_in.dart';
 import '/modules/layout/pages/admin/pages/flights/pages/edit_flights.dart';
 import '/modules/layout/pages/admin/pages/programs/pages/edit_programs.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/edit_trip.dart';
@@ -33,13 +34,24 @@ class _AdminHomeState extends State<AdminHome> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Scaffold(
+      backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Admin Home'),
+        title: Text(
+          "Travel Go",
+          style: theme.textTheme.titleLarge!.copyWith(
+            color: AppColors.whiteColor,
+          ),
+        ),
+        backgroundColor: AppColors.newBlueColor,
+
       ),
       drawer: Drawer(
         width: 0.5.width,
+
         backgroundColor: AppColors.greyColor,
         child: SingleChildScrollView(
           child: Column(
@@ -244,7 +256,7 @@ class _AdminHomeState extends State<AdminHome> {
                   EasyLoading.dismiss();
                   Navigator.pushReplacementNamed(
                     context,
-                    FirstScreen.routeName,
+                    SignIn.routeName,
                   );
                 },
               ),

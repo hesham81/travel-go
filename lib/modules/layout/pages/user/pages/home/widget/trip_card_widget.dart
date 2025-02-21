@@ -20,6 +20,9 @@ class TripCardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: AppColors.newBlueColor,
+        )
       ),
       child: Expanded(
         child: Row(

@@ -41,6 +41,7 @@ class _FilterWidgetState extends State<FilterWidget> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
     return Container(
+      color: AppColors.greyColor,
       height: 0.8.height,
       child: SingleChildScrollView(
         child: Column(

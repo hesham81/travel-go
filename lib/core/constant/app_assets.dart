@@ -22,6 +22,7 @@ abstract class AppAssets
   static const String logo = "assets/images/logo2.jpg";
   static const String forgetPassword = "assets/images/forget_password.jpg";
   static const String otpImage = "assets/images/otp.jpg";
+  static const String noProfileImage = "assets/images/noProfileImage.jpg";
 
   static const String lockICN = "assets/icons/lock.png";
   static const String eyeICN = "assets/icons/eye.png";
