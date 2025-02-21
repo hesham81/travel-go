@@ -10,16 +10,16 @@ import '/core/utils/firebase_auth_services.dart';
 import '/core/widget/custom_text_form_field.dart';
 import '/core/widget/label.dart';
 
-class Profile extends StatefulWidget {
+class AdminProfile extends StatefulWidget {
   static const routeName = '/profile';
 
-  const Profile({super.key});
+  const AdminProfile({super.key});
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<AdminProfile> createState() => _AdminProfileState();
 }
 
-class _ProfileState extends State<Profile> {
+class _AdminProfileState extends State<AdminProfile> {
   User? user = FirebaseAuthServices.getCurrentUserData();
   PhoneController phoneController = PhoneController();
 

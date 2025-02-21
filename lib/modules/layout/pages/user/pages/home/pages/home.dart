@@ -154,8 +154,9 @@ class _HomeState extends State<Home> {
         margin: EdgeInsets.all(20),
         width: double.maxFinite,
         decoration: BoxDecoration(
-            color: AppColors.newBlueColor,
-            borderRadius: BorderRadius.circular(25)),
+          color: AppColors.newBlueColor,
+          borderRadius: BorderRadius.circular(25),
+        ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(25),
           child: BottomNavigationBar(
@@ -226,6 +227,7 @@ class _HomeState extends State<Home> {
                           onTap: () => Navigator.pushNamed(
                             context,
                             UserProfile.routeName,
+                            arguments: user,
                           ),
                           child: Container(
                             decoration: BoxDecoration(
@@ -244,6 +246,7 @@ class _HomeState extends State<Home> {
                           onTap: () => Navigator.pushNamed(
                             context,
                             UserProfile.routeName,
+                            arguments: user,
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(50),
@@ -338,7 +341,7 @@ class _HomeState extends State<Home> {
                 itemBuilder: (context, index) => TripCardWidget(
                   tripModel: tripList[index],
                 ),
-                separatorBuilder:(context, _) => 0.01.height.hSpace ,
+                separatorBuilder: (context, _) => 0.01.height.hSpace,
                 itemCount: tripList.length,
               ),
             ],

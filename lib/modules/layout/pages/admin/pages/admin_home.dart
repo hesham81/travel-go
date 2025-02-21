@@ -59,7 +59,7 @@ class _AdminHomeState extends State<AdminHome> {
               SafeArea(
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, Profile.routeName);
+                    Navigator.pushNamed(context, AdminProfile.routeName);
                   },
                   child: Column(
                     children: [

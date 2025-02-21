@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/profile/pages/user_profile.dart';
 import 'package:travel_go/modules/splash_screen/pages/splash_screen.dart';
 import '/modules/layout/pages/admin/pages/flights/pages/selected_airline.dart';
 import '/modules/layout/pages/admin/pages/hotels/pages/selected_hotel.dart';
@@ -63,12 +64,12 @@ class MyApp extends StatelessWidget {
         NewPassword.routeName: (context) => NewPassword(),
         SelectedTrip.routeName: (context) => SelectedTrip(),
         EditHotels.routeName: (context) => EditHotels(),
-        Profile.routeName: (context) => Profile(),
+        AdminProfile.routeName: (context) => AdminProfile(),
         AddHotel.routeName: (context) => AddHotel(),
         SelectedAdminTrip.routeName: (context) => SelectedAdminTrip(),
         SelectedHotel.routeName: (context) => SelectedHotel(),
         SelectedAirline.routeName: (context) => SelectedAirline(),
-        Profile.routeName: (context) => Profile(),
+        UserProfile.routeName : (context) => UserProfile(),
       },
     );
   }
