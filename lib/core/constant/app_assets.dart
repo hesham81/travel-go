@@ -5,7 +5,6 @@ abstract class AppAssets
   static const String sharmIMG = 'assets/images/places/sharm.png';
   static const String tokyouIMG = 'assets/images/places/tokyou.png';
   static const String profile = 'assets/images/profile.png';
-  static const String logo = 'assets/images/logo.png';
   static const String fullLogo = 'assets/images/1.png';
   static const String plane = 'assets/images/3.png';
   static const String circle = 'assets/images/4.png';
@@ -20,6 +19,7 @@ abstract class AppAssets
   static const String dahabTwo = "assets/images/places/dahab2.jpg";
   static const String smaileSucessLottieFile = "assets/icons/smile.json";
   static const String uploadImage = "assets/images/upload.jpeg";
+  static const String logo = "assets/images/logo2.jpg";
 
   static const String lockICN = "assets/icons/lock.png";
   static const String eyeICN = "assets/icons/eye.png";

@@ -45,7 +45,7 @@ abstract class FirebaseAuthServices {
     }
   }
 
-  static signIn(
+  static Future<String?> signIn(
     BuildContext context,
     String email,
     String password,

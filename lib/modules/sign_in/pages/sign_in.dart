@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import '/core/services/bot_toast.dart';
+import '/core/utils/firebase_auth_services.dart';
+import '/modules/layout/pages/user/pages/home/pages/home.dart';
 import '/core/extensions/alignment.dart';
 import '/core/routes/route_names.dart';
 import '/core/validations/validations.dart';
@@ -60,15 +64,41 @@ class _SignInState extends State<SignIn> {
             ),
             CustomTextButton(
               onPressed: () {},
+              textColor: AppColors.newBlueColor,
               text: "Forget Password",
             ).rightBottomWidget(),
             CustomElevatedButton(
               text: "Login",
-              onPressed: () {
-                if (formKey.currentState!.validate()) {}
+              onPressed: () async {
+                String? role;
+                if (formKey.currentState!.validate()) {
+                  EasyLoading.show();
+                  await FirebaseAuthServices.signIn(
+                    context,
+                    emailController.text,
+                    passwordController.text,
+                  ).then(
+                    (value) => role = value,
+                  );
+                  EasyLoading.dismiss();
+                  if (role == "user") {
+                    BotToastServices.showSuccessMessage("Welcome Back");
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      Home.routeName,
+                      (route) => false,
+                    );
+                  } else if (role == "admin") {
+                    BotToastServices.showSuccessMessage("Welcome Back");
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      Home.routeName,
+                      (route) => false,
+                    );
+                  }
+                }
               },
               borderRadius: 10,
-              btnColor: Colors.lightBlue,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -79,6 +109,8 @@ class _SignInState extends State<SignIn> {
                 ),
                 0.01.width.vSpace,
                 CustomTextButton(
+                  textColor: AppColors.newBlueColor,
+                  textSize: 14,
                   onPressed: () {
                     Navigator.pushNamed(
                       context,
@@ -94,6 +126,7 @@ class _SignInState extends State<SignIn> {
             ),
             0.02.height.hSpace,
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: SocialMediaLogin(

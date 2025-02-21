@@ -16,7 +16,7 @@ class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
     super.key,
     required this.text,
-    this.btnColor = AppColors.skyBlueColor,
+    this.btnColor = AppColors.newBlueColor,
     this.textColor = AppColors.whiteColor,
     this.borderColor,
     this.borderWidth,
