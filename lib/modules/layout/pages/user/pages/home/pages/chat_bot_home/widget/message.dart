@@ -29,8 +29,8 @@ class _MessageState extends State<Message> {
         Container(
           height: 0.04.height,
           padding: EdgeInsets.symmetric(
-            vertical: 0.01.height,
-            horizontal: 0.02.width,
+            vertical: 0.02.height,
+            horizontal: 0.03.width,
           ),
           decoration: BoxDecoration(
             color: AppColors.newBlueColor,

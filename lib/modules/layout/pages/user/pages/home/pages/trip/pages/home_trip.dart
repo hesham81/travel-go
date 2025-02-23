@@ -26,7 +26,7 @@ class _HomeTripState extends State<HomeTrip> {
     TripModel(
       id: '1',
       imageUrl:
-      "https://i.pinimg.com/474x/6a/99/ee/6a99ee843798375c5f7049316e8d31ed.jpg",
+          "https://i.pinimg.com/474x/6a/99/ee/6a99ee843798375c5f7049316e8d31ed.jpg",
       title: 'Paris',
       startDateTime: DateTime(2025, 10, 12),
       endDateTime: DateTime(2025, 10, 15),
@@ -35,7 +35,7 @@ class _HomeTripState extends State<HomeTrip> {
     TripModel(
       id: '5',
       imageUrl:
-      "https://i.pinimg.com/474x/a1/40/72/a140720c714f8689dc23c9dbe8c7be13.jpg",
+          "https://i.pinimg.com/474x/a1/40/72/a140720c714f8689dc23c9dbe8c7be13.jpg",
       title: 'Dynamo Kiev',
       startDateTime: DateTime(2025, 10, 12),
       endDateTime: DateTime(2025, 10, 15),
@@ -45,7 +45,7 @@ class _HomeTripState extends State<HomeTrip> {
     TripModel(
       id: '6',
       imageUrl:
-      "https://i.pinimg.com/474x/ac/82/3f/ac823f39ce49b221f8d1c3cb44f88073.jpg",
+          "https://i.pinimg.com/474x/ac/82/3f/ac823f39ce49b221f8d1c3cb44f88073.jpg",
       title: 'Aswan',
       startDateTime: DateTime(2025, 3, 12),
       endDateTime: DateTime(2025, 3, 15),
@@ -54,7 +54,7 @@ class _HomeTripState extends State<HomeTrip> {
     TripModel(
       id: '4',
       imageUrl:
-      "https://i.pinimg.com/474x/ea/77/e6/ea77e6b28d3c330c8da3e2c565cb3da3.jpg",
+          "https://i.pinimg.com/474x/ea/77/e6/ea77e6b28d3c330c8da3e2c565cb3da3.jpg",
       title: 'Sharm',
       startDateTime: DateTime(2025, 3, 21),
       endDateTime: DateTime(2025, 4, 5),
@@ -63,7 +63,7 @@ class _HomeTripState extends State<HomeTrip> {
     TripModel(
       id: '2',
       imageUrl:
-      "https://i.pinimg.com/474x/5b/9c/95/5b9c95ae4a85c7ca6fc04919222654fc.jpg",
+          "https://i.pinimg.com/474x/5b/9c/95/5b9c95ae4a85c7ca6fc04919222654fc.jpg",
       title: 'Dahab',
       startDateTime: DateTime(2025, 8, 16),
       endDateTime: DateTime(2025, 8, 19),
@@ -72,7 +72,7 @@ class _HomeTripState extends State<HomeTrip> {
     TripModel(
       id: '3',
       imageUrl:
-      "https://i.pinimg.com/474x/a8/91/3d/a8913dd1fc3dcc7a3a8e9af97c0167f0.jpg",
+          "https://i.pinimg.com/474x/a8/91/3d/a8913dd1fc3dcc7a3a8e9af97c0167f0.jpg",
       title: 'Alex',
       startDateTime: DateTime(2025, 4, 20),
       endDateTime: DateTime(2025, 4, 23),
@@ -81,53 +81,53 @@ class _HomeTripState extends State<HomeTrip> {
   ];
   List<RecommendModel> recommendations = [
     RecommendModel(
+      name: "Pyramids of Egypt",
+      imgUrl:
+          "https://i.pinimg.com/474x/9b/73/61/9b7361b0dfbd5ffaf4f92928a2f554ed.jpg",
+      rating: 4.5,
+      location: "Giza, Egypt",
+    ),
+    RecommendModel(
       name: "Sunset Resort",
       imgUrl:
-      "https://i.pinimg.com/474x/fd/24/f7/fd24f7618315267be4c3c1f137b07ba5.jpg",
+          "https://i.pinimg.com/474x/fd/24/f7/fd24f7618315267be4c3c1f137b07ba5.jpg",
       rating: 4.0,
       location: "Maldives",
     ),
     RecommendModel(
       name: "Mountain Escape",
       imgUrl:
-      "https://i.pinimg.com/474x/9a/8a/15/9a8a15c6f624f8eced6e8749814d1346.jpg",
+          "https://i.pinimg.com/474x/9a/8a/15/9a8a15c6f624f8eced6e8749814d1346.jpg",
       rating: 3.7,
       location: "Switzerland",
     ),
     RecommendModel(
       name: "Urban Luxury Hotel",
       imgUrl:
-      "https://i.pinimg.com/474x/a9/11/11/a91111291a57cbbdd936a3673fb229fb.jpg",
+          "https://i.pinimg.com/474x/a9/11/11/a91111291a57cbbdd936a3673fb229fb.jpg",
       rating: 4.6,
       location: "New York, USA",
     ),
     RecommendModel(
       name: "Tropical Paradise",
       imgUrl:
-      "https://i.pinimg.com/474x/f5/3b/e4/f53be4d19b19f8c0116af5e0e804b4a5.jpg",
+          "https://i.pinimg.com/474x/f5/3b/e4/f53be4d19b19f8c0116af5e0e804b4a5.jpg",
       rating: 4.0,
       location: "Bali, Indonesia",
     ),
     RecommendModel(
       name: "Historic Castle Stay",
       imgUrl:
-      "https://i.pinimg.com/474x/70/ba/b8/70bab828bc5768acfd79719a8180639f.jpg",
+          "https://i.pinimg.com/474x/70/ba/b8/70bab828bc5768acfd79719a8180639f.jpg",
       rating: 4.5,
       location: "Edinburgh, Scotland",
-    ),
-    RecommendModel(
-      name: "Pyramids of Egypt",
-      imgUrl:
-      "https://i.pinimg.com/474x/9b/73/61/9b7361b0dfbd5ffaf4f92928a2f554ed.jpg",
-      rating: 4.5,
-      location: "Giza, Egypt",
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    return  SingleChildScrollView(
+    return SingleChildScrollView(
       child: SafeArea(
         child: Column(
           children: [

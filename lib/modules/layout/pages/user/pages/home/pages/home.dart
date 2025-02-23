@@ -5,7 +5,6 @@ import '/modules/layout/pages/user/pages/home/pages/trip/pages/home_trip.dart';
 import '/models/recommend_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/firebase_auth_services.dart';
-import '/modules/layout/pages/user/pages/home/widget/filter_widget.dart';
 import '/models/trip_model.dart';
 import 'chat_bot_home/page/chat_bot_home.dart';
 import 'favourite_home/page/favourite_home.dart';
@@ -68,7 +67,6 @@ class _HomeState extends State<Home> {
   var user = FirebaseAuthServices.getCurrentUserData();
   int selectedIndex = 0;
 
-
   @override
   void initState() {
     super.initState();
@@ -104,7 +102,7 @@ class _HomeState extends State<Home> {
             showUnselectedLabels: false,
             backgroundColor: AppColors.newBlueColor,
             onTap: (index) {
-              selectedIndex=index;
+              selectedIndex = index;
               setState(() {});
             },
             currentIndex: selectedIndex,
@@ -157,7 +155,6 @@ class _HomeState extends State<Home> {
                 icon: Icon(
                   Icons.favorite_outline,
                   color: AppColors.whiteColor,
-
                 ),
                 activeIcon: Icon(
                   Icons.favorite,
@@ -172,5 +169,4 @@ class _HomeState extends State<Home> {
       body: body[selectedIndex],
     );
   }
-
 }

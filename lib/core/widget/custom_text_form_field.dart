@@ -25,7 +25,7 @@ class CustomTextFormField extends StatefulWidget {
     this.controller,
     this.borderColor = AppColors.blackColor,
     this.hintStyle,
-    this.isReadOnly = false ,
+    this.isReadOnly = false,
   });
 
   @override
@@ -97,7 +97,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     ),
                   )
             : (widget.suffixIcon) != null
-                ? Icon(widget.suffixIcon)
+                ? GestureDetector(
+                    child: Icon(
+                      widget.suffixIcon,
+                    ),
+                  )
                 : null,
       ),
     );

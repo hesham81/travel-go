@@ -56,6 +56,10 @@ dependencies:
   searchfield: ^1.2.4
   animate_do: ^4.1.1
   google_gemini: ^0.1.2
+  dio: ^5.8.0+1
+  flutter_gemini: ^3.0.0
+  dash_chat_2: ^0.0.21
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:
