@@ -44,7 +44,7 @@ class _RecommendedWidgetState extends State<RecommendedWidget> {
                     setState(() {});
                   },
                   icon: Icon(
-                    Icons.favorite,
+                    Icons.bookmark,
                     color: AppColors.newBlueColor,
                   ),
                 ).alignTopRight()
@@ -54,7 +54,7 @@ class _RecommendedWidgetState extends State<RecommendedWidget> {
                     setState(() {});
                   },
                   icon: Icon(
-                    Icons.favorite_outline,
+                    Icons.bookmark_outline,
                     color: AppColors.newBlueColor,
                   ),
                 ).alignTopRight(),

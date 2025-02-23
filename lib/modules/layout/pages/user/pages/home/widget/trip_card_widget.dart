@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/extensions/align.dart';
-import 'package:travel_go/core/extensions/alignment.dart';
-import 'package:travel_go/core/services/bot_toast.dart';
-import 'package:travel_go/core/widget/custom_rating_widget.dart';
-import 'package:travel_go/core/widget/loading_image_network_widget.dart';
+import '/core/extensions/align.dart';
+import '/core/extensions/alignment.dart';
+import '/core/services/bot_toast.dart';
+import '/core/widget/custom_rating_widget.dart';
+import '/core/widget/loading_image_network_widget.dart';
 import '/core/extensions/extensions.dart';
-import '/core/widget/label.dart';
 import '/models/trip_model.dart';
 
 import '../../../../../../../core/theme/app_colors.dart';
@@ -47,7 +46,7 @@ class _TripCardWidgetState extends State<TripCardWidget> {
                     setState(() {});
                   },
                   icon: Icon(
-                    Icons.favorite,
+                    Icons.bookmark,
                     color: AppColors.newBlueColor,
                   ),
                 ).alignTopRight()
@@ -60,7 +59,7 @@ class _TripCardWidgetState extends State<TripCardWidget> {
                     setState(() {});
                   },
                   icon: Icon(
-                    Icons.favorite_outline,
+                    Icons.bookmark_outline,
                     color: AppColors.newBlueColor,
                   ),
                 ).alignTopRight(),

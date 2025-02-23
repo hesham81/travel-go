@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/core/utils/api/ai/chat_bot.dart';
+import '/modules/layout/pages/admin/menna/adminhome.dart';
 import '/core/utils/social_auth_services.dart';
 import '/modules/forget_password/pages/forget_password.dart';
-import '/modules/layout/pages/admin/pages/admin_home.dart';
 import '/core/services/bot_toast.dart';
 import '/core/utils/firebase_auth_services.dart';
 import '/modules/layout/pages/user/pages/home/pages/home.dart';
@@ -100,9 +99,16 @@ class _SignInState extends State<SignIn> {
                       );
                     } else if (role == "admin") {
                       BotToastServices.showSuccessMessage("Welcome Back");
-                      Navigator.pushNamedAndRemoveUntil(
+                      // Navigator.pushNamedAndRemoveUntil(
+                      //   context,
+                      //   AdminHome.routeName,
+                      //   (route) => false,
+                      // );
+                      Navigator.pushAndRemoveUntil(
                         context,
-                        AdminHome.routeName,
+                        MaterialPageRoute(
+                          builder: (context) => AdminHomeScreen(),
+                        ),
                         (route) => false,
                       );
                     }

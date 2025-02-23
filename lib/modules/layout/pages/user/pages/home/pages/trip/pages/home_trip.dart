@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/modules/layout/pages/user/widget/app_bar.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/reservation.dart';
+import '../../reservation/pages/reservation_2.dart';
+import '/modules/layout/pages/user/widget/app_bar.dart';
 import '/modules/layout/pages/user/pages/home/widget/trip_card_widget.dart';
-import '/modules/layout/pages/user/pages/profile/pages/user_profile.dart';
 import '/core/extensions/alignment.dart';
 import '/core/extensions/extensions.dart';
-import '/core/constant/app_assets.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/firebase_auth_services.dart';
 import '/core/widget/custom_text_button.dart';
-import '/core/widget/loading_image_network_widget.dart';
 import '/core/widget/recommended_widget.dart';
 import '/models/recommend_model.dart';
 import '/models/trip_model.dart';
@@ -212,8 +211,11 @@ class _HomeTripState extends State<HomeTrip> {
             ListView.separated(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) => TripCardWidget(
-                tripModel: tripList[index],
+              itemBuilder: (context, index) => GestureDetector(
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Reservation(),)),
+                child: TripCardWidget(
+                  tripModel: tripList[index],
+                ),
               ),
               separatorBuilder: (context, _) => 0.01.height.hSpace,
               itemCount: tripList.length,

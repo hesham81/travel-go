@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class LoadingImageNetworkWidget extends StatelessWidget {
   final String imageUrl;
+  final double? height;
 
   const LoadingImageNetworkWidget({
     super.key,
     required this.imageUrl,
+    this.height,
   });
 
   @override
@@ -14,6 +16,7 @@ class LoadingImageNetworkWidget extends StatelessWidget {
       width: double.maxFinite,
       imageUrl,
       fit: BoxFit.cover,
+      height: height,
       loadingBuilder: (context, child, loadingProgress) {
         if (loadingProgress == null) {
           return child;

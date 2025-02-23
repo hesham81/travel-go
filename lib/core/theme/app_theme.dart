@@ -5,9 +5,9 @@ import 'app_colors.dart';
 abstract class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     primaryColor: AppColors.primaryColor,
-    scaffoldBackgroundColor: AppColors.primaryColor,
+    scaffoldBackgroundColor: AppColors.whiteColor,
     appBarTheme: AppBarTheme(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: AppColors.newBlueColor,
       centerTitle: true,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(

@@ -18,7 +18,7 @@ class _BuildUiState extends State<BuildUi> {
     id: "1",
     firstName: "Atom",
     profileImage:
-        "https://i.pinimg.com/474x/e6/26/19/e62619dea4058f5ea546f39e66604d01.jpg",
+    "https://i.pinimg.com/474x/e6/26/19/e62619dea4058f5ea546f39e66604d01.jpg",
   );
 
   void _sendMessage(ChatMessage chatMessage) {
@@ -28,60 +28,89 @@ class _BuildUiState extends State<BuildUi> {
 
     try {
       String question = chatMessage.text;
-      gemini.streamGenerateContent(question).listen(
-        (event) {
-          String response = event.content?.parts?.fold(
-                "",
-                (previousValue, element) =>
-                    "$previousValue${element.toString()}",
-              ) ??
-              "";
+
+      // Send the user's message to Gemini API
+      gemini.prompt(
+        parts: [
+          Part.text(question), // Use the user's message as the prompt
+        ],
+      ).then((response) {
+        if (response != null && response.output != null) {
+          // Parse the response and update the UI
+          String botResponse = response.output!;
 
           setState(() {
-            if (messages.isNotEmpty && messages.first.user == chatBot) {
-              messages.first.text = response;
-            } else {
-              ChatMessage message = ChatMessage(
-                user: chatBot,
-                createdAt: DateTime.now(),
-                text: response,
-              );
-              messages = [message, ...messages];
-            }
+            // Add the bot's response to the messages list
+            ChatMessage message = ChatMessage(
+              user: chatBot,
+              createdAt: DateTime.now(),
+              text: botResponse,
+            );
+            messages = [message, ...messages];
           });
-        },
-        onError: (error) {
-          print("Error: $error");
-        },
-      );
+        } else {
+          // Handle empty response
+          print("No response from Gemini API");
+        }
+      }).catchError((e) {
+        // Handle API errors
+        print("Error: $e");
+        setState(() {
+          // Add an error message to the UI
+          ChatMessage errorMessage = ChatMessage(
+            user: chatBot,
+            createdAt: DateTime.now(),
+            text: "Failed to generate response. Please try again.",
+          );
+          messages = [errorMessage, ...messages];
+        });
+      });
     } catch (e) {
+      // Handle any exceptions
       print("Exception: $e");
+      setState(() {
+        // Add an error message to the UI
+        ChatMessage errorMessage = ChatMessage(
+          user: chatBot,
+          createdAt: DateTime.now(),
+          text: "An error occurred. Please try again.",
+        );
+        messages = [errorMessage, ...messages];
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return DashChat(
-      currentUser: currentUser,
-      onSend: _sendMessage,
-      messages: messages,
-      inputOptions: InputOptions(
-        inputDecoration: InputDecoration(
-          hintText: "Ask Atom Any Thing ",
-          focusedBorder: OutlineInputBorder(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Chat with Atom"),
+        backgroundColor: AppColors.newBlueColor,
+      ),
+      body: DashChat(
+        currentUser: currentUser,
+        onSend: _sendMessage,
+        messages: messages,
+        inputOptions: InputOptions(
+          inputDecoration: InputDecoration(
+            hintText: "Ask Atom Anything",
+            focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
               borderSide: BorderSide(
                 color: AppColors.newBlueColor,
-              )),
-          disabledBorder: OutlineInputBorder(
+              ),
+            ),
+            disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
               borderSide: BorderSide(
                 color: AppColors.newBlueColor,
-              )),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(
-              color: AppColors.newBlueColor,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide(
+                color: AppColors.newBlueColor,
+              ),
             ),
           ),
         ),

@@ -128,7 +128,9 @@ class DahabTripScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Reservation()),
+                      MaterialPageRoute(
+                        builder: (context) => ReservationScreen(),
+                      ),
                     );
                     // Add your reserve action here
                   },
@@ -139,7 +141,8 @@ class DahabTripScreen extends StatelessWidget {
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.white),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Hotels()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Hotels()));
                     // Add your next action here
                   },
                   child: Text('Next', style: TextStyle(color: Colors.black)),

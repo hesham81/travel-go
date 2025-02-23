@@ -16,7 +16,6 @@ class _ReservationState extends State<Reservation> {
   @override
   void initState() {
     super.initState();
-    // Ensure timeOfReservation stores only date part
     timeOfReservation = DateTime(timeOfReservation.year, timeOfReservation.month, timeOfReservation.day);
   }
 
