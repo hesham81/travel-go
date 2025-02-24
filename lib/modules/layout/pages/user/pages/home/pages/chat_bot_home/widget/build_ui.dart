@@ -28,19 +28,15 @@ class _BuildUiState extends State<BuildUi> {
 
     try {
       String question = chatMessage.text;
-
-      // Send the user's message to Gemini API
       gemini.prompt(
         parts: [
-          Part.text(question), // Use the user's message as the prompt
+          Part.text(question),
         ],
       ).then((response) {
         if (response != null && response.output != null) {
-          // Parse the response and update the UI
           String botResponse = response.output!;
 
           setState(() {
-            // Add the bot's response to the messages list
             ChatMessage message = ChatMessage(
               user: chatBot,
               createdAt: DateTime.now(),
@@ -53,10 +49,8 @@ class _BuildUiState extends State<BuildUi> {
           print("No response from Gemini API");
         }
       }).catchError((e) {
-        // Handle API errors
         print("Error: $e");
         setState(() {
-          // Add an error message to the UI
           ChatMessage errorMessage = ChatMessage(
             user: chatBot,
             createdAt: DateTime.now(),
@@ -66,7 +60,6 @@ class _BuildUiState extends State<BuildUi> {
         });
       });
     } catch (e) {
-      // Handle any exceptions
       print("Exception: $e");
       setState(() {
         // Add an error message to the UI

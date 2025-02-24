@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/reservation.dart';
-import '../../reservation/pages/reservation_2.dart';
+import '/modules/layout/pages/user/pages/home/pages/payment/pages/credt_card.dart';
 import '/modules/layout/pages/user/widget/app_bar.dart';
 import '/modules/layout/pages/user/pages/home/widget/trip_card_widget.dart';
 import '/core/extensions/alignment.dart';
@@ -212,7 +211,12 @@ class _HomeTripState extends State<HomeTrip> {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) => GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Reservation(),)),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CreditCardScreen(),
+                  ),
+                ),
                 child: TripCardWidget(
                   tripModel: tripList[index],
                 ),

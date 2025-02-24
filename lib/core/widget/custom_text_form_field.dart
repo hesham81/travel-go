@@ -12,6 +12,7 @@ class CustomTextFormField extends StatefulWidget {
   final TextEditingController? controller;
   final Color borderColor;
   final isReadOnly;
+  final Validator? onChanged;
 
   final TextStyle? hintStyle;
 
@@ -26,6 +27,7 @@ class CustomTextFormField extends StatefulWidget {
     this.borderColor = AppColors.blackColor,
     this.hintStyle,
     this.isReadOnly = false,
+    this.onChanged,
   });
 
   @override
@@ -38,6 +40,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: widget.onChanged,
       readOnly: widget.isReadOnly,
       validator: widget.validation,
       controller: widget.controller,
