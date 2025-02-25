@@ -42,4 +42,41 @@ abstract class Storage {
       return false;
     }
   }
+
+  static uploadPublicAttraction({
+    required String attractionName,
+    required File image,
+    required String fileName,
+  }) async {
+    try {
+      await _supabase.upload(
+        "attractions/attraction image/$fileName",
+        image,
+      );
+      return true;
+    } catch (error) {
+      log("Error $error");
+      return false;
+    }
+  }
+
+  static String? getPublicUrlAttractionImage(String path) {
+    try {
+      String url = _supabase.getPublicUrl("attractions/attraction image/$path");
+      return url;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  static Future<bool> deleteAttractionImage(String path) async {
+    try {
+      await _supabase.remove(
+        ["attractions/attraction image/$path"],
+      );
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }
