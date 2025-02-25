@@ -5,9 +5,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:google_gemini/google_gemini.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/delete_attractions/pages/delete_selected_attraction.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/update_attractions/pages/selected_attraction.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/reservation.dart';
+import 'package:travel_go/modules/layout/pages/manager/pages/manager_home/manager_home_screen.dart';
+import '/modules/layout/pages/admin/pages/attractions/pages/delete_attractions/pages/delete_selected_attraction.dart';
+import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/pages/selected_attraction.dart';
+import '/modules/layout/pages/user/pages/home/pages/reservation/pages/reservation.dart';
 import '/core/constant/ai_constant.dart';
 import '/modules/layout/pages/user/pages/profile/pages/user_profile.dart';
 import '/modules/splash_screen/pages/splash_screen.dart';
@@ -79,8 +80,10 @@ class MyApp extends StatelessWidget {
         SelectedAirline.routeName: (context) => SelectedAirline(),
         UserProfile.routeName: (context) => UserProfile(),
         SelectedAttraction.routeName: (context) => SelectedAttraction(),
-        DeleteSelectedAttraction.routeName: (context) => DeleteSelectedAttraction(),
+        DeleteSelectedAttraction.routeName: (context) =>
+            DeleteSelectedAttraction(),
         ReservationScreen.routeName: (context) => ReservationScreen(),
+        ManagerHomeScreen.routeName: (context) => ManagerHomeScreen(),
       },
     );
   }

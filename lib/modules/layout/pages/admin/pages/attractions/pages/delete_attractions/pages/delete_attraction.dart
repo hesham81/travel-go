@@ -14,86 +14,146 @@ class DeleteAttraction extends StatefulWidget {
 class _DeleteAttractionState extends State<DeleteAttraction> {
   List<AttractionsModel> attractions = [
     AttractionsModel(
-        location: "Eiffel Tower, Paris",
-        description:
-        "A wrought-iron lattice tower in Paris, France, and one of the most recognizable landmarks in the world.",
-        imageUrl:
-        "https://i.pinimg.com/474x/be/08/d9/be08d9d7b0d57f9102f8d6ec3f9e2a0e.jpg"),
-    AttractionsModel(
-      location: "Grand Canyon, USA",
-      description:
-      "A breathtaking natural wonder known for its immense size and stunning landscapes.",
-      imageUrl:
-      "https://i.pinimg.com/474x/03/2f/7f/032f7f3c30ba1ff7a0a300b80149baac.jpg",
+      title: "Eiffel Tower",
+      location: "Paris, France",
+      description: "The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris, France.",
+      imageUrl: "https://source.unsplash.com/1600x900/?eiffel,tower",
+      videoUrl: "https://www.youtube.com/watch?v=rlWO9QIgX8I",
     ),
     AttractionsModel(
-      location: "Great Wall of China",
-      description:
-      "An ancient series of walls and fortifications stretching across northern China.",
-      imageUrl:
-      "https://i.pinimg.com/474x/9d/c1/75/9dc175435728d5154f7cb77384a17c48.jpg",
+      title: "Times Square",
+      location: "New York City, USA",
+      description: "Times Square is a major commercial intersection, tourist destination, and entertainment hub in Midtown Manhattan.",
+      imageUrl: "https://source.unsplash.com/1600x900/?times,square",
+      videoUrl: "https://www.youtube.com/watch?v=O7WbVj5apxU",
     ),
     AttractionsModel(
+      title: "Colosseum",
+      location: "Rome, Italy",
+      description: "The Colosseum is an oval amphitheatre in the centre of the city of Rome, Italy.",
+      imageUrl: "https://source.unsplash.com/1600x900/?colosseum,rome",
+      videoUrl: "https://www.youtube.com/watch?v=oo1WZ4nqET4",
+    ),
+    AttractionsModel(
+      title: "Shibuya Crossing",
+      location: "Tokyo, Japan",
+      description: "Shibuya Crossing is a popular shopping and entertainment area known for its iconic pedestrian scramble.",
+      imageUrl: "https://source.unsplash.com/1600x900/?shibuya,crossing",
+      videoUrl: "https://www.youtube.com/watch?v=QkG4JSHW1kA",
+    ),
+    AttractionsModel(
+      title: "Sydney Opera House",
+      location: "Sydney, Australia",
+      description: "The Sydney Opera House is a multi-venue performing arts centre at Sydney Harbour.",
+      imageUrl: "https://source.unsplash.com/1600x900/?sydney,opera",
+      videoUrl: "https://www.youtube.com/watch?v=6mBO2vqLv38",
+    ),
+    AttractionsModel(
+      title: "Big Ben",
+      location: "London, UK",
+      description: "Big Ben is the nickname for the Great Bell of the clock at the north end of the Palace of Westminster.",
+      imageUrl: "https://source.unsplash.com/1600x900/?big,ben",
+      videoUrl: "https://www.youtube.com/watch?v=t1nFvfs2fqo",
+    ),
+    AttractionsModel(
+      title: "Burj Khalifa",
+      location: "Dubai, UAE",
+      description: "Burj Khalifa is the tallest building in the world, standing at 828 meters.",
+      imageUrl: "https://source.unsplash.com/1600x900/?burj,khalifa",
+      videoUrl: "https://www.youtube.com/watch?v=2aB2Q4lG7yI",
+    ),
+    AttractionsModel(
+      title: "Sagrada Familia",
+      location: "Barcelona, Spain",
+      description: "Sagrada Familia is a large unfinished Roman Catholic church designed by architect Antoni Gaudí.",
+      imageUrl: "https://source.unsplash.com/1600x900/?sagrada,familia",
+      videoUrl: "https://www.youtube.com/watch?v=1F2hV1vxI8k",
+    ),
+    AttractionsModel(
+      title: "Christ the Redeemer",
+      location: "Rio de Janeiro, Brazil",
+      description: "Christ the Redeemer is an Art Deco statue of Jesus Christ in Rio de Janeiro, Brazil.",
+      imageUrl: "https://source.unsplash.com/1600x900/?christ,redeemer",
+      videoUrl: "https://www.youtube.com/watch?v=Qj7eWaR6u2k",
+    ),
+    AttractionsModel(
+      title: "Machu Picchu",
       location: "Machu Picchu, Peru",
-      description:
-      "A 15th-century Inca citadel set high in the Andes Mountains.",
-      imageUrl:
-      "https://i.pinimg.com/474x/44/e6/3f/44e63fd319fe4ca864502c5819b45a6e.jpg",
+      description: "Machu Picchu is a 15th-century Inca citadel located in the Eastern Cordillera of southern Peru.",
+      imageUrl: "https://source.unsplash.com/1600x900/?machu,picchu",
+      videoUrl: "https://www.youtube.com/watch?v=6H8A2xXjx4E",
     ),
     AttractionsModel(
-      location: "Santorini, Greece",
-      description:
-      "A stunning Greek island known for its whitewashed buildings and blue domes.",
-      imageUrl:
-      "https://i.pinimg.com/474x/ef/75/1e/ef751e5a5d81a77e9e12dd93dc66f888.jpg",
+      title: "Grand Canyon",
+      location: "Grand Canyon, USA",
+      description: "The Grand Canyon is a steep-sided canyon carved by the Colorado River in Arizona.",
+      imageUrl: "https://source.unsplash.com/1600x900/?grand,canyon",
+      videoUrl: "https://www.youtube.com/watch?v=6H8A2xXjx4E",
     ),
     AttractionsModel(
-      location: "Colosseum, Rome",
-      description:
-      "An ancient amphitheater in Rome, once used for gladiator contests and public spectacles.",
-      imageUrl:
-      "https://i.pinimg.com/474x/34/a8/b9/34a8b96ee490128a9e249bf70ca17227.jpg",
+      title: "Venice Canals",
+      location: "Venice, Italy",
+      description: "Venice is famous for its canals, gondolas, and historic architecture.",
+      imageUrl: "https://source.unsplash.com/1600x900/?venice,italy",
+      videoUrl: "https://www.youtube.com/watch?v=JphHw6iU4m8",
     ),
     AttractionsModel(
-      location: "Taj Mahal, India",
-      description:
-      "A white marble mausoleum built by Emperor Shah Jahan in memory of his wife.",
-      imageUrl:
-      "https://i.pinimg.com/736x/d0/db/bb/d0dbbb3f2b35b89f385496ef82078544.jpg",
+      title: "Fushimi Inari Shrine",
+      location: "Kyoto, Japan",
+      description: "Fushimi Inari Shrine is famous for its thousands of vermilion torii gates.",
+      imageUrl: "https://source.unsplash.com/1600x900/?fushimi,inari",
+      videoUrl: "https://www.youtube.com/watch?v=5kZ4w5z9Jz4",
     ),
     AttractionsModel(
-      location: "Pyramids of Giza, Egypt",
-      description:
-      "Iconic pyramids that have stood for over 4,500 years in the desert.",
-      imageUrl:
-      "https://i.pinimg.com/474x/e7/32/cf/e732cf6e211fc111d51d8156ec4d85e1.jpg",
+      title: "Great Pyramid of Giza",
+      location: "Cairo, Egypt",
+      description: "The Great Pyramid of Giza is the oldest and largest of the three pyramids in the Giza pyramid complex.",
+      imageUrl: "https://source.unsplash.com/1600x900/?pyramid,giza",
+      videoUrl: "https://www.youtube.com/watch?v=4S8Z1i7xL8k",
     ),
     AttractionsModel(
-      location: "Sydney Opera House, Australia",
-      description:
-      "A world-famous performing arts center with a unique sail-like design.",
-      imageUrl:
-      "https://i.pinimg.com/474x/7d/b0/97/7db097ceda199971ad4f1a1e1bd78bff.jpg",
+      title: "Grand Palace",
+      location: "Bangkok, Thailand",
+      description: "The Grand Palace is a complex of buildings at the heart of Bangkok, Thailand.",
+      imageUrl: "https://source.unsplash.com/1600x900/?grand,palace",
+      videoUrl: "https://www.youtube.com/watch?v=2Z5P5v5z5Z4",
     ),
     AttractionsModel(
-      location: "Statue of Liberty, USA",
-      description:
-      "A symbol of freedom and democracy located in New York Harbor.",
-      imageUrl:
-      "https://i.pinimg.com/474x/92/7b/34/927b34755e3bdeb570ede29e6e708121.jpg",
+      title: "Van Gogh Museum",
+      location: "Amsterdam, Netherlands",
+      description: "The Van Gogh Museum houses the largest collection of artworks by Vincent van Gogh.",
+      imageUrl: "https://source.unsplash.com/1600x900/?van,gogh",
+      videoUrl: "https://www.youtube.com/watch?v=3Z5Z5Z5Z5Z4",
     ),
     AttractionsModel(
-      location: "Neuschwanstein Castle, Germany",
-      description: "A fairy-tale castle nestled in the Bavarian Alps.",
-      imageUrl:
-      "https://i.pinimg.com/474x/53/3d/34/533d340615a38181947eacce72b8b6d2.jpg",
+      title: "Prague Castle",
+      location: "Prague, Czech Republic",
+      description: "Prague Castle is a castle complex in Prague, dating back to the 9th century.",
+      imageUrl: "https://source.unsplash.com/1600x900/?prague,castle",
+      videoUrl: "https://www.youtube.com/watch?v=4Z5Z5Z5Z5Z4",
     ),
     AttractionsModel(
-      location: "Dubai Burj Khalifa",
-      description: "The tallest building in the world, standing at 828 meters.",
-      imageUrl:
-      "https://i.pinimg.com/474x/3f/63/2f/3f632f265c55fd526d94a1d65a54a74b.jpg",
+      title: "Hagia Sophia",
+      location: "Istanbul, Turkey",
+      description: "Hagia Sophia is a historic mosque and former cathedral in Istanbul.",
+      imageUrl: "https://source.unsplash.com/1600x900/?hagia,sophia",
+      videoUrl: "https://www.youtube.com/watch?v=5Z5Z5Z5Z5Z4",
     ),
+    AttractionsModel(
+      title: "Golden Gate Bridge",
+      location: "San Francisco, USA",
+      description: "The Golden Gate Bridge is a suspension bridge spanning the Golden Gate Strait.",
+      imageUrl: "https://source.unsplash.com/1600x900/?golden,gate",
+      videoUrl: "https://www.youtube.com/watch?v=6Z5Z5Z5Z5Z4",
+    ),
+    AttractionsModel(
+      title: "Great Wall of China",
+      location: "Beijing, China",
+      description: "The Great Wall of China is a series of fortifications made of stone, brick, and other materials.",
+      imageUrl: "https://source.unsplash.com/1600x900/?great,wall",
+      videoUrl: "https://www.youtube.com/watch?v=7Z5Z5Z5Z5Z4",
+    ),
+    // Add more attractions here...
   ];
 
   @override

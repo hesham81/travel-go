@@ -13,6 +13,7 @@ class CustomTextFormField extends StatefulWidget {
   final Color borderColor;
   final isReadOnly;
   final Validator? onChanged;
+  final int? minLine;
 
   final TextStyle? hintStyle;
 
@@ -28,6 +29,7 @@ class CustomTextFormField extends StatefulWidget {
     this.hintStyle,
     this.isReadOnly = false,
     this.onChanged,
+    this.minLine = 1,
   });
 
   @override
@@ -46,6 +48,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       controller: widget.controller,
       obscureText: widget.isPassword ? visible : false,
       obscuringCharacter: "*",
+      maxLines: widget.minLine,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),

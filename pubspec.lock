@@ -81,6 +81,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  awesome_alert:
+    dependency: "direct main"
+    description:
+      name: awesome_alert
+      sha256: "52ca79ba3a0a26afefe473b0e259c472aee441729ce18c8c675e4aeaa9bb1af8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -517,6 +525,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_widget_from_html_core:
+    dependency: transitive
+    description:
+      name: flutter_widget_from_html_core
+      sha256: b1048fd119a14762e2361bd057da608148a895477846d6149109b2151d2f7abf
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.15.2"
   functions_client:
     dependency: transitive
     description:
@@ -1122,6 +1138,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.8.3"
+  syncfusion_flutter_charts:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_charts
+      sha256: c91e9c48c14d2a947e3fd733bd7e2d9eddb2e67ffc60d8db5385b260f7df910d
+      url: "https://pub.dev"
+    source: hosted
+    version: "28.2.6"
+  syncfusion_flutter_core:
+    dependency: transitive
+    description:
+      name: syncfusion_flutter_core
+      sha256: "634adbc5c7d41e31513e9e3d60213bbc6aedff6e90ddb23b6495bfc0a23a260e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "28.2.6"
   synchronized:
     dependency: transitive
     description:

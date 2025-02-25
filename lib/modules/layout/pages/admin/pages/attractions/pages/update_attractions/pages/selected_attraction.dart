@@ -14,46 +14,58 @@ class SelectedAttraction extends StatelessWidget {
   Widget build(BuildContext context) {
     var model = ModalRoute.of(context)!.settings.arguments as AttractionsModel;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: Text(model.location),
+        title: Text(model.title),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Image.network(
-            model.imageUrl,
-          ),
-          0.01.height.hSpace,
-          CustomTextFormField(
-            hintText: model.location,
-          ).hPadding(0.03.width),
-          0.01.height.hSpace,
-          CustomTextFormField(
-            hintText: model.description,
-          ).hPadding(0.03.width),
-          0.01.height.hSpace,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: CustomElevatedButton(
-                  text: "Okay",
-                  onPressed: () {},
-                  borderRadius: 10,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Image.network(
+              model.imageUrl,
+            ),
+            0.01.height.hSpace,
+            CustomTextFormField(
+              hintText: model.location,
+              isReadOnly: true,
+            ).hPadding(0.03.width),
+            0.01.height.hSpace,
+            CustomTextFormField(
+              hintText: model.videoUrl ?? "No Video Url Founded",
+              minLine: 3,
+            ).hPadding(0.03.width),
+            0.01.height.hSpace,
+            CustomTextFormField(
+              hintText: model.description,
+              minLine: 3,
+            ).hPadding(0.03.width),
+            0.01.height.hSpace,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: CustomElevatedButton(
+                    text: "OK",
+                    onPressed: () {},
+                    borderRadius: 10,
+                  ),
                 ),
-              ),
-              0.01.width.vSpace,
-              Expanded(
-                child: CustomElevatedButton(
-                  text: "Cancel",
-                  btnColor: AppColors.errorColor,
-                  onPressed: () {},
-                  borderRadius: 10,
+                0.01.width.vSpace,
+                Expanded(
+                  child: CustomElevatedButton(
+                    text: "Cancel",
+                    btnColor: AppColors.errorColor,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    borderRadius: 10,
+                  ),
                 ),
-              ),
-            ],
-          ).hPadding(0.03.width),
-        ],
+              ],
+            ).hPadding(0.03.width),
+          ],
+        ),
       ),
     );
   }

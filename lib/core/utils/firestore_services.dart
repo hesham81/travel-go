@@ -11,12 +11,17 @@ abstract class FirestoreServices {
     required String uid,
     required String nationalId,
     bool isAdmin = false,
+    bool isManager = false,
   }) async {
     try {
       await _fireStore.collection('users').doc(uid).set({
         'email': email,
         'uid': uid,
-        'role': (isAdmin) ? 'admin' : 'user',
+        'role': (isManager)
+            ? 'manager'
+            : (isAdmin)
+                ? 'admin'
+                : 'user',
         'nationalId': nationalId,
       });
       return null;

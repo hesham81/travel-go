@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/extensions/align.dart';
-import 'package:travel_go/core/widget/loading_image_network_widget.dart';
-import 'package:travel_go/models/attractions_model.dart';
+import '/core/extensions/align.dart';
+import '/core/widget/loading_image_network_widget.dart';
+import '/models/attractions_model.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 
@@ -30,16 +30,15 @@ class ExploreAttractions extends StatelessWidget {
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    model.location,
-                    style: theme.textTheme.titleLarge!.copyWith(
-                      color: AppColors.blackColor,
-                    ),
+                    model.title,
+                    style: theme.textTheme.titleLarge!
+                        .copyWith(color: AppColors.blackColor, fontSize: 20),
                   ),
                   Text(
-                    model.description,
+                    model.location,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.titleMedium!.copyWith(
                       color: AppColors.blackColor,
