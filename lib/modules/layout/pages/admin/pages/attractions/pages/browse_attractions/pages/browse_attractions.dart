@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/attractions/widget/selected_deleted_widget.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/pages/selected_attraction.dart';
 import '/core/extensions/align.dart';
 import '/core/theme/app_colors.dart';
@@ -12,10 +13,8 @@ import '/core/extensions/extensions.dart';
 import '/models/attractions_model.dart';
 
 class BrowseAttractions extends StatefulWidget {
-
   const BrowseAttractions({
     super.key,
-
   });
 
   @override
@@ -181,24 +180,29 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
                     itemBuilder: (context, index) => AllExploreAttractions(
                       model: searchedAttraction[index],
                       deleteFunction: () {
-                        AwesomeAlert alert = AwesomeAlert(context: context);
-                        alert.showAlert(
-                          title: "Delete",
-                          description:
-                              "You Make Sure That You Are Need To Delete ${attractions[index].title} ? ",
-                          confirmText: "OK",
-                          confirmAction: () {
-                            alert.hideAlert();
-                            AttractionsDB.deleteAttraction(attractions[index]);
-                            EasyLoading.showSuccess(
-                              "${attractions[index]} Is Deleted Succefully",
-                            );
-                          },
-                          confirmButtonColor: AppColors.newBlueColor,
-                          cancelable: true,
-                          cancelText: "Cancel",
-                          cancelAction: () => alert.hideAlert(),
+                        Navigator.pushNamed(
+                          context,
+                          SelectedDeletedWidget.routeName,
+                          arguments: searchedAttraction[index],
                         );
+                        // AwesomeAlert alert = AwesomeAlert(context: context);
+                        // alert.showAlert(
+                        //   title: "Delete",
+                        //   description:
+                        //       "You Make Sure That You Are Need To Delete ${attractions[index].title} ? ",
+                        //   confirmText: "OK",
+                        //   confirmAction: () {
+                        //     alert.hideAlert();
+                        //     AttractionsDB.deleteAttraction(attractions[index]);
+                        //     EasyLoading.showSuccess(
+                        //       "${attractions[index]} Is Deleted Succefully",
+                        //     );
+                        //   },
+                        //   confirmButtonColor: AppColors.newBlueColor,
+                        //   cancelable: true,
+                        //   cancelText: "Cancel",
+                        //   cancelAction: () => alert.hideAlert(),
+                        // );
                       },
                       editFunction: () {
                         Navigator.pushNamed(
@@ -217,23 +221,10 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
                     itemBuilder: (context, index) => AllExploreAttractions(
                       model: attractions[index],
                       deleteFunction: () {
-                        AwesomeAlert alert = AwesomeAlert(context: context);
-                        alert.showAlert(
-                          title: "Delete",
-                          description:
-                              "You Make Sure That You Are Need To Delete ${attractions[index].title} ? ",
-                          confirmText: "OK",
-                          confirmAction: () {
-                            alert.hideAlert();
-                            AttractionsDB.deleteAttraction(attractions[index]);
-                            EasyLoading.showSuccess(
-                              "${attractions[index]} Is Deleted Succefully",
-                            );
-                          },
-                          confirmButtonColor: AppColors.newBlueColor,
-                          cancelable: true,
-                          cancelText: "Cancel",
-                          cancelAction: () => alert.hideAlert(),
+                        Navigator.pushNamed(
+                          context,
+                          SelectedDeletedWidget.routeName,
+                          arguments: attractions[index],
                         );
                       },
                       editFunction: () {

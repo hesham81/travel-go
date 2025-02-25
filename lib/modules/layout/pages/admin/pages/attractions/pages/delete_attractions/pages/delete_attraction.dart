@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import '../../../widget/selected_deleted_widget.dart';
 import '../widget/delete_widget.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/pages/selected_attraction.dart';
 import '/core/extensions/align.dart';
@@ -180,25 +181,10 @@ class _DeleteAttractionState extends State<DeleteAttraction> {
                     itemBuilder: (context, index) => DeleteExploreAttraction(
                       model: searchedAttraction[index],
                       deleteFunction: () {
-                        AwesomeAlert alert = AwesomeAlert(context: context);
-                        alert.showAlert(
-                          title: "Delete",
-                          description:
-                              "You Make Sure That You Are Need To Delete ${attractions[index].title} ? ",
-                          confirmText: "OK",
-                          confirmAction: () {
-                            alert.hideAlert();
-                            AttractionsDB.deleteAttraction(
-                              attractions[index],
-                            );
-                            EasyLoading.showSuccess(
-                              "${attractions[index]} Is Deleted Succefully",
-                            );
-                          },
-                          confirmButtonColor: AppColors.newBlueColor,
-                          cancelable: true,
-                          cancelText: "Cancel",
-                          cancelAction: () => alert.hideAlert(),
+                        Navigator.pushNamed(
+                          context,
+                          SelectedDeletedWidget.routeName,
+                          arguments: searchedAttraction[index],
                         );
                       },
                       editFunction: () {
@@ -218,23 +204,10 @@ class _DeleteAttractionState extends State<DeleteAttraction> {
                     itemBuilder: (context, index) => DeleteExploreAttraction(
                       model: attractions[index],
                       deleteFunction: () {
-                        AwesomeAlert alert = AwesomeAlert(context: context);
-                        alert.showAlert(
-                          title: "Delete",
-                          description:
-                              "You Make Sure That You Are Need To Delete ${attractions[index].title} ? ",
-                          confirmText: "OK",
-                          confirmAction: () {
-                            alert.hideAlert();
-                            AttractionsDB.deleteAttraction(attractions[index]);
-                            EasyLoading.showSuccess(
-                              "${attractions[index]} Is Deleted Succefully",
-                            );
-                          },
-                          confirmButtonColor: AppColors.newBlueColor,
-                          cancelable: true,
-                          cancelText: "Cancel",
-                          cancelAction: () => alert.hideAlert(),
+                        Navigator.pushNamed(
+                          context,
+                          SelectedDeletedWidget.routeName,
+                          arguments: attractions[index],
                         );
                       },
                       editFunction: () {
