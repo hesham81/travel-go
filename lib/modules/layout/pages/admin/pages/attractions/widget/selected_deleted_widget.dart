@@ -1,4 +1,3 @@
-import 'package:awesome_alert/awesome_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:travel_go/core/services/bot_toast.dart';

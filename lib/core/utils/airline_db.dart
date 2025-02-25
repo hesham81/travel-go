@@ -133,4 +133,14 @@ abstract class FlightAirlinesDB {
       return false;
     }
   }
+
+  static Future<List<FlightAirlines>> getAllAirlines() {
+    return collectionRef().get().then(
+          (value) => value.docs
+              .map(
+                (e) => e.data(),
+              )
+              .toList(),
+        );
+  }
 }

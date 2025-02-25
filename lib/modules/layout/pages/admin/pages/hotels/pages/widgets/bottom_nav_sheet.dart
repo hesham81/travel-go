@@ -58,6 +58,7 @@ class _BottomNavSheetState extends State<BottomNavSheet> {
       hotelRating: hotelRating,
       imageUrl: widget.hotel.imageUrl,
       availableRooms: widget.hotel.availableRooms,
+      accomdations: [],
     );
 
     await HotelsDB.updateHotel(newHotel).then(

@@ -67,8 +67,30 @@ class _SelectedAttractionState extends State<SelectedAttraction> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.network(
-              model.imageUrl,
+            Container(
+              height: 0.5.height,
+              alignment: Alignment.bottomRight,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(
+                    model.imageUrl,
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: IconButton(
+                onPressed: () {},
+                style: IconButton.styleFrom(
+                  backgroundColor: AppColors.errorColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  )
+                ),
+                icon: Icon(
+                  Icons.play_arrow_outlined,
+                  color: AppColors.newBlueColor,
+                ),
+              ),
             ),
             0.01.height.hSpace,
             CustomTextFormField(

@@ -76,7 +76,7 @@ class _EditTripState extends State<EditTrip> {
                 snapshot.data!.docs.map(
                   (element) {
                     trips.add(element.data());
-                    print(element.data().source);
+                    // print(element.data().source);
                   },
                 );
                 print("Length ${trips.length}");

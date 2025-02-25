@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:travel_go/models/hotel_accomdations.dart';
 import '/core/services/storage.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/align.dart';
@@ -152,7 +153,6 @@ class _AddHotelState extends State<AddHotel> {
                     },
                   ).center,
                   0.01.height.hSpace,
-
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -187,6 +187,13 @@ class _AddHotelState extends State<AddHotel> {
                               hotelName: hotelNameController.text,
                               hotelRating: hotelRatingController,
                               totalRooms: int.parse(totalRoomsController.text),
+                              accomdations: [
+                                HotelAccomdations(
+                                  accomdationType: "accomdationType",
+                                  price: 2500,
+                                  totalRooms: 50,
+                                ),
+                              ],
                             );
                             HotelsDB.addHotel(
                               hotel: data,

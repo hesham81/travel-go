@@ -984,11 +984,11 @@ class _UpdateTripState extends State<UpdateTrip> {
                     onPressed: () {
                       Navigator.pop(context); // Navigate back
                     },
-                    child: Text('Cancel'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF0d75b4),
                       foregroundColor: Colors.white,
                     ),
+                    child: Text('Cancel'),
                   ),
                 ],
               ),

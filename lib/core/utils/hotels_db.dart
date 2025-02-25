@@ -36,7 +36,9 @@ abstract class HotelsDB {
     return null;
   }
 
-  static Future<void> addHotel({required Hotel hotel}) async {
+  static Future<void> addHotel({
+    required Hotel hotel,
+  }) async {
     try {
       String id = IdGenerator.generateId(
         value1: hotel.hotelName,
@@ -127,5 +129,15 @@ abstract class HotelsDB {
       log("Error ${error}");
       return Future.value(false);
     }
+  }
+
+  static Future<List<Hotel>> getAllHotels() {
+    return collectionRef().get().then(
+          (value) => value.docs
+              .map(
+                (e) => e.data(),
+              )
+              .toList(),
+        );
   }
 }

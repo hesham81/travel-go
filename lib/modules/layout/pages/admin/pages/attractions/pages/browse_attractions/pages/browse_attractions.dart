@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:travel_go/core/utils/programs_collections.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/attractions/widget/selected_deleted_widget.dart';
+import '../../../../../menna/trippp/model/programs.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/pages/selected_attraction.dart';
 import '/core/extensions/align.dart';
 import '/core/theme/app_colors.dart';
@@ -172,6 +174,7 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
                       (e) => e.data(),
                     )
                     .toList();
+
                 return Visibility(
                   visible: searchedAttraction.isEmpty,
                   replacement: ListView.separated(
@@ -185,24 +188,6 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
                           SelectedDeletedWidget.routeName,
                           arguments: searchedAttraction[index],
                         );
-                        // AwesomeAlert alert = AwesomeAlert(context: context);
-                        // alert.showAlert(
-                        //   title: "Delete",
-                        //   description:
-                        //       "You Make Sure That You Are Need To Delete ${attractions[index].title} ? ",
-                        //   confirmText: "OK",
-                        //   confirmAction: () {
-                        //     alert.hideAlert();
-                        //     AttractionsDB.deleteAttraction(attractions[index]);
-                        //     EasyLoading.showSuccess(
-                        //       "${attractions[index]} Is Deleted Succefully",
-                        //     );
-                        //   },
-                        //   confirmButtonColor: AppColors.newBlueColor,
-                        //   cancelable: true,
-                        //   cancelText: "Cancel",
-                        //   cancelAction: () => alert.hideAlert(),
-                        // );
                       },
                       editFunction: () {
                         Navigator.pushNamed(

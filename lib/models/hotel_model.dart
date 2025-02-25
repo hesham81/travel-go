@@ -1,4 +1,5 @@
-import 'dart:developer';
+import '/models/hotel_accomdations.dart';
+
 class Hotel {
   final int availableRooms;
   final String hotelLocation;
@@ -6,7 +7,7 @@ class Hotel {
   final double hotelRating;
   final int totalRooms;
   final String imageUrl;
-  static List<Hotel> hotels = [];
+  final List<HotelAccomdations> accomdations;
 
   Hotel({
     required this.imageUrl,
@@ -15,6 +16,7 @@ class Hotel {
     required this.hotelName,
     required this.hotelRating,
     required this.totalRooms,
+    required this.accomdations,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,20 +27,9 @@ class Hotel {
       'HotelRating ': hotelRating,
       'TotalRooms ': totalRooms,
       'imageUrl': imageUrl,
+      'accomdations':
+          accomdations.map((accomdation) => accomdation.toMap()).toList(),
     };
-  }
-
-  static truncateHotelsList() {
-    hotels.clear();
-  }
-
-  static addNewHotel(Hotel hotel) {
-    log("Hotel Added Successfully");
-    hotels.add(hotel);
-  }
-
-  static List<Hotel> getAllHotels() {
-    return hotels;
   }
 
   factory Hotel.fromMap(Map<String, dynamic> map) {
@@ -49,6 +40,10 @@ class Hotel {
       hotelRating: map['HotelRating '],
       totalRooms: map['TotalRooms '],
       imageUrl: map['imageUrl'],
+      accomdations: List<HotelAccomdations>.from(
+        map['accomdations']
+            .map((accomdation) => HotelAccomdations.fromMap(accomdation)),
+      ),
     );
   }
 }
