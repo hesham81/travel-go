@@ -9,6 +9,9 @@ abstract class AppTheme {
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.newBlueColor,
       centerTitle: true,
+      iconTheme: IconThemeData(
+        color: AppColors.whiteColor,
+      )
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppColors.primaryColor,

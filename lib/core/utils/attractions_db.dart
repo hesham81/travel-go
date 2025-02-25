@@ -45,16 +45,24 @@ abstract class AttractionsDB {
     }
   }
 
-  static editAttraction(AttractionsModel model )
-  {
+  static Future<bool> editAttraction(AttractionsModel lastModel ,AttractionsModel newModel ) async {
     try {
-      String id = IdGenerator.generateId(
-        value1: model.location,
-        value2: model.description,
-      );
-      _collectionRef().doc(id).set(model);
+      QuerySnapshot querySnapshot = await _firestore
+          .where(
+            "title",
+            isEqualTo: lastModel.title,
+          )
+          .get();
+
+      String docId = querySnapshot.docs.first.id;
+      await _firestore.doc(docId).update(
+            newModel.toJson(),
+          );
+      print("Attraction updated successfully!");
       return true;
     } catch (error) {
+      print(
+          "Error editing attraction: ${error.toString()}"); // Proper error logging
       return false;
     }
   }

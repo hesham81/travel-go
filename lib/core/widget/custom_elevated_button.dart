@@ -11,7 +11,7 @@ class CustomElevatedButton extends StatelessWidget {
   final double textSize;
   final double borderRadius;
   final FontWeight textWeight;
-  final Function() onPressed;
+  final Function()? onPressed;
 
   const CustomElevatedButton({
     super.key,
@@ -23,7 +23,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.padding,
     this.textSize = 15,
     this.textWeight = FontWeight.w600,
-    required this.onPressed,
+     this.onPressed,
     this.borderRadius = 15 ,
   });
 

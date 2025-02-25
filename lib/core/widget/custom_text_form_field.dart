@@ -13,6 +13,7 @@ class CustomTextFormField extends StatefulWidget {
   final Color borderColor;
   final isReadOnly;
   final Validator? onChanged;
+  final Validator? onComplete;
   final int? minLine;
 
   final TextStyle? hintStyle;
@@ -30,6 +31,7 @@ class CustomTextFormField extends StatefulWidget {
     this.isReadOnly = false,
     this.onChanged,
     this.minLine = 1,
+    this.onComplete,
   });
 
   @override
@@ -110,6 +112,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   )
                 : null,
       ),
+      onFieldSubmitted: widget.onComplete,
     );
   }
 }
