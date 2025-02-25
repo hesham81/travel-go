@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/update_attractions/pages/selected_attraction.dart';
+import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/pages/selected_attraction.dart';
 import '/core/extensions/align.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/attractions_db.dart';
@@ -12,7 +12,11 @@ import '/core/extensions/extensions.dart';
 import '/models/attractions_model.dart';
 
 class BrowseAttractions extends StatefulWidget {
-  const BrowseAttractions({super.key});
+
+  const BrowseAttractions({
+    super.key,
+
+  });
 
   @override
   State<BrowseAttractions> createState() => _BrowseAttractionsState();
@@ -41,14 +45,14 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
               suggestions: attractions
                   .map(
                     (attraction) => SearchFieldListItem<AttractionsModel>(
-                  attraction.title,
-                  item: attraction,
-                  child: ListTile(
-                    title: Text(attraction.title),
-                    subtitle: Text(attraction.location),
-                  ),
-                ),
-              )
+                      attraction.title,
+                      item: attraction,
+                      child: ListTile(
+                        title: Text(attraction.title),
+                        subtitle: Text(attraction.location),
+                      ),
+                    ),
+                  )
                   .toList(),
               searchInputDecoration: SearchInputDecoration(
                 enabledBorder: OutlineInputBorder(
@@ -62,12 +66,12 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
                 suffixIcon: (searchedAttraction.isEmpty)
                     ? null
                     : IconButton(
-                  onPressed: () {
-                    searchedAttraction.clear();
-                    setState(() {});
-                  },
-                  icon: Icon(Icons.search_off_outlined),
-                ),
+                        onPressed: () {
+                          searchedAttraction.clear();
+                          setState(() {});
+                        },
+                        icon: Icon(Icons.search_off_outlined),
+                      ),
               ),
               onSearchTextChanged: (query) {
                 if (query.isEmpty) {
@@ -80,8 +84,12 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
 
                 // Filter attractions based on whether the title or location contains the query
                 final filteredAttractions = attractions.where((attraction) {
-                  return attraction.title.toLowerCase().contains(query.toLowerCase()) ||
-                      attraction.location.toLowerCase().contains(query.toLowerCase());
+                  return attraction.title
+                          .toLowerCase()
+                          .contains(query.toLowerCase()) ||
+                      attraction.location
+                          .toLowerCase()
+                          .contains(query.toLowerCase());
                 }).toList();
 
                 // Convert filtered attractions to SearchFieldListItem
@@ -96,7 +104,8 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
                   );
                 }).toList();
               },
-              onSuggestionTap: (SearchFieldListItem<AttractionsModel> suggestion) {
+              onSuggestionTap:
+                  (SearchFieldListItem<AttractionsModel> suggestion) {
                 if (suggestion.item != null) {
                   searchedAttraction = [];
                   searchedAttraction.add(suggestion.item!);

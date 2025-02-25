@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/core/utils/attractions_db.dart';
+import '/core/utils/attractions_db.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widget/custom_elevated_button.dart';
