@@ -14,6 +14,7 @@ class NumbersTextFormField extends StatefulWidget {
   final TextEditingController? controller;
   final Color borderColor;
   final Function(String)? onComplete;
+  final bool isReadOnly;
 
   final TextStyle? hintStyle;
 
@@ -28,6 +29,7 @@ class NumbersTextFormField extends StatefulWidget {
     this.borderColor = AppColors.blackColor,
     this.hintStyle,
     this.onComplete,
+    this.isReadOnly = false,
   });
 
   @override
@@ -38,6 +40,7 @@ class _NumbersTextFormFieldState extends State<NumbersTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      readOnly: widget.isReadOnly,
       onSubmitted: widget.onComplete,
       keyboardType: TextInputType.numberWithOptions(
         decimal: true,

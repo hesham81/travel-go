@@ -70,4 +70,19 @@ abstract class ProgramsCollections {
       return Future.value(false);
     }
   }
+
+  static Future<bool> deleteProgram(Program model) async {
+    try {
+      var id;
+      await searchUsingProgramTitle(model.programTitle).then((value) {
+        id = value;
+      });
+      if (id == null) return Future.value(false);
+      await _colRef().doc(id).delete();
+      return Future.value(true);
+    } catch (error) {
+      print("Error ${error.toString()}");
+      return Future.value(false);
+    }
+  }
 }
