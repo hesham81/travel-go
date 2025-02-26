@@ -13,14 +13,14 @@ abstract class ProgramsCollections {
     );
   }
 
-  static addProgram(Program model) async {
+  static Future<bool> addProgram(Program model) async {
     try {
       var id = IdGenerator.generateId(
           value1: model.programTitle, value2: model.programDetails);
       await _colRef().doc(id).set(model);
-      print("Done");
+      return Future.value(true);
     } catch (error) {
-      print("Error ${error}");
+      return Future.value(false);
     }
   }
 
@@ -32,5 +32,9 @@ abstract class ProgramsCollections {
               )
               .toList(),
         );
+  }
+  static Stream<QuerySnapshot<Program>> getStreamPrograms()
+  {
+    return _colRef().snapshots();
   }
 }

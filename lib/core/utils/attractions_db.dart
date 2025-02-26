@@ -45,7 +45,8 @@ abstract class AttractionsDB {
     }
   }
 
-  static Future<bool> editAttraction(AttractionsModel lastModel ,AttractionsModel newModel ) async {
+  static Future<bool> editAttraction(
+      AttractionsModel lastModel, AttractionsModel newModel) async {
     try {
       QuerySnapshot querySnapshot = await _firestore
           .where(
@@ -65,5 +66,15 @@ abstract class AttractionsDB {
           "Error editing attraction: ${error.toString()}"); // Proper error logging
       return false;
     }
+  }
+
+  static Future<List<AttractionsModel>> getAttractionsList() {
+   return  _collectionRef().get().then(
+          (value) => value.docs
+              .map(
+                (e) => e.data(),
+              )
+              .toList(),
+        );
   }
 }

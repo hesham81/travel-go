@@ -31,4 +31,5 @@ class TripProgramLine {
       tripId: map['tripId'],
     );
   }
+
 }
