@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '/core/services/bot_toast.dart';
@@ -9,7 +7,6 @@ import '/core/widget/custom_elevated_button.dart';
 import '/models/attractions_model.dart';
 import '/modules/layout/pages/admin/menna/trippp/model/programs.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/new_attractions/pages/new_attraction.dart';
-import '/core/constant/app_assets.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widget/custom_text_form_field.dart';

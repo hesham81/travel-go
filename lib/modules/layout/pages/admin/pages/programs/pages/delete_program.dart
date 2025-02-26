@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/programs.dart';
+import '/modules/layout/pages/admin/menna/trippp/model/programs.dart';
 
 class DeleteProgram extends StatelessWidget {
   static const routeName = '/delete_program';
