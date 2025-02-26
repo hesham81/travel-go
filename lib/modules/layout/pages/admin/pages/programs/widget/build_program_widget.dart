@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '/modules/layout/pages/admin/pages/programs/pages/delete_program.dart';
-import '/modules/layout/pages/admin/pages/programs/pages/edit_program.dart';
+import '../pages/delete_program/pages/delete_program.dart';
+import '../pages/edit_program/pages/edit_program.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widget/loading_image_network_widget.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel_go/core/theme/app_colors.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/trip_admin_screen.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/programs/pages/explore_programs.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/programs/pages/browse_program/pages/explore_programs.dart';
 import '/modules/layout/pages/admin/menna/trippp/trip_admin_bug.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/browse_attractions/pages/browse_attractions.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/delete_attractions/pages/delete_attraction.dart';
