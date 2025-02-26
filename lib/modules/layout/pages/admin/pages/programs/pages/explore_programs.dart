@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:searchfield/searchfield.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
 import '/core/utils/programs_collections.dart';
@@ -19,6 +20,7 @@ class ExploreProgram extends StatefulWidget {
 class _ExploreProgramState extends State<ExploreProgram> {
   TextEditingController searchController = TextEditingController();
   List<Program> programs = [];
+  List<Program> searchedPrograms = [];
 
   @override
   void initState() {
@@ -41,6 +43,52 @@ class _ExploreProgramState extends State<ExploreProgram> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            0.01.height.hSpace,
+            SearchField<Program>(
+              dynamicHeight: true,
+              scrollbarDecoration: ScrollbarDecoration(
+                thickness: 1.2,
+                radius: Radius.circular(15),
+              ),
+              suggestions: programs
+                  .map(
+                    (program) => SearchFieldListItem<Program>(
+                      program.programTitle,
+                      item: program,
+                      child: ListTile(
+                        title: Text(program.programTitle),
+                        subtitle: Text(program.attraction.title),
+                      ),
+                    ),
+                  )
+                  .toList(),
+              searchInputDecoration: SearchInputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                hintText: "Search For Attraction",
+                prefixIcon: Icon(Icons.search),
+                suffixIcon: (searchedPrograms.isEmpty)
+                    ? null
+                    : IconButton(
+                        onPressed: () {
+                          searchedPrograms.clear();
+                          setState(() {});
+                        },
+                        icon: Icon(
+                          Icons.search_off_outlined,
+                        ),
+                      ),
+              ),
+              onSuggestionTap: (SearchFieldListItem<Program> suggestion) {
+                if (suggestion.item != null) {
+                  setState(() {});
+                }
+              },
+            ),
             0.01.height.hSpace,
             StreamBuilder(
               stream: ProgramsCollections.getStreamPrograms(),
@@ -100,14 +148,26 @@ class _ExploreProgramState extends State<ExploreProgram> {
                       (e) => e.data(),
                     )
                     .toList();
-                return ListView.separated(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => BuildProgramWidget(
-                    model: programs[index],
+                return Visibility(
+                  visible: searchedPrograms.isEmpty,
+                  replacement: ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => BuildProgramWidget(
+                      model: searchedPrograms[index],
+                    ),
+                    separatorBuilder: (context, _) => 0.01.height.hSpace,
+                    itemCount: searchedPrograms.length,
                   ),
-                  separatorBuilder: (context, _) => 0.01.height.hSpace,
-                  itemCount: programs.length,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => BuildProgramWidget(
+                      model: programs[index],
+                    ),
+                    separatorBuilder: (context, _) => 0.01.height.hSpace,
+                    itemCount: programs.length,
+                  ),
                 );
               },
             ),
