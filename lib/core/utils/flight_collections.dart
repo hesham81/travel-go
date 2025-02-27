@@ -30,4 +30,8 @@ abstract class FlightCollections {
               .toList(),
         );
   }
+
+  static Stream<QuerySnapshot<Flight>> StreamFlight() {
+    return _colRef().snapshots();
+  }
 }
