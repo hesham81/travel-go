@@ -5,6 +5,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:google_gemini/google_gemini.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:travel_go/modules/layout/pages/admin/menna/trippp/assign_flight_trip.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trips/pages/program_day.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trips/pages/trip_program.dart';
 import '/modules/layout/pages/admin/pages/attractions/widget/selected_deleted_widget.dart';
 import '/modules/layout/pages/admin/pages/programs/pages/add_program/pages/new_program.dart';
 import '/modules/layout/pages/admin/pages/programs/pages/delete_program/pages/delete_program.dart';
@@ -92,6 +95,9 @@ class MyApp extends StatelessWidget {
         NewProgram.routeName: (context) => NewProgram(),
         EditProgram.routeName: (context) => EditProgram(),
         DeleteProgram.routeName: (context) => DeleteProgram(),
+        TripProgram.routeName: (context) => TripProgram(),
+        ProgramDay.routeName: (context) => ProgramDay(),
+        AssignFlightTrip.routeName: (context) => AssignFlightTrip(),
       },
     );
   }

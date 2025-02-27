@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import '/core/services/bot_toast.dart';
-import '/core/utils/attractions_db.dart';
+import '/core/extensions/extensions.dart';
+import '/core/theme/app_colors.dart';
 import '/core/utils/programs_collections.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/models/attractions_model.dart';
-import '/modules/layout/pages/admin/menna/trippp/model/programs.dart';
-import '/modules/layout/pages/admin/pages/attractions/pages/new_attractions/pages/new_attraction.dart';
-import '/core/extensions/extensions.dart';
-import '/core/theme/app_colors.dart';
+import '/core/services/bot_toast.dart';
+import '/core/utils/attractions_db.dart';
 import '/core/widget/custom_text_form_field.dart';
-import '/core/widget/numbers_text_form_field.dart';
+import '/core/widget/loading_image_network_widget.dart';
+import '/modules/layout/pages/admin/menna/trippp/model/programs.dart';
 
-class NewProgram extends StatefulWidget {
-  static const routeName = '/new-program';
+class TripProgram extends StatefulWidget {
+  static const String routeName = '/trip_program';
 
-  const NewProgram({
-    super.key,
-  });
+  const TripProgram({super.key});
 
   @override
-  State<NewProgram> createState() => _NewProgramState();
+  State<TripProgram> createState() => _TripProgramState();
 }
 
-class _NewProgramState extends State<NewProgram> {
+class _TripProgramState extends State<TripProgram> {
   List<AttractionsModel> attractions = [];
+
   var formKey = GlobalKey<FormState>();
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
@@ -45,9 +43,8 @@ class _NewProgramState extends State<NewProgram> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
-    var model = ModalRoute.of(context)!.settings.arguments as String;
+    var model = ModalRoute.of(context)!.settings.arguments as String ;
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(
           model,
@@ -64,6 +61,18 @@ class _NewProgramState extends State<NewProgram> {
               key: formKey,
               child: Column(
                 children: [
+                  LoadingImageNetworkWidget(
+                      imageUrl:
+                          "https://i.pinimg.com/736x/5d/63/e1/5d63e18215fd5e1ab2cc1fe3db2d8359.jpg"),
+                  0.01.height.hSpace,
+                  CustomTextFormField(
+                    hintText: "Program Id",
+                    controller: titleController,
+                    isReadOnly: true,
+                    validation: (value) =>
+                        titleController.text.isEmpty ? "Enter title" : null,
+                  ),
+                  0.01.height.hSpace,
                   CustomTextFormField(
                     hintText: "Program Title",
                     controller: titleController,
@@ -80,47 +89,15 @@ class _NewProgramState extends State<NewProgram> {
                     minLine: 3,
                   ),
                   0.01.height.hSpace,
-                  NumbersTextFormField(
-                    hintText: "Day Number ",
-                    validation: (value) => noOfDaysController.text.isEmpty
-                        ? "Enter Number Of Days"
-                        : null,
-                  ),
-                  0.01.height.hSpace,
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        flex: 3,
-                        child: DropdownMenu(
-                          width: double.maxFinite,
-                          hintText: "Attraction",
-                          controller: selectedAttraction,
-                          dropdownMenuEntries: [
-                            for (var attraction in attractions)
-                              DropdownMenuEntry(
-                                value: attraction,
-                                label: attraction.title,
-                              ),
-                          ],
-                        ),
+                        child: CustomTextFormField(hintText: "From"),
                       ),
-                      0.01.width.vSpace,
+                      0.05.width.vSpace,
                       Expanded(
-                        flex: 1,
-                        child: CustomElevatedButton(
-                          text: "Add",
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => NewAttraction(),
-                              ),
-                            );
-                          },
-                          textSize: 18,
-                          padding: EdgeInsets.symmetric(vertical: 15),
-                          borderRadius: 10,
-                        ),
+                        child: CustomTextFormField(hintText: "To"),
                       ),
                     ],
                   ),

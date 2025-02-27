@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:searchfield/searchfield.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/programs/pages/add_program/pages/new_program.dart';
+import '/modules/layout/pages/admin/pages/programs/pages/add_program/pages/new_program.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
 import '/core/utils/programs_collections.dart';
@@ -83,6 +83,35 @@ class _ExploreProgramState extends State<ExploreProgram> {
                         ),
                       ),
               ),
+              onSearchTextChanged: (query) {
+                if (query.isEmpty) {
+                  searchedPrograms.clear();
+                  if (mounted) {
+                    setState(() {});
+                  }
+                  return null;
+                }
+
+                final filteredAttractions = programs.where((attraction) {
+                  return attraction.programTitle
+                      .toLowerCase()
+                      .contains(query.toLowerCase()) ||
+                      attraction.programDetails
+                          .toLowerCase()
+                          .contains(query.toLowerCase());
+                }).toList();
+
+                return filteredAttractions.map((attraction) {
+                  return SearchFieldListItem<Program>(
+                    attraction.programTitle,
+                    item: attraction,
+                    child: ListTile(
+                      title: Text(attraction.programTitle),
+                      subtitle: Text(attraction.attraction.title),
+                    ),
+                  );
+                }).toList();
+              },
               onSuggestionTap: (SearchFieldListItem<Program> suggestion) {
                 if (suggestion.item != null) {
                   setState(() {});

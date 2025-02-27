@@ -1,11 +1,7 @@
-import 'package:awesome_alert/awesome_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:travel_go/core/utils/programs_collections.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/attractions/widget/selected_deleted_widget.dart';
-import '../../../../../menna/trippp/model/programs.dart';
+import '/modules/layout/pages/admin/pages/attractions/widget/selected_deleted_widget.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/pages/selected_attraction.dart';
 import '/core/extensions/align.dart';
 import '/core/theme/app_colors.dart';
@@ -83,7 +79,6 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
                   return null;
                 }
 
-                // Filter attractions based on whether the title or location contains the query
                 final filteredAttractions = attractions.where((attraction) {
                   return attraction.title
                           .toLowerCase()

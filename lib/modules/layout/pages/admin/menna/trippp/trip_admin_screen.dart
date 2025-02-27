@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import '/models/flight.dart';
 import '/core/utils/company_collections.dart';
 import '/core/utils/flight_collections.dart';
 import '/core/utils/hotels_db.dart';
 import '/core/utils/programs_collections.dart';
 import '/core/utils/trip_departures_collections.dart';
-import '/models/flight_model.dart';
 import '/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
 import '/modules/layout/pages/admin/menna/trippp/model/programs.dart';
 import '/models/hotel_model.dart';

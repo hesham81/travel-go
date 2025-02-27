@@ -1,4 +1,4 @@
-import '/models/flight_model.dart';
+import '/models/flight.dart';
 import '/models/hotel_model.dart';
 import '/modules/layout/pages/admin/menna/trippp/model/programs.dart';
 import '/modules/layout/pages/admin/menna/trippp/model/trip_departures.dart';

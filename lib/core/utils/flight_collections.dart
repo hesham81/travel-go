@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:travel_go/models/flight_model.dart';
 
+import '../../models/flight.dart';
 import '../../models/flight_airlines.dart';
 
 abstract class FlightCollections {
