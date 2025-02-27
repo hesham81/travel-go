@@ -1,33 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:travel_go/core/extensions/align.dart';
-import '/core/extensions/extensions.dart';
-import '/core/theme/app_colors.dart';
-import '/core/utils/flight_collections.dart';
-import '/models/flight.dart';
+import 'package:travel_go/core/extensions/extensions.dart';
+import 'package:travel_go/core/utils/hotels_db.dart';
+import 'package:travel_go/models/hotel_model.dart';
 
-class AssignFlightTrip extends StatefulWidget {
-  static const routeName = '/assign-flight-trip';
+import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/utils/flight_collections.dart';
+import '../../../../../../models/hotel_model.dart';
 
-  const AssignFlightTrip({super.key});
+class AssignHotel extends StatefulWidget {
+  static const routeName = '/assign-hotel';
+
+  const AssignHotel({super.key});
 
   @override
-  State<AssignFlightTrip> createState() => _AssignFlightTripState();
+  State<AssignHotel> createState() => _AssignHotelState();
 }
 
-class _AssignFlightTripState extends State<AssignFlightTrip> {
-  List<Flight> flights = [];
-
+class _AssignHotelState extends State<AssignHotel> {
+  List<Hotel> hotels = [];
   int? selectedIndex;
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Assign Flight",
+          "Assign Hotel",
           style: theme.titleLarge!.copyWith(
             color: AppColors.whiteColor,
           ),
@@ -37,14 +38,14 @@ class _AssignFlightTripState extends State<AssignFlightTrip> {
         child: Column(
           children: [
             StreamBuilder(
-              stream: FlightCollections.StreamFlight(),
+              stream: HotelsDB.getStreamHotelsData(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return CircularProgressIndicator(
                     color: AppColors.newBlueColor,
                   ).center;
                 }
-                flights = snapshot.data!.docs
+                hotels = snapshot.data!.docs
                     .map(
                       (e) => e.data(),
                     )
@@ -66,25 +67,25 @@ class _AssignFlightTripState extends State<AssignFlightTrip> {
                                 : false,
                         borderColor: AppColors.newBlueColor,
                         checkedWidget: Icon(
-                          Icons.flight_outlined,
+                          Icons.business,
                           color: AppColors.whiteColor,
                         ),
                         checkedColor: AppColors.newBlueColor,
                       ),
                       0.02.width.vSpace,
                       Text(
-                        "Flight ${flights[index].flightName}",
+                        hotels[index].hotelName,
                         style: theme.titleMedium,
                       ),
                       0.02.width.vSpace,
                       Text(
-                        flights[index].airline!.flighAirLineName,
+                        hotels[index].hotelLocation,
                         style: theme.titleMedium,
                       ),
                     ],
                   ),
                   separatorBuilder: (context, _) => 0.01.height.hSpace,
-                  itemCount: flights.length,
+                  itemCount: hotels.length,
                 );
               },
             ),

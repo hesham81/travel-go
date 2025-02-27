@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/assign_flight_trip.dart';
+import 'package:travel_go/modules/layout/pages/admin/menna/trippp/assign_hotel.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/core/widget/loading_image_network_widget.dart';
 import '/models/trip_program_day.dart';
@@ -124,7 +125,9 @@ class _NewTripScreenState extends State<NewTripScreen> {
             0.02.height.hSpace,
             WidgetElevetedButton(
               borderRadius: 10,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, AssignHotel.routeName);
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
