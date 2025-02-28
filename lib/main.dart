@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:google_gemini/google_gemini.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:travel_go/core/widget/map.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/assign_flight_trip.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/assign_hotel.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/trips/pages/program_day.dart';
@@ -100,6 +101,7 @@ class MyApp extends StatelessWidget {
         ProgramDay.routeName: (context) => ProgramDay(),
         AssignFlightTrip.routeName: (context) => AssignFlightTrip(),
         AssignHotel.routeName : (context) => AssignHotel(),
+        AppMaps.routeName: (context) => AppMaps(),
       },
     );
   }

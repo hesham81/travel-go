@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/extensions/align.dart';
+import 'package:travel_go/core/widget/map.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/assign_flight_trip.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/assign_hotel.dart';
 import '/core/widget/custom_elevated_button.dart';
@@ -52,6 +54,22 @@ class _NewTripScreenState extends State<NewTripScreen> {
               hintText: "Trip Description",
               minLine: 3,
             ),
+            0.01.height.hSpace,
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, AppMaps.routeName);
+              },
+              child: Text(
+                "From .. To",
+                style: theme.titleMedium!.copyWith(
+                  color: AppColors.blackColor,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 0.2.height,
+              child: AppMaps(),
+            ).center,
             0.02.height.hSpace,
             CustomTextFormField(
               hintText: "Video Url",
