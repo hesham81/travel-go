@@ -1,9 +1,9 @@
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/programs.dart';
+import '/modules/layout/pages/admin/menna/trippp/model/programs.dart';
 
 class ProgramDayModel {
   final int dayNumber;
 
-  final List<Program> program;
+   List<Program> program;
 
   ProgramDayModel({
     required this.dayNumber,
@@ -14,14 +14,21 @@ class ProgramDayModel {
     return ProgramDayModel(
       dayNumber: json['dayNumber'],
       program: List<Program>.from(
-          json['program'].map((program) => Program.fromMap(program))),
+        json['program'].map(
+          (program) => Program.fromMap(program),
+        ),
+      ),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'dayNumber': dayNumber,
-      'program': program.map((program) => program.toMap()).toList(),
+      'program': program
+          .map(
+            (program) => program.toMap(),
+          )
+          .toList(),
     };
   }
 }

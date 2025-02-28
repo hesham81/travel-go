@@ -9,4 +9,13 @@ abstract class IdGenerator {
         value3 +
         value2.substring(0, 5).trim();
   }
+
+  static generateProgramId({
+
+    required int dayNumber,
+    required int programNumber,
+    required String programTitle,
+  }) {
+    return "Pro${programNumber}-Day$dayNumber-${programTitle.trim()}";
+  }
 }

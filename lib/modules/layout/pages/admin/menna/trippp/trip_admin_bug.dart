@@ -29,11 +29,17 @@ class _NewTripScreenState extends State<NewTripScreen> {
   TextEditingController tripVideoUrlController = TextEditingController();
   TextEditingController tripTotalGuestsController = TextEditingController();
   TextEditingController tripTotalDaysController = TextEditingController();
+
+  String? source;
+
+  String? destination;
+
   var controller = DateRangePickerController();
 
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<TripAdminProvider>(context);
+    // provider.getSourceCity();
 
     var theme = Theme.of(context).textTheme;
     return Scaffold(
@@ -61,11 +67,6 @@ class _NewTripScreenState extends State<NewTripScreen> {
               hintText: "Trip Name ",
             ),
             0.02.height.hSpace,
-            // CustomTextFormField(
-            //   hintText: "Trip Description",
-            //   minLine: 3,
-            // ),
-            // 0.01.height.hSpace,
             GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, AppMaps.routeName);

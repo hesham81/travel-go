@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/extensions/align.dart';
-import 'package:travel_go/core/extensions/dimensions.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
-import 'package:travel_go/core/widget/custom_elevated_button.dart';
-import 'package:travel_go/core/widget/custom_text_form_field.dart';
-import 'package:travel_go/core/widget/loading_image_network_widget.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/programs/pages/add_program/pages/new_program.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/trips/pages/trip_program.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/programs.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/programs/widget/build_program_widget.dart';
+import '/core/providers/trip_admin_provider.dart';
+import '/core/extensions/align.dart';
+import '/core/extensions/extensions.dart';
+import '/core/theme/app_colors.dart';
+import '/core/widget/custom_elevated_button.dart';
+import '/core/widget/loading_image_network_widget.dart';
+import '/modules/layout/pages/admin/pages/trips/pages/trip_program.dart';
 
 class AllProgramsData extends StatefulWidget {
   static const routeName = '/all-programs-data';
@@ -23,10 +24,14 @@ class _AllProgramsDataState extends State<AllProgramsData> {
 
   @override
   Widget build(BuildContext context) {
+    var index = ModalRoute.of(context)!.settings.arguments as int;
+    var provider = Provider.of<TripAdminProvider>(context);
+    isEmpty = provider.getDaySpecificProgram.isEmpty;
+    List<Program> programs = provider.getProgramFromDay(index);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Day Program',
+          'Day ${index + 1} Programs',
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 color: AppColors.whiteColor,
               ),
@@ -36,18 +41,24 @@ class _AllProgramsDataState extends State<AllProgramsData> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            LoadingImageNetworkWidget(
-              imageUrl:
-                  "https://i.pinimg.com/736x/46/4b/ca/464bca0a73f4213243a7293eeb70c639.jpg",
-            ).center,
-            0.1.height.hSpace,
+            (programs.isEmpty)
+                ? Image.network(
+                    "https://i.pinimg.com/736x/46/4b/ca/464bca0a73f4213243a7293eeb70c639.jpg")
+                : ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) =>
+                        BuildProgramWidget(model: programs[index]),
+                    separatorBuilder: (context, _) => 0.01.height.hSpace,
+                    itemCount: programs.length,
+                  ),
             CustomElevatedButton(
               text: "Add Program",
               onPressed: () {
                 Navigator.pushNamed(
                   context,
                   TripProgram.routeName,
-                  arguments: "Program 1 Day 1 ",
+                  arguments: index,
                 );
               },
               borderRadius: 10,

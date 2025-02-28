@@ -1,15 +1,18 @@
 import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/core/extensions/alignment.dart';
-import 'package:travel_go/core/widget/widget_eleveted_button.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/new_attractions/pages/new_attraction.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_go/core/providers/trip_admin_provider.dart';
+import 'package:travel_go/core/utils/id_generator.dart';
+import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/program_day_model.dart';
+import '/core/extensions/alignment.dart';
+import '/core/widget/widget_eleveted_button.dart';
+import '/modules/layout/pages/admin/pages/attractions/pages/new_attractions/pages/new_attraction.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/programs_collections.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/models/attractions_model.dart';
-import '/core/services/bot_toast.dart';
 import '/core/utils/attractions_db.dart';
 import '/core/widget/custom_text_form_field.dart';
 import '/core/widget/loading_image_network_widget.dart';
@@ -30,9 +33,12 @@ class _TripProgramState extends State<TripProgram> {
   var formKey = GlobalKey<FormState>();
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
+  var programIdController = TextEditingController();
   var noOfDaysController = TextEditingController();
   var selectedAttraction = TextEditingController();
-  late AttractionsModel attraction;
+  AttractionsModel? attraction;
+  int index = 0;
+
   Time? from;
 
   Time? to;
@@ -53,11 +59,18 @@ class _TripProgramState extends State<TripProgram> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
-    var model = ModalRoute.of(context)!.settings.arguments as String;
+    var model = ModalRoute.of(context)!.settings.arguments as int;
+    var provider = Provider.of<TripAdminProvider>(context);
+    int lengthOfPrograms = provider.getDaySpecificProgram[model].program.length;
+    programIdController.text = IdGenerator.generateProgramId(
+      dayNumber: (lengthOfPrograms + 1),
+      programTitle: selectedAttraction.text ?? "",
+      programNumber: (model + 1),
+    );
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          model,
+          "Program ${model + 1} Day ${lengthOfPrograms + 1}",
           style: theme.titleLarge!.copyWith(
             color: AppColors.whiteColor,
           ),
@@ -77,7 +90,7 @@ class _TripProgramState extends State<TripProgram> {
                   0.01.height.hSpace,
                   CustomTextFormField(
                     hintText: "Program Id",
-                    controller: titleController,
+                    controller: programIdController,
                     isReadOnly: true,
                     validation: (value) =>
                         titleController.text.isEmpty ? "Enter title" : null,
@@ -111,11 +124,23 @@ class _TripProgramState extends State<TripProgram> {
                       Expanded(
                         flex: 3,
                         child: DropdownMenu(
+                          controller: selectedAttraction,
+                          enableFilter: true,
+                          onSelected: (value) {
+                            for (var attractionSearch in attractions) {
+                              if (attractionSearch.title ==
+                                  selectedAttraction.text) {
+                                provider
+                                    .setSelectedAttraction(attractionSearch);
+                                setState(() {});
+                              }
+                            }
+                          },
                           width: double.maxFinite,
                           dropdownMenuEntries: [
                             for (var element in attractions)
                               DropdownMenuEntry(
-                                value: element.title,
+                                value: attraction,
                                 label: element.title,
                               ),
                           ],
@@ -151,7 +176,9 @@ class _TripProgramState extends State<TripProgram> {
                           child: Row(
                             children: [
                               Text(
-                                (from == null )?  "From" : "${from!.hour}:${from!.minute}",
+                                (from == null)
+                                    ? "From"
+                                    : "${from!.hour}:${from!.minute}",
                                 style: theme.titleMedium!.copyWith(
                                   color: AppColors.whiteColor,
                                 ),
@@ -186,7 +213,9 @@ class _TripProgramState extends State<TripProgram> {
                           child: Row(
                             children: [
                               Text(
-                                (to == null )?  "To" : "${to!.hour}:${to!.minute}",
+                                (to == null)
+                                    ? "To"
+                                    : "${to!.hour}:${to!.minute}",
                                 style: theme.titleMedium!.copyWith(
                                   color: AppColors.whiteColor,
                                 ),
@@ -201,7 +230,7 @@ class _TripProgramState extends State<TripProgram> {
                           onPressed: () {
                             Navigator.of(context).push(
                               showPicker(
-                                value: to ?? from ??Time(hour: 0, minute: 0),
+                                value: to ?? from ?? Time(hour: 0, minute: 0),
                                 onChange: (Time time) {
                                   setState(() {
                                     to = time;
@@ -226,42 +255,24 @@ class _TripProgramState extends State<TripProgram> {
                         text: "OK",
                         borderRadius: 10,
                         onPressed: () async {
-                          if (formKey.currentState!.validate() &&
-                              selectedAttraction.text.isNotEmpty) {
-                            EasyLoading.show();
-                            for (var element in attractions) {
-                              if (element.title == selectedAttraction.text) {
-                                attraction = element;
-                                break;
-                              }
-                            }
-                            Program program = Program(
-                              programTitle: titleController.text,
-                              programDetails: descriptionController.text,
-                              attraction: attraction,
-                              dayNumber:
-                                  int.tryParse(noOfDaysController.text) ?? 1,
+                          if (formKey.currentState!.validate()) {
+                            provider.addSpecificProgramDay(
+                              Program(
+                                  programTitle: "programTitle",
+                                  programDetails: "programDetails",
+                                  attraction: provider.getSelectedAttraction ??
+                                      AttractionsModel(
+                                        title: "title",
+                                        location: "location",
+                                        description: "description",
+                                        imageUrl: "imageUrl",
+                                      ),
+                                  dayNumber: 1),
+                              index,
+                              lengthOfPrograms,
                             );
-                            await ProgramsCollections.addProgram(program)
-                                .then((value) {
-                              if (value) {
-                                EasyLoading.dismiss();
-                                BotToastServices.showSuccessMessage(
-                                  "Program Added Successfully",
-                                );
-                                Navigator.pop(context);
-                              } else {
-                                EasyLoading.dismiss();
-                                BotToastServices.showErrorMessage(
-                                  "Check Your Data",
-                                );
-                              }
-                            });
-                          } else {
-                            EasyLoading.dismiss();
-                            BotToastServices.showErrorMessage(
-                              "Check Your Data",
-                            );
+                            provider.setSelectedAttraction(null);
+                            Navigator.pop(context);
                           }
                         },
                       ),

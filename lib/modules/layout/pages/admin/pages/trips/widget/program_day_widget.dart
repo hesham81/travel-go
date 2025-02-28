@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/all_programs_data.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
-import '/modules/layout/pages/admin/pages/trips/pages/trip_program.dart';
 
 class ProgramDayWidget extends StatelessWidget {
   final int index;
@@ -28,6 +27,7 @@ class ProgramDayWidget extends StatelessWidget {
           Navigator.pushNamed(
             context,
             AllProgramsData.routeName,
+            arguments: index,
           );
         },
         child: Row(
