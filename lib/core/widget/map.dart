@@ -47,7 +47,6 @@ class _AppMapsState extends State<AppMaps> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
           mapController.move(
             LatLng(latitude, longitude),
             19,
@@ -63,7 +62,6 @@ class _AppMapsState extends State<AppMaps> {
         mapController: mapController,
         options: MapOptions(
           onTap: (tapPosition, point) {
-            if (markers.length < 2) {
               markers.add(
                 Marker(
                   point: point,
@@ -73,19 +71,8 @@ class _AppMapsState extends State<AppMaps> {
                   ),
                 ),
               );
-            } else {
-              markers.clear();
-              markers.add(
-                Marker(
-                  point: point,
-                  child: Icon(
-                    Icons.location_on_outlined,
-                    color: AppColors.errorColor,
-                  ),
-                ),
-              );
-            }
             setState(() {});
+            if(markers.length ==  2 ) Navigator.pop(context);
           },
         ),
         children: [
@@ -99,13 +86,6 @@ class _AppMapsState extends State<AppMaps> {
           PolygonLayer(
             polygons: polygons,
           ),
-          // OverlayImageLayer(overlayImages: [
-          //   OverlayImage(
-          //       imageProvider: AssetImage(
-          //         AppAssets.uploadImage,
-          //       ),
-          //       bounds: LatLngBounds(LatLng(latitude, longitude), corner2))
-          // ])
         ],
       ),
     );
