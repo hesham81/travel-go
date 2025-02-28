@@ -5,12 +5,10 @@ import '/models/trip_program_day.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/trip_program.dart';
 
 class ProgramDayWidget extends StatelessWidget {
-  final TripProgramDay model;
   final int index;
 
   const ProgramDayWidget({
     super.key,
-    required this.model,
     required this.index,
   });
 

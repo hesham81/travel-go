@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/modules/layout/pages/manager/pages/manager_home/manager_home_screen.dart';
+import '/modules/layout/pages/manager/pages/manager_home/manager_home_screen.dart';
 import '/modules/layout/pages/admin/menna/adminhome.dart';
 import '/core/utils/social_auth_services.dart';
 import '/modules/forget_password/pages/forget_password.dart';

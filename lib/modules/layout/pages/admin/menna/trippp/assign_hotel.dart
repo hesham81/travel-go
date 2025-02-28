@@ -80,7 +80,9 @@ class _AssignHotelState extends State<AssignHotel> {
                       0.02.width.vSpace,
                       Text(
                         hotels[index].hotelLocation,
+                        overflow: TextOverflow.ellipsis,
                         style: theme.titleMedium,
+
                       ),
                     ],
                   ),

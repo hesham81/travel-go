@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:google_gemini/google_gemini.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:travel_go/core/widget/map.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/assign_flight_trip.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/assign_hotel.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/trips/pages/program_day.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/trips/pages/trip_program.dart';
+import 'package:travel_go/core/providers/trip_admin_provider.dart';
+import '/core/widget/map.dart';
+import '/modules/layout/pages/admin/menna/trippp/assign_flight_trip.dart';
+import '/modules/layout/pages/admin/menna/trippp/assign_hotel.dart';
+import '/modules/layout/pages/admin/pages/trips/pages/program_day.dart';
+import '/modules/layout/pages/admin/pages/trips/pages/trip_program.dart';
 import '/modules/layout/pages/admin/pages/attractions/widget/selected_deleted_widget.dart';
 import '/modules/layout/pages/admin/pages/programs/pages/add_program/pages/new_program.dart';
 import '/modules/layout/pages/admin/pages/programs/pages/delete_program/pages/delete_program.dart';
@@ -51,7 +53,12 @@ Future<void> main() async {
     anonKey: SupabaseKeys.anonKey,
   );
   GoogleGemini(apiKey: AiConstants.chatBotApiKey);
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => TripAdminProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 var navigationKey = GlobalKey<NavigatorState>();
@@ -100,7 +107,7 @@ class MyApp extends StatelessWidget {
         TripProgram.routeName: (context) => TripProgram(),
         ProgramDay.routeName: (context) => ProgramDay(),
         AssignFlightTrip.routeName: (context) => AssignFlightTrip(),
-        AssignHotel.routeName : (context) => AssignHotel(),
+        AssignHotel.routeName: (context) => AssignHotel(),
         AppMaps.routeName: (context) => AppMaps(),
       },
     );

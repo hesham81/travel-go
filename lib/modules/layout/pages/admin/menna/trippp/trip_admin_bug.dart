@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/extensions/align.dart';
-import 'package:travel_go/core/widget/map.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/assign_flight_trip.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/assign_hotel.dart';
+import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import '/core/providers/trip_admin_provider.dart';
+import '/core/extensions/align.dart';
+import '/core/widget/map.dart';
+import '/modules/layout/pages/admin/menna/trippp/assign_flight_trip.dart';
+import '/modules/layout/pages/admin/menna/trippp/assign_hotel.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/core/widget/loading_image_network_widget.dart';
-import '/models/trip_program_day.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/program_day.dart';
 import '/core/extensions/extensions.dart';
 import '/core/widget/custom_text_form_field.dart';
@@ -22,8 +24,17 @@ class NewTripScreen extends StatefulWidget {
 }
 
 class _NewTripScreenState extends State<NewTripScreen> {
+  TextEditingController idController = TextEditingController();
+  TextEditingController tripNameController = TextEditingController();
+  TextEditingController tripVideoUrlController = TextEditingController();
+  TextEditingController tripTotalGuestsController = TextEditingController();
+  TextEditingController tripTotalDaysController = TextEditingController();
+  var controller = DateRangePickerController();
+
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<TripAdminProvider>(context);
+
     var theme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
@@ -47,14 +58,14 @@ class _NewTripScreenState extends State<NewTripScreen> {
             ),
             0.02.height.hSpace,
             CustomTextFormField(
-              hintText: "Trip Title ",
+              hintText: "Trip Name ",
             ),
             0.02.height.hSpace,
-            CustomTextFormField(
-              hintText: "Trip Description",
-              minLine: 3,
-            ),
-            0.01.height.hSpace,
+            // CustomTextFormField(
+            //   hintText: "Trip Description",
+            //   minLine: 3,
+            // ),
+            // 0.01.height.hSpace,
             GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, AppMaps.routeName);
@@ -66,8 +77,15 @@ class _NewTripScreenState extends State<NewTripScreen> {
                 ),
               ),
             ),
-            SizedBox(
+            0.01.height.hSpace,
+            Container(
               height: 0.2.height,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 2,
+                  color: AppColors.newBlueColor,
+                ),
+              ),
               child: AppMaps(),
             ).center,
             0.02.height.hSpace,
@@ -81,6 +99,11 @@ class _NewTripScreenState extends State<NewTripScreen> {
             0.02.height.hSpace,
             NumbersTextFormField(
               hintText: "Total Days",
+              controller: tripTotalDaysController,
+              onComplete: (p0) {
+                int value = int.tryParse(tripTotalDaysController.text) ?? 0;
+                provider.setTotalDays(value);
+              },
             ),
             0.02.height.hSpace,
             WidgetElevetedButton(
@@ -88,11 +111,6 @@ class _NewTripScreenState extends State<NewTripScreen> {
               onPressed: () => Navigator.pushNamed(
                 context,
                 ProgramDay.routeName,
-                arguments: TripProgramDay(
-                  id: "1",
-                  startDate: DateTime(2025, 1, 1),
-                  endDate: DateTime(2025, 1, 5),
-                ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -126,7 +144,9 @@ class _NewTripScreenState extends State<NewTripScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      "Assign Flight",
+                      provider.getSelectionFlight == null
+                          ? "Assign Flight"
+                          : "${provider.getSelectionFlight!.flightName}  ${provider.getSelectionFlight!.airline!.flighAirLineName}",
                       style: theme.titleMedium!.copyWith(
                         color: AppColors.whiteColor,
                       ),

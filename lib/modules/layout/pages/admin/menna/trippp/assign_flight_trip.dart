@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:travel_go/core/extensions/align.dart';
+import 'package:travel_go/core/providers/trip_admin_provider.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/flight_collections.dart';
@@ -23,6 +25,7 @@ class _AssignFlightTripState extends State<AssignFlightTrip> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
+    var provider = Provider.of<TripAdminProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -52,36 +55,39 @@ class _AssignFlightTripState extends State<AssignFlightTrip> {
                 return ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => Row(
-                    children: [
-                      RoundCheckBox(
-                        onTap: (_) {
-                          selectedIndex = index;
-                          setState(() {});
-                        },
-                        uncheckedColor: AppColors.greyColor,
-                        isChecked:
-                            (selectedIndex == index && selectedIndex != null)
-                                ? true
-                                : false,
-                        borderColor: AppColors.newBlueColor,
-                        checkedWidget: Icon(
-                          Icons.flight_outlined,
-                          color: AppColors.whiteColor,
+                  itemBuilder: (context, index) => SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        RoundCheckBox(
+                          onTap: (_) {
+                            provider.setSelectionFlight(flights[index]);
+                          },
+                          uncheckedColor: AppColors.greyColor,
+                          isChecked: (provider.getSelectionFlight!.flightId ==
+                                      flights[index].flightId &&
+                                  provider.getSelectionFlight != null)
+                              ? true
+                              : false,
+                          borderColor: AppColors.newBlueColor,
+                          checkedWidget: Icon(
+                            Icons.flight_outlined,
+                            color: AppColors.whiteColor,
+                          ),
+                          checkedColor: AppColors.newBlueColor,
                         ),
-                        checkedColor: AppColors.newBlueColor,
-                      ),
-                      0.02.width.vSpace,
-                      Text(
-                        "Flight ${flights[index].flightName}",
-                        style: theme.titleMedium,
-                      ),
-                      0.02.width.vSpace,
-                      Text(
-                        flights[index].airline!.flighAirLineName,
-                        style: theme.titleMedium,
-                      ),
-                    ],
+                        0.02.width.vSpace,
+                        Text(
+                          "Flight ${flights[index].flightName}",
+                          style: theme.titleMedium,
+                        ),
+                        0.02.width.vSpace,
+                        Text(
+                          flights[index].airline!.flighAirLineName,
+                          style: theme.titleMedium,
+                        ),
+                      ],
+                    ),
                   ),
                   separatorBuilder: (context, _) => 0.01.height.hSpace,
                   itemCount: flights.length,
