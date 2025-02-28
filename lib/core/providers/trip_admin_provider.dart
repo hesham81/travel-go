@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:travel_go/models/flight.dart';
 import 'package:travel_go/models/hotel_model.dart';
+import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/programs.dart';
 
 class TripAdminProvider extends ChangeNotifier {
   int _totalDays = 0;
@@ -13,6 +14,8 @@ class TripAdminProvider extends ChangeNotifier {
   LatLng? _fromLocation;
   LatLng? _toLocation;
   List<Marker> _markersFromTo = [];
+  List<Program> daySpecificProgram = [];
+
 
   Flight? get getSelectionFlight => _selectionFlight;
 
@@ -42,4 +45,8 @@ class TripAdminProvider extends ChangeNotifier {
   }
 
   List<Marker> get getMarkers => _markersFromTo;
+  void addSpecificProgramDay(Program program)
+  {
+
+  }
 }
