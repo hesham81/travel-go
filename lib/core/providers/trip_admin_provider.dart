@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:travel_go/models/flight.dart';
 import 'package:travel_go/models/hotel_model.dart';
 
 class TripAdminProvider extends ChangeNotifier {
   int _totalDays = 0;
   Flight? _selectionFlight;
-  Hotel? _selectionHotel ;
+  Hotel? _selectionHotel;
+
   int get getTotalDays => _totalDays;
+  LatLng? _fromLocation;
+  LatLng? _toLocation;
+  List<Marker> _markersFromTo = [];
 
   Flight? get getSelectionFlight => _selectionFlight;
+
   Hotel? get getSelectionHotel => _selectionHotel;
+
   void setTotalDays(int totalDays) {
     _totalDays = totalDays;
     notifyListeners();
@@ -19,9 +27,19 @@ class TripAdminProvider extends ChangeNotifier {
     _selectionFlight = selectedFlight;
     notifyListeners();
   }
+
   void setSelectionHotel(Hotel selectedHotel) {
     _selectionHotel = selectedHotel;
     notifyListeners();
   }
 
+  void addMarker(Marker marker) {
+    if (_markersFromTo.length == 2)
+      _markersFromTo.clear(); // No need for ?. operator
+    _markersFromTo.add(marker); // No need for ?. operator
+    print(_markersFromTo.length); // Debugging
+    notifyListeners();
+  }
+
+  List<Marker> get getMarkers => _markersFromTo;
 }

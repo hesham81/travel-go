@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
-import 'package:travel_go/core/extensions/align.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
-import 'package:travel_go/core/utils/hotels_db.dart';
-import 'package:travel_go/models/hotel_model.dart';
-
-import '../../../../../../core/theme/app_colors.dart';
-import '../../../../../../core/utils/flight_collections.dart';
-import '../../../../../../models/hotel_model.dart';
+import 'package:travel_go/core/providers/trip_admin_provider.dart';
+import '/core/extensions/align.dart';
+import '/core/extensions/extensions.dart';
+import '/core/utils/hotels_db.dart';
+import '/models/hotel_model.dart';
+import '/core/theme/app_colors.dart';
 
 class AssignHotel extends StatefulWidget {
   static const routeName = '/assign-hotel';
@@ -24,6 +23,7 @@ class _AssignHotelState extends State<AssignHotel> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<TripAdminProvider>(context);
     var theme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
@@ -57,14 +57,13 @@ class _AssignHotelState extends State<AssignHotel> {
                     children: [
                       RoundCheckBox(
                         onTap: (_) {
-                          selectedIndex = index;
-                          setState(() {});
+                          provider.setSelectionHotel(hotels[index]);
                         },
                         uncheckedColor: AppColors.greyColor,
-                        isChecked:
-                            (selectedIndex == index && selectedIndex != null)
-                                ? true
-                                : false,
+                        isChecked: (provider.getSelectionHotel != null &&
+                                provider.getSelectionHotel!.hotelName == hotels[index].hotelName)
+                            ? true
+                            : false,
                         borderColor: AppColors.newBlueColor,
                         checkedWidget: Icon(
                           Icons.business,
@@ -82,7 +81,6 @@ class _AssignHotelState extends State<AssignHotel> {
                         hotels[index].hotelLocation,
                         overflow: TextOverflow.ellipsis,
                         style: theme.titleMedium,
-
                       ),
                     ],
                   ),

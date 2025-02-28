@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
-import 'package:travel_go/core/constant/app_assets.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
+import 'package:provider/provider.dart';
+import '/core/providers/trip_admin_provider.dart';
+import '/core/theme/app_colors.dart';
 
 class AppMaps extends StatefulWidget {
   static const routeName = '/app-maps';
@@ -44,6 +45,7 @@ class _AppMapsState extends State<AppMaps> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<TripAdminProvider>(context);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -61,19 +63,15 @@ class _AppMapsState extends State<AppMaps> {
       body: FlutterMap(
         mapController: mapController,
         options: MapOptions(
-          onTap: (tapPosition, point) {
-              markers.add(
+            onTap: (tapPosition, point) {
+              provider.addMarker(
                 Marker(
                   point: point,
-                  child: Icon(
-                    Icons.location_on_outlined,
-                    color: AppColors.errorColor,
-                  ),
+                  child: Icon(Icons.location_on_outlined),
                 ),
               );
-            setState(() {});
-            if(markers.length ==  2 ) Navigator.pop(context);
-          },
+              print(provider.getMarkers.first.point.longitude); // Access the first marker's longitude
+            },
         ),
         children: [
           TileLayer(
@@ -81,7 +79,7 @@ class _AppMapsState extends State<AppMaps> {
             urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
           ),
           MarkerLayer(
-            markers: markers,
+            markers: provider.getMarkers ?? [], // Fallback to empty list if null (not needed anymore)
           ),
           PolygonLayer(
             polygons: polygons,

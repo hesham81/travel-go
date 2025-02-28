@@ -116,7 +116,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    "Program",
+                    "Program ${provider.getTotalDays} Days",
                     style: theme.titleMedium!.copyWith(
                       color: AppColors.whiteColor,
                     ),
@@ -170,7 +170,9 @@ class _NewTripScreenState extends State<NewTripScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    "Assign Hotel",
+                    provider.getSelectionHotel == null
+                        ? "Assign Hotel"
+                        : provider.getSelectionHotel!.hotelName,
                     style: theme.titleMedium!.copyWith(
                       color: AppColors.whiteColor,
                     ),
