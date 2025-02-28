@@ -15,6 +15,7 @@ class CustomTextFormField extends StatefulWidget {
   final Validator? onChanged;
   final Validator? onComplete;
   final int? minLine;
+  final Function()? onTap ;
 
   final TextStyle? hintStyle;
 
@@ -32,6 +33,7 @@ class CustomTextFormField extends StatefulWidget {
     this.onChanged,
     this.minLine = 1,
     this.onComplete,
+    this.onTap,
   });
 
   @override
@@ -44,6 +46,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: widget.onTap,
       onChanged: widget.onChanged,
       readOnly: widget.isReadOnly,
       validator: widget.validation,

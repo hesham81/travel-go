@@ -1,5 +1,9 @@
+import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/core/extensions/alignment.dart';
+import 'package:travel_go/core/widget/widget_eleveted_button.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/new_attractions/pages/new_attraction.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/programs_collections.dart';
@@ -29,6 +33,9 @@ class _TripProgramState extends State<TripProgram> {
   var noOfDaysController = TextEditingController();
   var selectedAttraction = TextEditingController();
   late AttractionsModel attraction;
+  Time? from;
+
+  Time? to;
 
   @override
   void initState() {
@@ -38,12 +45,15 @@ class _TripProgramState extends State<TripProgram> {
         attractions = value;
       },
     );
+    ProgramsCollections.getAllPrograms().then(
+      (value) => value,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
-    var model = ModalRoute.of(context)!.settings.arguments as String ;
+    var model = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -80,6 +90,13 @@ class _TripProgramState extends State<TripProgram> {
                         titleController.text.isEmpty ? "Enter title" : null,
                   ),
                   0.01.height.hSpace,
+                  Text(
+                    "Select Attraction",
+                    style: theme.titleMedium!.copyWith(
+                      color: AppColors.blackColor,
+                    ),
+                  ).leftBottomWidget(),
+                  0.01.height.hSpace,
                   CustomTextFormField(
                     hintText: "Program Description",
                     controller: descriptionController,
@@ -90,14 +107,114 @@ class _TripProgramState extends State<TripProgram> {
                   ),
                   0.01.height.hSpace,
                   Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: DropdownMenu(
+                          width: double.maxFinite,
+                          dropdownMenuEntries: [
+                            for (var element in attractions)
+                              DropdownMenuEntry(
+                                value: element.title,
+                                label: element.title,
+                              ),
+                          ],
+                        ),
+                      ),
+                      0.01.width.vSpace,
+                      Expanded(
+                        flex: 1,
+                        child: CustomElevatedButton(
+                          text: "Add",
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NewAttraction(),
+                              ),
+                            );
+                          },
+                          borderRadius: 12,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 0.02.height,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  0.01.height.hSpace,
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: CustomTextFormField(hintText: "From"),
+                        child: WidgetElevetedButton(
+                          child: Row(
+                            children: [
+                              Text(
+                                (from == null )?  "From" : "${from!.hour}:${from!.minute}",
+                                style: theme.titleMedium!.copyWith(
+                                  color: AppColors.whiteColor,
+                                ),
+                              ),
+                              Spacer(),
+                              Icon(
+                                Icons.date_range,
+                                color: AppColors.whiteColor,
+                              ),
+                            ],
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              showPicker(
+                                value: from ?? Time(hour: 0, minute: 0),
+                                onChange: (Time) {
+                                  setState(() {
+                                    from = Time;
+                                  });
+                                },
+                                sunrise: TimeOfDay(hour: 6, minute: 0),
+                                sunset: TimeOfDay(hour: 18, minute: 0),
+                                duskSpanInMinutes: 120, // optional
+                              ),
+                            );
+                          },
+                        ),
                       ),
                       0.05.width.vSpace,
                       Expanded(
-                        child: CustomTextFormField(hintText: "To"),
+                        child: WidgetElevetedButton(
+                          child: Row(
+                            children: [
+                              Text(
+                                (to == null )?  "To" : "${to!.hour}:${to!.minute}",
+                                style: theme.titleMedium!.copyWith(
+                                  color: AppColors.whiteColor,
+                                ),
+                              ),
+                              Spacer(),
+                              Icon(
+                                Icons.date_range,
+                                color: AppColors.whiteColor,
+                              ),
+                            ],
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              showPicker(
+                                value: to ?? from ??Time(hour: 0, minute: 0),
+                                onChange: (Time time) {
+                                  setState(() {
+                                    to = time;
+                                  });
+                                },
+                                sunrise: TimeOfDay(hour: 6, minute: 0),
+                                sunset: TimeOfDay(hour: 18, minute: 0),
+                                blurredBackground: true,
+                                duskSpanInMinutes: 120, // optional
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -150,6 +267,7 @@ class _TripProgramState extends State<TripProgram> {
                       ),
                     ],
                   ),
+                  0.02.height.hSpace,
                 ],
               ).hPadding(0.03.width),
             ),

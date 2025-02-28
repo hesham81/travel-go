@@ -164,7 +164,10 @@ class _NewTripScreenState extends State<NewTripScreen> {
             WidgetElevetedButton(
               borderRadius: 10,
               onPressed: () {
-                Navigator.pushNamed(context, AssignHotel.routeName);
+                Navigator.pushNamed(
+                  context,
+                  AssignHotel.routeName,
+                );
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -202,7 +205,9 @@ class _NewTripScreenState extends State<NewTripScreen> {
                     text: "Cancel",
                     borderRadius: 10,
                     btnColor: AppColors.errorColor,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
                 ),
               ],

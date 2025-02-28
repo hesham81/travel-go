@@ -64,10 +64,11 @@ class _AssignFlightTripState extends State<AssignFlightTrip> {
                             provider.setSelectionFlight(flights[index]);
                           },
                           uncheckedColor: AppColors.greyColor,
-                          isChecked: (provider.getSelectionFlight!.flightId ==
-                                      flights[index].flightId &&
-                                  provider.getSelectionFlight != null)
-                              ? true
+                          isChecked: (provider.getSelectionFlight != null)
+                              ? (provider.getSelectionFlight!.flightId ==
+                                      flights[index].flightId)
+                                  ? true
+                                  : false
                               : false,
                           borderColor: AppColors.newBlueColor,
                           checkedWidget: Icon(
