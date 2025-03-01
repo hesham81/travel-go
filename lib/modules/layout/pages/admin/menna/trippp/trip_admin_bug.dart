@@ -2,6 +2,7 @@ import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:travel_go/core/utils/id_generator.dart';
 import '/core/utils/company_collections.dart';
 import '/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
 import '/core/providers/trip_admin_provider.dart';
@@ -32,31 +33,45 @@ class _NewTripScreenState extends State<NewTripScreen> {
   TextEditingController tripVideoUrlController = TextEditingController();
   TextEditingController tripTotalGuestsController = TextEditingController();
   TextEditingController tripTotalDaysController = TextEditingController();
+  TextEditingController tripBudgetController = TextEditingController();
+  TextEditingController tripTitleController = TextEditingController();
 
   String? source;
 
   String? destination;
-  List<Company>? companies;
 
   var controller = DateRangePickerController();
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  _setCompanyData() async {
-    await CompanyCollections.getAllCompany().then(
-      (value) {
-        print(value.first.companyName);
-        companies = value;
-      },
-    );
-  }
+  List<String> companies = [
+    "G Adventures",
+    "Intrepid Travel",
+    "Trafalgar",
+    "Contiki",
+    "Globus",
+    "Insight Vacations",
+    "EF Ultimate Break",
+    "Topdeck Travel",
+    "Exodus Travels",
+    "Abercrombie & Kent",
+    "Road Scholar",
+    "Collette",
+    "Gate 1 Travel",
+    "TUI Group",
+    "Backroads",
+    "Tauck",
+    "National Geographic Expeditions",
+    "Butterfield & Robinson",
+    "REI Adventures",
+    "Smoky Mountain Tours"
+  ];
+  String? selectedCompany;
 
   @override
   Widget build(BuildContext context) {
-    _setCompanyData();
+    idController.text = IdGenerator.generateTripId(
+        dayNumber: int.tryParse(tripTotalDaysController.text) ?? 0,
+        tripOrganizedBy: selectedCompany ?? "",
+        tripTitle: tripTitleController.text ?? "");
     var provider = Provider.of<TripAdminProvider>(context);
     var theme = Theme.of(context).textTheme;
     return Scaffold(
@@ -77,11 +92,13 @@ class _NewTripScreenState extends State<NewTripScreen> {
                     "https://i.pinimg.com/736x/5d/63/e1/5d63e18215fd5e1ab2cc1fe3db2d8359.jpg"),
             CustomTextFormField(
               hintText: " Trip ID",
+              controller: idController,
               isReadOnly: true,
             ),
             0.02.height.hSpace,
             CustomTextFormField(
               hintText: "Trip Name ",
+              controller: tripTitleController,
             ),
             0.02.height.hSpace,
             GestureDetector(
@@ -109,6 +126,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
             0.02.height.hSpace,
             CustomTextFormField(
               hintText: "Video Url",
+              controller: tripVideoUrlController,
             ),
             0.02.height.hSpace,
             NumbersTextFormField(
@@ -121,6 +139,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
                   flex: 4,
                   child: NumbersTextFormField(
                     hintText: "Budget",
+                    controller: tripBudgetController,
                     onComplete: (p0) {
                       int value =
                           int.tryParse(tripTotalDaysController.text) ?? 0;
@@ -178,11 +197,11 @@ class _NewTripScreenState extends State<NewTripScreen> {
               width: double.maxFinite,
               hintText: "Organized By",
               dropdownMenuEntries: [
-                 for (var company in companies ?? [])
+                for (String company in companies ?? [])
                   DropdownMenuEntry(
-                    value: company,
-                    label: company.companyName,
-                  ) ,
+                    value: selectedCompany,
+                    label: company,
+                  ),
               ],
             ),
             0.02.height.hSpace,

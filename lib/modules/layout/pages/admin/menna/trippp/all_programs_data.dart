@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/programs.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/programs/widget/build_program_widget.dart';
+import '/modules/layout/pages/admin/menna/trippp/model/programs.dart';
+import '/modules/layout/pages/admin/pages/programs/widget/build_program_widget.dart';
 import '/core/providers/trip_admin_provider.dart';
-import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widget/custom_elevated_button.dart';
-import '/core/widget/loading_image_network_widget.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/trip_program.dart';
 
 class AllProgramsData extends StatefulWidget {
