@@ -25,11 +25,12 @@ class PlayYoutubeVideo extends StatelessWidget {
         player: YoutubePlayer(
           controller: controller,
           showVideoProgressIndicator: false,
+
         ),
         builder: (context, player) {
           return Container(
-            width: MediaQuery.of(context).size.width, // Full width
-            height: MediaQuery.of(context).size.height, // Full height
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
             child: player, // Full-screen player
           );
         },

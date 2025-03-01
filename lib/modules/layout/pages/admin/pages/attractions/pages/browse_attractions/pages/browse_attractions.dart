@@ -19,9 +19,21 @@ class BrowseAttractions extends StatefulWidget {
   State<BrowseAttractions> createState() => _BrowseAttractionsState();
 }
 
+List<String> attractionCategories = [
+  "all",
+  "Natural Attractions",
+  "Cultural & Historical Attractions",
+  "Urban & Architectural Attractions",
+  "Parks & Protected Areas",
+  "Entertainment & Recreational Attractions",
+  "Religious & Spiritual Attractions",
+  "Adventure & Outdoor Attractions",
+];
+
 class _BrowseAttractionsState extends State<BrowseAttractions> {
   List<AttractionsModel> attractions = [];
   List<AttractionsModel> searchedAttraction = [];
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +100,6 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
                           .contains(query.toLowerCase());
                 }).toList();
 
-                // Convert filtered attractions to SearchFieldListItem
                 return filteredAttractions.map((attraction) {
                   return SearchFieldListItem<AttractionsModel>(
                     attraction.title,
@@ -108,6 +119,53 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
                   setState(() {});
                 }
               },
+            ),
+            0.01.height.hSpace,
+            SizedBox(
+              height: 0.05.height,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.zero,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      searchedAttraction.clear();
+                      selectedIndex = index;
+                      for(var element in attractions) {
+                        if(element.category == attractionCategories[index]) {
+                          searchedAttraction.add(element);
+                        }
+                      }
+                      setState(() {});
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: (selectedIndex == index)
+                            ? AppColors.newBlueColor
+                            : AppColors.whiteColor,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: (selectedIndex == index)
+                              ? AppColors.whiteColor
+                              : AppColors.newBlueColor,
+                        ),
+                      ),
+                      child: Text(
+                        attractionCategories[index],
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: (selectedIndex == index)
+                                      ? AppColors.whiteColor
+                                      : AppColors.newBlueColor,
+                                ),
+                      ).allPadding(2),
+                    ),
+                  );
+                },
+                separatorBuilder: (context, _) => 0.02.width.vSpace,
+                itemCount: attractionCategories.length,
+              ),
             ),
             0.01.height.hSpace,
             StreamBuilder(

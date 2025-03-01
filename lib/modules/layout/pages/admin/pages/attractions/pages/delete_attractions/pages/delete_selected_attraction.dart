@@ -31,6 +31,10 @@ class DeleteSelectedAttraction extends StatelessWidget {
             hintText: model.location,
             isReadOnly: true,
           ).hPadding(0.03.width),
+          CustomTextFormField(
+            hintText: model.id,
+            isReadOnly: true,
+          ).hPadding(0.03.width),
           0.01.height.hSpace,
           CustomTextFormField(
             hintText: model.description,

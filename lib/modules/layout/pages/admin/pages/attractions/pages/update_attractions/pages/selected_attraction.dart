@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/set_map_location.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/play_youtube_video.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '/core/utils/attractions_db.dart';
@@ -27,6 +29,8 @@ class _SelectedAttractionState extends State<SelectedAttraction> {
   _uploadChanges(BuildContext context, AttractionsModel model) async {
     EasyLoading.show();
     AttractionsModel newModel = AttractionsModel(
+      id: model.id,
+      category: model.category,
       title: titleController.text.isEmpty ? model.title : titleController.text,
       location: model.location,
       description: (descriptionController.text.isEmpty)
@@ -114,6 +118,11 @@ class _SelectedAttractionState extends State<SelectedAttraction> {
             ),
             0.01.height.hSpace,
             CustomTextFormField(
+              hintText: model.id,
+              isReadOnly: true,
+            ).hPadding(0.03.width),
+            0.01.height.hSpace,
+            CustomTextFormField(
               hintText: model.title,
               controller: titleController,
               onComplete: (value) {
@@ -122,10 +131,6 @@ class _SelectedAttractionState extends State<SelectedAttraction> {
               },
             ).hPadding(0.03.width),
             0.01.height.hSpace,
-            CustomTextFormField(
-              hintText: model.location,
-              isReadOnly: true,
-            ).hPadding(0.03.width),
             0.01.height.hSpace,
             CustomTextFormField(
               hintText: model.videoUrl ?? "No Video Url Founded",
@@ -143,6 +148,13 @@ class _SelectedAttractionState extends State<SelectedAttraction> {
                 isChanged = true;
                 return null;
               },
+            ).hPadding(0.03.width),
+            0.01.height.hSpace,
+            SizedBox(
+              height: 0.4.height,
+              child: SetMapLocation(
+                locations: LatLng(model.lat ?? 0, model.long ?? 0),
+              ),
             ).hPadding(0.03.width),
             0.01.height.hSpace,
             Row(

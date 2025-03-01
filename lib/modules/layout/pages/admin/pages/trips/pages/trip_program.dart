@@ -260,6 +260,8 @@ class _TripProgramState extends State<TripProgram> {
                                 programDetails: "programDetails",
                                 attraction: provider.getSelectedAttraction ??
                                     AttractionsModel(
+                                      category: "category",
+                                      id: "id",
                                       title: "title",
                                       location: "location",
                                       description: "description",

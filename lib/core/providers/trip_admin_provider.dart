@@ -2,6 +2,7 @@ import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:travel_go/core/utils/company_collections.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
 import '/models/attractions_model.dart';
@@ -16,10 +17,18 @@ class TripAdminProvider extends ChangeNotifier {
   Hotel? _selectionHotel;
   AttractionsModel? _selectedAttraction;
   Company? _selectedCompany;
+  LatLng? attractionLocation;
 
   Currency? _currency;
 
   Company? get getSelectedCompany => _selectedCompany;
+
+  void setAttractionLocation(LatLng location) {
+    attractionLocation = location;
+    notifyListeners();
+  }
+
+  LatLng? get getAttractionLocation => attractionLocation;
 
   void setSelectedCompany(Company selectedCompany) {
     _selectedCompany = selectedCompany;
@@ -47,7 +56,7 @@ class TripAdminProvider extends ChangeNotifier {
 
   get getAllCompanies {
     (_companies.first.companyName);
-   return  _companies;
+    return _companies;
   }
 
   String? destination;

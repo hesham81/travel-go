@@ -23,6 +23,18 @@ class UpdateAttraction extends StatefulWidget {
 class _UpdateAttractionState extends State<UpdateAttraction> {
   List<AttractionsModel> attractions = [];
   List<AttractionsModel> searchedAttraction = [];
+  List<String> attractionCategories = [
+    "all",
+    "Natural Attractions",
+    "Cultural & Historical Attractions",
+    "Urban & Architectural Attractions",
+    "Parks & Protected Areas",
+    "Entertainment & Recreational Attractions",
+    "Religious & Spiritual Attractions",
+    "Adventure & Outdoor Attractions",
+  ];
+  int selectedIndex = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +92,6 @@ class _UpdateAttractionState extends State<UpdateAttraction> {
                   return null;
                 }
 
-                // Filter attractions based on whether the title or location contains the query
                 final filteredAttractions = attractions.where((attraction) {
                   return attraction.title
                           .toLowerCase()
@@ -90,7 +101,6 @@ class _UpdateAttractionState extends State<UpdateAttraction> {
                           .contains(query.toLowerCase());
                 }).toList();
 
-                // Convert filtered attractions to SearchFieldListItem
                 return filteredAttractions.map((attraction) {
                   return SearchFieldListItem<AttractionsModel>(
                     attraction.title,
@@ -111,6 +121,54 @@ class _UpdateAttractionState extends State<UpdateAttraction> {
                 }
               },
             ),
+            0.01.height.hSpace,
+            SizedBox(
+              height: 0.05.height,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.zero,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      searchedAttraction.clear();
+                      selectedIndex = index;
+                      for(var element in attractions) {
+                        if(element.category == attractionCategories[index]) {
+                          searchedAttraction.add(element);
+                        }
+                      }
+                      setState(() {});
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: (selectedIndex == index)
+                            ? AppColors.newBlueColor
+                            : AppColors.whiteColor,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: (selectedIndex == index)
+                              ? AppColors.whiteColor
+                              : AppColors.newBlueColor,
+                        ),
+                      ),
+                      child: Text(
+                        attractionCategories[index],
+                        style:
+                        Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: (selectedIndex == index)
+                              ? AppColors.whiteColor
+                              : AppColors.newBlueColor,
+                        ),
+                      ).allPadding(2),
+                    ),
+                  );
+                },
+                separatorBuilder: (context, _) => 0.02.width.vSpace,
+                itemCount: attractionCategories.length,
+              ),
+            ),
+            0.01.height.hSpace,
             0.01.height.hSpace,
             StreamBuilder(
               stream: AttractionsDB.getAllAttractions(),
@@ -171,6 +229,7 @@ class _UpdateAttractionState extends State<UpdateAttraction> {
                       (e) => e.data(),
                     )
                     .toList();
+
                 return Visibility(
                   visible: searchedAttraction.isEmpty,
                   replacement: ListView.separated(

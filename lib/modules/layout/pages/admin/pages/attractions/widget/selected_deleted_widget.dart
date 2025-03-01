@@ -26,6 +26,8 @@ class _SelectedDeletedWidgetState extends State<SelectedDeletedWidget> {
   _uploadChanges(BuildContext context, AttractionsModel model) async {
     EasyLoading.show();
     AttractionsModel newModel = AttractionsModel(
+      category: model.category,
+      id: model.id,
       title: titleController.text.isEmpty ? model.title : titleController.text,
       location: model.location,
       description: (descriptionController.text.isEmpty)
@@ -71,6 +73,11 @@ class _SelectedDeletedWidgetState extends State<SelectedDeletedWidget> {
             Image.network(
               model.imageUrl,
             ),
+            0.01.height.hSpace,
+            CustomTextFormField(
+              hintText: model.id,
+              isReadOnly: true,
+            ).hPadding(0.03.width),
             0.01.height.hSpace,
             CustomTextFormField(
               hintText: model.title,

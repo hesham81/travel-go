@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import '/modules/layout/pages/admin/task/adminscreen.dart';
 import '/modules/layout/pages/manager/pages/manager_home/manager_home_screen.dart';
-import '/modules/layout/pages/admin/menna/adminhome.dart';
 import '/core/utils/social_auth_services.dart';
 import '/modules/forget_password/pages/forget_password.dart';
 import '/core/services/bot_toast.dart';
@@ -103,7 +103,7 @@ class _SignInState extends State<SignIn> {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AdminHomeScreen(),
+                          builder: (context) => AdminHome(),
                         ),
                         (route) => false,
                       );

@@ -11,15 +11,14 @@ abstract class IdGenerator {
   }
 
   static generateProgramId({
-
     required int dayNumber,
     required int programNumber,
     required String programTitle,
   }) {
     return "Pro${programNumber}-Day$dayNumber-${programTitle.trim()}";
   }
-  static generateTripId({
 
+  static generateTripId({
     required int dayNumber,
     required String tripOrganizedBy,
     required String tripTitle,
@@ -27,4 +26,9 @@ abstract class IdGenerator {
     return "Trip-004-$tripOrganizedBy-${tripTitle.trim()}";
   }
 
+  static generateAttractionId({
+    required String attractionTitle,
+  }) {
+    return "Attraction-$attractionTitle";
+  }
 }

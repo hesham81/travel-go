@@ -24,6 +24,7 @@ abstract class AttractionsDB {
       await colRef.doc(id).set(model);
       return true;
     } catch (error) {
+      print(error.toString());
       return false;
     }
   }
