@@ -6,8 +6,9 @@ import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:google_gemini/google_gemini.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:travel_go/core/providers/trip_admin_provider.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/all_programs_data.dart';
+import '/core/providers/trip_admin_provider.dart';
+import '/modules/layout/pages/admin/menna/trippp/all_programs_data.dart';
+import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/play_youtube_video.dart';
 import '/core/widget/map.dart';
 import '/modules/layout/pages/admin/menna/trippp/assign_flight_trip.dart';
 import '/modules/layout/pages/admin/menna/trippp/assign_hotel.dart';
@@ -111,6 +112,7 @@ class MyApp extends StatelessWidget {
         AssignHotel.routeName: (context) => AssignHotel(),
         AppMaps.routeName: (context) => AppMaps(),
         AllProgramsData.routeName: (context) => AllProgramsData(),
+        PlayYoutubeVideo.routeName: (context) => PlayYoutubeVideo(),
       },
     );
   }

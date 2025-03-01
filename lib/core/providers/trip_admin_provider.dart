@@ -1,6 +1,9 @@
+import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:travel_go/core/utils/company_collections.dart';
+import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
 import '/models/attractions_model.dart';
 import '/models/flight.dart';
 import '/models/hotel_model.dart';
@@ -12,11 +15,40 @@ class TripAdminProvider extends ChangeNotifier {
   Flight? _selectionFlight;
   Hotel? _selectionHotel;
   AttractionsModel? _selectedAttraction;
+  Company? _selectedCompany;
+
+  Currency? _currency;
+
+  Company? get getSelectedCompany => _selectedCompany;
+
+  void setSelectedCompany(Company selectedCompany) {
+    _selectedCompany = selectedCompany;
+    notifyListeners();
+  }
 
   int get getTotalDays => _totalDays;
   List<Marker> _markersFromTo = [];
   List<ProgramDayModel> _daySpecificProgram = [];
   String? source;
+  List<Company> _companies = [];
+
+  TripAdminProvider() {
+    _getAllCompanies();
+  }
+
+  _getAllCompanies() {
+    CompanyCollections.getAllCompany().then(
+      (value) {
+        _companies = value;
+        notifyListeners();
+      },
+    );
+  }
+
+  get getAllCompanies {
+    (_companies.first.companyName);
+   return  _companies;
+  }
 
   String? destination;
 
@@ -51,6 +83,13 @@ class TripAdminProvider extends ChangeNotifier {
   }
 
   AttractionsModel? get getSelectedAttraction => _selectedAttraction;
+
+  Currency? get getCurrency => _currency;
+
+  void setCurrency(Currency currency) {
+    _currency = currency;
+    notifyListeners();
+  }
 
   List<Program> _programs = [];
 
@@ -103,8 +142,8 @@ class TripAdminProvider extends ChangeNotifier {
     _daySpecificProgram[dayNumber].program.insert(programNumber, program);
     notifyListeners();
   }
-  List<Program> getProgramFromDay(int dayNumber)
-  {
+
+  List<Program> getProgramFromDay(int dayNumber) {
     return _daySpecificProgram[dayNumber].program;
   }
 }

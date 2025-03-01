@@ -1,10 +1,8 @@
 import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_go/core/providers/trip_admin_provider.dart';
-import 'package:travel_go/core/utils/id_generator.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/program_day_model.dart';
+import '/core/providers/trip_admin_provider.dart';
+import '/core/utils/id_generator.dart';
 import '/core/extensions/alignment.dart';
 import '/core/widget/widget_eleveted_button.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/new_attractions/pages/new_attraction.dart';
@@ -63,14 +61,14 @@ class _TripProgramState extends State<TripProgram> {
     var provider = Provider.of<TripAdminProvider>(context);
     int lengthOfPrograms = provider.getDaySpecificProgram[model].program.length;
     programIdController.text = IdGenerator.generateProgramId(
-      dayNumber: (lengthOfPrograms + 1),
+      dayNumber: (model + 1),
       programTitle: selectedAttraction.text ?? "",
-      programNumber: (model + 1),
+      programNumber: (lengthOfPrograms + 1),
     );
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Program ${model + 1} Day ${lengthOfPrograms + 1}",
+          "Program ${lengthOfPrograms + 1} Day ${model + 1}",
           style: theme.titleLarge!.copyWith(
             color: AppColors.whiteColor,
           ),
@@ -258,16 +256,17 @@ class _TripProgramState extends State<TripProgram> {
                           if (formKey.currentState!.validate()) {
                             provider.addSpecificProgramDay(
                               Program(
-                                  programTitle: "programTitle",
-                                  programDetails: "programDetails",
-                                  attraction: provider.getSelectedAttraction ??
-                                      AttractionsModel(
-                                        title: "title",
-                                        location: "location",
-                                        description: "description",
-                                        imageUrl: "imageUrl",
-                                      ),
-                                  dayNumber: 1),
+                                programTitle: "programTitle",
+                                programDetails: "programDetails",
+                                attraction: provider.getSelectedAttraction ??
+                                    AttractionsModel(
+                                      title: "title",
+                                      location: "location",
+                                      description: "description",
+                                      imageUrl: "imageUrl",
+                                    ),
+                                dayNumber: 1,
+                              ),
                               index,
                               lengthOfPrograms,
                             );

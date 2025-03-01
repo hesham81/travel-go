@@ -18,4 +18,13 @@ abstract class IdGenerator {
   }) {
     return "Pro${programNumber}-Day$dayNumber-${programTitle.trim()}";
   }
+  static generateTripId({
+
+    required int dayNumber,
+    required String tripOrganizedBy,
+    required String tripTitle,
+  }) {
+    return "Trip-004-$tripOrganizedBy-${tripTitle.trim()}";
+  }
+
 }

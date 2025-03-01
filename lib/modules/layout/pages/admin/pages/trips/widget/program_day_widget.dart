@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/all_programs_data.dart';
+import '/modules/layout/pages/admin/menna/trippp/all_programs_data.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 

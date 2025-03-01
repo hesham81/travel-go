@@ -1,6 +1,9 @@
+import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import '/core/utils/company_collections.dart';
+import '/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
 import '/core/providers/trip_admin_provider.dart';
 import '/core/extensions/align.dart';
 import '/core/widget/map.dart';
@@ -33,14 +36,28 @@ class _NewTripScreenState extends State<NewTripScreen> {
   String? source;
 
   String? destination;
+  List<Company>? companies;
 
   var controller = DateRangePickerController();
 
   @override
-  Widget build(BuildContext context) {
-    var provider = Provider.of<TripAdminProvider>(context);
-    // provider.getSourceCity();
+  void initState() {
+    super.initState();
+  }
 
+  _setCompanyData() async {
+    await CompanyCollections.getAllCompany().then(
+      (value) {
+        print(value.first.companyName);
+        companies = value;
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _setCompanyData();
+    var provider = Provider.of<TripAdminProvider>(context);
     var theme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
@@ -98,6 +115,55 @@ class _NewTripScreenState extends State<NewTripScreen> {
               hintText: "Total Guests",
             ),
             0.02.height.hSpace,
+            Row(
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: NumbersTextFormField(
+                    hintText: "Budget",
+                    onComplete: (p0) {
+                      int value =
+                          int.tryParse(tripTotalDaysController.text) ?? 0;
+                      provider.setTotalDays(value);
+                    },
+                  ),
+                ),
+                0.01.width.vSpace,
+                Expanded(
+                  child: CustomElevatedButton(
+                    padding: EdgeInsets.symmetric(vertical: 0.015.height),
+                    text: provider.getCurrency?.name.substring(0, 4) ?? "Cur",
+                    onPressed: () {
+                      showCurrencyPicker(
+                          context: context,
+                          theme: CurrencyPickerThemeData(
+                            flagSize: 25,
+                            titleTextStyle: TextStyle(fontSize: 17),
+                            subtitleTextStyle: TextStyle(
+                                fontSize: 15,
+                                color: Theme.of(context).hintColor),
+                            bottomSheetHeight:
+                                MediaQuery.of(context).size.height / 2,
+                            inputDecoration: InputDecoration(
+                              labelText: 'Search',
+                              hintText: 'Start typing to search',
+                              prefixIcon: const Icon(Icons.search),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color:
+                                      const Color(0xFF8C98A8).withOpacity(0.2),
+                                ),
+                              ),
+                            ),
+                          ),
+                          onSelect: (Currency currency) =>
+                              provider.setCurrency(currency));
+                    },
+                  ),
+                )
+              ],
+            ),
+            0.02.height.hSpace,
             NumbersTextFormField(
               hintText: "Total Days",
               controller: tripTotalDaysController,
@@ -105,6 +171,19 @@ class _NewTripScreenState extends State<NewTripScreen> {
                 int value = int.tryParse(tripTotalDaysController.text) ?? 0;
                 provider.setTotalDays(value);
               },
+            ),
+            0.02.height.hSpace,
+            DropdownMenu(
+              enableSearch: true,
+              width: double.maxFinite,
+              hintText: "Organized By",
+              dropdownMenuEntries: [
+                 for (var company in companies ?? [])
+                  DropdownMenuEntry(
+                    value: company,
+                    label: company.companyName,
+                  ) ,
+              ],
             ),
             0.02.height.hSpace,
             WidgetElevetedButton(

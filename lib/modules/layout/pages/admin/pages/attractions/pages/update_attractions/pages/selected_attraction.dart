@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/play_youtube_video.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '/core/utils/attractions_db.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
@@ -49,10 +51,22 @@ class _SelectedAttractionState extends State<SelectedAttraction> {
     Navigator.pop(context);
   }
 
+  late YoutubePlayerController youTubeController;
+
+  _playVideo(String videoUrl) {
+    print(videoUrl);
+    if (videoUrl == "") {
+      EasyLoading.showError("The Url Is Invalid");
+      return;
+    }
+    youTubeController = YoutubePlayerController(initialVideoId: videoUrl);
+  }
+
   @override
   Widget build(BuildContext context) {
     var model = ModalRoute.of(context)!.settings.arguments as AttractionsModel;
     var theme = Theme.of(context);
+    _playVideo(model.videoUrl ?? "");
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -79,12 +93,18 @@ class _SelectedAttractionState extends State<SelectedAttraction> {
                 ),
               ),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    PlayYoutubeVideo.routeName,
+                    arguments: model.videoUrl,
+                  );
+                },
                 style: IconButton.styleFrom(
                   backgroundColor: AppColors.errorColor,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)
-                  )
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
                 icon: Icon(
                   Icons.play_arrow_outlined,
