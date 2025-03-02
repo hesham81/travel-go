@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import 'Updateflight.dart';
-
-
+import "flight_card.dart";
 
 class ViewFlights extends StatefulWidget {
-
   ViewFlights({super.key});
 
   @override
@@ -48,7 +44,9 @@ class _ViewFlightsState extends State<ViewFlights> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Filters", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text("Filters",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)),
 
                     SizedBox(height: 20),
 
@@ -79,8 +77,10 @@ class _ViewFlightsState extends State<ViewFlights> {
                                 selectedDestination = "Vancouver";
                               });
                             },
-                            style: TextButton.styleFrom(backgroundColor: Colors.grey[300]),
-                            child: Text("Reset", style: TextStyle(color: Colors.black)),
+                            style: TextButton.styleFrom(
+                                backgroundColor: Colors.grey[300]),
+                            child: Text("Reset",
+                                style: TextStyle(color: Colors.black)),
                           ),
                         ),
                         SizedBox(width: 10),
@@ -95,21 +95,34 @@ class _ViewFlightsState extends State<ViewFlights> {
 
                               // Prepare filter data to send to the database
                               Map<String, dynamic> filterData = {
-                                "min_price": minPriceController.text.isEmpty ? null : int.parse(minPriceController.text),
-                                "max_price": maxPriceController.text.isEmpty ? null : int.parse(maxPriceController.text),
+                                "min_price": minPriceController.text.isEmpty
+                                    ? null
+                                    : int.parse(minPriceController.text),
+                                "max_price": maxPriceController.text.isEmpty
+                                    ? null
+                                    : int.parse(maxPriceController.text),
                                 "selected_airlines": selectedAirlines,
-                                "start_date": selectedStartDate != null ? DateFormat('yyyy-MM-dd').format(selectedStartDate!) : null,
-                                "departure_time": selectedDepartureTime == "Any Time" ? null : selectedDepartureTime,
+                                "start_date": selectedStartDate != null
+                                    ? DateFormat('yyyy-MM-dd')
+                                        .format(selectedStartDate!)
+                                    : null,
+                                "departure_time":
+                                    selectedDepartureTime == "Any Time"
+                                        ? null
+                                        : selectedDepartureTime,
                                 "destination": selectedDestination,
                               };
 
                               Navigator.pop(context);
                             },
-                            style: ElevatedButton.styleFrom(backgroundColor: Color(0xff0d75b4)),
-                            child: Text("Show Flights" , style: TextStyle(
-                              color: Colors.white,
-
-                            ),),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xff0d75b4)),
+                            child: Text(
+                              "Show Flights",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -128,7 +141,8 @@ class _ViewFlightsState extends State<ViewFlights> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Price Range (CAD)", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text("Price Range (CAD)",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         SizedBox(height: 10),
         Row(
           children: [
@@ -136,7 +150,8 @@ class _ViewFlightsState extends State<ViewFlights> {
               child: TextField(
                 controller: minPriceController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: "Min Price", border: OutlineInputBorder()),
+                decoration: InputDecoration(
+                    labelText: "Min Price", border: OutlineInputBorder()),
               ),
             ),
             SizedBox(width: 10),
@@ -144,7 +159,8 @@ class _ViewFlightsState extends State<ViewFlights> {
               child: TextField(
                 controller: maxPriceController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: "Max Price", border: OutlineInputBorder()),
+                decoration: InputDecoration(
+                    labelText: "Max Price", border: OutlineInputBorder()),
               ),
             ),
           ],
@@ -157,7 +173,8 @@ class _ViewFlightsState extends State<ViewFlights> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Airlines", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text("Airlines",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         Column(
           children: airlines.keys.map((airline) {
             return CheckboxListTile(
@@ -179,7 +196,8 @@ class _ViewFlightsState extends State<ViewFlights> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Start Date", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text("Start Date",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         SizedBox(height: 10),
         GestureDetector(
           onTap: () async {
@@ -217,7 +235,8 @@ class _ViewFlightsState extends State<ViewFlights> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Departure Time", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text("Departure Time",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         SizedBox(height: 10),
         GestureDetector(
           onTap: () async {
@@ -238,7 +257,9 @@ class _ViewFlightsState extends State<ViewFlights> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
-              selectedDepartureTime == "Any Time" ? "Select Time" : selectedDepartureTime,
+              selectedDepartureTime == "Any Time"
+                  ? "Select Time"
+                  : selectedDepartureTime,
               style: TextStyle(fontSize: 16),
             ),
           ),
@@ -251,7 +272,8 @@ class _ViewFlightsState extends State<ViewFlights> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Destination", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text("Destination",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         SizedBox(height: 10),
         DropdownButtonFormField<String>(
           value: selectedDestination,
@@ -300,7 +322,7 @@ class _ViewFlightsState extends State<ViewFlights> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:Color(0xff0d75b4),
+        backgroundColor: Color(0xff0d75b4),
         leading: InkWell(
           onTap: () {
             Navigator.pop(context);
@@ -320,54 +342,59 @@ class _ViewFlightsState extends State<ViewFlights> {
         ),
         centerTitle: true,
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-
           children: [
-            Text("Flights" ,
+            Text(
+              "Flights",
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: Color(0xff0d75b4),
               ),
             ),
-            SizedBox(height: 33,),
-
+            SizedBox(
+              height: 33,
+            ),
             Row(
               children: [
                 Expanded(
-                    child:
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: "Search",
-                        prefixIcon: const Icon(Icons.search, color: Color(0xff0d75b4)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        enabledBorder: OutlineInputBorder( // Border when not focused
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xff0d75b4), // Custom color
-                            width: 1.5,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder( // Border when focused
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xff0d75b4), // Same color as enabled
-                            width: 2,
-                          ),
-                        ),
+                    child: TextField(
+                  decoration: InputDecoration(
+                    hintText: "Search",
+                    prefixIcon:
+                        const Icon(Icons.search, color: Color(0xff0d75b4)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      // Border when not focused
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Color(0xff0d75b4), // Custom color
+                        width: 1.5,
                       ),
-                    )
-                ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      // Border when focused
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Color(0xff0d75b4), // Same color as enabled
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                )),
                 SizedBox(width: 5),
                 IconButton(
-                  icon:  Icon(Icons.filter_list_alt, size: 40 , color: Color(0xff0d75b4),),
+                  icon: Icon(
+                    Icons.filter_list_alt,
+                    size: 40,
+                    color: Color(0xff0d75b4),
+                  ),
                   onPressed: () {
-                    _showFilters ();
+                    _showFilters();
                   },
                 )
               ],
@@ -394,116 +421,5 @@ class _ViewFlightsState extends State<ViewFlights> {
     );
   }
 }
-void _showDeleteConfirmationDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text("Confirm Deletion"),
-        content: Text("Are you sure you want to delete ?"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Close dialog
-            },
-            child: Text("Cancel"),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Close dialog
-              // Perform delete action here
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("Item deleted")),
-              );
-            },
-            child: Text("Delete", style: TextStyle(color: Colors.red)),
-          ),
-        ],
-      );
-    },
-  );
-}
 
-class FlightCard extends StatelessWidget {
-  final String destination;
-  final String date;
-  final String time;
-  final String price;
-  final String flightClass;
 
-  const FlightCard({
-    super.key,
-    required this.destination,
-    required this.date,
-    required this.time,
-    required this.price,
-    required this.flightClass,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Image.network(
-                    "https://upload.wikimedia.org/wikipedia/commons/7/7d/Egypt_air_logo.jpg",
-                    width: 40),
-                const SizedBox(width: 8),
-                const Text(
-                  "EGYPTAIR",
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff0d75b4)),
-                ),
-                const Spacer(),
-                Text(
-                  flightClass,
-                  style: const TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(height: 6),
-            Text(destination,
-                style: const TextStyle(
-                    fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 4),
-            Text("Date: $date", style: const TextStyle(color: Colors.grey)),
-            Text("Departure Time: $time",
-                style: const TextStyle(color: Colors.grey)),
-            const SizedBox(height: 6),
-            Text("Price: $price",
-                style: const TextStyle(
-                    color: Color(0xff0d75b4), fontWeight: FontWeight.bold)),
-            const SizedBox(height: 6),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => UpdateFlight()),
-                      );
-                    },
-                    icon: const Icon(Icons.edit)),
-                IconButton(
-                    onPressed: () =>
-                        _showDeleteConfirmationDialog(context),
-                    icon: const Icon(Icons.delete, color: Colors.red)),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
