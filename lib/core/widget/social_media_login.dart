@@ -30,7 +30,7 @@ class SocialMediaLogin extends StatelessWidget {
             width: 0.7,
           ),
           color: AppColors.alabasterWhiteColor,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Expanded(
           child: Row(

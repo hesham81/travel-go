@@ -53,10 +53,6 @@ class _NewAttractionState extends State<NewAttraction> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController videoUrlController = TextEditingController();
   TextEditingController idController = TextEditingController();
-  String countryValue = "";
-  String stateValue = "";
-  String cityValue = "";
-  String location = "";
   var formKey = GlobalKey<FormState>();
   List<AttractionsModel> attractions = [
     AttractionsModel(
@@ -342,12 +338,11 @@ class _NewAttractionState extends State<NewAttraction> {
                           titleController.text,
                         ) ??
                         "";
-                    location = "$countryValue,$cityValue";
                     AttractionsModel model = AttractionsModel(
                       category: selectedCategory ?? "Not Categorized",
                       id: idController.text,
                       title: titleController.text,
-                      location: location,
+                      location: "location",
                       description: descriptionController.text,
                       imageUrl: imageUrl,
                       videoUrl: videoUrlController.text.isEmpty

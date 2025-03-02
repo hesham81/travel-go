@@ -17,11 +17,7 @@ abstract class AttractionsDB {
   static Future<bool> addAttractionsData(AttractionsModel model) async {
     try {
       var colRef = _collectionRef();
-      String id = IdGenerator.generateId(
-        value1: model.location,
-        value2: model.description,
-      );
-      await colRef.doc(id).set(model);
+      await colRef.doc(model.id).set(model);
       return true;
     } catch (error) {
       print(error.toString());
