@@ -15,14 +15,16 @@ abstract class CompanyCollections {
     );
   }
 
-  static addCompany(Company model) async {
+  static Future<bool> addCompany(Company model) async {
     try {
       var id = IdGenerator.generateId(
           value1: model.companyName, value2: model.companyWebsite);
       await _colRef().doc(id).set(model);
       print("Done");
+      return true ;
     } catch (error) {
       print("Error ${error}");
+      return false ;
     }
   }
 

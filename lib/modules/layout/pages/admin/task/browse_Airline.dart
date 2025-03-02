@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/widget/loading_image_network_widget.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/airline_db.dart';
@@ -138,10 +139,9 @@ class _BrowseAirlinesState extends State<BrowseAirlines> {
                               ),
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(6),
-                                child: Image.network(
-                                  airlines[index].flightAirLineImageUrl,
+                                child: LoadingImageNetworkWidget(
+                                  imageUrl:airlines[index].flightAirLineImageUrl,
                                   width: 150,
-                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ],

@@ -45,8 +45,9 @@ class _AllProgramsDataState extends State<AllProgramsData> {
                 : ListView.separated(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) =>
-                        BuildProgramWidget(model: programs[index]),
+                    itemBuilder: (context, index) => BuildProgramWidget(
+                      model: programs[index],
+                    ),
                     separatorBuilder: (context, _) => 0.01.height.hSpace,
                     itemCount: programs.length,
                   ),

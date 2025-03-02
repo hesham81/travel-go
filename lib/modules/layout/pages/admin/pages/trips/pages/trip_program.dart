@@ -101,13 +101,6 @@ class _TripProgramState extends State<TripProgram> {
                         titleController.text.isEmpty ? "Enter title" : null,
                   ),
                   0.01.height.hSpace,
-                  Text(
-                    "Select Attraction",
-                    style: theme.titleMedium!.copyWith(
-                      color: AppColors.blackColor,
-                    ),
-                  ).leftBottomWidget(),
-                  0.01.height.hSpace,
                   CustomTextFormField(
                     hintText: "Program Description",
                     controller: descriptionController,
@@ -116,6 +109,13 @@ class _TripProgramState extends State<TripProgram> {
                         : null,
                     minLine: 3,
                   ),
+                  0.01.height.hSpace,
+                  Text(
+                    "Select Attraction",
+                    style: theme.titleMedium!.copyWith(
+                      color: AppColors.blackColor,
+                    ),
+                  ).leftBottomWidget(),
                   0.01.height.hSpace,
                   Row(
                     children: [
@@ -267,7 +267,7 @@ class _TripProgramState extends State<TripProgram> {
                                       description: "description",
                                       imageUrl: "imageUrl",
                                     ),
-                                dayNumber: 1,
+                                dayNumber: (model + 1),
                               ),
                               index,
                               lengthOfPrograms,

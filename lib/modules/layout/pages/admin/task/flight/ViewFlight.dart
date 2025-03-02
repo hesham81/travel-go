@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '/core/theme/app_colors.dart';
+import '/models/flight_airlines.dart';
 import "flight_card.dart";
 
 class ViewFlights extends StatefulWidget {
-  ViewFlights({super.key});
+  final FlightAirlines airline;
+
+  const ViewFlights({
+    super.key,
+    required this.airline,
+  });
 
   @override
   State<ViewFlights> createState() => _ViewFlightsState();
@@ -11,7 +18,6 @@ class ViewFlights extends StatefulWidget {
 
 class _ViewFlightsState extends State<ViewFlights> {
   final TextEditingController minPriceController = TextEditingController();
-
   final TextEditingController maxPriceController = TextEditingController();
 
   Map<String, bool> airlines = {
@@ -20,7 +26,29 @@ class _ViewFlightsState extends State<ViewFlights> {
     "Porter Airlines": false,
     "Air Transat": false,
   };
-
+  final List<Map<String, String>> flights = [
+    {
+      "destination": "Sharm el sheikh",
+      "date": "26/2/2025",
+      "time": "8:00 am",
+      "price": "3,000 L.E",
+      "class": "Economy"
+    },
+    {
+      "destination": "Cairo",
+      "date": "27/2/2025",
+      "time": "9:00 am",
+      "price": "6,000 L.E",
+      "class": "First class"
+    },
+    {
+      "destination": "Alexandria",
+      "date": "27/2/2025",
+      "time": "10:30 am",
+      "price": "6,000 L.E",
+      "class": "First class"
+    },
+  ];
   String selectedDestination = "Vancouver";
 
   DateTime? selectedStartDate;
@@ -294,50 +322,15 @@ class _ViewFlightsState extends State<ViewFlights> {
     );
   }
 
-  final List<Map<String, String>> flights = [
-    {
-      "destination": "Alexandria",
-      "date": "26/2/2025",
-      "time": "8:00 am",
-      "price": "3,000 L.E",
-      "class": "Economy"
-    },
-    {
-      "destination": "Alexandria",
-      "date": "27/2/2025",
-      "time": "9:00 am",
-      "price": "6,000 L.E",
-      "class": "First class"
-    },
-    {
-      "destination": "Alexandria",
-      "date": "27/2/2025",
-      "time": "10:30 am",
-      "price": "6,000 L.E",
-      "class": "First class"
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff0d75b4),
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-        ),
         title: Text(
-          "Tour And Travel ",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+          widget.airline.flighAirLineName,
+          style: theme.titleLarge!.copyWith(
+            color: AppColors.whiteColor,
           ),
         ),
         centerTitle: true,
@@ -351,7 +344,7 @@ class _ViewFlightsState extends State<ViewFlights> {
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
-                color: Color(0xff0d75b4),
+                color: AppColors.newBlueColor,
               ),
             ),
             SizedBox(
@@ -421,5 +414,3 @@ class _ViewFlightsState extends State<ViewFlights> {
     );
   }
 }
-
-

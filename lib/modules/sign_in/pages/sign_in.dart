@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import '/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
 import '/modules/layout/pages/admin/task/adminscreen.dart';
 import '/modules/layout/pages/manager/pages/manager_home/manager_home_screen.dart';
 import '/core/utils/social_auth_services.dart';

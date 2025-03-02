@@ -1,3 +1,5 @@
+import 'package:travel_go/core/utils/company_collections.dart';
+
 class Company {
   final String companyName;
 
@@ -14,9 +16,10 @@ class Company {
     required this.phoneNumber,
   });
 
+
   factory Company.fromJson(Map<String, dynamic> json) {
     return Company(
-      companyName: json['companyName'],
+      companyName: json['companyName'] ?? "No Company Name",
       companyWebsite: json['companyWebsite'],
       companyStartFrom: json['companyStartFrom'],
       phoneNumber: json['phoneNumber'],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/widget/loading_image_network_widget.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/airline_db.dart';
@@ -51,7 +52,7 @@ class _BrowseFlight2State extends State<BrowseFlight2> {
                   decoration: InputDecoration(
                     hintText: "Search",
                     prefixIcon:
-                    const Icon(Icons.search, color: Color(0xff0d75b4)),
+                        const Icon(Icons.search, color: Color(0xff0d75b4)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -83,7 +84,7 @@ class _BrowseFlight2State extends State<BrowseFlight2> {
                   airlines = snapshot.data!.docs
                       .map(
                         (e) => e.data(),
-                  )
+                      )
                       .toList();
                   return ListView.separated(
                     shrinkWrap: true,
@@ -97,16 +98,15 @@ class _BrowseFlight2State extends State<BrowseFlight2> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ViewFlights(),
+                              builder: (context) => ViewFlights(
+                                airline: airlines[index],
+                              ),
                             ),
                           );
                         },
                         child: Container(
                           margin: EdgeInsets.only(bottom: 15),
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width * 0.8,
+                          width: MediaQuery.of(context).size.width * 0.8,
                           height: 140,
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -142,10 +142,9 @@ class _BrowseFlight2State extends State<BrowseFlight2> {
                               ),
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(6),
-                                child: Image.network(
-                                  airlines[index].flightAirLineImageUrl,
+                                child: LoadingImageNetworkWidget(
+                                  imageUrl:airlines[index].flightAirLineImageUrl,
                                   width: 150,
-                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ],

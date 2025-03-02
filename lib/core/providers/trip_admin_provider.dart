@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:travel_go/core/utils/company_collections.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
+import '/core/utils/company_collections.dart';
+import '/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
 import '/models/attractions_model.dart';
 import '/models/flight.dart';
 import '/models/hotel_model.dart';
@@ -30,7 +30,7 @@ class TripAdminProvider extends ChangeNotifier {
 
   LatLng? get getAttractionLocation => attractionLocation;
 
-  void setSelectedCompany(Company selectedCompany) {
+  void setSelectedCompany(Company? selectedCompany) {
     _selectedCompany = selectedCompany;
     notifyListeners();
   }
@@ -59,11 +59,14 @@ class TripAdminProvider extends ChangeNotifier {
     return _companies;
   }
 
+  String? sourceLocation;
+
+  String? fromLocation;
+
   String? destination;
 
   Future<void> getSourceCity() async {
     if (_markersFromTo.isEmpty) {
-      print('No markers available.');
       return;
     }
 
@@ -78,7 +81,9 @@ class TripAdminProvider extends ChangeNotifier {
       if (placemarks.isNotEmpty) {
         Placemark sourcePlacemark = placemarks[0];
         source = sourcePlacemark.country ?? 'Unknown City';
-        print('Source City: $source');
+        Placemark fromPlaceMark = placemarks[1];
+        destination = fromPlaceMark.country ?? 'Unknown City';
+        notifyListeners();
       } else {
         print('No placemark found for the given coordinates.');
       }
@@ -137,6 +142,7 @@ class TripAdminProvider extends ChangeNotifier {
     if (_markersFromTo.length == 2) {
       _markersFromTo.clear();
     }
+    getSourceCity();
     _markersFromTo.add(marker);
     notifyListeners();
   }
@@ -154,5 +160,13 @@ class TripAdminProvider extends ChangeNotifier {
 
   List<Program> getProgramFromDay(int dayNumber) {
     return _daySpecificProgram[dayNumber].program;
+  }
+
+  void endOfProvider() {
+    _totalDays = 0;
+    _selectionFlight = null;
+    _selectedCompany = null;
+    _daySpecificProgram = [];
+    _currency = null;
   }
 }

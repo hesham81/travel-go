@@ -6,6 +6,7 @@ import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/program_
 
 class TripDataModel {
   final String tripId;
+  final String? imageUrl;
 
   final String tripName;
 
@@ -42,6 +43,7 @@ class TripDataModel {
     required this.programDetails,
     required this.hotel,
     required this.flight,
+    this.imageUrl,
   });
 
   Map<String, dynamic> toMap() {
@@ -58,6 +60,7 @@ class TripDataModel {
       'programDetails': programDetails.map((x) => x.toJson()).toList(),
       'hotel': hotel.toMap(),
       'flight': flight.toMap(),
+      'imageUrl': imageUrl,
     };
   }
 
@@ -71,14 +74,21 @@ class TripDataModel {
       totalGuests: map['totalGuests'],
       price: map['price'],
       currency: map['currency'],
-      organizedBy: Company.fromJson(map['organizedBy']),
+      organizedBy: Company.fromJson(
+        map['organizedBy'],
+      ),
       programDetails: List<ProgramDayModel>.from(
         map['programDetails']?.map(
           (x) => ProgramDayModel.fromJson(x),
         ),
       ),
-      hotel: Hotel.fromMap(map['hotel']),
-      flight: Flight.fromMap(map['flight']),
+      hotel: Hotel.fromMap(
+        map['hotel'],
+      ),
+      flight: Flight.fromMap(
+        map['flight'],
+      ),
+      imageUrl: map['imageUrl'],
     );
   }
 }

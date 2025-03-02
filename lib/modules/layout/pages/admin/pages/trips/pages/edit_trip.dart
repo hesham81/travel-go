@@ -19,20 +19,20 @@ class EditTrip extends StatefulWidget {
 
 class _EditTripState extends State<EditTrip> {
   TextEditingController searchController = TextEditingController();
-  final trip = Trip(
-    currency: "LE",
-    destination: "Cairo",
-    hotelId: "Hotel",
-    noOfDays: 10,
-    source: "Sharm",
-    id: "trip1232",
-    imageUrl:
-        "https://ulmlgjxomyybsvsjesuv.supabase.co/storage/v1/object/sign/trip/sharm/dahab.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0cmlwL3NoYXJtL2RhaGFiLnBuZyIsImlhdCI6MTczODYyMDMyMSwiZXhwIjoxNzcwMTU2MzIxfQ.OXBFOIOybFO9FQs19GLg0DYASGOetLwPqHhvox4Ovb8",
-    title: "Trip test123",
-    startDateTime: DateTime(2025, 10, 12),
-    endDateTime: DateTime(2025, 10, (12 + 10)),
-    price: 3200,
-  );
+  // final trip = Trip(
+  //   currency: "LE",
+  //   destination: "Cairo",
+  //   hotelId: "Hotel",
+  //   noOfDays: 10,
+  //   source: "Sharm",
+  //   id: "trip1232",
+  //   imageUrl:
+  //       "https://ulmlgjxomyybsvsjesuv.supabase.co/storage/v1/object/sign/trip/sharm/dahab.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0cmlwL3NoYXJtL2RhaGFiLnBuZyIsImlhdCI6MTczODYyMDMyMSwiZXhwIjoxNzcwMTU2MzIxfQ.OXBFOIOybFO9FQs19GLg0DYASGOetLwPqHhvox4Ovb8",
+  //   title: "Trip test123",
+  //   startDateTime: DateTime(2025, 10, 12),
+  //   endDateTime: DateTime(2025, 10, (12 + 10)),
+  //   price: 3200,
+  // );
   var trips = [];
   var searchQueryText = "";
   var searchTrip = [];

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
-import 'package:travel_go/core/providers/trip_admin_provider.dart';
+import '/core/providers/trip_admin_provider.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
 import '/core/utils/hotels_db.dart';

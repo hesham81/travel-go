@@ -79,4 +79,40 @@ abstract class Storage {
       return false;
     }
   }
+
+  static Future<bool> uploadPublicTrip({
+    required String tripName,
+    required File image,
+    required String fileName,
+  }) async {
+    try {
+      await _supabase.upload(
+        "Trips/$fileName",
+        image,
+      );
+      return true;
+    } catch (error) {
+      log("Error $error");
+      return false;
+    }
+  }
+  static String? getPublicUrlTripImage(String path) {
+    try {
+      String url = _supabase.getPublicUrl("Trips/$path");
+      return url;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  static Future<bool> deleteTripImage(String path) async {
+    try {
+      await _supabase.remove(
+        ["Trips/$path"],
+      );
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }

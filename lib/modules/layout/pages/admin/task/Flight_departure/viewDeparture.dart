@@ -183,11 +183,14 @@ class _ViewFlightDepartureScreenState extends State<ViewFlightDepartureScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title,
-            style: TextStyle(
-                fontSize: 16,
-                color: Color(0xff0d75b4),
-                fontWeight: FontWeight.bold)),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 16,
+            color: Color(0xff0d75b4),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         SizedBox(height: 8),
         GestureDetector(
           onTap: onTap,
@@ -198,8 +201,13 @@ class _ViewFlightDepartureScreenState extends State<ViewFlightDepartureScreen> {
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Text(value ?? "Select $title",
-                style: TextStyle(fontSize: 16, color: Colors.grey[700])),
+            child: Text(
+              value ?? "Select $title",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[700],
+              ),
+            ),
           ),
         ),
         SizedBox(height: 16),

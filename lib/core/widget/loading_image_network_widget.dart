@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 class LoadingImageNetworkWidget extends StatelessWidget {
   final String imageUrl;
   final double? height;
+  final double? width;
 
   const LoadingImageNetworkWidget({
     super.key,
     required this.imageUrl,
     this.height,
+    this.width,
   });
 
   @override
   Widget build(BuildContext context) {
     return Image.network(
-      width: double.maxFinite,
+      width: width ??  double.maxFinite,
       imageUrl,
       fit: BoxFit.cover,
       height: height,

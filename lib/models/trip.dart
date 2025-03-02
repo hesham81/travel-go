@@ -1,16 +1,17 @@
+import 'package:travel_go/models/hotel_model.dart';
 import 'package:travel_go/models/trip_model.dart';
 
 class Trip extends TripModel {
   final String currency;
   final String destination;
-  final String hotelId;
+  final Hotel hotel;
   final int noOfDays;
   final String source;
 
   Trip({
     required this.currency,
     required this.destination,
-    required this.hotelId,
+    required this.hotel,
     required this.noOfDays,
     required this.source,
     required super.id,
@@ -25,7 +26,7 @@ class Trip extends TripModel {
     return {
       'currency': currency,
       'destination': destination,
-      'hotelId': hotelId,
+      'hotel': hotel.toMap(),
       'noOfDays': noOfDays,
       'source': source,
       'id': id,
@@ -37,12 +38,11 @@ class Trip extends TripModel {
     };
   }
 
-  // Create an object from a Map (useful for Firestore)
   factory Trip.fromMap(Map<String, dynamic> map) {
     return Trip(
       currency: map['currency'],
       destination: map['destination'],
-      hotelId: map['hotelId'],
+      hotel: Hotel.fromMap(map['hotel']),
       noOfDays: map['noOfDays'],
       source: map['source'],
       id: map['id'],
