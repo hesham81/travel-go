@@ -1,8 +1,8 @@
-import 'package:awesome_alert/awesome_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:travel_go/core/widget/custom_elevated_button.dart';
+import 'package:travel_go/core/widget/search_widget.dart';
 import '../../../widget/selected_deleted_widget.dart';
 import '../widget/delete_widget.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/pages/selected_attraction.dart';
@@ -26,6 +26,168 @@ class _DeleteAttractionState extends State<DeleteAttraction> {
   List<AttractionsModel> attractions = [];
   List<AttractionsModel> searchedAttraction = [];
 
+  String searchQuery = "";
+
+  List<String> attractionCategories = [
+    "   all   ",
+    "Natural Attractions",
+    "Cultural & Historical Attractions",
+    "Urban & Architectural Attractions",
+    "Parks & Protected Areas",
+    "Entertainment & Recreational Attractions",
+    "Religious & Spiritual Attractions",
+    "Adventure & Outdoor Attractions",
+  ];
+
+  int selectedIndex = 0;
+  int sortIndex = 0;
+  int categoryIndex = 0;
+  _showBottomModelSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+            color: AppColors.whiteColor,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(20),
+              topLeft: Radius.circular(20),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                "Categories",
+                style: TextTheme.of(context).titleMedium,
+              ),
+              0.01.height.hSpace,
+              SizedBox(
+                height: 0.05.height,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) => CustomElevatedButton(
+                    text: attractionCategories[index],
+                    btnColor: (categoryIndex == index)
+                        ? AppColors.greyColor
+                        : AppColors.newBlueColor,
+                    borderColor: (categoryIndex == index)
+                        ? AppColors.newBlueColor
+                        : AppColors.greyColor,
+                    borderWidth: 1.2,
+                    onPressed: () {
+                      categoryIndex = index;
+                      setState(() {});
+                      Navigator.pop(context);
+                    },
+                    textColor: (categoryIndex == index)
+                        ? AppColors.blackColor
+                        : AppColors.whiteColor,
+                  ),
+                  separatorBuilder: (context, index) => 0.01.width.vSpace,
+                  itemCount: attractionCategories.length,
+                ),
+              ),
+              0.01.height.hSpace,
+              Divider(
+                color: AppColors.blackColor,
+              ).hPadding(
+                0.05.width,
+              ),
+              0.01.height.hSpace,
+              Row(
+                children: [
+                  Text(
+                    "Sort",
+                    style: TextTheme.of(context).titleMedium,
+                  ),
+                  0.03.width.vSpace,
+                  CustomElevatedButton(
+                    text: "A-Z",
+                    btnColor: (sortIndex == 0)
+                        ? AppColors.greyColor
+                        : AppColors.newBlueColor,
+                    borderColor: (sortIndex == 0)
+                        ? AppColors.newBlueColor
+                        : AppColors.greyColor,
+                    borderWidth: 1.2,
+                    textColor: (sortIndex == 0)
+                        ? AppColors.blackColor
+                        : AppColors.whiteColor,
+                    onPressed: () {
+                      sortIndex = 0;
+                      setState(() {});
+                      Navigator.pop(context);
+                    },
+                  ),
+                  Spacer(),
+                  CustomElevatedButton(
+                    text: "Z-A",
+                    btnColor: (sortIndex == 1)
+                        ? AppColors.greyColor
+                        : AppColors.newBlueColor,
+                    borderColor: (sortIndex == 1)
+                        ? AppColors.newBlueColor
+                        : AppColors.greyColor,
+                    borderWidth: 1.2,
+                    textColor: (sortIndex == 1)
+                        ? AppColors.blackColor
+                        : AppColors.whiteColor,
+                    onPressed: () {
+                      sortIndex = 1;
+                      setState(() {});
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+              0.01.height.hSpace,
+              Divider(
+                color: AppColors.blackColor,
+              ).hPadding(
+                0.05.width,
+              ),
+              0.01.height.hSpace,
+              Text(
+                "Distance",
+                style: TextTheme.of(context).titleMedium,
+              ),
+              0.03.width.vSpace,
+              CustomElevatedButton(
+                text: "More Than 10KM",
+                onPressed: () {},
+              ),
+              0.03.width.vSpace,
+              CustomElevatedButton(
+                text: "More Than 50KM",
+                onPressed: () {},
+              ),
+              0.03.width.vSpace,
+              CustomElevatedButton(
+                text: "More Than 100KM",
+                onPressed: () {},
+              ),
+              0.03.width.vSpace,
+              CustomElevatedButton(
+                text: "More Than 500KM",
+                onPressed: () {},
+              ),
+              0.03.width.vSpace,
+              CustomElevatedButton(
+                text: "More Than 1000KM",
+                onPressed: () {},
+              ),
+            ],
+          ).allPadding(10),
+        );
+      },
+    );
+  }
+  TextEditingController controller = TextEditingController();
+  List<AttractionsModel> allAttractions = [];
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,83 +198,42 @@ class _DeleteAttractionState extends State<DeleteAttraction> {
         child: Column(
           children: [
             0.01.height.hSpace,
-            SearchField<AttractionsModel>(
-              dynamicHeight: true,
-              scrollbarDecoration: ScrollbarDecoration(
-                thickness: 1.2,
-                radius: Radius.circular(15),
-              ),
-              suggestions: attractions
-                  .map(
-                    (attraction) => SearchFieldListItem<AttractionsModel>(
-                      attraction.title,
-                      item: attraction,
-                      child: ListTile(
-                        title: Text(attraction.title),
-                        subtitle: Text(attraction.location),
-                      ),
-                    ),
-                  )
-                  .toList(),
-              searchInputDecoration: SearchInputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
+            SearchWidget(
+              controller: controller,
+              suffixIcon: (searchQuery == "")
+                  ? IconButton(
+                onPressed: () {
+                  _showBottomModelSheet(context);
+                },
+                icon: Icon(
+                  Icons.filter_list,
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                hintText: "Search For Attraction",
-                prefixIcon: Icon(Icons.search),
-                suffixIcon: (searchedAttraction.isEmpty)
-                    ? null
-                    : IconButton(
-                        onPressed: () {
-                          searchedAttraction.clear();
-                          setState(() {});
-                        },
-                        icon: Icon(Icons.search_off_outlined),
-                      ),
-              ),
-              onSearchTextChanged: (query) {
-                if (query.isEmpty) {
-                  searchedAttraction.clear();
-                  if (mounted) {
-                    setState(() {});
-                  }
-                  return null;
-                }
-
-                // Filter attractions based on whether the title or location contains the query
-                final filteredAttractions = attractions.where((attraction) {
-                  return attraction.title
-                          .toLowerCase()
-                          .contains(query.toLowerCase()) ||
-                      attraction.location
-                          .toLowerCase()
-                          .contains(query.toLowerCase());
-                }).toList();
-
-                // Convert filtered attractions to SearchFieldListItem
-                return filteredAttractions.map((attraction) {
-                  return SearchFieldListItem<AttractionsModel>(
-                    attraction.title,
-                    item: attraction,
-                    child: ListTile(
-                      title: Text(attraction.title),
-                      subtitle: Text(attraction.location),
-                    ),
-                  );
-                }).toList();
-              },
-              onSuggestionTap:
-                  (SearchFieldListItem<AttractionsModel> suggestion) {
-                if (suggestion.item != null) {
-                  searchedAttraction = [];
-                  searchedAttraction.add(suggestion.item!);
+              )
+                  : IconButton(
+                onPressed: () {
+                  searchQuery = "";
                   setState(() {});
-                }
+                },
+                icon: Icon(
+                  Icons.search_off_outlined,
+                ),
+              ),
+              search: (value) {
+                setState(() {
+                  searchQuery = value; // Update the search query
+                  if (searchQuery.isNotEmpty) {
+                    attractions = allAttractions.where((element) {
+                      return element.title
+                          .toLowerCase()
+                          .contains(searchQuery.toLowerCase());
+                    }).toList();
+                  } else {
+                    attractions = List.from(allAttractions);
+                  }
+                });
               },
             ),
+
             0.01.height.hSpace,
             StreamBuilder(
               stream: AttractionsDB.getAllAttractions(),
@@ -168,11 +289,77 @@ class _DeleteAttractionState extends State<DeleteAttraction> {
                     ],
                   );
                 }
-                attractions = snapshot.data!.docs
+                allAttractions = snapshot.data!.docs
                     .map(
                       (e) => e.data(),
-                    )
+                )
                     .toList();
+                attractions = snapshot.data!.docs.map(
+                      (e) {
+                    if (e.data().category ==
+                        attractionCategories[categoryIndex]) {
+                      searchedAttraction.add(e.data());
+                      return e.data();
+                    } else {
+                      return e.data();
+                    }
+                  },
+                ).toList();
+
+                if (categoryIndex == 0) {
+                  attractions = List.from(allAttractions);
+                } else if (categoryIndex == 1) {
+                  attractions = allAttractions
+                      .where((element) =>
+                  element.category ==
+                      attractionCategories[categoryIndex])
+                      .toList();
+                } else if (categoryIndex == 2) {
+                  attractions = allAttractions
+                      .where((element) =>
+                  element.category ==
+                      attractionCategories[categoryIndex])
+                      .toList();
+                } else if (categoryIndex == 3) {
+                  attractions = allAttractions
+                      .where((element) =>
+                  element.category ==
+                      attractionCategories[categoryIndex])
+                      .toList();
+                } else if (categoryIndex == 4) {
+                  attractions = allAttractions
+                      .where((element) =>
+                  element.category ==
+                      attractionCategories[categoryIndex])
+                      .toList();
+                } else if (categoryIndex == 5) {
+                  attractions = allAttractions
+                      .where((element) =>
+                  element.category ==
+                      attractionCategories[categoryIndex])
+                      .toList();
+                } else if (categoryIndex == 6) {
+                  attractions = allAttractions
+                      .where((element) =>
+                  element.category ==
+                      attractionCategories[categoryIndex])
+                      .toList();
+                } else if (categoryIndex == 7) {
+                  attractions = allAttractions
+                      .where((element) =>
+                  element.category ==
+                      attractionCategories[categoryIndex])
+                      .toList();
+                }
+                if (attractions.isNotEmpty) {
+                  if (sortIndex == 0) {
+                    attractions.sort(
+                            (a, b) => a.title.compareTo(b.title)); // Ascending
+                  } else {
+                    attractions.sort(
+                            (a, b) => b.title.compareTo(a.title)); // Descending
+                  }
+                }
                 return Visibility(
                   visible: searchedAttraction.isEmpty,
                   replacement: ListView.separated(

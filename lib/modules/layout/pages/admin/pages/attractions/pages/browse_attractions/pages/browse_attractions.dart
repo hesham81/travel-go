@@ -43,15 +43,6 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
   TextEditingController controller = TextEditingController();
   int selectedIndex = 0;
 
-  _filterCategories() {
-    searchedAttraction.clear();
-    attractions.map(
-      (e) {
-        searchedAttraction.add(e);
-        setState(() {});
-      },
-    );
-  }
 
   _showBottomModelSheet(BuildContext context) {
     showModalBottomSheet(
@@ -200,9 +191,15 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Travel Go"),
+        title: Text(
+          "Travel Go",
+          style: theme.titleLarge!.copyWith(
+            color: AppColors.whiteColor,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -219,14 +216,28 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
                         Icons.filter_list,
                       ),
                     )
-                  : null,
+                  : IconButton(
+                      onPressed: () {
+                        searchQuery = "";
+                        setState(() {});
+                      },
+                      icon: Icon(
+                        Icons.search_off_outlined,
+                      ),
+                    ),
               search: (value) {
-                searchQuery = value;
-                for (var attraction in attractions) {
-                  if (value == attraction.title) {
-                    searchedAttraction.add(attraction);
+                setState(() {
+                  searchQuery = value; // Update the search query
+                  if (searchQuery.isNotEmpty) {
+                    attractions = allAttractions.where((element) {
+                      return element.title
+                          .toLowerCase()
+                          .contains(searchQuery.toLowerCase());
+                    }).toList();
+                  } else {
+                    attractions = List.from(allAttractions);
                   }
-                }
+                });
               },
             ),
             0.01.height.hSpace,
