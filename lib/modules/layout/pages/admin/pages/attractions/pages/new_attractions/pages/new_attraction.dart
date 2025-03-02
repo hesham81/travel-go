@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_go/core/providers/trip_admin_provider.dart';
 import 'package:travel_go/core/utils/id_generator.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/attractions/widget/attraction_map.dart';
 import '/core/services/bot_toast.dart';
@@ -55,12 +57,13 @@ class _NewAttractionState extends State<NewAttraction> {
   TextEditingController idController = TextEditingController();
   var formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     idController.text = IdGenerator.generateAttractionId(
         attractionTitle: titleController.text ?? "");
+    var provider = Provider.of<TripAdminProvider>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -167,7 +170,7 @@ class _NewAttractionState extends State<NewAttraction> {
                       category: selectedCategory ?? "Not Categorized",
                       id: idController.text,
                       title: titleController.text,
-                      location: "location",
+                      location:provider.currentAttractionLocation ?? "Not Located" ,
                       description: descriptionController.text,
                       imageUrl: imageUrl,
                       videoUrl: videoUrlController.text.isEmpty

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '/core/providers/trip_admin_provider.dart';
 import '/core/utils/id_generator.dart';
@@ -38,6 +41,19 @@ class _TripProgramState extends State<TripProgram> {
   int index = 0;
 
   Time? from;
+  List<File> _images = [];
+
+  Future<void> pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final List<XFile> selectedImages = await picker.pickMultiImage();
+
+    if (selectedImages.isNotEmpty) {
+      setState(() {
+        _images
+            .addAll(selectedImages.map((image) => File(image.path)).toList());
+      });
+    }
+  }
 
   Time? to;
 
@@ -82,9 +98,26 @@ class _TripProgramState extends State<TripProgram> {
               key: formKey,
               child: Column(
                 children: [
-                  LoadingImageNetworkWidget(
-                      imageUrl:
-                          "https://i.pinimg.com/736x/5d/63/e1/5d63e18215fd5e1ab2cc1fe3db2d8359.jpg"),
+                  (_images.isEmpty)
+                      ? GestureDetector(
+                          onTap: () {
+                            pickImage();
+                          },
+                          child: LoadingImageNetworkWidget(
+                              imageUrl:
+                                  "https://i.pinimg.com/736x/5d/63/e1/5d63e18215fd5e1ab2cc1fe3db2d8359.jpg"),
+                        )
+                      : SizedBox(
+                          height: 0.3.height,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) =>
+                                Image.file(_images[index]),
+                            separatorBuilder: (context, index) =>
+                                0.01.width.vSpace,
+                            itemCount: _images.length,
+                          ),
+                        ),
                   0.01.height.hSpace,
                   CustomTextFormField(
                     hintText: "Program Id",
@@ -254,6 +287,7 @@ class _TripProgramState extends State<TripProgram> {
                         borderRadius: 10,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
+                            _images.clear();
                             provider.addSpecificProgramDay(
                               Program(
                                 programTitle: "programTitle",

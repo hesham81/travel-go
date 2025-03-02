@@ -381,6 +381,8 @@ class _NewTripScreenState extends State<NewTripScreen> {
                             fileName: idController.text,
                             tripName: '',
                           );
+                          String imageUrl = Storage.getPublicUrlTripImage(tripNameController.text ) ?? "";
+                          print(imageUrl);
                           TripDataModel trip = TripDataModel(
                             tripId: idController.text,
                             tripName: tripNameController.text,
@@ -392,8 +394,9 @@ class _NewTripScreenState extends State<NewTripScreen> {
                                     0,
                             price:
                                 double.tryParse(tripBudgetController.text) ?? 0,
+                            imageUrl: imageUrl,
                             currency: provider.getCurrency!.code,
-                            organizedBy: selectedCompany!,
+                            organizedBy: provider.getSelectedCompany!,
                             programDetails: provider.getDaySpecificProgram,
                             hotel: provider.getSelectionHotel!,
                             flight: provider.getSelectionFlight!,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
-import 'package:travel_go/core/extensions/align.dart';
-import 'package:travel_go/core/providers/trip_admin_provider.dart';
+import '/core/extensions/align.dart';
+import '/core/providers/trip_admin_provider.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/flight_collections.dart';

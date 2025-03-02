@@ -25,6 +25,7 @@ class TripAdminProvider extends ChangeNotifier {
 
   void setAttractionLocation(LatLng location) {
     attractionLocation = location;
+    getAttractionCity();
     notifyListeners();
   }
 
@@ -64,6 +65,7 @@ class TripAdminProvider extends ChangeNotifier {
   String? fromLocation;
 
   String? destination;
+  String? currentAttractionLocation ;
 
   Future<void> getSourceCity() async {
     if (_markersFromTo.isEmpty) {
@@ -91,7 +93,30 @@ class TripAdminProvider extends ChangeNotifier {
       print('Error fetching source city: $e');
     }
   }
+  Future<void> getAttractionCity() async {
+    if (attractionLocation == null) {
+      return;
+    }
 
+    var firstMarker = attractionLocation;
+
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        firstMarker!.latitude, // Latitude first
+        firstMarker.longitude, // Longitude second
+      );
+
+      if (placemarks.isNotEmpty) {
+        Placemark sourcePlacemark = placemarks[0];
+        currentAttractionLocation = sourcePlacemark.country ?? 'Unknown City';
+        notifyListeners();
+      } else {
+        print('No placemark found for the given coordinates.');
+      }
+    } catch (e) {
+      print('Error fetching source city: $e');
+    }
+  }
   void setSelectedAttraction(AttractionsModel? selectedAttraction) {
     _selectedAttraction = selectedAttraction;
   }
