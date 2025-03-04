@@ -31,11 +31,7 @@ abstract class AttractionsDB {
 
   static deleteAttraction(AttractionsModel model) {
     try {
-      String id = IdGenerator.generateId(
-        value1: model.location,
-        value2: model.description,
-      );
-      _collectionRef().doc(id).delete();
+      _collectionRef().doc(model.id).delete();
       return true;
     } catch (error) {
       return false;

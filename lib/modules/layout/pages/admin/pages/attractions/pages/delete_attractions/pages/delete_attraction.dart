@@ -55,131 +55,133 @@ class _DeleteAttractionState extends State<DeleteAttraction> {
               topLeft: Radius.circular(20),
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                "Categories",
-                style: TextTheme.of(context).titleMedium,
-              ),
-              0.01.height.hSpace,
-              SizedBox(
-                height: 0.05.height,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => CustomElevatedButton(
-                    text: attractionCategories[index],
-                    btnColor: (categoryIndex == index)
-                        ? AppColors.greyColor
-                        : AppColors.newBlueColor,
-                    borderColor: (categoryIndex == index)
-                        ? AppColors.newBlueColor
-                        : AppColors.greyColor,
-                    borderWidth: 1.2,
-                    onPressed: () {
-                      categoryIndex = index;
-                      setState(() {});
-                      Navigator.pop(context);
-                    },
-                    textColor: (categoryIndex == index)
-                        ? AppColors.blackColor
-                        : AppColors.whiteColor,
-                  ),
-                  separatorBuilder: (context, index) => 0.01.width.vSpace,
-                  itemCount: attractionCategories.length,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  "Categories",
+                  style: TextTheme.of(context).titleMedium,
                 ),
-              ),
-              0.01.height.hSpace,
-              Divider(
-                color: AppColors.blackColor,
-              ).hPadding(
-                0.05.width,
-              ),
-              0.01.height.hSpace,
-              Row(
-                children: [
-                  Text(
-                    "Sort",
-                    style: TextTheme.of(context).titleMedium,
+                0.01.height.hSpace,
+                SizedBox(
+                  height: 0.05.height,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) => CustomElevatedButton(
+                      text: attractionCategories[index],
+                      btnColor: (categoryIndex == index)
+                          ? AppColors.greyColor
+                          : AppColors.newBlueColor,
+                      borderColor: (categoryIndex == index)
+                          ? AppColors.newBlueColor
+                          : AppColors.greyColor,
+                      borderWidth: 1.2,
+                      onPressed: () {
+                        categoryIndex = index;
+                        setState(() {});
+                        Navigator.pop(context);
+                      },
+                      textColor: (categoryIndex == index)
+                          ? AppColors.blackColor
+                          : AppColors.whiteColor,
+                    ),
+                    separatorBuilder: (context, index) => 0.01.width.vSpace,
+                    itemCount: attractionCategories.length,
                   ),
-                  0.03.width.vSpace,
-                  CustomElevatedButton(
-                    text: "A-Z",
-                    btnColor: (sortIndex == 0)
-                        ? AppColors.greyColor
-                        : AppColors.newBlueColor,
-                    borderColor: (sortIndex == 0)
-                        ? AppColors.newBlueColor
-                        : AppColors.greyColor,
-                    borderWidth: 1.2,
-                    textColor: (sortIndex == 0)
-                        ? AppColors.blackColor
-                        : AppColors.whiteColor,
-                    onPressed: () {
-                      sortIndex = 0;
-                      setState(() {});
-                      Navigator.pop(context);
-                    },
-                  ),
-                  Spacer(),
-                  CustomElevatedButton(
-                    text: "Z-A",
-                    btnColor: (sortIndex == 1)
-                        ? AppColors.greyColor
-                        : AppColors.newBlueColor,
-                    borderColor: (sortIndex == 1)
-                        ? AppColors.newBlueColor
-                        : AppColors.greyColor,
-                    borderWidth: 1.2,
-                    textColor: (sortIndex == 1)
-                        ? AppColors.blackColor
-                        : AppColors.whiteColor,
-                    onPressed: () {
-                      sortIndex = 1;
-                      setState(() {});
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
-              0.01.height.hSpace,
-              Divider(
-                color: AppColors.blackColor,
-              ).hPadding(
-                0.05.width,
-              ),
-              0.01.height.hSpace,
-              Text(
-                "Distance",
-                style: TextTheme.of(context).titleMedium,
-              ),
-              0.03.width.vSpace,
-              CustomElevatedButton(
-                text: "More Than 10KM",
-                onPressed: () {},
-              ),
-              0.03.width.vSpace,
-              CustomElevatedButton(
-                text: "More Than 50KM",
-                onPressed: () {},
-              ),
-              0.03.width.vSpace,
-              CustomElevatedButton(
-                text: "More Than 100KM",
-                onPressed: () {},
-              ),
-              0.03.width.vSpace,
-              CustomElevatedButton(
-                text: "More Than 500KM",
-                onPressed: () {},
-              ),
-              0.03.width.vSpace,
-              CustomElevatedButton(
-                text: "More Than 1000KM",
-                onPressed: () {},
-              ),
-            ],
-          ).allPadding(10),
+                ),
+                0.01.height.hSpace,
+                Divider(
+                  color: AppColors.blackColor,
+                ).hPadding(
+                  0.05.width,
+                ),
+                0.01.height.hSpace,
+                Row(
+                  children: [
+                    Text(
+                      "Sort",
+                      style: TextTheme.of(context).titleMedium,
+                    ),
+                    0.03.width.vSpace,
+                    CustomElevatedButton(
+                      text: "A-Z",
+                      btnColor: (sortIndex == 0)
+                          ? AppColors.greyColor
+                          : AppColors.newBlueColor,
+                      borderColor: (sortIndex == 0)
+                          ? AppColors.newBlueColor
+                          : AppColors.greyColor,
+                      borderWidth: 1.2,
+                      textColor: (sortIndex == 0)
+                          ? AppColors.blackColor
+                          : AppColors.whiteColor,
+                      onPressed: () {
+                        sortIndex = 0;
+                        setState(() {});
+                        Navigator.pop(context);
+                      },
+                    ),
+                    Spacer(),
+                    CustomElevatedButton(
+                      text: "Z-A",
+                      btnColor: (sortIndex == 1)
+                          ? AppColors.greyColor
+                          : AppColors.newBlueColor,
+                      borderColor: (sortIndex == 1)
+                          ? AppColors.newBlueColor
+                          : AppColors.greyColor,
+                      borderWidth: 1.2,
+                      textColor: (sortIndex == 1)
+                          ? AppColors.blackColor
+                          : AppColors.whiteColor,
+                      onPressed: () {
+                        sortIndex = 1;
+                        setState(() {});
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+                0.01.height.hSpace,
+                Divider(
+                  color: AppColors.blackColor,
+                ).hPadding(
+                  0.05.width,
+                ),
+                0.01.height.hSpace,
+                Text(
+                  "Distance",
+                  style: TextTheme.of(context).titleMedium,
+                ),
+                0.03.width.vSpace,
+                CustomElevatedButton(
+                  text: "More Than 10KM",
+                  onPressed: () {},
+                ),
+                0.03.width.vSpace,
+                CustomElevatedButton(
+                  text: "More Than 50KM",
+                  onPressed: () {},
+                ),
+                0.03.width.vSpace,
+                CustomElevatedButton(
+                  text: "More Than 100KM",
+                  onPressed: () {},
+                ),
+                0.03.width.vSpace,
+                CustomElevatedButton(
+                  text: "More Than 500KM",
+                  onPressed: () {},
+                ),
+                0.03.width.vSpace,
+                CustomElevatedButton(
+                  text: "More Than 1000KM",
+                  onPressed: () {},
+                ),
+              ],
+            ).allPadding(10),
+          ),
         );
       },
     );

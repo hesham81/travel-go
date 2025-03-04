@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
-import 'package:travel_go/core/constant/ai_constant.dart';
-import 'package:travel_go/core/services/bot_toast.dart';
+import '/core/constant/ai_constant.dart';
+import '/core/services/bot_toast.dart';
 
 abstract class ChatBotApi {
   static final Dio dio = Dio();

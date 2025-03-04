@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/core/extensions/dimensions.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
+import '/core/extensions/extensions.dart';
+import '/core/utils/attractions_db.dart';
 
-import '../../../../../../../../../core/theme/app_colors.dart';
-import '../../../../../../../../../core/widget/custom_elevated_button.dart';
-import '../../../../../../../../../core/widget/custom_text_form_field.dart';
-import '../../../../../../../../../models/attractions_model.dart';
+import '/core/theme/app_colors.dart';
+import '/core/widget/custom_elevated_button.dart';
+import '/core/widget/custom_text_form_field.dart';
+import '/models/attractions_model.dart';
 
 class DeleteSelectedAttraction extends StatelessWidget {
   static const routeName = '/delete_selected_attraction';
@@ -46,6 +46,7 @@ class DeleteSelectedAttraction extends StatelessWidget {
             btnColor: AppColors.errorColor,
             borderRadius: 10,
             onPressed: () {
+              AttractionsDB.deleteAttraction(model);
               Navigator.pop(context);
               EasyLoading.showSuccess("Deleted Successfully");
             },

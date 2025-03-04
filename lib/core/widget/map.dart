@@ -53,6 +53,7 @@ class _AppMapsState extends State<AppMaps> {
             LatLng(latitude, longitude),
             19,
           );
+          provider.setCurrentLocation(LatLng(latitude, longitude));
         },
         backgroundColor: AppColors.newBlueColor,
         child: Icon(

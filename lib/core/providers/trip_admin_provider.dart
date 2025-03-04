@@ -65,7 +65,12 @@ class TripAdminProvider extends ChangeNotifier {
   String? fromLocation;
 
   String? destination;
-  String? currentAttractionLocation ;
+  String? currentAttractionLocation;
+  LatLng? currentLocation;
+
+  setCurrentLocation(LatLng? currentLocation) {
+    currentLocation = this.currentLocation;
+  }
 
   Future<void> getSourceCity() async {
     if (_markersFromTo.isEmpty) {
@@ -75,17 +80,15 @@ class TripAdminProvider extends ChangeNotifier {
     var firstMarker = _markersFromTo[0];
 
     try {
-      List<Placemark> placemarks = await placemarkFromCoordinates(
+      List<Placemark> placeMarker1 = await placemarkFromCoordinates(
         firstMarker.point.latitude, // Latitude first
         firstMarker.point.longitude, // Longitude second
       );
 
-      if (placemarks.isNotEmpty) {
-        Placemark sourcePlacemark = placemarks[0];
+      if (placeMarker1.isNotEmpty) {
+        Placemark sourcePlacemark = placeMarker1[0];
         source = sourcePlacemark.country ?? 'Unknown City';
-        Placemark fromPlaceMark = placemarks[1];
-        destination = fromPlaceMark.country ?? 'Unknown City';
-        notifyListeners();
+        print(source);
       } else {
         print('No placemark found for the given coordinates.');
       }
@@ -93,6 +96,32 @@ class TripAdminProvider extends ChangeNotifier {
       print('Error fetching source city: $e');
     }
   }
+
+  Future<void> getDestinationCity() async {
+    if (_markersFromTo.isEmpty) {
+      return;
+    }
+
+    var secondMarker = _markersFromTo[1];
+
+    try {
+      List<Placemark> placeMarker2 = await placemarkFromCoordinates(
+        secondMarker.point.latitude, // Latitude first
+        secondMarker.point.longitude, // Longitude second
+      );
+      //destination
+      if (placeMarker2.isNotEmpty) {
+        Placemark sourcePlacemark = placeMarker2[0];
+        destination = sourcePlacemark.country ?? 'Unknown City';
+        print(destination);
+      } else {
+        print('No placemark found for the given coordinates.');
+      }
+    } catch (e) {
+      print('Error fetching source city: $e');
+    }
+  }
+
   Future<void> getAttractionCity() async {
     if (attractionLocation == null) {
       return;
@@ -117,6 +146,7 @@ class TripAdminProvider extends ChangeNotifier {
       print('Error fetching source city: $e');
     }
   }
+
   void setSelectedAttraction(AttractionsModel? selectedAttraction) {
     _selectedAttraction = selectedAttraction;
   }
@@ -167,8 +197,13 @@ class TripAdminProvider extends ChangeNotifier {
     if (_markersFromTo.length == 2) {
       _markersFromTo.clear();
     }
-    getSourceCity();
-    _markersFromTo.add(marker);
+    if (_markersFromTo.length == 0) {
+      _markersFromTo.add(marker);
+      getSourceCity();
+    } else {
+      _markersFromTo.add(marker);
+      getDestinationCity();
+    }
     notifyListeners();
   }
 

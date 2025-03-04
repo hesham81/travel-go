@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/set_map_location.dart';
+import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/set_map_location.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/play_youtube_video.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '/core/utils/attractions_db.dart';
@@ -22,6 +22,7 @@ class SelectedAttraction extends StatefulWidget {
 
 class _SelectedAttractionState extends State<SelectedAttraction> {
   TextEditingController titleController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
   TextEditingController videoUrlController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   bool isChanged = false;
@@ -117,9 +118,40 @@ class _SelectedAttractionState extends State<SelectedAttraction> {
               ),
             ),
             0.01.height.hSpace,
-            CustomTextFormField(
-              hintText: model.id,
-              isReadOnly: true,
+            Row(
+              children: [
+                Text(
+                  "Attraction ID : ",
+                  style: theme.textTheme.titleMedium!.copyWith(
+                    color: AppColors.blackColor,
+                  ),
+                ),
+                0.01.width.vSpace,
+                Text(
+                  model.id,
+                  style: theme.textTheme.titleMedium!.copyWith(
+                    color: AppColors.newBlueColor,
+                  ),
+                ),
+              ],
+            ).hPadding(0.03.width),
+            0.01.height.hSpace,
+            Row(
+              children: [
+                Text(
+                  "Attraction Location : ",
+                  style: theme.textTheme.titleMedium!.copyWith(
+                    color: AppColors.blackColor,
+                  ),
+                ),
+                0.01.width.vSpace,
+                Text(
+                  model.location,
+                  style: theme.textTheme.titleMedium!.copyWith(
+                    color: AppColors.newBlueColor,
+                  ),
+                ),
+              ],
             ).hPadding(0.03.width),
             0.01.height.hSpace,
             CustomTextFormField(
@@ -131,10 +163,10 @@ class _SelectedAttractionState extends State<SelectedAttraction> {
               },
             ).hPadding(0.03.width),
             0.01.height.hSpace,
-            0.01.height.hSpace,
             CustomTextFormField(
-              hintText: model.videoUrl ?? "No Video Url Founded",
-              controller: videoUrlController,
+              hintText: model.description,
+              controller: descriptionController,
+              minLine: 5,
               onComplete: (value) {
                 isChanged = true;
                 return null;
@@ -142,8 +174,8 @@ class _SelectedAttractionState extends State<SelectedAttraction> {
             ).hPadding(0.03.width),
             0.01.height.hSpace,
             CustomTextFormField(
-              hintText: model.description,
-              controller: descriptionController,
+              hintText: model.videoUrl ?? "No Video Url Founded",
+              controller: videoUrlController,
               onComplete: (value) {
                 isChanged = true;
                 return null;

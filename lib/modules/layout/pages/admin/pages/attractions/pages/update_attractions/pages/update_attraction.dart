@@ -2,8 +2,8 @@ import 'package:awesome_alert/awesome_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:travel_go/core/widget/custom_elevated_button.dart';
-import 'package:travel_go/core/widget/search_widget.dart';
+import '/core/widget/custom_elevated_button.dart';
+import '/core/widget/search_widget.dart';
 import '../widget/update_widget.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/pages/selected_attraction.dart';
 import '/core/extensions/align.dart';
@@ -376,7 +376,7 @@ class _UpdateAttractionState extends State<UpdateAttraction> {
                           alert.hideAlert();
                           AttractionsDB.deleteAttraction(attractions[index]);
                           EasyLoading.showSuccess(
-                            "${attractions[index]} Is Deleted Succefully",
+                            "${attractions[index]} Is Deleted Successfully",
                           );
                         },
                         confirmButtonColor: AppColors.newBlueColor,

@@ -14,8 +14,12 @@ class AdminHome extends StatelessWidget {
 
   void _navigateToPage(BuildContext context, String title) {
     if (pageRoutes.containsKey(title)) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => pageRoutes[title]!()));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => pageRoutes[title]!(),
+        ),
+      );
     } else {
       print("Page not found for: $title");
     }

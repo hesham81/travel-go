@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/browse_attractions/pages/explore_attractions.dart';
+import '/core/providers/trip_admin_provider.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/core/widget/search_widget.dart';
 import '/modules/layout/pages/admin/pages/attractions/widget/selected_deleted_widget.dart';
@@ -43,7 +46,6 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
   TextEditingController controller = TextEditingController();
   int selectedIndex = 0;
 
-
   _showBottomModelSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -57,18 +59,19 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
               topLeft: Radius.circular(20),
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                "Categories",
-                style: TextTheme.of(context).titleMedium,
-              ),
-              0.01.height.hSpace,
-              SizedBox(
-                height: 0.05.height,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  "Categories",
+                  style: TextTheme.of(context).titleMedium,
+                ),
+                0.01.height.hSpace,
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) => CustomElevatedButton(
                     text: attractionCategories[index],
                     btnColor: (categoryIndex == index)
@@ -87,101 +90,101 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
                         ? AppColors.blackColor
                         : AppColors.whiteColor,
                   ),
-                  separatorBuilder: (context, index) => 0.01.width.vSpace,
+                  separatorBuilder: (context, index) => 0.03.width.vSpace,
                   itemCount: attractionCategories.length,
                 ),
-              ),
-              0.01.height.hSpace,
-              Divider(
-                color: AppColors.blackColor,
-              ).hPadding(
-                0.05.width,
-              ),
-              0.01.height.hSpace,
-              Row(
-                children: [
-                  Text(
-                    "Sort",
-                    style: TextTheme.of(context).titleMedium,
-                  ),
-                  0.03.width.vSpace,
-                  CustomElevatedButton(
-                    text: "A-Z",
-                    btnColor: (sortIndex == 0)
-                        ? AppColors.greyColor
-                        : AppColors.newBlueColor,
-                    borderColor: (sortIndex == 0)
-                        ? AppColors.newBlueColor
-                        : AppColors.greyColor,
-                    borderWidth: 1.2,
-                    textColor: (sortIndex == 0)
-                        ? AppColors.blackColor
-                        : AppColors.whiteColor,
-                    onPressed: () {
-                      sortIndex = 0;
-                      setState(() {});
-                      Navigator.pop(context);
-                    },
-                  ),
-                  Spacer(),
-                  CustomElevatedButton(
-                    text: "Z-A",
-                    btnColor: (sortIndex == 1)
-                        ? AppColors.greyColor
-                        : AppColors.newBlueColor,
-                    borderColor: (sortIndex == 1)
-                        ? AppColors.newBlueColor
-                        : AppColors.greyColor,
-                    borderWidth: 1.2,
-                    textColor: (sortIndex == 1)
-                        ? AppColors.blackColor
-                        : AppColors.whiteColor,
-                    onPressed: () {
-                      sortIndex = 1;
-                      setState(() {});
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
-              0.01.height.hSpace,
-              Divider(
-                color: AppColors.blackColor,
-              ).hPadding(
-                0.05.width,
-              ),
-              0.01.height.hSpace,
-              Text(
-                "Distance",
-                style: TextTheme.of(context).titleMedium,
-              ),
-              0.03.width.vSpace,
-              CustomElevatedButton(
-                text: "More Than 10KM",
-                onPressed: () {},
-              ),
-              0.03.width.vSpace,
-              CustomElevatedButton(
-                text: "More Than 50KM",
-                onPressed: () {},
-              ),
-              0.03.width.vSpace,
-              CustomElevatedButton(
-                text: "More Than 100KM",
-                onPressed: () {},
-              ),
-              0.03.width.vSpace,
-              CustomElevatedButton(
-                text: "More Than 500KM",
-                onPressed: () {},
-              ),
-              0.03.width.vSpace,
-              CustomElevatedButton(
-                text: "More Than 1000KM",
-                onPressed: () {},
-              ),
-            ],
-          ).allPadding(10),
+                0.01.height.hSpace,
+                Divider(
+                  color: AppColors.blackColor,
+                ).hPadding(
+                  0.05.width,
+                ),
+                0.01.height.hSpace,
+                Row(
+                  children: [
+                    Text(
+                      "Sort",
+                      style: TextTheme.of(context).titleMedium,
+                    ),
+                    0.03.width.vSpace,
+                    CustomElevatedButton(
+                      text: "A-Z",
+                      btnColor: (sortIndex == 0)
+                          ? AppColors.greyColor
+                          : AppColors.newBlueColor,
+                      borderColor: (sortIndex == 0)
+                          ? AppColors.newBlueColor
+                          : AppColors.greyColor,
+                      borderWidth: 1.2,
+                      textColor: (sortIndex == 0)
+                          ? AppColors.blackColor
+                          : AppColors.whiteColor,
+                      onPressed: () {
+                        sortIndex = 0;
+                        setState(() {});
+                        Navigator.pop(context);
+                      },
+                    ),
+                    Spacer(),
+                    CustomElevatedButton(
+                      text: "Z-A",
+                      btnColor: (sortIndex == 1)
+                          ? AppColors.greyColor
+                          : AppColors.newBlueColor,
+                      borderColor: (sortIndex == 1)
+                          ? AppColors.newBlueColor
+                          : AppColors.greyColor,
+                      borderWidth: 1.2,
+                      textColor: (sortIndex == 1)
+                          ? AppColors.blackColor
+                          : AppColors.whiteColor,
+                      onPressed: () {
+                        sortIndex = 1;
+                        setState(() {});
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+                0.01.height.hSpace,
+                Divider(
+                  color: AppColors.blackColor,
+                ).hPadding(
+                  0.05.width,
+                ),
+                // 0.01.height.hSpace,
+                // Text(
+                //   "Distance",
+                //   style: TextTheme.of(context).titleMedium,
+                // ),
+                // 0.01.height.hSpace,
+                // CustomElevatedButton(
+                //   text: "More Than 10KM",
+                //   onPressed: () {},
+                // ),
+                // 0.01.height.hSpace,
+                // CustomElevatedButton(
+                //   text: "More Than 50KM",
+                //   onPressed: () {},
+                // ),
+                // 0.01.height.hSpace,
+                // CustomElevatedButton(
+                //   text: "More Than 100KM",
+                //   onPressed: () {},
+                // ),
+                // 0.01.height.hSpace,
+                // CustomElevatedButton(
+                //   text: "More Than 500KM",
+                //   onPressed: () {},
+                // ),
+                // 0.01.height.hSpace,
+                // CustomElevatedButton(
+                //   text: "More Than 1000KM",
+                //   onPressed: () {},
+                // ),
+              ],
+            ).allPadding(10),
+          ),
         );
       },
     );
@@ -191,6 +194,7 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<TripAdminProvider>(context);
     var theme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
@@ -226,18 +230,22 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
                       ),
                     ),
               search: (value) {
-                setState(() {
-                  searchQuery = value; // Update the search query
-                  if (searchQuery.isNotEmpty) {
-                    attractions = allAttractions.where((element) {
-                      return element.title
-                          .toLowerCase()
-                          .contains(searchQuery.toLowerCase());
-                    }).toList();
-                  } else {
-                    attractions = List.from(allAttractions);
-                  }
-                });
+                setState(
+                  () {
+                    searchQuery = value; // Update the search query
+                    if (searchQuery.isNotEmpty) {
+                      attractions = allAttractions.where(
+                        (element) {
+                          return element.title
+                              .toLowerCase()
+                              .contains(searchQuery.toLowerCase());
+                        },
+                      ).toList();
+                    } else {
+                      attractions = List.from(allAttractions);
+                    }
+                  },
+                );
               },
             ),
             0.01.height.hSpace,
@@ -369,22 +377,31 @@ class _BrowseAttractionsState extends State<BrowseAttractions> {
                 return ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => AllExploreAttractions(
-                    model: attractions[index],
-                    deleteFunction: () {
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () {
                       Navigator.pushNamed(
                         context,
-                        SelectedDeletedWidget.routeName,
+                        ExploreAttractions.routeName,
                         arguments: attractions[index],
                       );
                     },
-                    editFunction: () {
-                      Navigator.pushNamed(
-                        context,
-                        SelectedAttraction.routeName,
-                        arguments: attractions[index],
-                      );
-                    },
+                    child: AllExploreAttractions(
+                      model: attractions[index],
+                      deleteFunction: () {
+                        Navigator.pushNamed(
+                          context,
+                          SelectedDeletedWidget.routeName,
+                          arguments: attractions[index],
+                        );
+                      },
+                      editFunction: () {
+                        Navigator.pushNamed(
+                          context,
+                          SelectedAttraction.routeName,
+                          arguments: attractions[index],
+                        );
+                      },
+                    ),
                   ),
                   separatorBuilder: (context, index) => 0.01.height.hSpace,
                   itemCount: attractions.length,

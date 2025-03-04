@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/core/services/bot_toast.dart';
+import 'package:latlong2/latlong.dart';
+import '/core/services/bot_toast.dart';
+import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/set_map_location.dart';
 import '/core/utils/attractions_db.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
@@ -91,9 +93,16 @@ class _SelectedDeletedWidgetState extends State<SelectedDeletedWidget> {
             ).hPadding(0.03.width),
             0.01.height.hSpace,
             CustomTextFormField(
-              hintText: model.location,
+              hintText: model.description,
+              controller: descriptionController,
+              minLine: 5,
               isReadOnly: true,
-            ).hPadding(0.03.width),
+              onComplete: (value) {
+                isChanged = true;
+                return null;
+              },
+            ).hPadding(0.03.width)
+            ,
             0.01.height.hSpace,
             CustomTextFormField(
               hintText: model.videoUrl ?? "No Video Url Founded",
@@ -106,13 +115,15 @@ class _SelectedDeletedWidgetState extends State<SelectedDeletedWidget> {
             ).hPadding(0.03.width),
             0.01.height.hSpace,
             CustomTextFormField(
-              hintText: model.description,
-              controller: descriptionController,
+              hintText: model.location,
               isReadOnly: true,
-              onComplete: (value) {
-                isChanged = true;
-                return null;
-              },
+            ).hPadding(0.03.width),
+            0.01.height.hSpace,
+            SizedBox(
+              height: 0.4.height,
+              child: SetMapLocation(
+                locations: LatLng(model.lat ?? 0, model.long ?? 0),
+              ),
             ).hPadding(0.03.width),
             0.01.height.hSpace,
             Row(
