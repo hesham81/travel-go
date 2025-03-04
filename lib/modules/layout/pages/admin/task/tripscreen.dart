@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/browse_trip.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/delete_trip.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/trip_admin_bug.dart';
+import 'package:travel_go/modules/layout/pages/admin/menna/trippp/new_trip_screen.dart';
 import 'package:travel_go/modules/layout/pages/admin/task/Addflight.dart';
 import 'package:travel_go/modules/layout/pages/admin/task/update_trip.dart';
 

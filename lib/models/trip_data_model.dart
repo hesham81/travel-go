@@ -35,6 +35,7 @@ class TripDataModel {
   final String source;
 
   final String destination;
+  final int totalDays;
 
   TripDataModel({
     required this.tripId,
@@ -51,6 +52,7 @@ class TripDataModel {
     required this.programDetails,
     required this.hotel,
     required this.flight,
+    required this.totalDays,
     this.imageUrl,
     required this.source,
     required this.destination,
@@ -75,6 +77,7 @@ class TripDataModel {
       'imageUrl': imageUrl,
       "source": source,
       "destination": destination,
+      "totalDays": totalDays,
     };
   }
 
@@ -107,6 +110,7 @@ class TripDataModel {
       imageUrl: map['imageUrl'],
       source: map['source'],
       destination: map['destination'],
+      totalDays: map['totalDays'],
     );
   }
 }

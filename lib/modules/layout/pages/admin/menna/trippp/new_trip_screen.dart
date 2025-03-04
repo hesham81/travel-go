@@ -44,7 +44,9 @@ class _NewTripScreenState extends State<NewTripScreen> {
     if (selectedImage != null) {
       _image = File(selectedImage.path);
     }
-    setState(() {});
+    setState(
+      () {},
+    );
   }
 
   TextEditingController idController = TextEditingController();
@@ -54,7 +56,6 @@ class _NewTripScreenState extends State<NewTripScreen> {
   TextEditingController tripTotalGuestsController = TextEditingController();
   TextEditingController tripTotalDaysController = TextEditingController();
   TextEditingController tripBudgetController = TextEditingController();
-  TextEditingController tripTitleController = TextEditingController();
 
   String? source;
   Company? selectedCompany;
@@ -90,7 +91,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
     idController.text = IdGenerator.generateTripId(
         dayNumber: int.tryParse(tripTotalDaysController.text) ?? 0,
         tripOrganizedBy: selectedCompany?.companyName ?? "",
-        tripTitle: tripTitleController.text ?? "");
+        tripTitle: tripNameController.text ?? "");
     var provider = Provider.of<TripAdminProvider>(context);
     var theme = Theme.of(context).textTheme;
     return Scaffold(
@@ -135,8 +136,8 @@ class _NewTripScreenState extends State<NewTripScreen> {
               0.02.height.hSpace,
               CustomTextFormField(
                 hintText: "Trip Name ",
-                controller: tripTitleController,
-                validation: (value) => (tripTitleController.text.isEmpty)
+                controller: tripNameController,
+                validation: (value) => (tripNameController.text.isEmpty)
                     ? "Enter Trip Title"
                     : null,
               ),
@@ -394,10 +395,8 @@ class _NewTripScreenState extends State<NewTripScreen> {
                             tripName: tripNameController.text,
                           );
                           String imageUrl = Storage.getPublicUrlTripImage(
-                                tripNameController.text,
-                              ) ??
-                              "";
-                          // String imageUrl = "";
+                            idController.text,
+                          )!;
                           TripDataModel trip = TripDataModel(
                             destination: provider.destination ??
                                 "No Destination Located",
@@ -409,6 +408,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
                             fromLat: provider.getMarkers.first.point.latitude,
                             toLat: provider.getMarkers[1].point.latitude,
                             toLong: provider.getMarkers[1].point.longitude,
+                            totalDays: provider.getTotalDays,
                             totalGuests:
                                 int.tryParse(tripTotalGuestsController.text) ??
                                     0,

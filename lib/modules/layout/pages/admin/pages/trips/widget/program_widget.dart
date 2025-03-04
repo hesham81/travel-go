@@ -19,7 +19,9 @@ class ProgramWidget extends StatelessWidget {
     return Container(
       height: 0.21.height,
       decoration: BoxDecoration(
-          color: AppColors.greyColor, borderRadius: BorderRadius.circular(25)),
+        color: AppColors.greyColor,
+        borderRadius: BorderRadius.circular(25),
+      ),
       child: Row(
         children: [
           Expanded(
@@ -45,7 +47,9 @@ class ProgramWidget extends StatelessWidget {
                 ),
                 0.01.height.hSpace,
                 Text(
-                  "Days ${model.dayNumber.map((e) => e.toString(),)}",
+                  "Days ${model.dayNumber.map(
+                    (e) => e.toString(),
+                  )}",
                   overflow: TextOverflow.ellipsis,
                   style: theme.labelLarge!.copyWith(
                     color: AppColors.blackColor,
@@ -98,6 +102,7 @@ class ProgramWidget extends StatelessWidget {
                 bottomRight: Radius.circular(25),
               ),
               child: LoadingImageNetworkWidget(
+                height: 0.21.height,
                 imageUrl: model.images.first,
               ),
             ),

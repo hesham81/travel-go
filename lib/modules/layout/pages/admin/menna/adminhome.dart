@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '/core/theme/app_colors.dart';
 import '/modules/layout/pages/admin/menna/trippp/trip_admin_screen.dart';
 import '/modules/layout/pages/admin/pages/programs/pages/browse_program/pages/explore_programs.dart';
-import '/modules/layout/pages/admin/menna/trippp/trip_admin_bug.dart';
+import '/modules/layout/pages/admin/menna/trippp/new_trip_screen.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/browse_attractions/pages/browse_attractions.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/delete_attractions/pages/delete_attraction.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/pages/update_attraction.dart';

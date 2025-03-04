@@ -25,4 +25,14 @@ abstract class TripCollections {
       return false;
     }
   }
+
+  static Future<List<TripDataModel>> getListOfTrips() async {
+    return await _colRef().get().then(
+          (value) => value.docs
+              .map(
+                (e) => e.data(),
+              )
+              .toList(),
+        );
+  }
 }

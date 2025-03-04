@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/constant/app_assets.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/trip_admin_bug.dart';
+import 'package:provider/provider.dart';
+import '/core/extensions/extensions.dart';
+import '/core/providers/collections_provider.dart';
+import '/core/theme/app_colors.dart';
+import '/models/trip_data_model.dart';
+import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
+import '/modules/layout/pages/admin/widget/trip_cart_widget.dart';
 
-class BrowseTrip extends StatelessWidget {
+class BrowseTrip extends StatefulWidget {
   const BrowseTrip({super.key});
+
+  @override
+  State<BrowseTrip> createState() => _BrowseTripState();
+}
+
+class _BrowseTripState extends State<BrowseTrip> {
+  List<TripDataModel> trips = [];
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
+    var provider = Provider.of<CollectionsProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -18,23 +30,34 @@ class BrowseTrip extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NewTripScreen(),
-                ),
-              );
-            },
-            child: Image.asset(
-              AppAssets.noAvailableImages,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            StreamBuilder(
+              stream: TripCollections.getAllTrips(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+                trips = snapshot.data!.docs
+                    .map(
+                      (e) => e.data(),
+                    )
+                    .toList();
+                return ListView.separated(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) => TripCartWidget(
+                    model: trips[index],
+                  ),
+                  separatorBuilder: (context, index) => 0.02.height.hSpace,
+                  itemCount: trips.length,
+                );
+              },
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

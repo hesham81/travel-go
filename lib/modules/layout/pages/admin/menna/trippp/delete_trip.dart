@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel_go/core/constant/app_assets.dart';
 import 'package:travel_go/core/theme/app_colors.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/trip_admin_bug.dart';
+import 'package:travel_go/modules/layout/pages/admin/menna/trippp/new_trip_screen.dart';
 
 class DeleteTrip extends StatelessWidget {
   const DeleteTrip({super.key});
