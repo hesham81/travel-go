@@ -49,6 +49,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
 
   TextEditingController idController = TextEditingController();
   TextEditingController tripNameController = TextEditingController();
+  TextEditingController tripTotalProgramsController = TextEditingController();
   TextEditingController tripVideoUrlController = TextEditingController();
   TextEditingController tripTotalGuestsController = TextEditingController();
   TextEditingController tripTotalDaysController = TextEditingController();
@@ -86,7 +87,6 @@ class _NewTripScreenState extends State<NewTripScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     idController.text = IdGenerator.generateTripId(
         dayNumber: int.tryParse(tripTotalDaysController.text) ?? 0,
         tripOrganizedBy: selectedCompany?.companyName ?? "",
@@ -261,6 +261,20 @@ class _NewTripScreenState extends State<NewTripScreen> {
                     : null,
               ),
               0.02.height.hSpace,
+              NumbersTextFormField(
+                hintText: "Total Programs",
+                controller: tripTotalProgramsController,
+                onComplete: (p0) {
+                  int value =
+                      int.tryParse(tripTotalProgramsController.text) ?? 0;
+                  provider.setTotalPrograms(value);
+                },
+                validation: (value) =>
+                    (tripTotalProgramsController.text.isEmpty)
+                        ? "Total Programs Can't Be Empty"
+                        : null,
+              ),
+              0.02.height.hSpace,
               DropdownMenu(
                 enableSearch: true,
                 width: double.maxFinite,
@@ -381,7 +395,9 @@ class _NewTripScreenState extends State<NewTripScreen> {
                             fileName: idController.text,
                             tripName: '',
                           );
-                          String imageUrl = Storage.getPublicUrlTripImage(tripNameController.text ) ?? "";
+                          String imageUrl = Storage.getPublicUrlTripImage(
+                                  tripNameController.text) ??
+                              "";
                           print(imageUrl);
                           TripDataModel trip = TripDataModel(
                             tripId: idController.text,

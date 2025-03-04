@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/programs/pages/browse_program/pages/explore_programs.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/attractions.dart';
 import '/modules/sign_in/pages/sign_in.dart';
 import '/modules/layout/pages/admin/pages/flights/pages/edit_flights.dart';
-import 'programs/pages/browse_program/pages/explore_programs.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/edit_trip.dart';
 import '/modules/layout/pages/admin/pages/profile/profile.dart';
 import '/core/extensions/extensions.dart';

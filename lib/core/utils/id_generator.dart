@@ -11,11 +11,10 @@ abstract class IdGenerator {
   }
 
   static generateProgramId({
-    required int dayNumber,
     required int programNumber,
     required String programTitle,
   }) {
-    return "Pro${programNumber}-Day$dayNumber-${programTitle.trim()}";
+    return "Pro${programNumber}-${programTitle.trim()}";
   }
 
   static generateTripId({

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:travel_go/models/program_model.dart';
 import '/core/utils/company_collections.dart';
 import '/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
 import '/models/attractions_model.dart';
@@ -18,6 +19,13 @@ class TripAdminProvider extends ChangeNotifier {
   AttractionsModel? _selectedAttraction;
   Company? _selectedCompany;
   LatLng? attractionLocation;
+  int _totalPrograms = 0;
+  List<AttractionsModel> attractions = [];
+  List<AttractionsModel> selectedAttraction = [];
+  List<int> noOfDays = [];
+
+  List<ProgramModel> _programs = [];
+  List<String> imageUrls = [];
 
   Currency? _currency;
 
@@ -28,6 +36,13 @@ class TripAdminProvider extends ChangeNotifier {
     getAttractionCity();
     notifyListeners();
   }
+
+  void setTotalPrograms(int programNumber) {
+    _totalPrograms = programNumber;
+    notifyListeners();
+  }
+
+  get getTotalPrograms => _totalPrograms;
 
   LatLng? get getAttractionLocation => attractionLocation;
 
@@ -160,8 +175,6 @@ class TripAdminProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Program> _programs = [];
-
   Flight? get getSelectionFlight => _selectionFlight;
 
   Hotel? get getSelectionHotel => _selectionHotel;
@@ -228,5 +241,17 @@ class TripAdminProvider extends ChangeNotifier {
     _selectedCompany = null;
     _daySpecificProgram = [];
     _currency = null;
+  }
+
+  List<ProgramModel> get listOfPrograms => _programs;
+
+  void addProgram(ProgramModel program) {
+    _programs.add(program);
+  }
+
+  void endOfAddProgram() {
+    imageUrls = [];
+    selectedAttraction = [];
+    noOfDays = [];
   }
 }

@@ -8,31 +8,36 @@ class ProgramModel {
 
   final String programDetails;
 
-  final AttractionsModel attraction;
+  final List<AttractionsModel> attractions;
 
-  final int dayNumber;
+  final List<int> dayNumber;
   final Time from;
   final Time to;
+  final List<String> images;
 
   ProgramModel({
     required this.programTitle,
     required this.programDetails,
-    required this.attraction,
+    required this.attractions,
     required this.dayNumber,
     required this.from,
     required this.to,
     required this.id,
+    required this.images,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'programTitle': programTitle,
       'programDetails': programDetails,
-      'attraction': attraction.toJson(),
+      'attraction': attractions.map(
+        (e) => e.toJson(),
+      ),
       'dayNumber': dayNumber,
       'from': from,
       'to': to,
       'id': id,
+      'images': images,
     };
   }
 
@@ -40,11 +45,14 @@ class ProgramModel {
     return ProgramModel(
       programTitle: map['programTitle'],
       programDetails: map['programDetails'],
-      attraction: AttractionsModel.fromJson(map['attraction']),
+      attractions:  List<AttractionsModel>.from(
+        map['attraction'].map((attraction) => AttractionsModel.fromJson(attraction)),
+      ),
       dayNumber: map['dayNumber'],
       from: map['from'],
       to: map['to'],
       id: map['id'],
+      images: map['images'],
     );
   }
 }

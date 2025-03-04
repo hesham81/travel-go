@@ -1,14 +1,19 @@
 import 'dart:io';
-
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import '/core/constant/app_assets.dart';
+import '/core/services/bot_toast.dart';
+import '/core/services/storage.dart';
+import '/models/program_model.dart';
+import '/modules/layout/pages/admin/pages/trips/pages/select_attraction.dart';
 import '/core/providers/trip_admin_provider.dart';
 import '/core/utils/id_generator.dart';
 import '/core/extensions/alignment.dart';
 import '/core/widget/widget_eleveted_button.dart';
-import '/modules/layout/pages/admin/pages/attractions/pages/new_attractions/pages/new_attraction.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/programs_collections.dart';
@@ -16,8 +21,6 @@ import '/core/widget/custom_elevated_button.dart';
 import '/models/attractions_model.dart';
 import '/core/utils/attractions_db.dart';
 import '/core/widget/custom_text_form_field.dart';
-import '/core/widget/loading_image_network_widget.dart';
-import '/modules/layout/pages/admin/menna/trippp/model/programs.dart';
 
 class TripProgram extends StatefulWidget {
   static const String routeName = '/trip_program';
@@ -73,18 +76,15 @@ class _TripProgramState extends State<TripProgram> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
-    var model = ModalRoute.of(context)!.settings.arguments as int;
     var provider = Provider.of<TripAdminProvider>(context);
-    int lengthOfPrograms = provider.getDaySpecificProgram[model].program.length;
     programIdController.text = IdGenerator.generateProgramId(
-      dayNumber: (model + 1),
-      programTitle: selectedAttraction.text ?? "",
-      programNumber: (lengthOfPrograms + 1),
+      programTitle: titleController.text ?? "",
+      programNumber: (provider.listOfPrograms.length + 1),
     );
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Program ${lengthOfPrograms + 1} Day ${model + 1}",
+          "Program ${provider.listOfPrograms.length + 1} ",
           style: theme.titleLarge!.copyWith(
             color: AppColors.whiteColor,
           ),
@@ -103,19 +103,30 @@ class _TripProgramState extends State<TripProgram> {
                           onTap: () {
                             pickImage();
                           },
-                          child: LoadingImageNetworkWidget(
-                              imageUrl:
-                                  "https://i.pinimg.com/736x/5d/63/e1/5d63e18215fd5e1ab2cc1fe3db2d8359.jpg"),
+                          child: Image.asset(
+                            AppAssets.noAvailableImages,
+                          ),
                         )
                       : SizedBox(
                           height: 0.3.height,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) =>
-                                Image.file(_images[index]),
-                            separatorBuilder: (context, index) =>
-                                0.01.width.vSpace,
-                            itemCount: _images.length,
+                          child: CarouselSlider(
+                            items: _images.map((imagePath) {
+                              return Container(
+                                margin: EdgeInsets.all(5.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.file(
+                                    imagePath,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            options: CarouselOptions(
+                              reverse: false,
+                              autoPlay: true,
+                            ),
                           ),
                         ),
                   0.01.height.hSpace,
@@ -150,53 +161,45 @@ class _TripProgramState extends State<TripProgram> {
                     ),
                   ).leftBottomWidget(),
                   0.01.height.hSpace,
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: DropdownMenu(
-                          controller: selectedAttraction,
-                          enableFilter: true,
-                          onSelected: (value) {
-                            for (var attractionSearch in attractions) {
-                              if (attractionSearch.title ==
-                                  selectedAttraction.text) {
-                                provider
-                                    .setSelectedAttraction(attractionSearch);
-                                setState(() {});
-                              }
-                            }
-                          },
-                          width: double.maxFinite,
-                          dropdownMenuEntries: [
-                            for (var element in attractions)
-                              DropdownMenuEntry(
-                                value: attraction,
-                                label: element.title,
-                              ),
-                          ],
-                        ),
+                  SizedBox(
+                    width: double.maxFinite,
+                    child: CustomElevatedButton(
+                      text: "Select Attractions",
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          SelectAttraction.routeName,
+                        );
+                      },
+                    ),
+                  ),
+                  0.01.height.hSpace,
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => CheckboxListTile(
+                      value: (provider.noOfDays.contains(
+                        (index + 1),
+                      )),
+                      onChanged: (value) {
+                        if (value == true) {
+                          provider.noOfDays.add((index + 1));
+                        } else {
+                          provider.noOfDays.remove((index + 1));
+                        }
+                        setState(() {});
+                      },
+                      selectedTileColor: AppColors.newBlueColor,
+                      checkColor: AppColors.whiteColor,
+                      hoverColor: AppColors.newBlueColor,
+                      title: Text(
+                        "Day : ${index + 1}",
+                        style: theme.bodyMedium!
+                            .copyWith(color: AppColors.blackColor),
                       ),
-                      0.01.width.vSpace,
-                      Expanded(
-                        flex: 1,
-                        child: CustomElevatedButton(
-                          text: "Add",
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => NewAttraction(),
-                              ),
-                            );
-                          },
-                          borderRadius: 12,
-                          padding: EdgeInsets.symmetric(
-                            vertical: 0.02.height,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
+                    separatorBuilder: (context, index) => 0.02.height.hSpace,
+                    itemCount: provider.getTotalDays,
                   ),
                   0.01.height.hSpace,
                   Row(
@@ -286,28 +289,42 @@ class _TripProgramState extends State<TripProgram> {
                         text: "OK",
                         borderRadius: 10,
                         onPressed: () async {
-                          if (formKey.currentState!.validate()) {
-                            _images.clear();
-                            provider.addSpecificProgramDay(
-                              Program(
-                                programTitle: "programTitle",
-                                programDetails: "programDetails",
-                                attraction: provider.getSelectedAttraction ??
-                                    AttractionsModel(
-                                      category: "category",
-                                      id: "id",
-                                      title: "title",
-                                      location: "location",
-                                      description: "description",
-                                      imageUrl: "imageUrl",
-                                    ),
-                                dayNumber: (model + 1),
-                              ),
-                              index,
-                              lengthOfPrograms,
+                          if (formKey.currentState!.validate() &&
+                              _images.isNotEmpty) {
+                            List<String> urls = [];
+                            EasyLoading.show();
+                            await Storage.uploadProgramAttractionsImages(
+                              _images,
+                              programIdController.text,
+                              provider,
+                            ).then(
+                              (value) {
+                                if (!value) {
+                                  EasyLoading.dismiss();
+                                  return;
+                                }
+                              },
                             );
-                            provider.setSelectedAttraction(null);
+                            print(provider.imageUrls);
+                            provider.addProgram(
+                              ProgramModel(
+                                programTitle: titleController.text,
+                                programDetails: descriptionController.text,
+                                attractions: provider.selectedAttraction,
+                                dayNumber: provider.noOfDays,
+                                from: from!,
+                                to: to!,
+                                id: programIdController.text,
+                                images: provider.imageUrls,
+                              ),
+                            );
+                            provider.endOfAddProgram();
+                            EasyLoading.dismiss();
                             Navigator.pop(context);
+                            setState(() {});
+                          } else {
+                            BotToastServices.showErrorMessage(
+                                "Check Your Inputs");
                           }
                         },
                       ),

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/core/constant/app_assets.dart';
+import '/core/extensions/center.dart';
+import '/core/widget/custom_elevated_button.dart';
+import '/modules/layout/pages/admin/pages/trips/pages/trip_program.dart';
+import '/modules/layout/pages/admin/pages/trips/widget/program_widget.dart';
 import '/core/providers/trip_admin_provider.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
-import '/modules/layout/pages/admin/pages/trips/widget/program_day_widget.dart';
 
 class ProgramDay extends StatelessWidget {
   static const routeName = '/program-day';
@@ -12,7 +16,7 @@ class ProgramDay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var provider  = Provider.of<TripAdminProvider>(context);
+    var provider = Provider.of<TripAdminProvider>(context);
     var style = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
@@ -23,19 +27,43 @@ class ProgramDay extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => ProgramDayWidget(
-              index: index,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            (provider.listOfPrograms.isEmpty)
+                ? Column(
+                    children: [
+                      0.3.height.hSpace,
+                      Image.asset(
+                        AppAssets.noAvailableImages,
+                      ).centerWidget(),
+                    ],
+                  )
+                : ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => ProgramWidget(
+                      model: provider.listOfPrograms[index],
+                    ),
+                    separatorBuilder: (context, index) => 0.01.height.hSpace,
+                    itemCount: provider.listOfPrograms.length,
+                  ),
+            0.17.height.hSpace,
+            CustomElevatedButton(
+              text: "Add Program",
+              onPressed:
+                  (provider.listOfPrograms.length == provider.getTotalPrograms)
+                      ? null
+                      : () => Navigator.pushNamed(
+                            context,
+                            TripProgram.routeName,
+                          ),
+              borderRadius: 10,
             ),
-            separatorBuilder: (context, index) => 0.02.height.hSpace,
-            itemCount: provider.getTotalDays,
-          )
-        ],
-      ).allPadding(10),
+          ],
+        ).allPadding(10),
+      ),
     );
   }
 }

@@ -6,10 +6,11 @@ import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:google_gemini/google_gemini.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:travel_go/modules/layout/pages/admin/menna/trippp/all_programs_data.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/browse_attractions/pages/browse_attractions.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/browse_attractions/pages/explore_attractions.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trips/pages/select_attraction.dart';
 import '/core/providers/trip_admin_provider.dart';
-import '/modules/layout/pages/admin/menna/trippp/all_programs_data.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/play_youtube_video.dart';
 import '/core/widget/map.dart';
 import '/modules/layout/pages/admin/menna/trippp/assign_flight_trip.dart';
@@ -17,9 +18,6 @@ import '/modules/layout/pages/admin/menna/trippp/assign_hotel.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/program_day.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/trip_program.dart';
 import '/modules/layout/pages/admin/pages/attractions/widget/selected_deleted_widget.dart';
-import '/modules/layout/pages/admin/pages/programs/pages/add_program/pages/new_program.dart';
-import '/modules/layout/pages/admin/pages/programs/pages/delete_program/pages/delete_program.dart';
-import '/modules/layout/pages/admin/pages/programs/pages/edit_program/pages/edit_program.dart';
 import '/modules/layout/pages/manager/pages/manager_home/manager_home_screen.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/delete_attractions/pages/delete_selected_attraction.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/pages/selected_attraction.dart';
@@ -105,9 +103,6 @@ class MyApp extends StatelessWidget {
         ReservationScreen.routeName: (context) => ReservationScreen(),
         ManagerHomeScreen.routeName: (context) => ManagerHomeScreen(),
         SelectedDeletedWidget.routeName: (context) => SelectedDeletedWidget(),
-        NewProgram.routeName: (context) => NewProgram(),
-        EditProgram.routeName: (context) => EditProgram(),
-        DeleteProgram.routeName: (context) => DeleteProgram(),
         TripProgram.routeName: (context) => TripProgram(),
         ProgramDay.routeName: (context) => ProgramDay(),
         AssignFlightTrip.routeName: (context) => AssignFlightTrip(),
@@ -115,7 +110,8 @@ class MyApp extends StatelessWidget {
         AppMaps.routeName: (context) => AppMaps(),
         AllProgramsData.routeName: (context) => AllProgramsData(),
         PlayYoutubeVideo.routeName: (context) => PlayYoutubeVideo(),
-        ExploreAttractions.routeName : (context)=> ExploreAttractions(),
+        ExploreAttractions.routeName: (context) => ExploreAttractions(),
+        SelectAttraction.routeName: (context) => SelectAttraction(),
       },
     );
   }
