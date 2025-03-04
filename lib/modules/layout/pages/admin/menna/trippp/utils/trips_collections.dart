@@ -21,6 +21,7 @@ abstract class TripCollections {
       await _colRef().doc(model.tripId).set(model);
       return true;
     } catch (error) {
+      print(error);
       return false;
     }
   }

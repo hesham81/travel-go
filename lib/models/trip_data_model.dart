@@ -1,6 +1,7 @@
 import 'package:latlong2/latlong.dart';
 import 'package:travel_go/models/flight.dart';
 import 'package:travel_go/models/hotel_model.dart';
+import 'package:travel_go/models/program_model.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/program_day_model.dart';
 
@@ -12,9 +13,11 @@ class TripDataModel {
 
   final String tripVideoUrl;
 
-  final LatLng from;
+  final double fromLong;
+  final double fromLat;
 
-  final LatLng to;
+  final double toLong;
+  final double toLat;
 
   final int totalGuests;
 
@@ -24,18 +27,23 @@ class TripDataModel {
 
   final Company organizedBy;
 
-  final List<ProgramDayModel> programDetails;
+  final List<ProgramModel> programDetails;
 
   final Hotel hotel;
 
   final Flight flight;
+  final String source;
+
+  final String destination;
 
   TripDataModel({
     required this.tripId,
     required this.tripName,
     required this.tripVideoUrl,
-    required this.from,
-    required this.to,
+    required this.fromLong,
+    required this.fromLat,
+    required this.toLong,
+    required this.toLat,
     required this.totalGuests,
     required this.price,
     required this.currency,
@@ -44,6 +52,8 @@ class TripDataModel {
     required this.hotel,
     required this.flight,
     this.imageUrl,
+    required this.source,
+    required this.destination,
   });
 
   Map<String, dynamic> toMap() {
@@ -51,16 +61,20 @@ class TripDataModel {
       'tripId': tripId,
       'tripName': tripName,
       'tripVideoUrl': tripVideoUrl,
-      'from': from,
-      'to': to,
+      'fromLong': fromLong,
+      'toLong': toLong,
+      "fromLat": fromLat,
+      "toLat": toLat,
       'totalGuests': totalGuests,
       'price': price,
       'currency': currency,
       'organizedBy': organizedBy.toJson(),
-      'programDetails': programDetails.map((x) => x.toJson()).toList(),
+      'programDetails': programDetails.map((x) => x.toMap()).toList(),
       'hotel': hotel.toMap(),
       'flight': flight.toMap(),
       'imageUrl': imageUrl,
+      "source": source,
+      "destination": destination,
     };
   }
 
@@ -69,17 +83,19 @@ class TripDataModel {
       tripId: map['tripId'],
       tripName: map['tripName'],
       tripVideoUrl: map['tripVideoUrl'],
-      from: map['from'],
-      to: map['to'],
+      fromLat: map['fromLat'],
+      fromLong: map['fromLong'],
+      toLong: map['toLong'],
+      toLat: map['toLat'],
       totalGuests: map['totalGuests'],
       price: map['price'],
       currency: map['currency'],
       organizedBy: Company.fromJson(
         map['organizedBy'],
       ),
-      programDetails: List<ProgramDayModel>.from(
+      programDetails: List<ProgramModel>.from(
         map['programDetails']?.map(
-          (x) => ProgramDayModel.fromJson(x),
+          (x) => ProgramModel.fromMap(x),
         ),
       ),
       hotel: Hotel.fromMap(
@@ -89,6 +105,8 @@ class TripDataModel {
         map['flight'],
       ),
       imageUrl: map['imageUrl'],
+      source: map['source'],
+      destination: map['destination'],
     );
   }
 }

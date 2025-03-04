@@ -3,13 +3,9 @@ import 'package:travel_go/models/attractions_model.dart';
 
 class ProgramModel {
   final String id;
-
   final String programTitle;
-
   final String programDetails;
-
   final List<AttractionsModel> attractions;
-
   final List<int> dayNumber;
   final Time from;
   final Time to;
@@ -30,12 +26,16 @@ class ProgramModel {
     return {
       'programTitle': programTitle,
       'programDetails': programDetails,
-      'attraction': attractions.map(
-        (e) => e.toJson(),
-      ),
+      'attraction': attractions.map((e) => e.toJson()).toList(),
       'dayNumber': dayNumber,
-      'from': from,
-      'to': to,
+      'from': {
+        'hour': from.hour,
+        'minute': from.minute,
+      },
+      'to': {
+        'hour': to.hour,
+        'minute': to.minute,
+      },
       'id': id,
       'images': images,
     };
@@ -45,14 +45,14 @@ class ProgramModel {
     return ProgramModel(
       programTitle: map['programTitle'],
       programDetails: map['programDetails'],
-      attractions:  List<AttractionsModel>.from(
+      attractions: List<AttractionsModel>.from(
         map['attraction'].map((attraction) => AttractionsModel.fromJson(attraction)),
       ),
-      dayNumber: map['dayNumber'],
-      from: map['from'],
-      to: map['to'],
+      dayNumber: List<int>.from(map['dayNumber']),
+      from: Time(hour: map['from']['hour'], minute: map['from']['minute']),
+      to: Time(hour: map['to']['hour'], minute: map['to']['minute']),
       id: map['id'],
-      images: map['images'],
+      images: List<String>.from(map['images']),
     );
   }
 }

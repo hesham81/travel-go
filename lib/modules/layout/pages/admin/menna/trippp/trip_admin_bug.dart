@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:travel_go/core/constant/app_assets.dart';
 import '/core/services/bot_toast.dart';
 import '/core/services/storage.dart';
 import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
@@ -18,7 +19,6 @@ import '/core/widget/map.dart';
 import '/modules/layout/pages/admin/menna/trippp/assign_flight_trip.dart';
 import '/modules/layout/pages/admin/menna/trippp/assign_hotel.dart';
 import '/core/widget/custom_elevated_button.dart';
-import '/core/widget/loading_image_network_widget.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/program_day.dart';
 import '/core/extensions/extensions.dart';
 import '/core/widget/custom_text_form_field.dart';
@@ -118,9 +118,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
                         },
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          child: LoadingImageNetworkWidget(
-                              imageUrl:
-                                  "https://i.pinimg.com/736x/5d/63/e1/5d63e18215fd5e1ab2cc1fe3db2d8359.jpg"),
+                          child: Image.asset(AppAssets.noAvailableImages),
                         ),
                       )
                     : ClipRRect(
@@ -393,18 +391,24 @@ class _NewTripScreenState extends State<NewTripScreen> {
                           await Storage.uploadPublicTrip(
                             image: _image!,
                             fileName: idController.text,
-                            tripName: '',
+                            tripName: tripNameController.text,
                           );
                           String imageUrl = Storage.getPublicUrlTripImage(
-                                  tripNameController.text) ??
+                                tripNameController.text,
+                              ) ??
                               "";
-                          print(imageUrl);
+                          // String imageUrl = "";
                           TripDataModel trip = TripDataModel(
+                            destination: provider.destination ??
+                                "No Destination Located",
+                            source: provider.source ?? "No Source Located",
                             tripId: idController.text,
                             tripName: tripNameController.text,
                             tripVideoUrl: tripVideoUrlController.text,
-                            from: provider.getMarkers.first.point,
-                            to: provider.getMarkers[1].point,
+                            fromLong: provider.getMarkers.first.point.longitude,
+                            fromLat: provider.getMarkers.first.point.latitude,
+                            toLat: provider.getMarkers[1].point.latitude,
+                            toLong: provider.getMarkers[1].point.longitude,
                             totalGuests:
                                 int.tryParse(tripTotalGuestsController.text) ??
                                     0,
@@ -413,10 +417,11 @@ class _NewTripScreenState extends State<NewTripScreen> {
                             imageUrl: imageUrl,
                             currency: provider.getCurrency!.code,
                             organizedBy: provider.getSelectedCompany!,
-                            programDetails: provider.getDaySpecificProgram,
+                            programDetails: provider.listOfPrograms,
                             hotel: provider.getSelectionHotel!,
                             flight: provider.getSelectionFlight!,
                           );
+                          print(imageUrl);
                           await TripCollections.addTrip(trip).then(
                             (value) {
                               if (value) {
@@ -424,6 +429,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
                                 BotToastServices.showSuccessMessage(
                                   "Trip Added Successfully",
                                 );
+                                provider.endOfTrip();
                                 Navigator.pop(context);
                               } else {
                                 EasyLoading.dismiss();

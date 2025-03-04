@@ -6,10 +6,9 @@ import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:google_gemini/google_gemini.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/all_programs_data.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/browse_attractions/pages/browse_attractions.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/browse_attractions/pages/explore_attractions.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/trips/pages/select_attraction.dart';
+import '/modules/layout/pages/admin/menna/trippp/all_programs_data.dart';
+import '/modules/layout/pages/admin/pages/attractions/pages/browse_attractions/pages/explore_attractions.dart';
+import '/modules/layout/pages/admin/pages/trips/pages/select_attraction.dart';
 import '/core/providers/trip_admin_provider.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/play_youtube_video.dart';
 import '/core/widget/map.dart';
@@ -35,6 +34,7 @@ import '/modules/layout/pages/admin/pages/trips/pages/selected_trip.dart';
 import '/core/services/easy_loading.dart';
 import '/modules/layout/pages/user/pages/trips/selected_trip/selected_trip.dart';
 import '/modules/new_password/pages/new_password.dart';
+import 'core/providers/collections_provider.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/forget_password/pages/forget_password.dart';
 import 'modules/layout/pages/admin/pages/admin_home.dart';
@@ -56,8 +56,12 @@ Future<void> main() async {
   );
   GoogleGemini(apiKey: AiConstants.chatBotApiKey);
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => TripAdminProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => TripAdminProvider()),
+        ChangeNotifierProvider(create: (context) => CollectionsProvider()),
+        // Add more providers here if needed
+      ],
       child: const MyApp(),
     ),
   );
@@ -76,9 +80,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigationKey,
       theme: AppTheme.lightTheme,
       builder: EasyLoading.init(
-        builder: EasyLoading.init(
-          builder: BotToastInit(),
-        ),
+        builder: BotToastInit(),
       ),
       routes: {
         SplashScreen.routeName: (context) => const SplashScreen(),

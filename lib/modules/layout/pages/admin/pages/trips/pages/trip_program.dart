@@ -324,7 +324,8 @@ class _TripProgramState extends State<TripProgram> {
                             setState(() {});
                           } else {
                             BotToastServices.showErrorMessage(
-                                "Check Your Inputs");
+                              "Check Your Inputs",
+                            );
                           }
                         },
                       ),

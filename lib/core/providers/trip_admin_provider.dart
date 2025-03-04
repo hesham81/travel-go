@@ -254,4 +254,17 @@ class TripAdminProvider extends ChangeNotifier {
     selectedAttraction = [];
     noOfDays = [];
   }
+
+  void endOfTrip() {
+    _programs = [];
+    _totalDays = 0;
+    _totalPrograms = 0;
+    _selectedCompany = null;
+    _selectionHotel = null;
+    _selectionFlight = null;
+    _currency = null;
+    source = null;
+    destination = null;
+    _markersFromTo = [];
+  }
 }
