@@ -247,6 +247,7 @@ class TripAdminProvider extends ChangeNotifier {
 
   void addProgram(ProgramModel program) {
     _programs.add(program);
+    notifyListeners();
   }
 
   void endOfAddProgram() {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/core/widget/search_widget.dart';
+import '/modules/layout/pages/admin/menna/trippp/browse_selected_trip.dart';
 import '/core/extensions/extensions.dart';
 import '/core/providers/collections_provider.dart';
 import '/core/theme/app_colors.dart';
@@ -24,7 +26,7 @@ class _BrowseTripState extends State<BrowseTrip> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Browse Trip",
+          "Browse Trips",
           style: theme.titleLarge!.copyWith(
             color: AppColors.whiteColor,
           ),
@@ -34,6 +36,11 @@ class _BrowseTripState extends State<BrowseTrip> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            0.01.height.hSpace,
+            SearchWidget(
+              controller: TextEditingController(),
+            ),
+            0.01.height.hSpace,
             StreamBuilder(
               stream: TripCollections.getAllTrips(),
               builder: (context, snapshot) {
@@ -48,8 +55,15 @@ class _BrowseTripState extends State<BrowseTrip> {
                 return ListView.separated(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => TripCartWidget(
-                    model: trips[index],
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      BrowseSelectedTrip.routeName,
+                      arguments: trips[index],
+                    ),
+                    child: TripCartWidget(
+                      model: trips[index],
+                    ),
                   ),
                   separatorBuilder: (context, index) => 0.02.height.hSpace,
                   itemCount: trips.length,
@@ -57,7 +71,7 @@ class _BrowseTripState extends State<BrowseTrip> {
               },
             ),
           ],
-        ),
+        ).hPadding(0.03.width),
       ),
     );
   }

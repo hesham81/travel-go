@@ -6,6 +6,7 @@ import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:google_gemini/google_gemini.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:travel_go/modules/layout/pages/admin/menna/trippp/browse_selected_trip.dart';
 import '/modules/layout/pages/admin/menna/trippp/all_programs_data.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/browse_attractions/pages/explore_attractions.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/select_attraction.dart';
@@ -114,6 +115,7 @@ class MyApp extends StatelessWidget {
         PlayYoutubeVideo.routeName: (context) => PlayYoutubeVideo(),
         ExploreAttractions.routeName: (context) => ExploreAttractions(),
         SelectAttraction.routeName: (context) => SelectAttraction(),
+        BrowseSelectedTrip.routeName: (context) => BrowseSelectedTrip(),
       },
     );
   }

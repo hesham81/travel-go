@@ -88,11 +88,12 @@ class _NewTripScreenState extends State<NewTripScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<TripAdminProvider>(context);
+
     idController.text = IdGenerator.generateTripId(
         dayNumber: int.tryParse(tripTotalDaysController.text) ?? 0,
-        tripOrganizedBy: selectedCompany?.companyName ?? "",
+        tripOrganizedBy: provider.getSelectedCompany?.companyName??"",
         tripTitle: tripNameController.text ?? "");
-    var provider = Provider.of<TripAdminProvider>(context);
     var theme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
@@ -421,7 +422,6 @@ class _NewTripScreenState extends State<NewTripScreen> {
                             hotel: provider.getSelectionHotel!,
                             flight: provider.getSelectionFlight!,
                           );
-                          print(imageUrl);
                           await TripCollections.addTrip(trip).then(
                             (value) {
                               if (value) {

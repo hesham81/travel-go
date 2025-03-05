@@ -120,6 +120,42 @@ class TripCartWidget extends StatelessWidget {
                       ),
                     ],
                   ),
+                  0.01.height.hSpace,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: IconButton(
+                          onPressed: () {},
+                          style: IconButton.styleFrom(
+                            backgroundColor: AppColors.errorColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                          icon: Icon(
+                            Icons.delete_outline,
+                            color: AppColors.whiteColor,
+                          ),
+                        ),
+                      ),
+                      0.02.width.vSpace,
+                      Expanded(
+                        child: IconButton(
+                          onPressed: () {},
+                          style: IconButton.styleFrom(
+                            backgroundColor: AppColors.newBlueColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                          icon: Icon(
+                            Icons.edit,
+                            color: AppColors.whiteColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ).allPadding(7),
             ),

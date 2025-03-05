@@ -22,7 +22,7 @@ abstract class IdGenerator {
     required String tripOrganizedBy,
     required String tripTitle,
   }) {
-    return "Trip-004-$tripOrganizedBy-${tripTitle.trim()}";
+    return "Trip-$tripOrganizedBy-${tripTitle.trim()}";
   }
 
   static generateAttractionId({
