@@ -1,72 +1,116 @@
 import 'package:flutter/material.dart';
-import '/modules/layout/pages/admin/task/attractionscreen.dart';
-import '/modules/layout/pages/admin/task/flightscreen.dart';
-import '/modules/layout/pages/admin/task/hotelscreen.dart';
+import 'package:travel_go/modules/layout/pages/admin/task/attractionscreen.dart';
+import 'package:travel_go/modules/layout/pages/admin/task/flightscreen.dart';
+import 'package:travel_go/modules/layout/pages/admin/task/hotelscreen.dart';
+import '/core/routes/route_transact.dart';
 import '/modules/layout/pages/admin/task/tripscreen.dart';
+import '/core/extensions/extensions.dart';
 
 class AdminHome extends StatelessWidget {
-  final Map<String, Widget Function()> pageRoutes = {
-    "Trip": () => Tripscreen(),
-    "Flight": () => flightscreen(),
-    "Hotel": () => hotelscreen(),
-    "Attraction": () => Attraction(),
-  };
-
-  void _navigateToPage(BuildContext context, String title) {
-    if (pageRoutes.containsKey(title)) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => pageRoutes[title]!(),
-        ),
-      );
-    } else {
-      print("Page not found for: $title");
-    }
-  }
-
-  Widget _buildElevatedButton(BuildContext context, String title) {
-    return ElevatedButton(
-      onPressed: () => _navigateToPage(context, title),
-      style: ElevatedButton.styleFrom(
-        minimumSize: Size(250, 70),
-        backgroundColor: Color(0xff0d75b4),
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-      child: Text(
-        title,
-        style: TextStyle(
-            color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xff0d75b4),
-        title: Text(
-          "Tour And Travel",
-          style: TextStyle(
-              fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-        centerTitle: true,
-      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildElevatedButton(context, "Trip"),
-              SizedBox(height: 12),
-              _buildElevatedButton(context, "Flight"),
-              SizedBox(height: 12),
-              _buildElevatedButton(context, "Hotel"),
-              SizedBox(height: 12),
-              _buildElevatedButton(context, "Attraction"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      SlideRightRoute(
+                        page: Tripscreen(),
+                      ),
+                    ),
+                    child: Container(
+                      height: 0.2.height,
+                      width: 0.42.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        image: DecorationImage(
+                          image: AssetImage(
+                            "assets/images/trip_background_admin_page.jpeg",
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      SlideRightRoute(
+                        page: HotelScreen(),
+                      ),
+                    ),
+                    child: Container(
+                      height: 0.2.height,
+                      width: 0.42.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        image: DecorationImage(
+                          image: AssetImage(
+                            "assets/images/hotel_admin_bg.jpg",
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              0.01.height.hSpace,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      SlideRightRoute(
+                        page: flightscreen(),
+                      ),
+                    ),
+                    child: Container(
+                      height: 0.2.height,
+                      width: 0.42.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        image: DecorationImage(
+                          image: AssetImage(
+                            "assets/images/flight_admin_bg_image.jpg",
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      SlideRightRoute(
+                        page: Attraction(),
+                      ),
+                    ),
+                    child: Container(
+                      height: 0.2.height,
+                      width: 0.42.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        image: DecorationImage(
+                          image: AssetImage(
+                            "assets/images/attraction_background_image_admin.jpg",
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

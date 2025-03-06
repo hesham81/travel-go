@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/widget/custom_elevated_button.dart';
+import 'package:travel_go/core/widget/loading_image_network_widget.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/programs/pages/browse_program/pages/program_details.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widget/dividers_word.dart';
@@ -98,9 +101,47 @@ class BrowseSelectedTrip extends StatelessWidget {
               ],
             ).hPadding(0.03.width),
             0.02.height.hSpace,
-            DividersWord(
-              text: "Programs",
-            ),
+            SizedBox(
+              width: double.maxFinite,
+              child: CustomElevatedButton(
+                text: "Company Details",
+                borderRadius: 10,
+                onPressed: () {},
+              ),
+            ).hPadding(0.03.width),
+            0.01.height.hSpace,
+            SizedBox(
+              width: double.maxFinite,
+              child: CustomElevatedButton(
+                text: "Program Details",
+                borderRadius: 10,
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    ProgramDetails.routeName,
+                    arguments: model,
+                  );
+                },
+              ),
+            ).hPadding(0.03.width),
+            0.01.height.hSpace,
+            SizedBox(
+              width: double.maxFinite,
+              child: CustomElevatedButton(
+                text: "Flight Details",
+                borderRadius: 10,
+                onPressed: () {},
+              ),
+            ).hPadding(0.03.width),
+            0.01.height.hSpace,
+            SizedBox(
+              width: double.maxFinite,
+              child: CustomElevatedButton(
+                text: "Hotel Details",
+                borderRadius: 10,
+                onPressed: () {},
+              ),
+            ).hPadding(0.03.width),
             0.01.height.hSpace,
           ],
         ),

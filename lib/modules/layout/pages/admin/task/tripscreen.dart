@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/browse_trip.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/delete_trip.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/new_trip_screen.dart';
-import 'package:travel_go/modules/layout/pages/admin/task/Addflight.dart';
-import 'package:travel_go/modules/layout/pages/admin/task/update_trip.dart';
+import '/modules/layout/pages/admin/menna/trippp/browse_trip.dart';
+import '/modules/layout/pages/admin/menna/trippp/delete_trip.dart';
+import '/modules/layout/pages/admin/menna/trippp/new_trip_screen.dart';
+import '/modules/layout/pages/admin/task/Addflight.dart';
+import '/modules/layout/pages/admin/task/update_trip.dart';
 
 class Tripscreen extends StatelessWidget {
   final Map<String, Widget Function()> pageRoutes = {

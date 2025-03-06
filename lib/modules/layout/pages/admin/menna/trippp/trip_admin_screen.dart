@@ -33,7 +33,6 @@ class _TripAdminScreenState extends State<TripAdminScreen> {
 
   List<Flight> flights = [];
 
-  _loadHotels() {}
 
   @override
   void initState() {
