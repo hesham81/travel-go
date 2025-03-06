@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/routes/route_transact.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/delete_selected_trip.dart';
+import '/core/routes/route_transact.dart';
+import '/modules/layout/pages/admin/menna/delete_selected_trip.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';

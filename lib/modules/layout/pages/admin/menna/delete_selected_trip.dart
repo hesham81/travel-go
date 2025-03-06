@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:travel_go/core/services/bot_toast.dart';
-import 'package:travel_go/core/widget/dividers_word.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
+import '/core/services/bot_toast.dart';
+import '/core/widget/dividers_word.dart';
+import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widget/custom_elevated_button.dart';
