@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/delete_trip_cart_widget.dart';
 import '/core/widget/search_widget.dart';
 import '/modules/layout/pages/admin/menna/trippp/browse_selected_trip.dart';
 import '/core/extensions/extensions.dart';
-import '/core/providers/collections_provider.dart';
 import '/core/theme/app_colors.dart';
 import '/models/trip_data_model.dart';
 import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
-import '/modules/layout/pages/admin/widget/trip_cart_widget.dart';
 
 class BrowseDeleteTrip extends StatefulWidget {
   const BrowseDeleteTrip({super.key});

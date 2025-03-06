@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trips/widget/update_trip_widget.dart';
+import '/core/routes/route_transact.dart';
+import '/modules/layout/pages/admin/menna/delete_selected_trip.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
@@ -125,7 +128,16 @@ class TripCartWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              SlideRightRoute(
+                                page: DeleteSelectedTrip(
+                                  trip: model,
+                                ),
+                              ),
+                            );
+                          },
                           style: IconButton.styleFrom(
                             backgroundColor: AppColors.errorColor,
                             shape: RoundedRectangleBorder(
@@ -141,7 +153,16 @@ class TripCartWidget extends StatelessWidget {
                       0.02.width.vSpace,
                       Expanded(
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              SlideRightRoute(
+                                page: UpdateTripWidget(
+                                  trip: model,
+                                ),
+                              ),
+                            );
+                          },
                           style: IconButton.styleFrom(
                             backgroundColor: AppColors.newBlueColor,
                             shape: RoundedRectangleBorder(

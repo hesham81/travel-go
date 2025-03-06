@@ -103,7 +103,7 @@ class ProgramWidget extends StatelessWidget {
               ),
               child: LoadingImageNetworkWidget(
                 height: 0.21.height,
-                imageUrl: model.images.first,
+                imageUrl: model.images.first ?? "",
               ),
             ),
           ),

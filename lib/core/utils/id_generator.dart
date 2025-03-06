@@ -21,6 +21,9 @@ abstract class IdGenerator {
     required int dayNumber,
     required String tripOrganizedBy,
     required String tripTitle,
+    required String from ,
+    required String to ,
+
   }) {
     return "Trip-$tripOrganizedBy-${tripTitle.trim()}";
   }

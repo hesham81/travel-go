@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_go/core/extensions/dimensions.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
-import 'package:travel_go/core/providers/trip_admin_provider.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
-import 'package:travel_go/core/utils/attractions_db.dart';
-import 'package:travel_go/core/widget/custom_elevated_button.dart';
-import 'package:travel_go/models/attractions_model.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/new_attractions/pages/new_attraction.dart';
+import '/core/extensions/extensions.dart';
+import '/core/providers/trip_admin_provider.dart';
+import '/core/theme/app_colors.dart';
+import '/core/utils/attractions_db.dart';
+import '/core/widget/custom_elevated_button.dart';
+import '/models/attractions_model.dart';
+import '/modules/layout/pages/admin/pages/attractions/pages/new_attractions/pages/new_attraction.dart';
 
 class SelectAttraction extends StatefulWidget {
   static const String routeName = "/select-program-attractions";
