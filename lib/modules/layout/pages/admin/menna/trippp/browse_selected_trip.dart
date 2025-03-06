@@ -12,7 +12,7 @@ import '/modules/layout/widget/text_labels_widget.dart';
 class BrowseSelectedTrip extends StatelessWidget {
   static const routeName = '/browse-selected-trip';
 
-  BrowseSelectedTrip({super.key});
+  const BrowseSelectedTrip({super.key});
 
   @override
   Widget build(BuildContext context) {
