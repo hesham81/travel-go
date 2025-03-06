@@ -1,12 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/extensions/dimensions.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
-import 'package:travel_go/models/program_model.dart';
-import 'package:travel_go/models/trip_data_model.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/trips/widget/program_day_widget.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/trips/widget/program_widget.dart';
+import '/core/extensions/extensions.dart';
+import '/core/theme/app_colors.dart';
+import '/models/trip_data_model.dart';
+import '/modules/layout/pages/admin/pages/trips/widget/program_widget.dart';
 
 class ProgramDetails extends StatelessWidget {
   static const routeName = '/program-details';
