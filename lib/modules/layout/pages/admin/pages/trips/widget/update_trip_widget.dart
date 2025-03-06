@@ -1,5 +1,8 @@
 import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/core/services/bot_toast.dart';
+import 'package:travel_go/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widget/custom_elevated_button.dart';
@@ -27,12 +30,56 @@ class _UpdateTripWidgetState extends State<UpdateTripWidget> {
   TextEditingController price = TextEditingController();
   TextEditingController currency = TextEditingController();
   TextEditingController totalDays = TextEditingController();
+  Currency? selectedCurrency;
 
   _startData() {
     videoUrlController.text = widget.trip.tripVideoUrl;
     totalGuests.text = widget.trip.totalGuests.toString();
     price.text = widget.trip.price.toString();
     totalDays.text = widget.trip.totalDays.toString();
+  }
+
+  _updateData(BuildContext context) async {
+    EasyLoading.show();
+    await TripCollections.addTrip(
+      TripDataModel(
+        tripId: widget.trip.tripId,
+        tripName: widget.trip.tripName,
+        tripVideoUrl: videoUrlController.text,
+        fromLong: widget.trip.fromLong,
+        fromLat: widget.trip.fromLat,
+        toLong: widget.trip.toLong,
+        toLat: widget.trip.toLat,
+        totalGuests: int.tryParse(totalGuests.text) ?? 0,
+        price: double.tryParse(price.text) ?? 0,
+        currency: selectedCurrency?.code ?? widget.trip.currency,
+        organizedBy: widget.trip.organizedBy,
+        programDetails: widget.trip.programDetails,
+        hotel: widget.trip.hotel,
+        flight: widget.trip.flight,
+        totalDays: int.tryParse(totalDays.text) ?? 0,
+        source: widget.trip.source,
+        destination: widget.trip.destination,
+        imageUrl: widget.trip.imageUrl,
+      ),
+    ).then(
+      (value) {
+        if (value) {
+          Navigator.pop(context);
+          BotToastServices.showSuccessMessage("Trip Updated Successfully");
+          EasyLoading.dismiss();
+        } else {
+          EasyLoading.dismiss();
+          BotToastServices.showErrorMessage("Error While Update Trip");
+        }
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    _startData();
+    super.initState();
   }
 
   @override
@@ -134,7 +181,8 @@ class _UpdateTripWidgetState extends State<UpdateTripWidget> {
                     Expanded(
                       child: CustomElevatedButton(
                         padding: EdgeInsets.symmetric(vertical: 0.015.height),
-                        text: widget.trip.currency,
+                        text: selectedCurrency?.name.substring(0, 5) ??
+                            widget.trip.currency,
                         onPressed: () {
                           showCurrencyPicker(
                             context: context,
@@ -158,7 +206,10 @@ class _UpdateTripWidgetState extends State<UpdateTripWidget> {
                                 ),
                               ),
                             ),
-                            onSelect: (Currency value) {},
+                            onSelect: (Currency value) {
+                              selectedCurrency = value;
+                              setState(() {});
+                            },
                           );
                         },
                       ),
@@ -176,7 +227,9 @@ class _UpdateTripWidgetState extends State<UpdateTripWidget> {
                     Expanded(
                       child: CustomElevatedButton(
                         text: "OK",
-                        onPressed: () {},
+                        onPressed: () async {
+                          await _updateData(context);
+                        },
                       ),
                     ),
                     0.02.width.vSpace,
