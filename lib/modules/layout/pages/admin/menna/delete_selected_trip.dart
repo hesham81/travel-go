@@ -1,12 +1,12 @@
-import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/core/services/bot_toast.dart';
 import 'package:travel_go/core/widget/dividers_word.dart';
+import 'package:travel_go/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widget/custom_elevated_button.dart';
-import '/core/widget/custom_text_form_field.dart';
 import '/core/widget/labels_widget.dart';
-import '/core/widget/numbers_text_form_field.dart';
 import '/models/trip_data_model.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/play_youtube_video.dart';
 
@@ -195,7 +195,23 @@ class _DeleteSelectedTripState extends State<DeleteSelectedTrip> {
                   width: double.maxFinite,
                   child: CustomElevatedButton(
                     text: "OK",
-                    onPressed: () {},
+                    onPressed: () async {
+                      EasyLoading.show();
+                      await TripCollections.deleteTrip(widget.trip).then(
+                        (value) {
+                          if (value) {
+                            EasyLoading.dismiss();
+                            BotToastServices.showSuccessMessage("Trip Deleted");
+                            Navigator.pop(context);
+                          }
+                          else
+                            {
+                              EasyLoading.dismiss();
+                              BotToastServices.showErrorMessage("Error while delete trip");
+                            }
+                        },
+                      );
+                    },
                     btnColor: AppColors.errorColor,
                   ),
                 ),
