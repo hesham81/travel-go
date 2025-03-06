@@ -35,4 +35,13 @@ abstract class TripCollections {
               .toList(),
         );
   }
+
+  static Future<bool> deleteTrip(TripDataModel model) async {
+    try {
+      await _colRef().doc(model.tripId).delete();
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }
