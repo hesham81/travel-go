@@ -23,11 +23,14 @@ class LabelsWidget extends StatelessWidget {
             color: AppColors.newBlueColor,
           ),
         ),
-        Text(
-          value,
-          overflow: TextOverflow.ellipsis,
-          style: theme.labelLarge!.copyWith(
-            color: AppColors.blackColor,
+        Expanded(
+
+          child: Text(
+            value,
+            overflow: TextOverflow.ellipsis,
+            style: theme.labelLarge!.copyWith(
+              color: AppColors.blackColor,
+            ),
           ),
         ),
       ],

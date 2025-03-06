@@ -106,6 +106,11 @@ class _UpdateTripWidgetState extends State<UpdateTripWidget> {
                   value: widget.trip.destination,
                 ),
                 0.01.height.hSpace,
+                LabelsWidget(
+                  label: "Organized By : ",
+                  value: widget.trip.organizedBy.companyName,
+                ),
+                0.01.height.hSpace,
                 CustomTextFormField(
                   hintText: widget.trip.tripVideoUrl,
                   controller: videoUrlController,
