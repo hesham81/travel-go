@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel_go/modules/layout/pages/admin/task/Addflight.dart';
 
-class hotelscreen extends StatelessWidget {
+class HotelScreen extends StatelessWidget {
   final Map<String, Widget Function()> pageRoutes = {
     // hotel
     "Browse hotel": () => Addflight(),
