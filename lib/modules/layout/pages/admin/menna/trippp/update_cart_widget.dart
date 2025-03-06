@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/routes/route_transact.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trips/widget/update_trip_widget.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
@@ -39,23 +41,6 @@ class UpdateTripCartWidget extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Total Days : ",
-                        style: theme.labelLarge!.copyWith(
-                          color: AppColors.newBlueColor,
-                        ),
-                      ),
-                      Text(
-                        "${model.totalDays}",
-                        style: theme.labelLarge!.copyWith(
-                          color: AppColors.blackColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  0.01.height.hSpace,
-                  Row(
-                    children: [
-                      Text(
                         "From : ",
                         style: theme.labelLarge!.copyWith(
                           color: AppColors.newBlueColor,
@@ -72,9 +57,33 @@ class UpdateTripCartWidget extends StatelessWidget {
                   0.01.height.hSpace,
                   Row(
                     children: [
+                      Text(
+                        "To : ",
+                        style: theme.labelLarge!.copyWith(
+                          color: AppColors.newBlueColor,
+                        ),
+                      ),
+                      Text(
+                        model.destination,
+                        style: theme.labelLarge!.copyWith(
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  0.01.height.hSpace,
+                  Row(
+                    children: [
                       Expanded(
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              SlideRightRoute(
+                                page: UpdateTripWidget(trip: model),
+                              ),
+                            );
+                          },
                           style: IconButton.styleFrom(
                             backgroundColor: AppColors.newBlueColor,
                             shape: RoundedRectangleBorder(

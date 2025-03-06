@@ -122,7 +122,9 @@ class _NewTripScreenState extends State<NewTripScreen> {
                     ? GestureDetector(
                         onTap: () {
                           pickImage();
-                          setState(() {});
+                          setState(
+                            () {},
+                          );
                         },
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
