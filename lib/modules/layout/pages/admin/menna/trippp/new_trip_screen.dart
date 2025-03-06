@@ -5,7 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import 'package:travel_go/core/constant/app_assets.dart';
+import '/core/constant/app_assets.dart';
 import '/core/services/bot_toast.dart';
 import '/core/services/storage.dart';
 import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
@@ -92,11 +92,17 @@ class _NewTripScreenState extends State<NewTripScreen> {
 
     idController.text = IdGenerator.generateTripId(
         dayNumber: int.tryParse(tripTotalDaysController.text) ?? 0,
-        tripOrganizedBy: provider.getSelectedCompany?.companyName??"",
+        tripOrganizedBy: provider.getSelectedCompany?.companyName ?? "",
         tripTitle: tripNameController.text ?? "");
     var theme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
+          ),
+        ),
         title: Text(
           "New Trip",
           style: theme.titleLarge!.copyWith(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/theme/app_colors.dart';
 import '/modules/layout/pages/admin/menna/trippp/browse_trip.dart';
 import '/modules/layout/pages/admin/menna/trippp/delete_trip.dart';
 import '/modules/layout/pages/admin/menna/trippp/new_trip_screen.dart';
@@ -9,7 +10,7 @@ class Tripscreen extends StatelessWidget {
   final Map<String, Widget Function()> pageRoutes = {
     "Browse Trip": () => BrowseTrip(),
     "New Trip": () => NewTripScreen(),
-    "Update Trip ": () => UpdateTrip(),
+    "Update Trip": () => UpdateTrip(),
     "Delete Trip": () => DeleteTrip(),
 
     "Browse departure": () => Addflight(),
@@ -33,14 +34,16 @@ class Tripscreen extends StatelessWidget {
     "New program": () => Addflight(),
     "Update program": () => Addflight(),
     "Delete program": () => Addflight(),
-
-
   };
 
   void _handleMenuSelection(BuildContext context, String value) {
     if (pageRoutes.containsKey(value)) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => pageRoutes[value]!()));
+        context,
+        MaterialPageRoute(
+          builder: (context) => pageRoutes[value]!(),
+        ),
+      );
     } else {
       print("Page not found for: $value");
     }
@@ -70,13 +73,13 @@ class Tripscreen extends StatelessWidget {
             children: menuOptions
                 .map(
                   (option) => ListTile(
-                title: Text(option, style: TextStyle(fontSize: 18)),
-                onTap: () {
-                  Navigator.pop(context);
-                  _handleMenuSelection(context, option);
-                },
-              ),
-            )
+                    title: Text(option, style: TextStyle(fontSize: 18)),
+                    onTap: () {
+                      Navigator.pop(context);
+                      _handleMenuSelection(context, option);
+                    },
+                  ),
+                )
                 .toList(),
           ),
         ),
@@ -95,19 +98,28 @@ class Tripscreen extends StatelessWidget {
       ),
       child: Text(
         title,
-        style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+        style: TextStyle(
+            color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff0d75b4),
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
+          ),
+        ),
         title: Text(
           "Tour And Travel",
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+          style: theme.titleLarge!.copyWith(
+            color: AppColors.whiteColor,
+          ),
         ),
         centerTitle: true,
       ),
@@ -129,7 +141,6 @@ class Tripscreen extends StatelessWidget {
               SizedBox(height: 12),
 
               _buildPopupButton(context, "Trip Flight"),
-
             ],
           ),
         ),

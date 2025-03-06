@@ -72,6 +72,12 @@ class _TripAdminScreenState extends State<TripAdminScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
+          ),
+        ),
         title: Text(
           "Travel Go",
           style: theme.titleLarge!.copyWith(

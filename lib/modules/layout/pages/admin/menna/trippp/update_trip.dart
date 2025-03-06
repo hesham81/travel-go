@@ -9,14 +9,14 @@ import '/models/trip_data_model.dart';
 import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
 import '/modules/layout/pages/admin/widget/trip_cart_widget.dart';
 
-class BrowseTrip extends StatefulWidget {
-  const BrowseTrip({super.key});
+class UpdateTrip extends StatefulWidget {
+  const UpdateTrip({super.key});
 
   @override
-  State<BrowseTrip> createState() => _BrowseTripState();
+  State<UpdateTrip> createState() => _UpdateTripState();
 }
 
-class _BrowseTripState extends State<BrowseTrip> {
+class _UpdateTripState extends State<UpdateTrip> {
   List<TripDataModel> trips = [];
 
   @override
@@ -32,7 +32,7 @@ class _BrowseTripState extends State<BrowseTrip> {
           ),
         ),
         title: Text(
-          "Browse Trips",
+          "Update Trips",
           style: theme.titleLarge!.copyWith(
             color: AppColors.whiteColor,
           ),
@@ -56,7 +56,7 @@ class _BrowseTripState extends State<BrowseTrip> {
                 trips = snapshot.data!.docs
                     .map(
                       (e) => e.data(),
-                    )
+                )
                     .toList();
                 return ListView.separated(
                   shrinkWrap: true,
