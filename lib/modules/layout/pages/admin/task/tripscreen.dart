@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_go/core/providers/collections_provider.dart';
 import 'package:travel_go/core/theme/app_colors.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/delete_trip_screen.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/pages/browse_departure/pages/browse_trip_departure.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/pages/delete_departure/pages/delete_trip_departure.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/pages/new_departure/pages/new_trip_departures.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/pages/update_departure/pages/update_departure.dart';
 import '/modules/layout/pages/admin/menna/trippp/browse_trip.dart';
 import '/modules/layout/pages/admin/menna/trippp/new_trip_screen.dart';
 import '/modules/layout/pages/admin/task/Addflight.dart';
@@ -13,10 +19,10 @@ class Tripscreen extends StatelessWidget {
     "Update Trip": () => UpdateTrip(),
     "Delete Trip": () => BrowseDeleteTrip(),
 
-    "Browse departure": () => Addflight(),
-    "New departure": () => Addflight(),
-    "Update departure": () => Addflight(),
-    "Delete departure": () => Addflight(),
+    "Browse departure": () => BrowseTripDeparture(),
+    "New departure": () => NewTripDepartures(),
+    "Update departure": () => UpdateDeparture(),
+    "Delete departure": () => DeleteTripDeparture(),
 
     "Browse hotel": () => Addflight(),
     "New hotel": () => Addflight(),
@@ -28,6 +34,7 @@ class Tripscreen extends StatelessWidget {
     "New fight": () => Addflight(),
     "Update fight": () => Addflight(),
     "Delete fight": () => Addflight(),
+
 
     // Trip  program
     "Browse program": () => Addflight(),
@@ -106,6 +113,7 @@ class Tripscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<CollectionsProvider>(context).getAllTripsData;
     var theme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
@@ -131,7 +139,7 @@ class Tripscreen extends StatelessWidget {
             children: [
               _buildPopupButton(context, "Trip"),
               SizedBox(height: 12),
-              _buildPopupButton(context, " Trip Departure"),
+              _buildPopupButton(context, "departure"),
               SizedBox(height: 12),
 
               // _buildPopupButton(context, "Trip Program"),

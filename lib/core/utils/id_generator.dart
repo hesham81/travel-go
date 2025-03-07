@@ -14,7 +14,7 @@ abstract class IdGenerator {
     required int programNumber,
     required String programTitle,
   }) {
-    return "Pro${programNumber}-${programTitle.trim()}";
+    return "Pro$programNumber-${programTitle.trim()}";
   }
 
   static generateTripId({

@@ -6,8 +6,9 @@ import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:google_gemini/google_gemini.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/browse_selected_trip.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/programs/pages/browse_program/pages/program_details.dart';
+import 'package:travel_go/core/providers/departure_provider.dart';
+import '/modules/layout/pages/admin/menna/trippp/browse_selected_trip.dart';
+import '/modules/layout/pages/admin/pages/programs/pages/browse_program/pages/program_details.dart';
 import '/modules/layout/pages/admin/menna/trippp/all_programs_data.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/browse_attractions/pages/explore_attractions.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/select_attraction.dart';
@@ -60,6 +61,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => TripAdminProvider()),
         ChangeNotifierProvider(create: (context) => CollectionsProvider()),
+        ChangeNotifierProvider(create: (context) => DepartureProvider()),
         // Add more providers here if needed
       ],
       child: const MyApp(),
