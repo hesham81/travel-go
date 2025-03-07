@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_go/core/extensions/align.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
-import 'package:travel_go/core/providers/collections_provider.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
-import 'package:travel_go/core/widget/custom_elevated_button.dart';
-import 'package:travel_go/core/widget/custom_text_button.dart';
-import 'package:travel_go/core/widget/loading_image_network_widget.dart';
-import 'package:travel_go/models/trip_data_model.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/set_map_location.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/data/use_case/departures.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/utilities_trip.dart';
-import 'package:travel_go/modules/layout/pages/user/widget/app_bar.dart';
+import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/trip_program/pages/trip_program_home.dart';
+import '/core/extensions/align.dart';
+import '/core/extensions/extensions.dart';
+import '/core/providers/collections_provider.dart';
+import '/core/theme/app_colors.dart';
+import '/core/widget/custom_text_button.dart';
+import '/core/widget/loading_image_network_widget.dart';
+import '/models/trip_data_model.dart';
+import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/utilities_trip.dart';
+import '/modules/layout/pages/user/widget/app_bar.dart';
 
 class SelectedHomeScreenTrip extends StatefulWidget {
   final TripDataModel model;
@@ -30,7 +27,6 @@ class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
   List<String> buttonsItems = [
     "Utilities",
     "Program",
-    "Attractions",
     "Hotel",
     "Flight"
   ];
@@ -57,6 +53,9 @@ class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
       UtilitiesTrip(
         model: widget.model,
         totalPlaces: totalPlaces,
+      ),
+      TripProgramHome(
+        model: widget.model,
       ),
     ];
     var theme = Theme.of(context).textTheme;
