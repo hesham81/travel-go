@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/models/program_model.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/trip_program/pages/day_content.dart';
+import '/core/routes/route_transact.dart';
+import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/trip_program/pages/day_details.dart';
+import '/models/program_model.dart';
+import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/trip_program/pages/day_content.dart';
 import '/core/extensions/extensions.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/models/trip_data_model.dart';
@@ -22,16 +24,7 @@ class _TripProgramHomeState extends State<TripProgramHome> {
   ProgramModel? selectedProgram;
   List<ProgramModel> programsDays = [];
 
-  ProgramModel? searchByDay(int day) {
-    for (var element in widget.model.programDetails) {
-      if (element.dayNumber.contains(day)) {
-        return element;
-      }
-    }
-    return null;
-  }
-
-  totalDayNumberProgram(int day) {
+  searchByProgram(int day) {
     programsDays = [];
     for (var element in widget.model.programDetails) {
       if (element.dayNumber.contains(day)) {
@@ -63,7 +56,7 @@ class _TripProgramHomeState extends State<TripProgramHome> {
                   : "Week ${index + 1}",
               onPressed: () {
                 dayIndex = index;
-                totalDayNumberProgram(index + 1);
+                searchByProgram(index + 1);
                 setState(() {});
               },
               borderColor: (dayIndex != index)
@@ -86,12 +79,23 @@ class _TripProgramHomeState extends State<TripProgramHome> {
                   ),
           ),
         ),
-        0.01.height.hSpace,
         ListView.separated(
           shrinkWrap: true,
+          padding: EdgeInsets.zero,
           physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) => DayContent(
-            model: programsDays[index],
+          itemBuilder: (context, index) => GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              SlideRightRoute(
+                page: DayDetails(
+                  model: programsDays[index],
+                  index: index,
+                ),
+              ),
+            ),
+            child: DayContent(
+              model: programsDays[index],
+            ),
           ),
           separatorBuilder: (context, index) => Divider().hPadding(0.1.width),
           itemCount: programsDays.length,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
-import 'package:travel_go/models/program_model.dart';
+import '/core/extensions/extensions.dart';
+import '/core/theme/app_colors.dart';
+import '/models/program_model.dart';
 
 class DayContent extends StatelessWidget {
   final ProgramModel model;
@@ -23,14 +23,14 @@ class DayContent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            model.from.format(context),
+            "${model.from.format(context)} - ${model.to.format(context)}",
             style: theme.titleMedium,
           ),
           0.02.width.vSpace,
 
           Expanded(
             child: Text(
-              model.programDetails,
+              model.programTitle,
               overflow: TextOverflow.ellipsis,
               style: theme.titleMedium,
             ),
