@@ -33,12 +33,10 @@ import '/modules/layout/pages/admin/pages/hotels/pages/add_hotel.dart';
 import '/modules/layout/pages/admin/pages/profile/profile.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/selected_trip.dart';
 import '/core/services/easy_loading.dart';
-import '/modules/layout/pages/user/pages/trips/selected_trip/selected_trip.dart';
 import '/modules/new_password/pages/new_password.dart';
 import 'core/providers/collections_provider.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/forget_password/pages/forget_password.dart';
-import 'modules/layout/pages/admin/pages/admin_home.dart';
 import 'modules/layout/pages/user/pages/home/pages/home.dart';
 import 'modules/otp/pages/otp.dart';
 import 'modules/sign_in/pages/sign_in.dart';
@@ -93,7 +91,7 @@ class MyApp extends StatelessWidget {
         Home.routeName: (context) => Home(),
         // AdminHome.routeName: (context) => AdminHome(),
         NewPassword.routeName: (context) => NewPassword(),
-        SelectedTrip.routeName: (context) => SelectedTrip(),
+        // SelectedTrip.routeName: (context) => SelectedTrip(),
         // EditHotels.routeName: (context) => EditHotels(),
         AdminProfile.routeName: (context) => AdminProfile(),
         AddHotel.routeName: (context) => AddHotel(),

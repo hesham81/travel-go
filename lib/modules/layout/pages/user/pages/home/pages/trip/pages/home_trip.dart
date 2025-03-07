@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/routes/route_transact.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/selected_trip.dart';
+import '/core/routes/route_transact.dart';
+import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/selected_trip.dart';
 import '/models/trip_data_model.dart';
 import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/widget/home_trip_cart_widget.dart';

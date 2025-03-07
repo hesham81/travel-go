@@ -28,7 +28,8 @@ class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
     "Utilities",
     "Program",
     "Hotel",
-    "Flight"
+    "Flight",
+    "Reviews"
   ];
 
   int selectedIndex = 0;
@@ -65,8 +66,9 @@ class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppBarWidget(),
-            0.01.height.hSpace,
+            SafeArea(
+              child: AppBarWidget(),
+            ),
             SizedBox(
               height: 0.4.height,
               child: Stack(

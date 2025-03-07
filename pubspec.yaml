@@ -54,6 +54,8 @@ dependencies:
   currency_picker: ^2.0.21
   carousel_slider: ^5.0.0
   cupertino_calendar_picker: ^2.2.2
+  rich_readmore: ^1.1.1
+  smooth_page_indicator: ^1.2.1
 
 dev_dependencies:
   flutter_test:
