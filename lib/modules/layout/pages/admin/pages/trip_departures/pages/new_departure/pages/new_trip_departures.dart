@@ -210,7 +210,7 @@ class _NewTripDeparturesState extends State<NewTripDepartures> {
                           onPressed: (fromDate != null && toDate != null)
                               ? () async {
                                   EasyLoading.show();
-                                  await DeparturesCollection.addDeparture(
+                                  await TripDeparturesCollection.addDeparture(
                                     TripDepartureDataModel(
                                       trip: departure.getSelectedTrip!,
                                       from: fromDate!,

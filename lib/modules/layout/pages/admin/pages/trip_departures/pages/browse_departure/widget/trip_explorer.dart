@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/extensions/align.dart';
-import 'package:travel_go/core/extensions/dimensions.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
-import 'package:travel_go/core/widget/loading_image_network_widget.dart';
-import 'package:travel_go/models/trip_data_model.dart';
+import '/core/extensions/align.dart';
+import '/core/extensions/dimensions.dart';
+import '/core/theme/app_colors.dart';
+import '/core/widget/loading_image_network_widget.dart';
+import '/models/trip_data_model.dart';
 
 class TripExplorer extends StatelessWidget {
   final TripDataModel model;

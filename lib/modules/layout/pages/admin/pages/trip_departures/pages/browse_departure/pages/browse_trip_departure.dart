@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_go/core/routes/route_transact.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/pages/browse_departure/pages/explore_selected_list_of_departures.dart';
 import '/core/providers/collections_provider.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
@@ -35,8 +37,18 @@ class BrowseTripDeparture extends StatelessWidget {
             ListView.separated(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) => TripExplorer(
-                model: provider.getAllTripsData[index],
+              itemBuilder: (context, index) => GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  SlideRightRoute(
+                    page: ExploreSelectedListOfDepartures(
+                      model: provider.getAllTripsData[index],
+                    ),
+                  ),
+                ),
+                child: TripExplorer(
+                  model: provider.getAllTripsData[index],
+                ),
               ),
               separatorBuilder: (context, _) => 0.01.height.hSpace,
               itemCount: provider.getAllTripsData.length,
