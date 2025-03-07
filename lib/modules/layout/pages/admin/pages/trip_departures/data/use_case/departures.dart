@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:travel_go/models/trip_data_model.dart';
 import '/modules/layout/pages/admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
 
 abstract class DeparturesCollection {
@@ -20,5 +21,18 @@ abstract class DeparturesCollection {
     } catch (e) {
       return false;
     }
+  }
+
+  static Future<List<TripDepartureDataModel>> getTripDeparture(
+      TripDataModel trip) async {
+    return await _colRef().where("tripId", isEqualTo: trip.tripId).get().then(
+      (value) {
+        return value.docs
+            .map(
+              (e) => e.data(),
+            )
+            .toList();
+      },
+    );
   }
 }

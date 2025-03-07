@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/utils/company_collections.dart';
-import 'package:travel_go/models/trip_data_model.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
+import '/core/utils/company_collections.dart';
+import '/models/trip_data_model.dart';
+import '/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
+import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
 
 class CollectionsProvider extends ChangeNotifier {
   List<Company> _companies = [];
@@ -19,10 +19,10 @@ class CollectionsProvider extends ChangeNotifier {
 
   CollectionsProvider() {
     getAllCompanies();
-    getAllTrips();
+    _getAllTrips();
   }
 
-  getAllTrips() async {
+  _getAllTrips() async {
     await TripCollections.getListOfTrips().then((value) {
       _trips = value;
     });
