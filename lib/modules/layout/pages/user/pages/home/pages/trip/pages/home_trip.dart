@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/routes/route_transact.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/selected_trip.dart';
 import '/models/trip_data_model.dart';
 import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/widget/home_trip_cart_widget.dart';
@@ -172,8 +174,18 @@ class _HomeTripState extends State<HomeTrip> {
                 return ListView.separated(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => HomeTripCartWidget(
-                    model: tripList[index],
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      SlideRightRoute(
+                        page: SelectedHomeScreenTrip(
+                          model: tripList[index],
+                        ),
+                      ),
+                    ),
+                    child: HomeTripCartWidget(
+                      model: tripList[index],
+                    ),
                   ),
                   separatorBuilder: (context, index) => 0.01.height.hSpace,
                   itemCount: tripList.length,
