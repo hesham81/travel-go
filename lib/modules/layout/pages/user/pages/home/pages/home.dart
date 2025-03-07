@@ -12,7 +12,7 @@ import 'favourite_home/page/favourite_home.dart';
 class Home extends StatefulWidget {
   static const routeName = '/home';
 
-  Home({super.key});
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();

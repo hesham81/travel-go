@@ -89,7 +89,7 @@ class _NewAttractionState extends State<NewAttraction> {
                   },
                   child: _image == null
                       ? Image.asset(
-                          AppAssets.uploadImage,
+                          AppAssets.noAvailableImages,
                         )
                       : Image.file(_image!),
                 ),
@@ -170,7 +170,8 @@ class _NewAttractionState extends State<NewAttraction> {
                       category: selectedCategory ?? "Not Categorized",
                       id: idController.text,
                       title: titleController.text,
-                      location:provider.currentAttractionLocation ?? "Not Located" ,
+                      location:
+                          provider.currentAttractionLocation ?? "Not Located",
                       description: descriptionController.text,
                       imageUrl: imageUrl,
                       videoUrl: videoUrlController.text.isEmpty

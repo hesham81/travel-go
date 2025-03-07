@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '/modules/layout/pages/user/pages/home/pages/payment/pages/credt_card.dart';
+import '/models/trip_data_model.dart';
+import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
+import '/modules/layout/pages/user/pages/home/pages/trip/widget/home_trip_cart_widget.dart';
 import '/modules/layout/pages/user/widget/app_bar.dart';
-import '/modules/layout/pages/user/pages/home/widget/trip_card_widget.dart';
 import '/core/extensions/alignment.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
@@ -9,7 +10,6 @@ import '/core/utils/firebase_auth_services.dart';
 import '/core/widget/custom_text_button.dart';
 import '/core/widget/recommended_widget.dart';
 import '/models/recommend_model.dart';
-import '/models/trip_model.dart';
 
 class HomeTrip extends StatefulWidget {
   const HomeTrip({super.key});
@@ -20,63 +20,7 @@ class HomeTrip extends StatefulWidget {
 
 class _HomeTripState extends State<HomeTrip> {
   var user = FirebaseAuthServices.getCurrentUserData();
-  List<TripModel> tripList = [
-    TripModel(
-      id: '1',
-      imageUrl:
-          "https://i.pinimg.com/474x/6a/99/ee/6a99ee843798375c5f7049316e8d31ed.jpg",
-      title: 'Paris',
-      startDateTime: DateTime(2025, 10, 12),
-      endDateTime: DateTime(2025, 10, 15),
-      price: 12000,
-    ),
-    TripModel(
-      id: '5',
-      imageUrl:
-          "https://i.pinimg.com/474x/a1/40/72/a140720c714f8689dc23c9dbe8c7be13.jpg",
-      title: 'Dynamo Kiev',
-      startDateTime: DateTime(2025, 10, 12),
-      endDateTime: DateTime(2025, 10, 15),
-      price: 1800,
-      currency: "USD",
-    ),
-    TripModel(
-      id: '6',
-      imageUrl:
-          "https://i.pinimg.com/474x/ac/82/3f/ac823f39ce49b221f8d1c3cb44f88073.jpg",
-      title: 'Aswan',
-      startDateTime: DateTime(2025, 3, 12),
-      endDateTime: DateTime(2025, 3, 15),
-      price: 800,
-    ),
-    TripModel(
-      id: '4',
-      imageUrl:
-          "https://i.pinimg.com/474x/ea/77/e6/ea77e6b28d3c330c8da3e2c565cb3da3.jpg",
-      title: 'Sharm',
-      startDateTime: DateTime(2025, 3, 21),
-      endDateTime: DateTime(2025, 4, 5),
-      price: 3000,
-    ),
-    TripModel(
-      id: '2',
-      imageUrl:
-          "https://i.pinimg.com/474x/5b/9c/95/5b9c95ae4a85c7ca6fc04919222654fc.jpg",
-      title: 'Dahab',
-      startDateTime: DateTime(2025, 8, 16),
-      endDateTime: DateTime(2025, 8, 19),
-      price: 4000,
-    ),
-    TripModel(
-      id: '3',
-      imageUrl:
-          "https://i.pinimg.com/474x/a8/91/3d/a8913dd1fc3dcc7a3a8e9af97c0167f0.jpg",
-      title: 'Alex',
-      startDateTime: DateTime(2025, 4, 20),
-      endDateTime: DateTime(2025, 4, 23),
-      price: 4500,
-    ),
-  ];
+  List<TripDataModel> tripList = [];
   List<RecommendModel> recommendations = [
     RecommendModel(
       name: "Pyramids of Egypt",
@@ -207,23 +151,35 @@ class _HomeTripState extends State<HomeTrip> {
               ),
             ).leftBottomWidget(),
             0.01.height.hSpace,
-            ListView.separated(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) => GestureDetector(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CreditCardScreen(),
+            StreamBuilder(
+              stream: TripCollections.getAllTrips(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Column(
+                    children: [
+                      0.05.height.hSpace,
+                      CircularProgressIndicator(),
+                    ],
+                  );
+                }
+                if (snapshot.hasData) {
+                  tripList = snapshot.data!.docs
+                      .map(
+                        (e) => e.data(),
+                      )
+                      .toList();
+                }
+                return ListView.separated(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) => HomeTripCartWidget(
+                    model: tripList[index],
                   ),
-                ),
-                child: TripCardWidget(
-                  tripModel: tripList[index],
-                ),
-              ),
-              separatorBuilder: (context, _) => 0.01.height.hSpace,
-              itemCount: tripList.length,
-            ),
+                  separatorBuilder: (context, index) => 0.01.height.hSpace,
+                  itemCount: tripList.length,
+                );
+              },
+            )
           ],
         ).hPadding(0.03.width),
       ),
