@@ -8,19 +8,24 @@ class CollectionsProvider extends ChangeNotifier {
   List<Company> _companies = [];
   List<TripDataModel> _trips = [];
 
-  _getAllCompanies() async {
+  getAllCompanies() async {
     await CompanyCollections.getAllCompany().then(
-          (value) {
+      (value) {
         _companies = value;
       },
     );
     notifyListeners();
   }
 
+  CollectionsProvider() {
+    getAllCompanies();
+    getAllTrips();
+  }
+
   getAllTrips() async {
-    _trips = await TripCollections.getListOfTrips().then(
-          (value) => value,
-    );
+    await TripCollections.getListOfTrips().then((value) {
+      _trips = value;
+    });
     notifyListeners();
   }
 

@@ -241,6 +241,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  cupertino_calendar_picker:
+    dependency: "direct main"
+    description:
+      name: cupertino_calendar_picker
+      sha256: "5a0aa2952a08414633f3b52509c08200dd41c26f926e243545512af92d0a3677"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.2"
   cupertino_icons:
     dependency: "direct main"
     description:
