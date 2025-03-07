@@ -24,7 +24,8 @@ abstract class TripDeparturesCollection {
   }
 
   static Future<List<TripDepartureDataModel>> getTripDeparture(
-      TripDataModel trip) async {
+    TripDataModel trip,
+  ) async {
     return await _colRef().where("tripId", isEqualTo: trip.tripId).get().then(
       (value) {
         return value.docs
@@ -35,8 +36,8 @@ abstract class TripDeparturesCollection {
       },
     );
   }
-  static Stream<QuerySnapshot<TripDepartureDataModel>> getStreamDepartures()
-  {
+
+  static Stream<QuerySnapshot<TripDepartureDataModel>> getStreamDepartures() {
     return _colRef().snapshots();
   }
 }

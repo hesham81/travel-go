@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/theme/app_colors.dart';
 
 class LoadingImageNetworkWidget extends StatelessWidget {
   final String imageUrl;
@@ -25,6 +26,7 @@ class LoadingImageNetworkWidget extends StatelessWidget {
         }
         return Center(
           child: CircularProgressIndicator(
+            color: AppColors.newBlueColor,
             value: loadingProgress.expectedTotalBytes != null
                 ? loadingProgress.cumulativeBytesLoaded /
                     (loadingProgress.expectedTotalBytes ?? 1)
