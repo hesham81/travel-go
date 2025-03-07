@@ -53,6 +53,7 @@ dependencies:
   geocoding: ^3.0.0
   currency_picker: ^2.0.21
   carousel_slider: ^5.0.0
+  cupertino_calendar_picker: ^2.2.2
 
 dev_dependencies:
   flutter_test:

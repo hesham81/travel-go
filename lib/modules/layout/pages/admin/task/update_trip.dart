@@ -67,6 +67,7 @@ class _UpdateTripState extends State<UpdateTrip> {
                       BrowseSelectedTrip.routeName,
                       arguments: trips[index],
                     ),
+
                     child: UpdateTripCartWidget(
                       model: trips[index],
                     ),

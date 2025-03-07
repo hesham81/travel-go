@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_go/core/providers/trip_admin_provider.dart';
 import '/modules/layout/pages/user/pages/profile/pages/user_profile.dart';
 import '/core/extensions/extensions.dart';
 import '/core/constant/app_assets.dart';
@@ -17,6 +19,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   var user = FirebaseAuthServices.getCurrentUserData();
   @override
   Widget build(BuildContext context) {
+  var provider = Provider.of<TripAdminProvider>(context);
     var theme = Theme.of(context);
     return Row(
       children: [

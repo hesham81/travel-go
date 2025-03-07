@@ -91,6 +91,8 @@ class _NewTripScreenState extends State<NewTripScreen> {
     var provider = Provider.of<TripAdminProvider>(context);
 
     idController.text = IdGenerator.generateTripId(
+        from: provider.source ?? "",
+        to: provider.destination ?? "",
         dayNumber: int.tryParse(tripTotalDaysController.text) ?? 0,
         tripOrganizedBy: provider.getSelectedCompany?.companyName ?? "",
         tripTitle: tripNameController.text ?? "");

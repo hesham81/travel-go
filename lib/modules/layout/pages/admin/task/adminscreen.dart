@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/modules/layout/pages/admin/task/attractionscreen.dart';
-import 'package:travel_go/modules/layout/pages/admin/task/flightscreen.dart';
-import 'package:travel_go/modules/layout/pages/admin/task/hotelscreen.dart';
+import '/modules/layout/pages/admin/task/attractionscreen.dart';
+import '/modules/layout/pages/admin/task/flightscreen.dart';
+import '/modules/layout/pages/admin/task/hotelscreen.dart';
 import '/core/routes/route_transact.dart';
 import '/modules/layout/pages/admin/task/tripscreen.dart';
 import '/core/extensions/extensions.dart';
