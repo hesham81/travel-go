@@ -19,10 +19,11 @@ class CollectionsProvider extends ChangeNotifier {
 
   CollectionsProvider() {
     getAllCompanies();
-    _getAllTrips();
+    getAllTrips();
   }
+  List<Company> get getAllCompaniesData => _companies;
 
-  _getAllTrips() async {
+  getAllTrips() async {
     await TripCollections.getListOfTrips().then((value) {
       _trips = value;
     });

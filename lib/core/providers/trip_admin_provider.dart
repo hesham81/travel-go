@@ -87,6 +87,23 @@ class TripAdminProvider extends ChangeNotifier {
     currentLocation = this.currentLocation;
   }
 
+  String? currentCityLocation;
+
+  getCurrentCityLocation() async {
+    List<Placemark> placeMark1 = await placemarkFromCoordinates(
+      currentLocation?.latitude ?? 0,
+      currentLocation?.longitude ?? 0,
+    );
+    if (placeMark1.isNotEmpty) {
+      String locationCity = "";
+      Placemark placeMark = placeMark1[0];
+      currentCityLocation = placeMark.country;
+      notifyListeners();
+    } else {
+      print("error");
+    }
+  }
+
   Future<void> getSourceCity() async {
     if (_markersFromTo.isEmpty) {
       return;
@@ -103,6 +120,7 @@ class TripAdminProvider extends ChangeNotifier {
       if (placeMarker1.isNotEmpty) {
         Placemark sourcePlacemark = placeMarker1[0];
         source = sourcePlacemark.country ?? 'Unknown City';
+        notifyListeners();
         print(source);
       } else {
         print('No placemark found for the given coordinates.');
@@ -128,6 +146,7 @@ class TripAdminProvider extends ChangeNotifier {
       if (placeMarker2.isNotEmpty) {
         Placemark sourcePlacemark = placeMarker2[0];
         destination = sourcePlacemark.country ?? 'Unknown City';
+        notifyListeners();
         print(destination);
       } else {
         print('No placemark found for the given coordinates.');
