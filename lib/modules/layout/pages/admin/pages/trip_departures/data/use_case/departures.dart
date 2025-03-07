@@ -13,7 +13,7 @@ abstract class DeparturesCollection {
     );
   }
 
-  static addDeparture(TripDepartureDataModel model) async {
+  static Future<bool> addDeparture(TripDepartureDataModel model) async {
     try {
       await _colRef().doc(model.id).set(model);
       return true;

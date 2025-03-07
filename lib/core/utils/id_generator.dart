@@ -21,9 +21,8 @@ abstract class IdGenerator {
     required int dayNumber,
     required String tripOrganizedBy,
     required String tripTitle,
-    required String from ,
-    required String to ,
-
+    required String from,
+    required String to,
   }) {
     return "Trip-$tripOrganizedBy-${tripTitle.trim()}";
   }
@@ -32,5 +31,13 @@ abstract class IdGenerator {
     required String attractionTitle,
   }) {
     return "Attraction-$attractionTitle";
+  }
+
+  static generateDepartureId({
+    required String tripName,
+    required String from,
+    required String to,
+  }) {
+    return "Departure-$tripName-$from-$to";
   }
 }

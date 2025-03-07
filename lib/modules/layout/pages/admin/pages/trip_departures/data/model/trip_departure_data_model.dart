@@ -8,7 +8,7 @@ class TripDepartureDataModel {
 
   final DateTime to;
 
-  final int availableSeats;
+   int availableSeats;
 
   TripDepartureDataModel({
     required this.trip,
@@ -21,8 +21,8 @@ class TripDepartureDataModel {
   Map<String, dynamic> toMap() {
     return {
       'trip': trip.toMap(),
-      'from': from.toIso8601String(),
-      'to': to.toIso8601String(),
+      'from': from.millisecondsSinceEpoch,
+      'to': to.millisecondsSinceEpoch,
       'availableSeats': availableSeats,
       'id': id,
     };
@@ -31,8 +31,8 @@ class TripDepartureDataModel {
   factory TripDepartureDataModel.fromMap(Map<String, dynamic> map) {
     return TripDepartureDataModel(
       trip: TripDataModel.fromMap(map['trip']),
-      from: DateTime.parse(map['from']),
-      to: DateTime.parse(map['to']),
+      from: DateTime.fromMillisecondsSinceEpoch(map['from']),
+      to: DateTime.fromMillisecondsSinceEpoch(map['to']),
       availableSeats: map['availableSeats'],
       id: map['id'],
     );
