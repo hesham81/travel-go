@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/utils/company_collections.dart';
-import 'package:travel_go/models/trip_data_model.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
+import '/core/utils/company_collections.dart';
+import '/models/trip_data_model.dart';
+import '/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
+import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
 
 class CollectionsProvider extends ChangeNotifier {
   List<Company> _companies = [];
   List<TripDataModel> _trips = [];
 
-  _getAllCompanies() async {
+  getAllCompanies() async {
     await CompanyCollections.getAllCompany().then(
-          (value) {
+      (value) {
         _companies = value;
       },
     );
     notifyListeners();
   }
 
+  CollectionsProvider() {
+    getAllCompanies();
+    getAllTrips();
+  }
+  List<Company> get getAllCompaniesData => _companies;
+
   getAllTrips() async {
-    _trips = await TripCollections.getListOfTrips().then(
-          (value) => value,
-    );
+    await TripCollections.getListOfTrips().then((value) {
+      _trips = value;
+    });
     notifyListeners();
   }
 
