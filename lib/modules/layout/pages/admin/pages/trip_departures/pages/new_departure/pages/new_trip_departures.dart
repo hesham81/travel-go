@@ -3,10 +3,10 @@ import 'package:cupertino_calendar_picker/cupertino_calendar_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_go/core/services/bot_toast.dart';
-import 'package:travel_go/core/utils/id_generator.dart';
-import 'package:travel_go/core/widget/custom_elevated_button.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/data/use_case/departures.dart';
+import '/core/services/bot_toast.dart';
+import '/core/utils/id_generator.dart';
+import '/core/widget/custom_elevated_button.dart';
+import '/modules/layout/pages/admin/pages/trip_departures/data/use_case/departures.dart';
 import '/modules/layout/pages/admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
 import '/core/extensions/extensions.dart';
 import '/core/providers/collections_provider.dart';
@@ -28,10 +28,12 @@ class _NewTripDeparturesState extends State<NewTripDepartures> {
   List<TripDepartureDataModel> departures = [];
   DateTime? fromDate;
   DateTime? toDate;
+  @override
 
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<CollectionsProvider>(context);
+    provider.getAllTrips();
     var departure = Provider.of<DepartureProvider>(context);
     var theme = Theme.of(context).textTheme;
     log("Length Of Provider is ${provider.getAllTripsData.length}");
@@ -210,7 +212,7 @@ class _NewTripDeparturesState extends State<NewTripDepartures> {
                           onPressed: (fromDate != null && toDate != null)
                               ? () async {
                                   EasyLoading.show();
-                                  await DeparturesCollection.addDeparture(
+                                  await TripDeparturesCollection.addDeparture(
                                     TripDepartureDataModel(
                                       trip: departure.getSelectedTrip!,
                                       from: fromDate!,

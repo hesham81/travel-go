@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class FlightAirlines {
   final String flighAirLineName;
 
