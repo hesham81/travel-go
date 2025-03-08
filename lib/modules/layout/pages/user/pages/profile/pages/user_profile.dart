@@ -31,7 +31,7 @@ class UserProfile extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
                 Text(
-                  "Travel Go",
+                  "Tour And Travel",
                   style: theme.textTheme.titleSmall!.copyWith(
                     color: AppColors.newBlueColor,
                   ),
@@ -71,14 +71,12 @@ class UserProfile extends StatelessWidget {
                       width: 120,
                     ),
                   )
-                : GestureDetector(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: LoadingImageNetworkWidget(
-                        imageUrl: user.photoURL!,
-                      ),
-                    ),
-                  ).allPadding(10),
+                : CircleAvatar(
+                  radius: 80,
+                  backgroundImage: NetworkImage(
+                    user.photoURL!,
+                  ),
+                ).allPadding(10),
             0.01.height.hSpace,
             Text(
               user.displayName!,

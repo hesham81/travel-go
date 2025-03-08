@@ -21,8 +21,16 @@ class HomeTripCartWidget extends StatelessWidget {
       height: 0.2.height,
       width: double.maxFinite,
       decoration: BoxDecoration(
-        color: AppColors.greyColor,
-        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.4),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: const Offset(0, 5),
+          ),
+        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
