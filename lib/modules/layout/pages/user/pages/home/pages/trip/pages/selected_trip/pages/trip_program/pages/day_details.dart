@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rich_readmore/rich_readmore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:travel_go/core/widget/dividers_word.dart';
+import '/core/widget/dividers_word.dart';
 import '/core/extensions/align.dart';
 import '/core/widget/labels_widget.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';

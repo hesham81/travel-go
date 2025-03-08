@@ -79,6 +79,7 @@ class _TripProgramHomeState extends State<TripProgramHome> {
                   ),
           ),
         ),
+        0.01.height.hSpace,
         ListView.separated(
           shrinkWrap: true,
           padding: EdgeInsets.zero,
@@ -97,11 +98,10 @@ class _TripProgramHomeState extends State<TripProgramHome> {
               model: programsDays[index],
             ),
           ),
-          separatorBuilder: (context, index) => Divider().hPadding(0.1.width),
+          separatorBuilder: (context, index) => 0.01.height.hSpace,
           itemCount: programsDays.length,
         ),
         0.01.height.hSpace,
-        Divider().hPadding(0.1.width)
       ],
     );
   }

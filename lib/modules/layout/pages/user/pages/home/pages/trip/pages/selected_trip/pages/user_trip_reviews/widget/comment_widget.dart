@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/constant/app_assets.dart';
-import 'package:travel_go/core/extensions/dimensions.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
+import '/core/constant/app_assets.dart';
+import '/core/extensions/extensions.dart';
 
 class ReviewWidget extends StatelessWidget {
   final String reviewerName;

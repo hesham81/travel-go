@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '/core/routes/route_transact.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/selected_trip.dart';
@@ -21,7 +22,7 @@ class HomeTrip extends StatefulWidget {
 }
 
 class _HomeTripState extends State<HomeTrip> {
-  var user = FirebaseAuthServices.getCurrentUserData();
+  User? user = FirebaseAuthServices.getCurrentUserData();
   List<TripDataModel> tripList = [];
   List<RecommendModel> recommendations = [
     RecommendModel(
@@ -67,6 +68,8 @@ class _HomeTripState extends State<HomeTrip> {
       location: "Edinburgh, Scotland",
     ),
   ];
+
+  // List<TripDataModel> favouriteTrips = [];
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +194,8 @@ class _HomeTripState extends State<HomeTrip> {
                   itemCount: tripList.length,
                 );
               },
-            )
+            ),
+            0.01.height.hSpace,
           ],
         ).hPadding(0.03.width),
       ),

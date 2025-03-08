@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '/core/extensions/extensions.dart';
-import '/core/theme/app_colors.dart';
 import '/models/program_model.dart';
 
 class DayContent extends StatelessWidget {
@@ -16,8 +15,18 @@ class DayContent extends StatelessWidget {
     var theme = Theme.of(context).textTheme;
     return Container(
       height: 0.1.height,
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -27,7 +36,6 @@ class DayContent extends StatelessWidget {
             style: theme.titleMedium,
           ),
           0.02.width.vSpace,
-
           Expanded(
             child: Text(
               model.programTitle,
