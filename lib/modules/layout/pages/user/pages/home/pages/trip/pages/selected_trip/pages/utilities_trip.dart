@@ -87,7 +87,7 @@ class _UtilitiesTripState extends State<UtilitiesTrip> {
         Divider(),
         0.01.height.hSpace,
         Text(
-          "Location",
+          "Map Destination",
           style: theme.titleMedium!.copyWith(
             color: AppColors.blackColor,
           ),
@@ -100,6 +100,7 @@ class _UtilitiesTripState extends State<UtilitiesTrip> {
               widget.model.toLat,
               widget.model.toLat,
             ),
+            imageUrl: widget.model.imageUrl,
           ),
         ),
         0.01.height.hSpace,
