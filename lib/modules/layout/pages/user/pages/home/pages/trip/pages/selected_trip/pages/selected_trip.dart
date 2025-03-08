@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/trip_info/pages/trip_info.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/user_trip_flight/pages/user_trip_flight.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/user_trip_hotel/pages/user_trip_hotel.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/user_trip_reviews/pages/user_trip_reviews.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/trip_program/pages/trip_program_home.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
@@ -29,7 +33,8 @@ class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
     "Program",
     "Hotel",
     "Flight",
-    "Reviews"
+    "Reviews",
+    "Info",
   ];
 
   int selectedIndex = 0;
@@ -56,6 +61,12 @@ class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
         totalPlaces: totalPlaces,
       ),
       TripProgramHome(
+        model: widget.model,
+      ),
+      UserTripHotel(),
+      UserTripFlight(),
+      UserTripReviews(),
+      TripInfo(
         model: widget.model,
       ),
     ];

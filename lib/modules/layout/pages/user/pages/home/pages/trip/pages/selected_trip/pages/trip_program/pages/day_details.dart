@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rich_readmore/rich_readmore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:travel_go/core/widget/dividers_word.dart';
 import '/core/extensions/align.dart';
 import '/core/widget/labels_widget.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -73,7 +74,7 @@ class _DayDetailsState extends State<DayDetails> {
                 RichReadMoreText(
                   TextSpan(
                     text: widget.model.programDetails,
-                    style: theme.bodyMedium!.copyWith(
+                    style: theme.labelLarge!.copyWith(
                       color: AppColors.blackColor,
                     ),
                   ),
@@ -162,6 +163,52 @@ class _DayDetailsState extends State<DayDetails> {
                   ),
                 ),
                 0.01.height.hSpace,
+                DividersWord(
+                  text: "Attractions",
+                ),
+                0.01.height.hSpace,
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      LabelsWidget(
+                        label: "Name : ",
+                        value: widget.model.attractions.first.title,
+                      ),
+                      0.01.height.hSpace,
+                      Text(
+                        'Description : ',
+                        style: theme.labelLarge!.copyWith(
+                          color: AppColors.newBlueColor,
+                        ),
+                      ),
+                      0.01.height.hSpace,
+                      RichReadMoreText(
+                        TextSpan(
+                          text: widget.model.attractions.first.description,
+                          style: theme.labelLarge!.copyWith(
+                            color: AppColors.blackColor,
+                          ),
+                        ),
+                        settings: LineModeSettings(
+                          trimLines: 3,
+                          trimCollapsedText: 'More',
+                          trimExpandedText: 'Less',
+                          moreStyle: theme.labelLarge!.copyWith(
+                            color: AppColors.newBlueColor,
+                          ),
+                          lessStyle: theme.labelLarge!.copyWith(
+                            color: AppColors.newBlueColor,
+                          ),
+                          onPressReadMore: () {},
+                          onPressReadLess: () {},
+                        ),
+                      ),
+                      0.01.height.hSpace,
+                    ],
+                  ),
+                0.01.height.hSpace,
+
               ],
             ).hPadding(0.03.width)
           ],
