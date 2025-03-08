@@ -1,9 +1,7 @@
-import 'package:latlong2/latlong.dart';
-import 'package:travel_go/models/flight.dart';
-import 'package:travel_go/models/hotel_model.dart';
-import 'package:travel_go/models/program_model.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
-import 'package:travel_go/modules/layout/pages/admin/menna/trippp/model/program_day_model.dart';
+import '/models/flight.dart';
+import '/models/hotel_model.dart';
+import '/models/program_model.dart';
+import '/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
 
 class TripDataModel {
   final String tripId;

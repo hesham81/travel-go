@@ -51,7 +51,7 @@ class _UpdateTripWidgetState extends State<UpdateTripWidget> {
         toLong: widget.trip.toLong,
         toLat: widget.trip.toLat,
         totalGuests: int.tryParse(totalGuests.text) ?? 0,
-        price: double.tryParse(price.text) ?? 0,
+        price: double.tryParse(price.text) ?? 0.0,
         currency: selectedCurrency?.code ?? widget.trip.currency,
         organizedBy: widget.trip.organizedBy,
         programDetails: widget.trip.programDetails,

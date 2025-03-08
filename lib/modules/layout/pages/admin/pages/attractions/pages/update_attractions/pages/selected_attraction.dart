@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:travel_go/core/widget/labels_widget.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/set_map_location.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/play_youtube_video.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -59,7 +60,6 @@ class _SelectedAttractionState extends State<SelectedAttraction> {
   late YoutubePlayerController youTubeController;
 
   _playVideo(String videoUrl) {
-    print(videoUrl);
     if (videoUrl == "") {
       EasyLoading.showError("The Url Is Invalid");
       return;
@@ -113,45 +113,19 @@ class _SelectedAttractionState extends State<SelectedAttraction> {
                 ),
                 icon: Icon(
                   Icons.play_arrow_outlined,
-                  color: AppColors.newBlueColor,
+                  color: AppColors.whiteColor,
                 ),
               ),
             ),
             0.01.height.hSpace,
-            Row(
-              children: [
-                Text(
-                  "Attraction ID : ",
-                  style: theme.textTheme.titleMedium!.copyWith(
-                    color: AppColors.blackColor,
-                  ),
-                ),
-                0.01.width.vSpace,
-                Text(
-                  model.id,
-                  style: theme.textTheme.titleMedium!.copyWith(
-                    color: AppColors.newBlueColor,
-                  ),
-                ),
-              ],
+            LabelsWidget(
+              label: "ID : ",
+              value: model.id,
             ).hPadding(0.03.width),
             0.01.height.hSpace,
-            Row(
-              children: [
-                Text(
-                  "Attraction Location : ",
-                  style: theme.textTheme.titleMedium!.copyWith(
-                    color: AppColors.blackColor,
-                  ),
-                ),
-                0.01.width.vSpace,
-                Text(
-                  model.location,
-                  style: theme.textTheme.titleMedium!.copyWith(
-                    color: AppColors.newBlueColor,
-                  ),
-                ),
-              ],
+            LabelsWidget(
+              label: "Location : ",
+              value: model.location,
             ).hPadding(0.03.width),
             0.01.height.hSpace,
             CustomTextFormField(

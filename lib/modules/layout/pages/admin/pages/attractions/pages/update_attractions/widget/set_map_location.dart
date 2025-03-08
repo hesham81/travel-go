@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
+import 'package:travel_go/core/extensions/extensions.dart';
+import 'package:travel_go/core/widget/loading_image_network_widget.dart';
 
 import '/core/theme/app_colors.dart';
 
 class SetMapLocation extends StatefulWidget {
   final LatLng locations;
+  final String? imageUrl;
 
   const SetMapLocation({
     super.key,
     required this.locations,
+    this.imageUrl,
   });
 
   @override
@@ -60,7 +64,8 @@ class _SetMapLocationState extends State<SetMapLocation> {
           child: FlutterMap(
             mapController: mapController,
             options: MapOptions(
-              initialCenter: widget.locations
+              initialCenter: widget.locations,
+              initialZoom: 10,
             ),
             children: [
               TileLayer(
@@ -71,14 +76,40 @@ class _SetMapLocationState extends State<SetMapLocation> {
                 markers: [
                   Marker(
                     point: widget.locations,
-                    child: Icon(
-                      Icons.attractions,
-                      color: AppColors.newBlueColor,
-                      size: 30,
-                    ),
+                    child: widget.imageUrl != null
+                        ? Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColors.newBlueColor,
+                              ),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: LoadingImageNetworkWidget(
+                                imageUrl: widget.imageUrl!,
+                              ),
+                            ),
+                          )
+                        : Icon(
+                            Icons.location_on_outlined,
+                            color: AppColors.newBlueColor,
+                          ),
                   )
                 ],
               ),
+              (widget.imageUrl != null)
+                  ? CircleLayer(
+                      circles: [
+                        CircleMarker(
+                          point: widget.locations,
+                          radius: 10000,
+                          color: AppColors.newBlueColor.withAlpha(30),
+                          useRadiusInMeter: true,
+                        )
+                      ],
+                    )
+                  : Container(),
             ],
           ),
         ),
