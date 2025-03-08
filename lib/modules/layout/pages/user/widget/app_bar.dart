@@ -65,11 +65,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 ),
                 child: Container(
                   decoration: BoxDecoration(
-                      border: Border.all(
-                        color: AppColors.newBlueColor,
-                        width: 3,
-                      ),
-                      borderRadius: BorderRadius.circular(50)),
+                    border: Border.all(
+                      color: AppColors.newBlueColor,
+                      width: 4,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
                   child: CircleAvatar(
                     radius: 30,
                     backgroundImage: NetworkImage(
