@@ -7,6 +7,7 @@ import 'package:travel_go/core/widget/custom_elevated_button.dart';
 import 'package:travel_go/models/trip_data_model.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/set_map_location.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/reservation.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip_departure/pages/trip_departure.dart';
 
 class UtilitiesTrip extends StatefulWidget {
   final TripDataModel model;
@@ -115,7 +116,9 @@ class _UtilitiesTripState extends State<UtilitiesTrip> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Reservation(model: widget.model),
+                  builder: (context) => TripDeparture(
+                    model: widget.model,
+                  ),
                 ),
               );
             },
