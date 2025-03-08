@@ -102,7 +102,6 @@ class MyApp extends StatelessWidget {
         SelectedAttraction.routeName: (context) => SelectedAttraction(),
         DeleteSelectedAttraction.routeName: (context) =>
             DeleteSelectedAttraction(),
-        ReservationScreen.routeName: (context) => ReservationScreen(),
         ManagerHomeScreen.routeName: (context) => ManagerHomeScreen(),
         SelectedDeletedWidget.routeName: (context) => SelectedDeletedWidget(),
         TripProgram.routeName: (context) => TripProgram(),

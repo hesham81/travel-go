@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/user_trip_reviews/widget/comment_widget.dart';
+import '/core/extensions/extensions.dart';
+import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/user_trip_reviews/widget/comment_widget.dart';
 
 class UserTripReviews extends StatelessWidget {
   const UserTripReviews({super.key});
