@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/core/routes/route_transact.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/reservation.dart';
 import '/core/extensions/extensions.dart';
 import '/models/trip_data_model.dart';
 import '/modules/layout/pages/admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
@@ -50,8 +53,15 @@ class _TripDepartureState extends State<TripDeparture> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
-                  itemBuilder: (context, index) => TripDepartureUserWidget(
-                    model: departures[index],
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () => slideRightWidget(
+                        newPage: Reservation(
+                          model: widget.model,
+                        ),
+                        context: context),
+                    child: TripDepartureUserWidget(
+                      model: departures[index],
+                    ),
                   ),
                   separatorBuilder: (context, _) => 0.01.height.hSpace,
                   itemCount: departures.length,

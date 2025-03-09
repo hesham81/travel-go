@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/core/extensions/extensions.dart';
 import 'package:travel_go/core/routes/route_transact.dart';
 import 'package:travel_go/core/theme/app_colors.dart';
@@ -113,13 +114,9 @@ class _UtilitiesTripState extends State<UtilitiesTrip> {
             text: "Reserve",
             borderRadius: 10,
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TripDeparture(
-                    model: widget.model,
-                  ),
-                ),
+              slideRightWidget(
+                context: context,
+                  newPage:  TripDeparture(model: widget.model,),
               );
             },
           ),
