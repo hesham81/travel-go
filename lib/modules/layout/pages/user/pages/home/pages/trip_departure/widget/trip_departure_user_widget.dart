@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
+import '/modules/layout/pages/admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widget/labels_widget.dart';
@@ -65,30 +65,41 @@ class _TripDepartureUserWidgetState extends State<TripDepartureUserWidget> {
                 value: "${widget.model.availableSeats} Guests",
               ),
               0.01.height.hSpace,
-              Row(
-                children: [
-                  Text(
-                    "After : ",
-                    style: theme.labelLarge!.copyWith(
-                      color: AppColors.newBlueColor,
-                    ),
-                  ),
-                  Text(
-                    "${availableDate.inDays} Days",
-                    style: theme.labelLarge!.copyWith(
-                      color: AppColors.blackColor.withAlpha(80),
-                    ),
-                  ),
-                  0.02.width.vSpace,
-                  if (availableDate.inDays == 1)
-                    Text(
-                      "Last Date To Reserve",
-                      style: theme.labelMedium!.copyWith(
-                        color:Colors.green,
-                      ),
+              (availableDate.inDays >= 0)
+                  ? Row(
+                      children: [
+                        Text(
+                          "After : ",
+                          style: theme.labelLarge!.copyWith(
+                            color: AppColors.newBlueColor,
+                          ),
+                        ),
+                        Text(
+                          "${availableDate.inDays} Days",
+                          style: theme.labelLarge!.copyWith(
+                            color: AppColors.blackColor.withAlpha(80),
+                          ),
+                        ),
+                        0.02.width.vSpace,
+                        if (availableDate.inDays == 1)
+                          Text(
+                            "Last Date To Reserve",
+                            style: theme.labelMedium!.copyWith(
+                              color: Colors.green,
+                            ),
+                          )
+                      ],
                     )
-                ],
-              ),
+                  : Row(
+                      children: [
+                        Text(
+                          "Not Available",
+                          style: theme.labelLarge!.copyWith(
+                            color: AppColors.errorColor,
+                          ),
+                        ),
+                      ],
+                    ),
             ],
           ),
         ),
@@ -108,7 +119,6 @@ class _TripDepartureUserWidgetState extends State<TripDepartureUserWidget> {
               ),
             ),
           ),
-
       ],
     ).hPadding(0.03.width);
   }
