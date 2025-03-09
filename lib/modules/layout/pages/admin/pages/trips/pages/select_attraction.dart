@@ -37,7 +37,7 @@ class _SelectAttractionState extends State<SelectAttraction> {
   @override
   Widget build(BuildContext context) {
     provider = Provider.of<TripAdminProvider>(context);
-    if (provider.attractions.isEmpty) _getAllAttractions(context);
+    _getAllAttractions(context);
 
     var theme = Theme.of(context).textTheme;
     return Scaffold(

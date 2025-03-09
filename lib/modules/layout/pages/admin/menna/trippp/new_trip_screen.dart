@@ -230,29 +230,30 @@ class _NewTripScreenState extends State<NewTripScreen> {
                       text: provider.getCurrency?.name.substring(0, 4) ?? "Cur",
                       onPressed: () {
                         showCurrencyPicker(
-                            context: context,
-                            theme: CurrencyPickerThemeData(
-                              flagSize: 25,
-                              titleTextStyle: TextStyle(fontSize: 17),
-                              subtitleTextStyle: TextStyle(
-                                  fontSize: 15,
-                                  color: Theme.of(context).hintColor),
-                              bottomSheetHeight:
-                                  MediaQuery.of(context).size.height / 2,
-                              inputDecoration: InputDecoration(
-                                labelText: 'Search',
-                                hintText: 'Start typing to search',
-                                prefixIcon: const Icon(Icons.search),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: const Color(0xFF8C98A8)
-                                        .withOpacity(0.2),
-                                  ),
+                          context: context,
+                          theme: CurrencyPickerThemeData(
+                            flagSize: 25,
+                            titleTextStyle: TextStyle(fontSize: 17),
+                            subtitleTextStyle: TextStyle(
+                                fontSize: 15,
+                                color: Theme.of(context).hintColor),
+                            bottomSheetHeight:
+                                MediaQuery.of(context).size.height / 2,
+                            inputDecoration: InputDecoration(
+                              labelText: 'Search',
+                              hintText: 'Start typing to search',
+                              prefixIcon: const Icon(Icons.search),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color:
+                                      const Color(0xFF8C98A8).withOpacity(0.2),
                                 ),
                               ),
                             ),
-                            onSelect: (Currency currency) =>
-                                provider.setCurrency(currency));
+                          ),
+                          onSelect: (Currency currency) =>
+                              provider.setCurrency(currency),
+                        );
                       },
                     ),
                   )
