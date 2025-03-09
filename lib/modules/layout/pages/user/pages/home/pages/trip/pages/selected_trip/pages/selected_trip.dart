@@ -63,7 +63,9 @@ class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
       TripProgramHome(
         model: widget.model,
       ),
-      UserTripHotel(),
+      UserTripHotel(
+        model: widget.model,
+      ),
       UserTripFlight(
         model: widget.model.flight,
         trip: widget.model,
