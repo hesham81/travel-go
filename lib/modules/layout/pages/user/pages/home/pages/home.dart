@@ -153,11 +153,11 @@ class _HomeState extends State<Home> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.favorite_outline,
+                  Icons.bookmark_outline,
                   color: AppColors.whiteColor,
                 ),
                 activeIcon: Icon(
-                  Icons.favorite,
+                  Icons.bookmark,
                   color: AppColors.whiteColor,
                 ),
                 label: "Favourite",

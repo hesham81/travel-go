@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:route_transitions/route_transitions.dart';
 import '/core/routes/route_transact.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/trip_program/pages/day_details.dart';
 import '/models/program_model.dart';
@@ -79,29 +80,27 @@ class _TripProgramHomeState extends State<TripProgramHome> {
                   ),
           ),
         ),
+        0.01.height.hSpace,
         ListView.separated(
           shrinkWrap: true,
           padding: EdgeInsets.zero,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) => GestureDetector(
-            onTap: () => Navigator.push(
-              context,
-              SlideRightRoute(
-                page: DayDetails(
-                  model: programsDays[index],
-                  index: index,
-                ),
+            onTap: () => slideRightWidget(
+              context: context,
+              newPage: DayDetails(
+                model: programsDays[index],
+                index: index,
               ),
             ),
             child: DayContent(
               model: programsDays[index],
             ),
           ),
-          separatorBuilder: (context, index) => Divider().hPadding(0.1.width),
+          separatorBuilder: (context, index) => 0.01.height.hSpace,
           itemCount: programsDays.length,
         ),
         0.01.height.hSpace,
-        Divider().hPadding(0.1.width)
       ],
     );
   }

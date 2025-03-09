@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/core/extensions/extensions.dart';
+import 'package:travel_go/core/routes/route_transact.dart';
 import 'package:travel_go/core/theme/app_colors.dart';
 import 'package:travel_go/core/widget/custom_elevated_button.dart';
 import 'package:travel_go/models/trip_data_model.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/set_map_location.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/reservation.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip_departure/pages/trip_departure.dart';
 
 class UtilitiesTrip extends StatefulWidget {
   final TripDataModel model;
@@ -87,7 +91,7 @@ class _UtilitiesTripState extends State<UtilitiesTrip> {
         Divider(),
         0.01.height.hSpace,
         Text(
-          "Map Destination",
+          "Location",
           style: theme.titleMedium!.copyWith(
             color: AppColors.blackColor,
           ),
@@ -109,7 +113,12 @@ class _UtilitiesTripState extends State<UtilitiesTrip> {
           child: CustomElevatedButton(
             text: "Reserve",
             borderRadius: 10,
-            onPressed: () {},
+            onPressed: () {
+              slideRightWidget(
+                context: context,
+                  newPage:  TripDeparture(model: widget.model,),
+              );
+            },
           ),
         ),
         0.01.height.hSpace,
