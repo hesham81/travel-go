@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/core/services/bot_toast.dart';
 import 'package:travel_go/core/theme/app_colors.dart';
+import 'package:travel_go/core/widget/custom_elevated_button.dart';
 import 'package:travel_go/core/widget/numbers_text_form_field.dart';
 import 'package:travel_go/main.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/flight_reservation/pages/flights_reservations_basic_info/pages/flight_reservations.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/widget/reserve_widget_users.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/widget/trip_info_reservation.dart';
 import '/modules/layout/pages/user/pages/home/pages/reservation/widget/reserve_total_info_widget.dart';
@@ -22,11 +26,15 @@ class Reservation extends StatefulWidget {
 
 class _ReservationState extends State<Reservation> {
   TextEditingController totalGuests = TextEditingController();
+
   @override
   void initState() {
-    Provider.of<ReservationProvider>(navigationKey.currentContext!).setTotalUsers(0);
+    Provider.of<ReservationProvider>(navigationKey.currentContext!)
+        .setTotalUsers(0);
     super.initState();
   }
+
+  bool moreGuests = false;
 
   @override
   Widget build(BuildContext context) {
@@ -46,28 +54,56 @@ class _ReservationState extends State<Reservation> {
                 0.02.height.hSpace,
                 ReserveTotalInfoWidget(),
                 0.02.height.hSpace,
-                Text(
-                  "Total Guests",
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                0.01.height.hSpace,
-                NumbersTextFormField(
-                  hintText: "Total Guests ",
-                  controller: totalGuests,
-                  onComplete: (p0) {
-                    int? number =
-                        (int.tryParse(p0) != 1) ? int.tryParse(p0) ?? 1 : 1;
-                    if (number >
-                        provider.getSelectedDeparture!.availableSeats) {
-                      provider.setValid(false);
-                      setState(() {});
-                    } else {
-                      provider.setValid(true);
-                    }
-                    number -= 1;
+                Row(
+                  children: [
+                    Expanded(
+                      child: Divider(),
+                    ),
+                    0.01.width.vSpace,
+                    GestureDetector(
+                      onTap: () => setState(() => moreGuests = !moreGuests),
+                      child: Text(
+                        " More Guests",
+                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: AppColors.newBlueColor,
+                        ),
+                      ),
+                    ),
+                    0.01.width.vSpace,
+                  ],
+                ).hPadding(0.03.width),
+                0.02.height.hSpace,
+                Visibility(
+                  visible: moreGuests,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Total Guests",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      0.01.height.hSpace,
+                      NumbersTextFormField(
+                        hintText: "Total Guests ",
+                        controller: totalGuests,
+                        onComplete: (p0) {
+                          int? number = (int.tryParse(p0) != 1)
+                              ? int.tryParse(p0) ?? 1
+                              : 1;
+                          if (number >
+                              provider.getSelectedDeparture!.availableSeats) {
+                            provider.setValid(false);
+                            setState(() {});
+                          } else {
+                            provider.setValid(true);
+                          }
+                          number -= 1;
 
-                    provider.setTotalUsers(number);
-                  },
+                          provider.setTotalUsers(number);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
                 0.02.height.hSpace,
                 (provider.getTotalUsers + 1 != 0 && provider.getValid)
@@ -129,6 +165,39 @@ class _ReservationState extends State<Reservation> {
                           ],
                         ),
                       ),
+                SizedBox(
+                  width: double.maxFinite,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CustomElevatedButton(
+                          text: "OK",
+                          onPressed: () {
+                            if (provider.getValid) {
+                              slideRightWidget(
+                                newPage: FlightReservations(),
+                                context: context,
+                              );
+                            } else {
+                              BotToastServices.showErrorMessage(
+                                  "Error Please Check Your Inputs ");
+                            }
+                          },
+                        ),
+                      ),
+                      0.02.width.vSpace,
+                      Expanded(
+                        child: CustomElevatedButton(
+                          text: "Cancel",
+                          btnColor: AppColors.errorColor,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 0.03.height.hSpace,
               ],
             ).hPadding(0.03.width)
