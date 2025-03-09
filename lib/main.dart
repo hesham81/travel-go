@@ -7,6 +7,7 @@ import 'package:google_gemini/google_gemini.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:travel_go/core/providers/departure_provider.dart';
+import 'package:travel_go/core/providers/reservation_provider.dart';
 import '/modules/layout/pages/admin/menna/trippp/browse_selected_trip.dart';
 import '/modules/layout/pages/admin/pages/programs/pages/browse_program/pages/program_details.dart';
 import '/modules/layout/pages/admin/menna/trippp/all_programs_data.dart';
@@ -23,7 +24,6 @@ import '/modules/layout/pages/admin/pages/attractions/widget/selected_deleted_wi
 import '/modules/layout/pages/manager/pages/manager_home/manager_home_screen.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/delete_attractions/pages/delete_selected_attraction.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/pages/selected_attraction.dart';
-import '/modules/layout/pages/user/pages/home/pages/reservation/pages/reservation.dart';
 import '/core/constant/ai_constant.dart';
 import '/modules/layout/pages/user/pages/profile/pages/user_profile.dart';
 import '/modules/splash_screen/pages/splash_screen.dart';
@@ -60,7 +60,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => TripAdminProvider()),
         ChangeNotifierProvider(create: (context) => CollectionsProvider()),
         ChangeNotifierProvider(create: (context) => DepartureProvider()),
-        // Add more providers here if needed
+        ChangeNotifierProvider(create: (context) => ReservationProvider()),
       ],
       child: const MyApp(),
     ),
@@ -89,14 +89,10 @@ class MyApp extends StatelessWidget {
         ForgetPassword.routeName: (context) => ForgetPassword(),
         Otp.routeName: (context) => Otp(),
         Home.routeName: (context) => Home(),
-        // AdminHome.routeName: (context) => AdminHome(),
         NewPassword.routeName: (context) => NewPassword(),
-        // SelectedTrip.routeName: (context) => SelectedTrip(),
-        // EditHotels.routeName: (context) => EditHotels(),
         AdminProfile.routeName: (context) => AdminProfile(),
         AddHotel.routeName: (context) => AddHotel(),
         SelectedAdminTrip.routeName: (context) => SelectedAdminTrip(),
-        // SelectedHotel.routeName: (context) => SelectedHotel(),
         SelectedAirline.routeName: (context) => SelectedAirline(),
         UserProfile.routeName: (context) => UserProfile(),
         SelectedAttraction.routeName: (context) => SelectedAttraction(),

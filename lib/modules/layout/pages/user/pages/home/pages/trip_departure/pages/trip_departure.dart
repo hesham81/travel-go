@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/core/providers/reservation_provider.dart';
 import 'package:travel_go/core/routes/route_transact.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/reservation.dart';
 import '/core/extensions/extensions.dart';
@@ -27,6 +29,7 @@ class _TripDepartureState extends State<TripDeparture> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ReservationProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -39,7 +42,12 @@ class _TripDepartureState extends State<TripDeparture> {
               stream: TripDeparturesCollection.getStreamDepartures(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return Lottie.file("assets/icons/no_favourite.json");
+                  return Column(
+                    children: [
+                      0.2.height.hSpace,
+                      Lottie.file("assets/icons/no_favourite.json"),
+                    ],
+                  );
                 }
                 departures = snapshot.data!.docs
                     .map(
@@ -54,11 +62,13 @@ class _TripDepartureState extends State<TripDeparture> {
                   physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) => GestureDetector(
-                    onTap: () => slideRightWidget(
-                        newPage: Reservation(
-                          model: widget.model,
-                        ),
-                        context: context),
+                    onTap: () {
+                      provider.setSelectedDeparture(departures[index]);
+                      slideRightWidget(
+                        newPage: Reservation(),
+                        context: context,
+                      );
+                    },
                     child: TripDepartureUserWidget(
                       model: departures[index],
                     ),
