@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import '/core/utils/firebase_auth_services.dart';
 import '/core/functions/city_locations.dart';
@@ -52,5 +53,26 @@ class ReservationProvider extends ChangeNotifier {
       );
       notifyListeners();
     }
+  }
+  String getMonthAbbreviation(int month) {
+    const List<String> monthAbbreviations = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
+    return monthAbbreviations[month - 1];
+  }
+
+  String getDayOfWeek(DateTime date) {
+    return DateFormat('EEEE').format(date);
   }
 }
