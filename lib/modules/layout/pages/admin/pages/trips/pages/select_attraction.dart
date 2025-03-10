@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
@@ -27,18 +29,24 @@ class _SelectAttractionState extends State<SelectAttraction> {
     await AttractionsDB.getAttractionsList().then(
       (value) {
         EasyLoading.dismiss();
-        provider.attractions = value;
+        print("Value : ${value.length}");
+        attractions = value;
+        setState(() {});
+        provider.setAttractions(value);
       },
     );
-    setState(() {});
   }
 
   @override
+  void initState() {
+    _getAllAttractions(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<TripAdminProvider>(context);
-    _getAllAttractions(context);
-
+    if (provider.getAttractions.isEmpty || provider.getAttractions.length < attractions.length) provider.setAttractions(attractions);
     var theme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
@@ -57,8 +65,9 @@ class _SelectAttractionState extends State<SelectAttraction> {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) => CheckboxListTile(
-                value: provider.selectedAttraction
-                    .contains(provider.attractions[index]),
+                value: provider.selectedAttraction.contains(
+                  provider.attractions[index],
+                ),
                 onChanged: (value) {
                   setState(() {
                     if (value == true) {
@@ -83,12 +92,15 @@ class _SelectAttractionState extends State<SelectAttraction> {
             CustomElevatedButton(
               text: "Add Attraction",
               borderRadius: 10,
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NewAttraction(),
-                ),
-              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NewAttraction(),
+                  ),
+                );
+                provider.isAttractionAdded = true;
+              },
             ).hPadding(0.03.width),
             0.01.height.hSpace,
           ],
