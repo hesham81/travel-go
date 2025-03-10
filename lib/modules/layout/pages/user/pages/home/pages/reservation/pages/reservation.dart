@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
-import 'package:travel_go/core/services/bot_toast.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
-import 'package:travel_go/core/widget/custom_elevated_button.dart';
-import 'package:travel_go/core/widget/numbers_text_form_field.dart';
-import 'package:travel_go/main.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/flight_reservation/pages/flights_reservations_basic_info/pages/flight_reservations.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/widget/reserve_widget_users.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/widget/trip_info_reservation.dart';
+import '/core/services/bot_toast.dart';
+import '/core/theme/app_colors.dart';
+import '/core/widget/custom_elevated_button.dart';
+import '/core/widget/numbers_text_form_field.dart';
+import '/main.dart';
+import '/modules/layout/pages/user/pages/home/pages/reservation/pages/flight_reservation/pages/flights_reservations_basic_info/pages/flight_reservations.dart';
+import '/modules/layout/pages/user/pages/home/pages/reservation/widget/reserve_widget_users.dart';
+import '/modules/layout/pages/user/pages/home/pages/reservation/widget/trip_info_reservation.dart';
 import '/modules/layout/pages/user/pages/home/pages/reservation/widget/reserve_total_info_widget.dart';
 import '/core/extensions/extensions.dart';
 import '/core/providers/reservation_provider.dart';
@@ -165,6 +165,7 @@ class _ReservationState extends State<Reservation> {
                           ],
                         ),
                       ),
+                0.02.height.hSpace,
                 SizedBox(
                   width: double.maxFinite,
                   child: Row(
