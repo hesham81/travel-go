@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/payment/pages/credt_card.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/hotel_reservations_info/pages/hotel_reservation_user.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/extensions.dart';
 import '/core/providers/reservation_provider.dart';
@@ -267,7 +268,10 @@ class FlightAccomdationsReservations extends StatelessWidget {
                     child: CustomElevatedButton(
                       text: "OK",
                       onPressed: () => slideRightWidget(
-                          newPage: CreditCardScreen(), context: context),
+                          newPage: CreditCardScreen(
+                            route: HotelReservationUser(),
+                          ),
+                          context: context),
                     ),
                   ),
                   0.02.width.vSpace,

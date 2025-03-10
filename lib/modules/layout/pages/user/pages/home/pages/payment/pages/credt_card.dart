@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
+import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/core/widget/custom_elevated_button.dart';
 import '/core/extensions/extensions.dart';
 import '/core/providers/reservation_provider.dart';
@@ -13,7 +12,12 @@ import '/core/theme/app_colors.dart';
 import '/modules/layout/pages/user/widget/app_bar.dart';
 
 class CreditCardScreen extends StatefulWidget {
-  const CreditCardScreen({super.key});
+  final Widget route;
+
+  const CreditCardScreen({
+    super.key,
+    required this.route,
+  });
 
   @override
   State<CreditCardScreen> createState() => _CreditCardScreenState();
@@ -162,13 +166,11 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                       child: CustomElevatedButton(
                         text: "OK",
                         onPressed: () {
-                          EasyLoading.show();
-                          Timer(
-                            Duration(seconds: 3),
-                            () => EasyLoading.dismiss(),
-                          );
-
                           EasyLoading.showSuccess("Payment Successfully");
+                          replaceWidget(
+                            newPage: widget.route,
+                            context: context,
+                          );
                           // _checkCreditCard();
                         },
                       ),

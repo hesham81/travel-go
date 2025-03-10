@@ -90,7 +90,7 @@ abstract class FirebaseAuthServices {
     return FirebaseAuth.instance.currentUser;
   }
 
-  static logout() {
+  static Future<void> logout() async {
     FirebaseAuth.instance.signOut();
   }
 
