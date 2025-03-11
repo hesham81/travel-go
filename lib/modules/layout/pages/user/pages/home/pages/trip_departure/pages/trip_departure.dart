@@ -43,31 +43,68 @@ class _TripDepartureState extends State<TripDeparture> {
   List<TripDepartureDataModel> filterList = [];
 
   bool _checkIsAvailable(TripDepartureDataModel model) {
-    print("${DateTime.now().year} ${DateTime.now().month} ${DateTime.now().day}");
+    print(
+        "${DateTime.now().year} ${DateTime.now().month} ${DateTime.now().day}");
     return model.from.isAfter(DateTime.now());
+  }
 
+  bool _checkIsTomorrow(TripDepartureDataModel model) {
+    DateTime tomorrow = DateTime.now().add(Duration(days: 1));
+    return model.from.year == tomorrow.year &&
+        model.from.month == tomorrow.month &&
+        model.from.day == tomorrow.day;
+  }
+
+  bool _checkIsThisWeek(TripDepartureDataModel model) {
+    DateTime now = DateTime.now();
+    DateTime startOfWeek = now.subtract(Duration(days: now.weekday - 1));
+    DateTime endOfWeek = startOfWeek.add(Duration(days: 6));
+    return model.from.isAfter(startOfWeek) && model.from.isBefore(endOfWeek);
+  }
+
+  bool _checkIsThisMonth(TripDepartureDataModel model) {
+    DateTime now = DateTime.now();
+    DateTime startOfMonth = DateTime(now.year, now.month, 1);
+    DateTime endOfMonth = DateTime(now.year, now.month + 1, 0);
+    return model.from.isAfter(startOfMonth) && model.from.isBefore(endOfMonth);
   }
 
   void _filter() {
     switch (selectedIndex) {
       case 0:
         filterList = departures;
+        setState(() {});
         break;
       case 1:
-        filterList = departures
-            .where((element) => _checkIsAvailable(element))
-            .toList();
+        filterList =
+            departures.where((element) => _checkIsAvailable(element)).toList();
+        setState(() {});
         break;
       case 2:
-        filterList = departures
-            .where((element) => !_checkIsAvailable(element))
-            .toList();
+        filterList =
+            departures.where((element) => !_checkIsAvailable(element)).toList();
+        setState(() {});
+        break;
+      case 3:
+        filterList =
+            departures.where((element) => _checkIsTomorrow(element)).toList();
+        setState(() {});
+        break;
+      case 4:
+        filterList =
+            departures.where((element) => _checkIsThisWeek(element)).toList();
+        setState(() {});
+        break;
+      case 5:
+        filterList =
+            departures.where((element) => _checkIsThisMonth(element)).toList();
+        setState(() {});
         break;
       default: // No filter applied
         filterList = departures;
+        setState(() {});
         break;
     }
-    setState(() {}); // Update the UI
     print("Filtered List Length: ${filterList.length}"); // Debugging
   }
 
@@ -89,9 +126,9 @@ class _TripDepartureState extends State<TripDeparture> {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) => ElevatedButton(
                   onPressed: () {
-                    _filter();
                     setState(() {
                       selectedIndex = index;
+                    _filter();
                     });
                   },
                   style: ElevatedButton.styleFrom(
