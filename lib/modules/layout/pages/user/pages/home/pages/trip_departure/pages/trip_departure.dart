@@ -100,7 +100,7 @@ class _TripDepartureState extends State<TripDeparture> {
             departures.where((element) => _checkIsThisMonth(element)).toList();
         setState(() {});
         break;
-      default: // No filter applied
+      default:
         filterList = departures;
         setState(() {});
         break;
@@ -176,6 +176,7 @@ class _TripDepartureState extends State<TripDeparture> {
                         (element) => element.trip.tripId == widget.model.tripId)
                     .toList();
                 if (selectedIndex == 0) filterList = departures;
+                if(filterList.isEmpty) return Image.asset(AppAssets.noSearchResult);
                 return (providerConnections.getConnectionStatus)
                     ? ListView.separated(
                         shrinkWrap: true,
@@ -196,6 +197,7 @@ class _TripDepartureState extends State<TripDeparture> {
                               : null,
                           child: TripDepartureUserWidget(
                             model: filterList[index],
+                            isAvaialble: _checkIsAvailable(filterList[index]),
                           ),
                         ),
                         separatorBuilder: (context, _) => 0.01.height.hSpace,

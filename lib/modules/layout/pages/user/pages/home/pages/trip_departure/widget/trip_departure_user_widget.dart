@@ -6,10 +6,12 @@ import '/core/widget/labels_widget.dart';
 
 class TripDepartureUserWidget extends StatefulWidget {
   final TripDepartureDataModel model;
+  final bool isAvaialble ;
 
   const TripDepartureUserWidget({
     super.key,
     required this.model,
+    this.isAvaialble = true,
   });
 
   @override
@@ -65,7 +67,7 @@ class _TripDepartureUserWidgetState extends State<TripDepartureUserWidget> {
                 value: "${widget.model.availableSeats} Guests",
               ),
               0.01.height.hSpace,
-              (availableDate.inDays > 0)
+              (widget.isAvaialble)
                   ? Row(
                       children: [
                         Text(
@@ -75,7 +77,7 @@ class _TripDepartureUserWidgetState extends State<TripDepartureUserWidget> {
                           ),
                         ),
                         Text(
-                          "${availableDate.inDays} Days",
+                          "${widget.model.from.difference(DateTime.now()).inDays} Days",
                           style: theme.labelLarge!.copyWith(
                             color: AppColors.blackColor.withAlpha(80),
                           ),
