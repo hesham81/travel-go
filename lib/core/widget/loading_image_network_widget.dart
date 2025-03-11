@@ -22,7 +22,8 @@ class LoadingImageNetworkWidget extends StatefulWidget {
 }
 
 class _LoadingImageNetworkWidgetState extends State<LoadingImageNetworkWidget>
-    with SingleTickerProviderStateMixin { // Add this mixin
+    with SingleTickerProviderStateMixin {
+  // Add this mixin
   late AnimationController _controller;
 
   @override
@@ -36,7 +37,7 @@ class _LoadingImageNetworkWidgetState extends State<LoadingImageNetworkWidget>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller.dispose(); // Dispose the controller when not needed
     super.dispose();
   }
 
@@ -56,7 +57,7 @@ class _LoadingImageNetworkWidgetState extends State<LoadingImageNetworkWidget>
                 angle: _controller.value * -2 * 3.14159,
                 child: Image.asset(
                   "assets/images/loading_indicator.png",
-                  width: 50,
+                  width: 50, // Adjust size as needed
                   height: 50,
                 ),
               );
@@ -65,19 +66,25 @@ class _LoadingImageNetworkWidgetState extends State<LoadingImageNetworkWidget>
         );
       },
       errorWidget: (context, url, error) {
-        return Container(
-          width: widget.width ?? double.maxFinite,
-          height: widget.height,
-          decoration: BoxDecoration(
-            color: AppColors.greyColor,
-            border: Border.all(
-              width: 2,
+        return Skeletonizer(
+          enabled: true,
+          enableSwitchAnimation: true,
+          child: Container(
+            width: widget.width ?? double.maxFinite,
+            height: widget.height,
+            decoration: BoxDecoration(
               color: AppColors.greyColor,
+              border: Border.all(
+                width: 2,
+                color: AppColors.greyColor,
+              ),
             ),
-          ),
-          child: Image.asset(
-            AppAssets.firstScreenIMG, // Your fallback image
-            fit: BoxFit.cover,
+            child: Expanded(
+              child: Image.asset(
+                AppAssets.firstScreenIMG,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         );
       },

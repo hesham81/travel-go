@@ -60,6 +60,8 @@ dependencies:
   awesome_card: ^1.1.7
   u_credit_card: ^1.4.0
   shared_preferences: ^2.5.2
+  audioplayers: ^6.3.0
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +79,7 @@ flutter:
     - assets/icons/
     - assets/files/
     - assets/images/places/
+    - assets/sounds/
   fonts:
     - family: Poppins
       fonts:

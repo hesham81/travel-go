@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:travel_go/modules/sign_in/pages/sign_in.dart';
 import '/core/constant/local_storage.dart';
 import '/core/constant/shared_preferences_keys.dart';
 import '/core/routes/route_names.dart';
@@ -32,7 +33,11 @@ class UserProfile extends StatelessWidget {
                   Row(
                     children: [
                       IconButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          SignIn.routeName,
+                          (route) => false,
+                        ),
                         icon: Icon(
                           Icons.arrow_back_ios,
                           color: AppColors.blackColor,

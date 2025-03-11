@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
-import 'package:travel_go/core/providers/reservation_provider.dart';
-import 'package:travel_go/core/routes/route_transact.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/reservation.dart';
+import '/core/providers/reservation_provider.dart';
+import '/modules/layout/pages/user/pages/home/pages/reservation/pages/reservation.dart';
 import '/core/extensions/extensions.dart';
 import '/models/trip_data_model.dart';
 import '/modules/layout/pages/admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
@@ -62,13 +61,15 @@ class _TripDepartureState extends State<TripDeparture> {
                   physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) => GestureDetector(
-                    onTap: () {
-                      provider.setSelectedDeparture(departures[index]);
-                      slideRightWidget(
-                        newPage: Reservation(),
-                        context: context,
-                      );
-                    },
+                    onTap: (departures[index].from.isAfter(DateTime.now()))
+                        ? () {
+                            provider.setSelectedDeparture(departures[index]);
+                            slideRightWidget(
+                              newPage: Reservation(),
+                              context: context,
+                            );
+                          }
+                        : null,
                     child: TripDepartureUserWidget(
                       model: departures[index],
                     ),

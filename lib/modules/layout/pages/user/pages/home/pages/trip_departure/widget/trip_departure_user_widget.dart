@@ -65,7 +65,7 @@ class _TripDepartureUserWidgetState extends State<TripDepartureUserWidget> {
                 value: "${widget.model.availableSeats} Guests",
               ),
               0.01.height.hSpace,
-              (availableDate.inDays >= 0)
+              (availableDate.inDays > 0)
                   ? Row(
                       children: [
                         Text(
@@ -103,22 +103,6 @@ class _TripDepartureUserWidgetState extends State<TripDepartureUserWidget> {
             ],
           ),
         ),
-        if (availableDate.inDays == 0)
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColors.errorColor.withOpacity(0.6),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                "Not Available",
-                style: theme.titleLarge!.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
       ],
     ).hPadding(0.03.width);
   }
