@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import '/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
+import 'package:travel_go/core/constant/local_storage.dart';
+import 'package:travel_go/core/constant/shared_preferences_keys.dart';
 import '/modules/layout/pages/admin/task/adminscreen.dart';
 import '/modules/layout/pages/manager/pages/manager_home/manager_home_screen.dart';
 import '/core/utils/social_auth_services.dart';
@@ -93,6 +94,7 @@ class _SignInState extends State<SignIn> {
                     );
                     EasyLoading.dismiss();
                     if (role == "user") {
+                      await LocalStorageData.setString(SharedPreferencesKey.login, "user");
                       BotToastServices.showSuccessMessage("Welcome Back");
                       Navigator.pushNamedAndRemoveUntil(
                         context,
@@ -100,6 +102,7 @@ class _SignInState extends State<SignIn> {
                         (route) => false,
                       );
                     } else if (role == "admin") {
+                      await LocalStorageData.setString(SharedPreferencesKey.login, "admin");
                       BotToastServices.showSuccessMessage("Welcome Back");
                       Navigator.pushAndRemoveUntil(
                         context,
@@ -109,6 +112,7 @@ class _SignInState extends State<SignIn> {
                         (route) => false,
                       );
                     } else if (role == "manager") {
+                      await LocalStorageData.setString(SharedPreferencesKey.login, "Manager");
                       BotToastServices.showSuccessMessage("Welcome Back");
                       Navigator.pushNamedAndRemoveUntil(
                         context,

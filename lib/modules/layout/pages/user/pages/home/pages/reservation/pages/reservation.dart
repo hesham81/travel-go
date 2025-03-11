@@ -106,7 +106,7 @@ class _ReservationState extends State<Reservation> {
                   ),
                 ),
                 0.02.height.hSpace,
-                (provider.getTotalUsers + 1 != 0 && provider.getValid)
+                if(moreGuests == true)(provider.getTotalUsers + 1 != 0 && provider.getValid)
                     ? ListView.separated(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
@@ -174,6 +174,7 @@ class _ReservationState extends State<Reservation> {
                         child: CustomElevatedButton(
                           text: "OK",
                           onPressed: () {
+                            if(moreGuests == false) provider.totalUsers = 0 ;
                             if (provider.getValid) {
                               slideRightWidget(
                                 newPage: FlightReservations(),
