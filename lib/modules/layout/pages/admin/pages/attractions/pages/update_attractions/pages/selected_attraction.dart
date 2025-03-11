@@ -60,7 +60,6 @@ class _SelectedAttractionState extends State<SelectedAttraction> {
   late YoutubePlayerController youTubeController;
 
   _playVideo(String videoUrl) {
-    print(videoUrl);
     if (videoUrl == "") {
       EasyLoading.showError("The Url Is Invalid");
       return;
@@ -114,7 +113,7 @@ class _SelectedAttractionState extends State<SelectedAttraction> {
                 ),
                 icon: Icon(
                   Icons.play_arrow_outlined,
-                  color: AppColors.newBlueColor,
+                  color: AppColors.whiteColor,
                 ),
               ),
             ),

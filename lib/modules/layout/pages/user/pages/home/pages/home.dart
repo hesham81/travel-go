@@ -67,10 +67,6 @@ class _HomeState extends State<Home> {
   var user = FirebaseAuthServices.getCurrentUserData();
   int selectedIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-  }
 
   var searchController = TextEditingController();
   List<TripModel> searchList = [];
@@ -83,9 +79,9 @@ class _HomeState extends State<Home> {
     FavouriteHome(),
   ];
 
+
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       bottomNavigationBar: Container(
@@ -153,11 +149,11 @@ class _HomeState extends State<Home> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.favorite_outline,
+                  Icons.bookmark_outline,
                   color: AppColors.whiteColor,
                 ),
                 activeIcon: Icon(
-                  Icons.favorite,
+                  Icons.bookmark,
                   color: AppColors.whiteColor,
                 ),
                 label: "Favourite",

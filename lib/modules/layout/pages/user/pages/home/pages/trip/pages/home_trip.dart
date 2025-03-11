@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:route_transitions/route_transitions.dart';
+import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/selected_trip.dart';
 import '/models/trip_data_model.dart';
 import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/widget/home_trip_cart_widget.dart';
@@ -19,7 +22,7 @@ class HomeTrip extends StatefulWidget {
 }
 
 class _HomeTripState extends State<HomeTrip> {
-  var user = FirebaseAuthServices.getCurrentUserData();
+  User? user = FirebaseAuthServices.getCurrentUserData();
   List<TripDataModel> tripList = [];
   List<RecommendModel> recommendations = [
     RecommendModel(
@@ -55,16 +58,18 @@ class _HomeTripState extends State<HomeTrip> {
       imgUrl:
           "https://i.pinimg.com/474x/f5/3b/e4/f53be4d19b19f8c0116af5e0e804b4a5.jpg",
       rating: 4.0,
-      location: "Bali, Indonesia",
+      location: "Bali,",
     ),
     RecommendModel(
       name: "Historic Castle Stay",
       imgUrl:
           "https://i.pinimg.com/474x/70/ba/b8/70bab828bc5768acfd79719a8180639f.jpg",
       rating: 4.5,
-      location: "Edinburgh, Scotland",
+      location: "Edinburgh,",
     ),
   ];
+
+  // List<TripDataModel> favouriteTrips = [];
 
   @override
   Widget build(BuildContext context) {
@@ -172,14 +177,23 @@ class _HomeTripState extends State<HomeTrip> {
                 return ListView.separated(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => HomeTripCartWidget(
-                    model: tripList[index],
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () => slideRightWidget(
+                      context: context,
+                      newPage: SelectedHomeScreenTrip(
+                        model: tripList[index],
+                      ),
+                    ),
+                    child: HomeTripCartWidget(
+                      model: tripList[index],
+                    ),
                   ),
                   separatorBuilder: (context, index) => 0.01.height.hSpace,
                   itemCount: tripList.length,
                 );
               },
-            )
+            ),
+            0.01.height.hSpace,
           ],
         ).hPadding(0.03.width),
       ),

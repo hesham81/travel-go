@@ -1,12 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_go/core/providers/trip_admin_provider.dart';
+import '/core/providers/trip_admin_provider.dart';
 import '/modules/layout/pages/user/pages/profile/pages/user_profile.dart';
 import '/core/extensions/extensions.dart';
 import '/core/constant/app_assets.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/firebase_auth_services.dart';
-import '/core/widget/loading_image_network_widget.dart';
 
 class AppBarWidget extends StatefulWidget {
   const AppBarWidget({super.key});
@@ -16,10 +17,10 @@ class AppBarWidget extends StatefulWidget {
 }
 
 class _AppBarWidgetState extends State<AppBarWidget> {
-  var user = FirebaseAuthServices.getCurrentUserData();
   @override
   Widget build(BuildContext context) {
-  var provider = Provider.of<TripAdminProvider>(context);
+    User? user = FirebaseAuthServices.getCurrentUserData();
+    var provider = Provider.of<TripAdminProvider>(context);
     var theme = Theme.of(context);
     return Row(
       children: [
@@ -30,45 +31,54 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           fit: BoxFit.cover,
         ),
         Text(
-          "Travel Go",
+          "Tour And Travel",
           style: theme.textTheme.titleSmall!.copyWith(
             color: AppColors.newBlueColor,
           ),
         ).hPadding(0.03.width),
         Spacer(),
-        user.photoURL == null
+        user?.photoURL == null
             ? GestureDetector(
-          onTap: () => Navigator.pushNamed(
-            context,
-            UserProfile.routeName,
-            arguments: user,
-          ),
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  AppAssets.noProfileImage,
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  UserProfile.routeName,
+                  arguments: user,
                 ),
-              ),
-              shape: BoxShape.circle,
-            ),
-            height: 70,
-            width: 70,
-          ),
-        )
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        AppAssets.noProfileImage,
+                      ),
+                    ),
+                    shape: BoxShape.circle,
+                  ),
+                  height: 70,
+                  width: 70,
+                ),
+              )
             : GestureDetector(
-          onTap: () => Navigator.pushNamed(
-            context,
-            UserProfile.routeName,
-            arguments: user,
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: LoadingImageNetworkWidget(
-              imageUrl: user.photoURL!,
-            ),
-          ),
-        ),
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  UserProfile.routeName,
+                  arguments: user,
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: AppColors.newBlueColor,
+                      width: 4,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundImage: CachedNetworkImageProvider(
+                      user!.photoURL!,
+                    ),
+                  ),
+                ).allPadding(10),
+              ),
         0.01.width.vSpace,
       ],
     );

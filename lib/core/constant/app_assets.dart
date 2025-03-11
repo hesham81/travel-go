@@ -25,6 +25,10 @@ abstract class AppAssets
   static const String noProfileImage = "assets/images/noProfileImage.jpg";
   static const String noAvailableImages = "assets/images/no_image_available.jpg";
   static const String noSearchResult = "assets/icons/no_search_result.jpg";
+  static const String sourceDestinationFlightTripUser = "assets/icons/source_destaination.jpg";
+  static const String flightReservationUsers = "assets/icons/flight_reservation.jpg";
+  static const String flightTicket = "assets/icons/flight_ticket.jpg";
+  static const String noInternetConnections = "assets/images/no_connections.jpg";
 
   static const String lockICN = "assets/icons/lock.png";
   static const String eyeICN = "assets/icons/eye.png";

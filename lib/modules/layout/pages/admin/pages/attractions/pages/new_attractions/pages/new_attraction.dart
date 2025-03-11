@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_go/core/providers/trip_admin_provider.dart';
-import 'package:travel_go/core/utils/id_generator.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/attractions/widget/attraction_map.dart';
+import 'package:travel_go/core/providers/collections_provider.dart';
+import '/core/providers/trip_admin_provider.dart';
+import '/core/utils/id_generator.dart';
+import '/modules/layout/pages/admin/pages/attractions/widget/attraction_map.dart';
 import '/core/services/bot_toast.dart';
 import '/core/services/storage.dart';
 import '/core/utils/attractions_db.dart';
@@ -63,6 +64,8 @@ class _NewAttractionState extends State<NewAttraction> {
     idController.text = IdGenerator.generateAttractionId(
         attractionTitle: titleController.text ?? "");
     var provider = Provider.of<TripAdminProvider>(context);
+    var collections = Provider.of<CollectionsProvider>(context);
+
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
