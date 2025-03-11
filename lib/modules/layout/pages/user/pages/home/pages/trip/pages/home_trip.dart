@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:route_transitions/route_transitions.dart';
-import '/core/routes/route_transact.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/selected_trip.dart';
 import '/models/trip_data_model.dart';
 import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
@@ -59,14 +58,14 @@ class _HomeTripState extends State<HomeTrip> {
       imgUrl:
           "https://i.pinimg.com/474x/f5/3b/e4/f53be4d19b19f8c0116af5e0e804b4a5.jpg",
       rating: 4.0,
-      location: "Bali, Indonesia",
+      location: "Bali,",
     ),
     RecommendModel(
       name: "Historic Castle Stay",
       imgUrl:
           "https://i.pinimg.com/474x/70/ba/b8/70bab828bc5768acfd79719a8180639f.jpg",
       rating: 4.5,
-      location: "Edinburgh, Scotland",
+      location: "Edinburgh,",
     ),
   ];
 
