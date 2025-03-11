@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '/core/extensions/align.dart';
 import '/core/theme/app_colors.dart';
@@ -28,8 +29,22 @@ class _RecommendedWidgetState extends State<RecommendedWidget> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
         image: DecorationImage(
-          image: NetworkImage(
+          image: CachedNetworkImageProvider(
             widget.model.imgUrl,
+            cacheKey: widget.model.name,
+            errorListener: (p0) => Container(
+              width: 0.5.width,
+              height: 0.3.height,
+              decoration: BoxDecoration(
+                color: AppColors.greyColor,
+                borderRadius: BorderRadius.circular(25),
+                border: Border.all(
+                  color: AppColors.greyColor,
+                  width: 3
+                )
+              ),
+            ),
+            headers: {'key': 'value'},
           ),
           fit: BoxFit.cover,
         ),

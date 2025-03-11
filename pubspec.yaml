@@ -59,6 +59,7 @@ dependencies:
   route_transitions: ^2.0.1
   awesome_card: ^1.1.7
   u_credit_card: ^1.4.0
+  shared_preferences: ^2.5.2
 
 dev_dependencies:
   flutter_test:
