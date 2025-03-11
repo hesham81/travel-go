@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
+import '/modules/layout/pages/admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widget/labels_widget.dart';
 
 class TripDepartureUserWidget extends StatefulWidget {
   final TripDepartureDataModel model;
+  final bool isAvaialble ;
 
   const TripDepartureUserWidget({
     super.key,
     required this.model,
+    this.isAvaialble = true,
   });
 
   @override
@@ -65,50 +67,44 @@ class _TripDepartureUserWidgetState extends State<TripDepartureUserWidget> {
                 value: "${widget.model.availableSeats} Guests",
               ),
               0.01.height.hSpace,
-              Row(
-                children: [
-                  Text(
-                    "After : ",
-                    style: theme.labelLarge!.copyWith(
-                      color: AppColors.newBlueColor,
-                    ),
-                  ),
-                  Text(
-                    "${availableDate.inDays} Days",
-                    style: theme.labelLarge!.copyWith(
-                      color: AppColors.blackColor.withAlpha(80),
-                    ),
-                  ),
-                  0.02.width.vSpace,
-                  if (availableDate.inDays == 1)
-                    Text(
-                      "Last Date To Reserve",
-                      style: theme.labelMedium!.copyWith(
-                        color:Colors.green,
-                      ),
+              (widget.isAvaialble)
+                  ? Row(
+                      children: [
+                        Text(
+                          "After : ",
+                          style: theme.labelLarge!.copyWith(
+                            color: AppColors.newBlueColor,
+                          ),
+                        ),
+                        Text(
+                          "${widget.model.from.difference(DateTime.now()).inDays} Days",
+                          style: theme.labelLarge!.copyWith(
+                            color: AppColors.blackColor.withAlpha(80),
+                          ),
+                        ),
+                        0.02.width.vSpace,
+                        if (availableDate.inDays == 1)
+                          Text(
+                            "Last Date To Reserve",
+                            style: theme.labelMedium!.copyWith(
+                              color: Colors.green,
+                            ),
+                          )
+                      ],
                     )
-                ],
-              ),
+                  : Row(
+                      children: [
+                        Text(
+                          "Not Available",
+                          style: theme.labelLarge!.copyWith(
+                            color: AppColors.errorColor,
+                          ),
+                        ),
+                      ],
+                    ),
             ],
           ),
         ),
-        if (availableDate.inDays == 0)
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColors.errorColor.withOpacity(0.6),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                "Not Available",
-                style: theme.titleLarge!.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-
       ],
     ).hPadding(0.03.width);
   }

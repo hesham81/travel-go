@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rich_readmore/rich_readmore.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widget/custom_text_button.dart';
@@ -52,7 +53,11 @@ class TripInfo extends StatelessWidget {
           value: model.organizedBy.companyStartFrom,
         ),
         CustomTextButton(
-          onPressed: () {},
+          onPressed: () {
+            final Uri _url = Uri.parse(model.organizedBy.companyWebsite);
+            launchUrl(_url);
+
+          },
           text: model.organizedBy.companyWebsite,
           textSize: 12,
         ),

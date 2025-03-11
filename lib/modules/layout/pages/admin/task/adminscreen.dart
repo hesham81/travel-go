@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/routes/route_names.dart';
+import 'package:travel_go/core/utils/firebase_auth_services.dart';
 import '/modules/layout/pages/admin/task/attractionscreen.dart';
 import '/modules/layout/pages/admin/task/flightscreen.dart';
 import '/modules/layout/pages/admin/task/hotelscreen.dart';
@@ -19,6 +21,10 @@ class AdminHome extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  IconButton(onPressed: () {
+                    FirebaseAuthServices.logout();
+                    Navigator.pushNamedAndRemoveUntil(context, RouteNames.signIn, (route) => false,);
+                  }, icon: Icon(Icons.logout)),
                   GestureDetector(
                     onTap: () => Navigator.push(
                       context,

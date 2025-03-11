@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:travel_go/core/utils/attractions_db.dart';
 import 'package:travel_go/models/program_model.dart';
 import '/core/utils/company_collections.dart';
 import '/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
@@ -14,6 +15,7 @@ import '/modules/layout/pages/admin/menna/trippp/model/programs.dart';
 
 class TripAdminProvider extends ChangeNotifier {
   int _totalDays = 0;
+  bool isAttractionAdded = false ;
   Flight? _selectionFlight;
   Hotel? _selectionHotel;
   AttractionsModel? _selectedAttraction;
@@ -23,13 +25,24 @@ class TripAdminProvider extends ChangeNotifier {
   List<AttractionsModel> attractions = [];
   List<AttractionsModel> selectedAttraction = [];
   List<int> noOfDays = [];
-
+  List<ProgramDayModel> _daySpecificProgram = [];
   List<ProgramModel> _programs = [];
   List<String> imageUrls = [];
+  List<Marker> _markersFromTo = [];
+  String? source;
+  List<Company> _companies = [];
 
   Currency? _currency;
+  void setAttractions(List<AttractionsModel> attractions) {
+    this.attractions = attractions;
+    notifyListeners();
+  }
+  get getAttractions => attractions;
 
   Company? get getSelectedCompany => _selectedCompany;
+  get getTotalPrograms => _totalPrograms;
+  LatLng? get getAttractionLocation => attractionLocation;
+  int get getTotalDays => _totalDays;
 
   void setAttractionLocation(LatLng location) {
     attractionLocation = location;
@@ -42,21 +55,10 @@ class TripAdminProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  get getTotalPrograms => _totalPrograms;
-
-  LatLng? get getAttractionLocation => attractionLocation;
-
   void setSelectedCompany(Company? selectedCompany) {
     _selectedCompany = selectedCompany;
     notifyListeners();
   }
-
-  int get getTotalDays => _totalDays;
-  List<Marker> _markersFromTo = [];
-  List<ProgramDayModel> _daySpecificProgram = [];
-  String? source;
-  List<Company> _companies = [];
-
   TripAdminProvider() {
     _getAllCompanies();
   }

@@ -6,6 +6,8 @@ import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:google_gemini/google_gemini.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:travel_go/core/constant/local_storage.dart';
+import 'package:travel_go/core/providers/connections_provider.dart';
 import 'package:travel_go/core/providers/departure_provider.dart';
 import 'package:travel_go/core/providers/reservation_provider.dart';
 import '/modules/layout/pages/admin/menna/trippp/browse_selected_trip.dart';
@@ -45,6 +47,7 @@ import 'modules/sign_up/pages/sign_up.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await LocalStorageData.init();
   Gemini.init(
     apiKey: AiConstants.chatBotApiKey,
   );
@@ -61,6 +64,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => CollectionsProvider()),
         ChangeNotifierProvider(create: (context) => DepartureProvider()),
         ChangeNotifierProvider(create: (context) => ReservationProvider()),
+        ChangeNotifierProvider(create: (context) => ConnectionProvider()),
       ],
       child: const MyApp(),
     ),
