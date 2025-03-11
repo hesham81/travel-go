@@ -44,4 +44,7 @@ abstract class TripCollections {
       return false;
     }
   }
+  static updateFavouriteTrip(TripDataModel model) async {
+    await _colRef().doc(model.tripId).set(model);
+  }
 }

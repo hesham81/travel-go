@@ -34,6 +34,7 @@ class TripDataModel {
 
   final String destination;
   final int totalDays;
+  List<String>? favourites ;
 
   TripDataModel({
     required this.tripId,
@@ -54,6 +55,7 @@ class TripDataModel {
     this.imageUrl,
     required this.source,
     required this.destination,
+    this.favourites ,
   });
 
   Map<String, dynamic> toMap() {
@@ -76,6 +78,7 @@ class TripDataModel {
       "source": source,
       "destination": destination,
       "totalDays": totalDays,
+      "favourites": favourites ?? [],
     };
   }
 
@@ -109,6 +112,7 @@ class TripDataModel {
       source: map['source'],
       destination: map['destination'],
       totalDays: map['totalDays'],
+      favourites: List<String>.from(map['favourites']),
     );
   }
 }
