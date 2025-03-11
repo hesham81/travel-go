@@ -1,13 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_go/core/providers/trip_admin_provider.dart';
+import '/core/providers/trip_admin_provider.dart';
 import '/modules/layout/pages/user/pages/profile/pages/user_profile.dart';
 import '/core/extensions/extensions.dart';
 import '/core/constant/app_assets.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/firebase_auth_services.dart';
-import '/core/widget/loading_image_network_widget.dart';
 
 class AppBarWidget extends StatefulWidget {
   const AppBarWidget({super.key});
@@ -73,7 +73,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                   ),
                   child: CircleAvatar(
                     radius: 30,
-                    backgroundImage: NetworkImage(
+                    backgroundImage: CachedNetworkImageProvider(
                       user!.photoURL!,
                     ),
                   ),

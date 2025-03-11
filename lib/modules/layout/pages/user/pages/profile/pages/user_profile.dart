@@ -1,11 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:route_transitions/route_transitions.dart';
-import 'package:travel_go/core/utils/firebase_auth_services.dart';
-import 'package:travel_go/core/widget/custom_elevated_button.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/profile/widget/choose_profile_index.dart';
 import 'package:travel_go/modules/sign_in/pages/sign_in.dart';
+import '/core/constant/local_storage.dart';
+import '/core/constant/shared_preferences_keys.dart';
+import '/core/routes/route_names.dart';
+import '/core/utils/firebase_auth_services.dart';
+import '/core/widget/custom_elevated_button.dart';
+import '/modules/layout/pages/user/pages/profile/widget/choose_profile_index.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/constant/app_assets.dart';
@@ -30,7 +33,11 @@ class UserProfile extends StatelessWidget {
                   Row(
                     children: [
                       IconButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          SignIn.routeName,
+                          (route) => false,
+                        ),
                         icon: Icon(
                           Icons.arrow_back_ios,
                           color: AppColors.blackColor,
@@ -65,8 +72,11 @@ class UserProfile extends StatelessWidget {
                     )
                   : CircleAvatar(
                       radius: 80,
-                      backgroundImage: NetworkImage(
+                      backgroundImage: CachedNetworkImageProvider(
                         user.photoURL!,
+                        cacheKey: user.uid,
+                        errorListener: (p0) =>
+                            Image.asset(AppAssets.noProfileImage),
                       ),
                     ).allPadding(10),
               0.01.height.hSpace,
@@ -178,10 +188,12 @@ class UserProfile extends StatelessWidget {
                         EasyLoading.show();
                         await FirebaseAuthServices.logout().then(
                           (value) {
-                            slideLeftWidget(
-                              newPage: SignIn(),
-                              context: context,
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              RouteNames.signIn,
+                              (route) => false,
                             );
+                            LocalStorageData.remove(SharedPreferencesKey.login);
                             EasyLoading.dismiss();
                           },
                         );
