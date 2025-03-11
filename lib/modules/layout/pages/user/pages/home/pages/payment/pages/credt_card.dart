@@ -62,7 +62,6 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<ReservationProvider>(context);
-    print(provider.getSelectedDeparture!.trip.price);
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: SingleChildScrollView(
