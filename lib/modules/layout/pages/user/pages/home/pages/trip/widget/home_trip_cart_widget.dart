@@ -1,10 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_go/core/providers/reservation_provider.dart';
-import 'package:travel_go/core/utils/favourite_trip_collections.dart';
 import 'package:travel_go/core/utils/firebase_auth_services.dart';
-import 'package:travel_go/models/favourite_trip_model.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
 import '/core/extensions/align.dart';
 import '/core/widget/labels_widget.dart';
@@ -37,11 +35,10 @@ class _HomeTripCartWidgetState extends State<HomeTripCartWidget> {
           isFavourite = true;
           setState(() {});
           break;
+        } else {
+          isFavourite = false;
+          setState(() {});
         }
-        else
-          {
-            isFavourite = false;
-          }
       }
   }
 
@@ -115,19 +112,26 @@ class _HomeTripCartWidgetState extends State<HomeTripCartWidget> {
                 IconButton(
                   onPressed: () async {
                     if (isFavourite) {
+                      EasyLoading.show();
                       int index = widget.model.favourites!.indexOf(
                         provider.user!.uid,
                       );
                       widget.model.favourites!.removeAt(index);
                       widget.model.favourites!.remove(
                           FirebaseAuthServices.getCurrentUserData()!.uid);
-                      await TripCollections.updateFavouriteTrip(widget.model);
+                      await TripCollections.updateFavouriteTrip(widget.model)
+                          .then(
+                        (value) => EasyLoading.dismiss(),
+                      );
                       isFavourite = false;
                       setState(() {});
                     } else {
                       widget.model.favourites!
                           .add(FirebaseAuthServices.getCurrentUserData()!.uid);
-                      await TripCollections.updateFavouriteTrip(widget.model);
+                      await TripCollections.updateFavouriteTrip(widget.model)
+                          .then(
+                        (value) => EasyLoading.dismiss(),
+                      );
                       isFavourite = true;
                       setState(() {});
                     }

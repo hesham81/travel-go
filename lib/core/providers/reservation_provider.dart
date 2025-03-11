@@ -18,6 +18,16 @@ class ReservationProvider extends ChangeNotifier {
   CreditCardModel? card ;
 
 
+  void _getUsersData()
+  {
+    user = FirebaseAuthServices.getCurrentUserData();
+    notifyListeners();
+  }
+  void resetToken()
+  {
+    _getUsersData();
+  }
+
   setCard(CreditCardModel value) {
     card = value;
     notifyListeners();
