@@ -2,8 +2,8 @@ import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/payment/pages/credt_card.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/hotel_reservations_info/pages/hotel_reservation_user.dart';
+import '/modules/layout/pages/user/pages/home/pages/payment/pages/credt_card.dart';
+import '/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/hotel_reservations_info/pages/hotel_reservation_user.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/extensions.dart';
 import '/core/providers/reservation_provider.dart';
@@ -184,7 +184,7 @@ class _FlightAccomdationsReservationsState
                       ),
                     ],
                   ),
-                ).hPadding(0.03.width);
+                );
               },
               listItemBuilder: (context, item, isSelected, onItemSelect) {
                 int index = classes.indexOf(item);
@@ -239,13 +239,13 @@ class _FlightAccomdationsReservationsState
                       ),
                     ],
                   ),
-                ).hPadding(0.03.width);
+                );
               },
               onChanged: (p0) {
                 selectedIndex = classes.indexOf(p0!);
                 setState(() {});
               },
-            ),
+            ).hPadding(0.03.width),
             0.01.height.hSpace,
             Stack(
               children: [

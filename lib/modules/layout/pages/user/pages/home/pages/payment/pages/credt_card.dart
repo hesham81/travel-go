@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/core/services/bot_toast.dart';
+import 'package:travel_go/core/utils/credit_card_db.dart';
+import 'package:travel_go/models/credit_card_model.dart';
 import '/core/constant/sounds.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/core/extensions/extensions.dart';
@@ -26,6 +29,9 @@ class CreditCardScreen extends StatefulWidget {
 }
 
 class _CreditCardScreenState extends State<CreditCardScreen> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  CreditCardModel? cardData;
+
   TextEditingController cardNumber = TextEditingController();
   TextEditingController cardHolderName = TextEditingController();
   TextEditingController cardValidTo = TextEditingController();
@@ -33,6 +39,19 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
 
   double balance = 0.0;
   final player = AudioPlayer();
+
+  _checkCreditCardData(CreditCardModel card) async {
+    await CreditCardDB.getCreditData(card.creditNumber).then(
+      (value) {
+        if (value != null) {
+          setState(() {
+            cardData = value;
+          });
+        } else {
+        }
+      },
+    );
+  }
 
   Future<void> _playSounds() async {
     await player.play(
@@ -43,6 +62,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<ReservationProvider>(context);
+    print(provider.getSelectedDeparture!.trip.price);
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: SingleChildScrollView(
@@ -160,14 +180,45 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                       child: CustomElevatedButton(
                         text: "OK",
                         onPressed: () async {
-                          EasyLoading.showSuccess("Payment Successfully");
-                          await _playSounds();
-
-                          replaceWidget(
-                            newPage: widget.route,
-                            context: context,
+                          EasyLoading.show();
+                          _checkCreditCardData(
+                            CreditCardModel(
+                              creditNumber: cardNumber.text,
+                              cvv: cvv.text,
+                              expiryDate: cardValidTo.text,
+                              holderName: cardHolderName.text,
+                              userId: provider.user!.uid,
+                            ),
                           );
-                          // _checkCreditCard();
+                          if (cardData != null) {
+                            setState(() {
+                              balance = cardData!.balance!;
+                            });
+                            await CreditCardDB.withDraw(
+                              cardNumber.text,
+                              provider.getSelectedDeparture!.trip.price,
+                            ).then(
+                              (value) async {
+                                EasyLoading.dismiss();
+                                if (value) {
+                                  EasyLoading.dismiss();
+                                  await _playSounds();
+                                  replaceWidget(
+                                    newPage: widget.route,
+                                    context: context,
+                                  );
+                                } else {
+                                  BotToastServices.showErrorMessage(
+                                    "Your Money Is Not Enough",
+                                  );
+                                }
+                              },
+                            );
+                          } else {
+                            EasyLoading.dismiss();
+                            BotToastServices.showErrorMessage(
+                                "Card Is Not Valid");
+                          }
                         },
                       ),
                     ),

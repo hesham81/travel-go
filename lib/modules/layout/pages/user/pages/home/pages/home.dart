@@ -67,7 +67,6 @@ class _HomeState extends State<Home> {
   var user = FirebaseAuthServices.getCurrentUserData();
   int selectedIndex = 0;
 
-
   var searchController = TextEditingController();
   List<TripModel> searchList = [];
   String searchQueryText = "";
@@ -79,7 +78,6 @@ class _HomeState extends State<Home> {
     FavouriteHome(),
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,14 +86,24 @@ class _HomeState extends State<Home> {
         margin: EdgeInsets.all(20),
         width: double.maxFinite,
         decoration: BoxDecoration(
-          color: AppColors.newBlueColor,
           borderRadius: BorderRadius.circular(25),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(25),
           child: BottomNavigationBar(
-            showSelectedLabels: false,
+            showSelectedLabels: true,
+            selectedLabelStyle: TextStyle(
+              color: AppColors.whiteColor,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+            unselectedLabelStyle: TextStyle(
+              color: AppColors.whiteColor,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
             showUnselectedLabels: false,
+            fixedColor: AppColors.whiteColor,
             backgroundColor: AppColors.newBlueColor,
             onTap: (index) {
               selectedIndex = index;
@@ -134,7 +142,7 @@ class _HomeState extends State<Home> {
                   Icons.apartment,
                   color: AppColors.whiteColor,
                 ),
-                label: "Favourite",
+                label: "Hotel",
               ),
               BottomNavigationBarItem(
                 icon: Icon(
