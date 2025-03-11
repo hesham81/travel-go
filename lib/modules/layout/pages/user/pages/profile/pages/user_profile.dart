@@ -33,11 +33,7 @@ class UserProfile extends StatelessWidget {
                   Row(
                     children: [
                       IconButton(
-                        onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          SignIn.routeName,
-                          (route) => false,
-                        ),
+                        onPressed: () => Navigator.pop(context),
                         icon: Icon(
                           Icons.arrow_back_ios,
                           color: AppColors.blackColor,

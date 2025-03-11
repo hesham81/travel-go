@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
+import 'package:travel_go/models/credit_card_model.dart';
 import '/core/utils/firebase_auth_services.dart';
 import '/core/functions/city_locations.dart';
 import '/modules/layout/pages/admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
@@ -14,7 +15,14 @@ class ReservationProvider extends ChangeNotifier {
   LocationData? _locationData;
   int totalUsers = 0;
   String? _address;
+  CreditCardModel? card ;
 
+
+  setCard(CreditCardModel value) {
+    card = value;
+    notifyListeners();
+  }
+  CreditCardModel? get getCard => card;
 
   ReservationProvider() {
     _getCurrentLocationData();

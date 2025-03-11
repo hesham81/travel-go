@@ -36,7 +36,7 @@ class _TripPaymentState extends State<TripPayment> {
   double balance = 0.0;
   final player = AudioPlayer();
 
-  _checkCreditCardData(CreditCardModel card) async {
+  Future<void>_checkCreditCardData(CreditCardModel card) async {
     await CreditCardDB.getCreditData(card.creditNumber).then(
       (value) {
         if (value != null) {
@@ -203,7 +203,7 @@ class _TripPaymentState extends State<TripPayment> {
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
                               EasyLoading.show();
-                              _checkCreditCardData(
+                              await _checkCreditCardData(
                                 CreditCardModel(
                                   creditNumber: cardNumber.text,
                                   cvv: cvv.text,
@@ -218,12 +218,13 @@ class _TripPaymentState extends State<TripPayment> {
                                 });
                                 await CreditCardDB.withDraw(
                                   cardNumber.text,
-                                  provider.getSelectedDeparture!.trip.price,
+                                  provider.getSelectedDeparture!.trip.price * (provider.totalUsers +1 ),
                                 ).then(
                                   (value) async {
                                     EasyLoading.dismiss();
                                     if (value) {
                                       EasyLoading.dismiss();
+                                      provider.setCard(cardData!);
                                       await _playSounds();
                                       replaceWidget(
                                         newPage: FlightReservations(),
