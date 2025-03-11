@@ -1,3 +1,4 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
@@ -11,8 +12,27 @@ import '/core/widget/custom_elevated_button.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/user_trip_flight/widget/source_destination_flight_trip_user.dart';
 import '/modules/layout/pages/user/widget/app_bar.dart';
 
-class FlightAccomdationsReservations extends StatelessWidget {
+class FlightAccomdationsReservations extends StatefulWidget {
   const FlightAccomdationsReservations({super.key});
+
+  @override
+  State<FlightAccomdationsReservations> createState() =>
+      _FlightAccomdationsReservationsState();
+}
+
+class _FlightAccomdationsReservationsState
+    extends State<FlightAccomdationsReservations> {
+  List<String> classes = [
+    "First Class ",
+    "Business Class",
+    "Economy Class",
+  ];
+  List<String> prices = [
+    "10000",
+    "18000",
+    "28000",
+  ];
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -109,47 +129,123 @@ class FlightAccomdationsReservations extends StatelessWidget {
               ],
             ).hPadding(0.03.width),
             0.02.height.hSpace,
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.4),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Image(
-                        image: AssetImage(
-                          "assets/icons/seat_flight_attraction.jpg",
-                        ),
-                        height: 0.05.height,
-                      ),
-                      Text(
-                        provider.user?.displayName ?? "No name",
-                        style: theme.titleMedium!.copyWith(
-                          color: AppColors.blackColor,
-                        ),
-                      ),
-                      Text(
-                        "10000 ${provider.getSelectedDeparture!.trip.currency}",
-                        style: theme.titleMedium!.copyWith(
-                          color: Colors.green,
-                        ),
+            CustomDropdown(
+              closedHeaderPadding: EdgeInsets.zero,
+              items: classes,
+              excludeSelected: true,
+              canCloseOutsideBounds: false,
+
+              hideSelectedFieldWhenExpanded: false,
+              initialItem: classes[0],
+
+              headerBuilder: (context, selectedItem, enabled) {
+                return Container(
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.4),
+                        spreadRadius: 1,
+                        blurRadius: 5,
                       ),
                     ],
                   ),
-                ],
-              ),
-            ).hPadding(0.03.width),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image(
+                            image: AssetImage(
+                              "assets/icons/seat_flight_attraction.jpg",
+                            ),
+                            height: 0.05.height,
+                          ),
+                          Text(
+                            provider.user?.displayName ?? "No name",
+                            style: theme.titleMedium!.copyWith(
+                              color: AppColors.blackColor,
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                classes[selectedIndex],
+                                style: theme.titleMedium!.copyWith(
+                                  color: AppColors.newBlueColor,
+                                  fontSize: 13
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ).hPadding(0.03.width);
+              },
+              listItemBuilder: (context, item, isSelected, onItemSelect) {
+                int index = classes.indexOf(item);
+                return Container(
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.4),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image(
+                            image: AssetImage(
+                              "assets/icons/seat_flight_attraction.jpg",
+                            ),
+                            height: 0.05.height,
+                          ),
+                          Text(
+                            provider.user?.displayName ?? "No name",
+                            style: theme.titleMedium!.copyWith(
+                              color: AppColors.blackColor,
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                item,
+                                style: theme.titleMedium!.copyWith(
+                                  color: AppColors.newBlueColor,
+                                ),
+                              ),
+                              0.01.height.hSpace,
+                              Text(
+                                "${prices[index]} ${provider.getSelectedDeparture!.trip.currency}",
+                                style: theme.titleMedium!.copyWith(
+                                  color: Colors.green,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ).hPadding(0.03.width);
+              },
+              onChanged: (p0) {
+                selectedIndex = classes.indexOf(p0!);
+                setState(() {});
+              },
+            ),
             0.01.height.hSpace,
             Stack(
               children: [
