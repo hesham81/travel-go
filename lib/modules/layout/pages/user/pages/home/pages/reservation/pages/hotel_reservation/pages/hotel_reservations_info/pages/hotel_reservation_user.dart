@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_go/core/extensions/align.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
+import '/core/extensions/align.dart';
+import '/core/extensions/extensions.dart';
+import '/core/theme/app_colors.dart';
 import '/core/providers/reservation_provider.dart';
 import '/core/widget/loading_image_network_widget.dart';
 

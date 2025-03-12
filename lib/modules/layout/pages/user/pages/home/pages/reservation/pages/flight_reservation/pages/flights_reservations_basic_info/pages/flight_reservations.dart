@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/hotel_reservations_info/pages/hotel_reservation_user.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/extensions.dart';
 import '/core/providers/reservation_provider.dart';
@@ -19,12 +20,51 @@ class FlightReservations extends StatefulWidget {
 }
 
 class _FlightReservationsState extends State<FlightReservations> {
-
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
     var provider = Provider.of<ReservationProvider>(context);
     return Scaffold(
+      bottomNavigationBar: Container(
+        height: 0.1.height,
+        decoration: BoxDecoration(
+          color: AppColors.whiteColor,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(1),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
+            ),
+          ],
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: Row(
+          children: [
+            Text(
+              "You Don't Need Flight ? ",
+              style: theme.labelLarge!.copyWith(
+                color: AppColors.newBlueColor,
+              ),
+            ),
+            0.01.width.vSpace,
+            Expanded(
+              child: CustomElevatedButton(
+                text: "Skip Now",
+                onPressed: () {
+                  slideRightWidget(
+                    newPage: HotelReservationUser(),
+                    context: context,
+                  );
+                },
+              ),
+            ),
+          ],
+        ).hPadding(0.03.width),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -181,7 +221,8 @@ class _FlightReservationsState extends State<FlightReservations> {
                   ),
                 ],
               ),
-            ).hPadding(0.03.width)
+            ).hPadding(0.03.width),
+            0.03.height.hSpace,
           ],
         ),
       ),
