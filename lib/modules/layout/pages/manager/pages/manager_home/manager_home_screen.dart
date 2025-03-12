@@ -1,8 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:route_transitions/route_transitions.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:travel_go/core/constant/local_storage.dart';
+import 'package:travel_go/core/constant/shared_preferences_keys.dart';
 import 'package:travel_go/core/theme/app_colors.dart';
+import 'package:travel_go/core/utils/firebase_auth_services.dart';
 import 'package:travel_go/modules/layout/pages/manager/pages/utils/users_reports.dart';
+import 'package:travel_go/modules/sign_in/pages/sign_in.dart';
 
 class ManagerHomeScreen extends StatefulWidget {
   static const routeName = "/manager";
@@ -45,6 +50,16 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
       ),
       body: Column(
         children: [
+          IconButton(
+              onPressed: () async {
+                await FirebaseAuthServices.logout();
+              LocalStorageData.setString(SharedPreferencesKey.login, "");
+                slideLeftWidget(
+                  newPage: SignIn(),
+                  context: context,
+                );
+              },
+              icon: Icon(Icons.logout)),
           Text(
             "Users Reports :",
           ),
@@ -61,7 +76,6 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
               yValueMapper: (datum, index) => datum["y"],
               dataLabelSettings: DataLabelSettings(
                 isVisible: true,
-
               ),
             ),
           ),

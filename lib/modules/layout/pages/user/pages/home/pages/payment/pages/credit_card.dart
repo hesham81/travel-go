@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
-import 'package:travel_go/core/services/bot_toast.dart';
-import 'package:travel_go/core/utils/credit_card_db.dart';
-import 'package:travel_go/models/credit_card_model.dart';
+import '/core/services/bot_toast.dart';
+import '/core/utils/credit_card_db.dart';
+import '/models/credit_card_model.dart';
 import '/core/constant/sounds.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/core/extensions/extensions.dart';
@@ -62,7 +62,6 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<ReservationProvider>(context);
-    print(provider.getSelectedDeparture!.trip.price);
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: SingleChildScrollView(

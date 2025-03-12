@@ -17,10 +17,10 @@ abstract class CreditCardDB {
     return creditCredintial;
   }
 
-  static Future<void> addCreditData(CreditCardModel card)
-  {
+  static Future<void> addCreditData(CreditCardModel card) {
     return _colRef.doc(card.creditNumber).set(card);
   }
+
   static Future<bool> withDraw(String creditNumber, double amount) async {
     CreditCardModel? card = await getCreditData(creditNumber).then(
       (value) => value,
@@ -33,5 +33,18 @@ abstract class CreditCardDB {
     } else {
       return false;
     }
+  }
+
+  static Future<List<CreditCardModel>> getAllCreditData() async {
+    List<CreditCardModel> creditCards = [];
+
+    await _colRef.get().then(
+      (value) {
+        for (var element in value.docs) {
+          creditCards.add(element.data());
+        }
+      },
+    );
+    return creditCards;
   }
 }
