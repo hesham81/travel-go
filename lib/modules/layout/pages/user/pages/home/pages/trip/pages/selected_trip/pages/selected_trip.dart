@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_go/core/utils/firebase_auth_services.dart';
+import 'package:travel_go/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/trip_info/pages/trip_info.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/user_trip_flight/pages/user_trip_flight.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/user_trip_hotel/pages/user_trip_hotel.dart';
@@ -47,8 +51,24 @@ class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
     setState(() {});
   }
 
+  List<TripDataModel> favouriteTrips = [];
+  bool isFavourite = false;
+
+  _getAllFavouriteTrips() {
+    User? user = FirebaseAuthServices.getCurrentUserData();
+    if (widget.model.favourites!.isNotEmpty) {
+      for (String id in widget.model.favourites!) {
+        if (id == user!.uid) {
+          isFavourite = true;
+          setState(() {});
+        }
+      }
+    }
+  }
+
   @override
   void initState() {
+    _getAllFavouriteTrips();
     _calcTotalPlaces();
     super.initState();
   }
@@ -105,15 +125,38 @@ class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
                       ),
                       Spacer(),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          EasyLoading.show();
+                          if (isFavourite) {
+                            int index = widget.model.favourites!.indexOf(
+                                FirebaseAuthServices.getCurrentUserData()!.uid);
+                            widget.model.favourites!.removeAt(index);
+
+                            await TripCollections.updateFavouriteTrip(
+                                widget.model);
+                            isFavourite = false;
+                          } else {
+                            widget.model.favourites!.add(
+                                FirebaseAuthServices.getCurrentUserData()!.uid);
+                            await TripCollections.updateFavouriteTrip(widget.model);
+                            isFavourite = true;
+                          }
+                          EasyLoading.dismiss();
+                          setState(() {});
+                        },
                         style: IconButton.styleFrom(
                           backgroundColor: AppColors.whiteColor,
                           padding: EdgeInsets.zero,
                         ),
-                        icon: Icon(
-                          Icons.bookmark_border,
-                          color: AppColors.newBlueColor,
-                        ),
+                        icon: (isFavourite)
+                            ? Icon(
+                                Icons.bookmark,
+                                color: AppColors.newBlueColor,
+                              )
+                            : Icon(
+                                Icons.bookmark_border,
+                                color: AppColors.newBlueColor,
+                              ),
                       ),
                       0.01.height.hSpace,
                     ],

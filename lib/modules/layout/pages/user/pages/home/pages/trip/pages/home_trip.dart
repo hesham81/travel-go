@@ -190,6 +190,7 @@ class _HomeTripState extends State<HomeTrip> {
                       context: context,
                       newPage: SelectedHomeScreenTrip(
                         model: tripList[index],
+
                       ),
                     ),
                     child: HomeTripCartWidget(
