@@ -25,12 +25,16 @@ class SocialMediaLogin extends StatelessWidget {
           vertical: 0.01.height,
         ),
         decoration: BoxDecoration(
-          border: Border.all(
-            color: AppColors.blackColor,
-            width: 0.7,
-          ),
-          color: AppColors.alabasterWhiteColor,
-          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(1),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
         child: Expanded(
           child: Row(

@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
+import 'package:travel_go/core/functions/calculate_distance.dart';
 import 'package:travel_go/models/credit_card_model.dart';
 import '/core/utils/firebase_auth_services.dart';
 import '/core/functions/city_locations.dart';
@@ -10,21 +12,34 @@ import '/modules/layout/pages/admin/pages/trip_departures/data/model/trip_depart
 class ReservationProvider extends ChangeNotifier {
   TripDepartureDataModel? selectedDeparture;
   late User? user;
-  var _valid = true ;
+  var _valid = true;
+
   Location _location = Location();
   LocationData? _locationData;
   int totalUsers = 0;
   String? _address;
-  CreditCardModel? card ;
+  CreditCardModel? card;
 
+  int calculateDistanceFromLocation()  {
+    return calculateDistance(
+      lat1: selectedDeparture!.trip.toLat,
+      lon1: selectedDeparture!.trip.toLong,
+      lat2: _locationData!.latitude!,
+      lon2: _locationData!.longitude!,
+    );
+  }
 
-  void _getUsersData()
-  {
+  LatLng get location => LatLng(
+        _locationData!.latitude!,
+        _locationData!.longitude!,
+      );
+
+  void _getUsersData() {
     user = FirebaseAuthServices.getCurrentUserData();
     notifyListeners();
   }
-  void resetToken()
-  {
+
+  void resetToken() {
     _getUsersData();
   }
 
@@ -32,13 +47,13 @@ class ReservationProvider extends ChangeNotifier {
     card = value;
     notifyListeners();
   }
+
   CreditCardModel? get getCard => card;
 
   ReservationProvider() {
     _getCurrentLocationData();
     user = FirebaseAuthServices.getCurrentUserData();
     print("Address From Provider : $_address");
-
   }
 
   void setValid(bool value) {
@@ -50,15 +65,18 @@ class ReservationProvider extends ChangeNotifier {
     selectedDeparture = value;
     notifyListeners();
   }
+
   void setTotalUsers(int value) {
     totalUsers = value;
     notifyListeners();
   }
 
-
   int get getTotalUsers => totalUsers;
+
   String? get getAddress => _address;
+
   bool get getValid => _valid;
+
   TripDepartureDataModel? get getSelectedDeparture => selectedDeparture;
 
   _getCurrentLocationData() async {
@@ -72,6 +90,7 @@ class ReservationProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
   String getMonthAbbreviation(int month) {
     const List<String> monthAbbreviations = [
       'Jan',

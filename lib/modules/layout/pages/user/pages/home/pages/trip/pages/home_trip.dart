@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
-import 'package:travel_go/core/utils/favourite_trip_collections.dart';
-import 'package:travel_go/models/favourite_trip_model.dart';
+import 'package:travel_go/core/providers/reservation_provider.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/selected_trip.dart';
 import '/models/trip_data_model.dart';
 import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
@@ -70,8 +70,6 @@ class _HomeTripState extends State<HomeTrip> {
       location: "Edinburgh,",
     ),
   ];
-  List<FavouriteTripDataModel> favouriteList = [];
-
 
   @override
   void initState() {
@@ -190,7 +188,6 @@ class _HomeTripState extends State<HomeTrip> {
                       context: context,
                       newPage: SelectedHomeScreenTrip(
                         model: tripList[index],
-
                       ),
                     ),
                     child: HomeTripCartWidget(

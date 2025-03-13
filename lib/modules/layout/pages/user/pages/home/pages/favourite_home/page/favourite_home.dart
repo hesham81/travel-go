@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/selected_trip.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
@@ -103,8 +105,17 @@ class _FavouriteHomeState extends State<FavouriteHome> {
               : Expanded(
                   child: ListView.separated(
                     padding: EdgeInsets.symmetric(horizontal: 10),
-                    itemBuilder: (context, index) => HomeTripCartWidget(
-                      model: favouriteTrips[index],
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () {
+                        slideLeftWidget(
+                          newPage: SelectedHomeScreenTrip(
+                              model: favouriteTrips[index]),
+                          context: context,
+                        );
+                      },
+                      child: HomeTripCartWidget(
+                        model: favouriteTrips[index],
+                      ),
                     ),
                     separatorBuilder: (context, _) => 0.01.height.hSpace,
                     itemCount: favouriteTrips.length,
