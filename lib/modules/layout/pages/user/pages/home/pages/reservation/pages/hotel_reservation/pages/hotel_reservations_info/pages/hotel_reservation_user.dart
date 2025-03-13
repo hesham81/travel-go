@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:travel_go/core/widget/custom_elevated_button.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/widget/hotel_accomdations_widget.dart';
+import '/core/widget/custom_elevated_button.dart';
+import '/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/widget/hotel_accomdations_widget.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
@@ -120,14 +120,37 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
                   ).allPadding(5),
                 ),
                 SafeArea(
-                  child: IconButton(
-                    onPressed: () {},
-                    style: IconButton.styleFrom(
-                      backgroundColor: AppColors.whiteColor,
-                    ),
-                    icon: Icon(
-                      Icons.bookmark_outline,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        style: IconButton.styleFrom(
+                          backgroundColor: AppColors.whiteColor,
+                        ),
+                        icon: Icon(
+                          Icons.bookmark_outline,
+                        ),
+                      ),
+                      0.01.width.vSpace,
+                      CircleAvatar(
+                        backgroundColor: AppColors.whiteColor,
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.star,
+                              color: Colors.yellow,
+                            ),
+                            Text(
+                              provider.getSelectedDeparture!.trip.hotel.hotelRating.toString(),
+                              style: theme.labelSmall!.copyWith(
+                                color: AppColors.blackColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ).alignTopRight(),
                 ).allPadding(5),
               ],
