@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
-import '/core/constant/sounds.dart';
+import '/core/constant/soundEffects.dart';
 import '/core/extensions/extensions.dart';
 import '/core/providers/reservation_provider.dart';
 import '/core/services/bot_toast.dart';
@@ -50,7 +50,7 @@ class _TripPaymentState extends State<TripPayment> {
 
   Future<void> _playSounds() async {
     await player.play(
-      AssetSource(Sounds.cashMoney),
+      AssetSource(SoundEffects.cashMoney),
     );
   }
 

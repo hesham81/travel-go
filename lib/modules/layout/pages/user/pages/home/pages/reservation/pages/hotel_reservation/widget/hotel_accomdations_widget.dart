@@ -16,8 +16,8 @@ class HotelAccomdationsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:  EdgeInsets.symmetric(
-        horizontal: title.length > 8 ? 3 : 18.0,
+      padding: EdgeInsets.symmetric(
+        horizontal: title.length > 5 ? 8 : 18.0,
       ),
       decoration: BoxDecoration(
         color: Colors.white,

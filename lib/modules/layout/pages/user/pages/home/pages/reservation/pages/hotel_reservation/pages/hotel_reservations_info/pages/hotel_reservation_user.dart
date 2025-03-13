@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:route_transitions/route_transitions.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/confirm_reservations/pages/confirm_user_reservations.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/widget/hotel_accomdations_widget.dart';
 import '/core/extensions/align.dart';
@@ -89,7 +91,10 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
             Expanded(
               child: CustomElevatedButton(
                 text: "Skip Now",
-                onPressed: () {},
+                onPressed: () => slideLeftWidget(
+                  newPage: ConfirmUserReservations(),
+                  context: context,
+                ),
               ),
             ),
           ],
@@ -142,7 +147,9 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
                               color: Colors.yellow,
                             ),
                             Text(
-                              provider.getSelectedDeparture!.trip.hotel.hotelRating.toString(),
+                              provider
+                                  .getSelectedDeparture!.trip.hotel.hotelRating
+                                  .toString(),
                               style: theme.labelSmall!.copyWith(
                                 color: AppColors.blackColor,
                               ),
@@ -201,8 +208,8 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
                 Divider().hPadding(0.1.width),
                 Text(
                   "Facility Place",
-                  style:
-                      theme.titleMedium!.copyWith(color: AppColors.blackColor),
+                  style: theme.titleMedium!
+                      .copyWith(color: AppColors.newBlueColor),
                 ),
                 0.01.height.hSpace,
                 Row(
@@ -248,8 +255,9 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
                 Divider().hPadding(0.1.width),
                 Text(
                   "Gallery",
-                  style:
-                      theme.titleMedium!.copyWith(color: AppColors.blackColor),
+                  style: theme.titleMedium!.copyWith(
+                    color: AppColors.newBlueColor,
+                  ),
                 ),
                 0.01.height.hSpace,
                 SizedBox(
@@ -295,7 +303,7 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
                     Expanded(
                       child: CustomElevatedButton(
                         text: "Cancel",
-                        onPressed: () {},
+                        onPressed: () => Navigator.pop(context),
                         btnColor: AppColors.errorColor,
                       ),
                     ),

@@ -53,7 +53,7 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
           IconButton(
               onPressed: () async {
                 await FirebaseAuthServices.logout();
-              LocalStorageData.setString(SharedPreferencesKey.login, "");
+                LocalStorageData.setString(SharedPreferencesKey.login, "");
                 slideLeftWidget(
                   newPage: SignIn(),
                   context: context,
@@ -76,6 +76,9 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
               yValueMapper: (datum, index) => datum["y"],
               dataLabelSettings: DataLabelSettings(
                 isVisible: true,
+              ),
+              emptyPointSettings: EmptyPointSettings(
+                mode: EmptyPointMode.gap,
               ),
             ),
           ),
