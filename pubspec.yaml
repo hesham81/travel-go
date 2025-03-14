@@ -39,7 +39,6 @@ dependencies:
   dash_chat_2: ^0.0.21
   cached_network_image: ^3.4.1
   country_picker: ^2.0.27
-  syncfusion_flutter_charts: ^28.2.6
   awesome_alert: ^1.0.2
   youtube_player_flutter: ^9.1.1
   roundcheckbox: ^2.0.5
@@ -64,6 +63,7 @@ dependencies:
   url_launcher: ^6.3.1
   internet_connection_checker: ^3.0.1
   animated_custom_dropdown: ^3.1.1
+  fl_chart: ^0.70.2
 
 dev_dependencies:
   flutter_test:
