@@ -120,7 +120,7 @@ class _HomeState extends State<Home> {
                   Icons.home,
                   color: AppColors.whiteColor,
                 ),
-                label: "Home",
+                label: "Trip",
               ),
               BottomNavigationBarItem(
                 icon: Icon(

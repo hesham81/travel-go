@@ -6,7 +6,7 @@ import 'package:route_transitions/route_transitions.dart';
 import '/core/services/bot_toast.dart';
 import '/core/utils/credit_card_db.dart';
 import '/models/credit_card_model.dart';
-import '/core/constant/sounds.dart';
+import '/core/constant/soundEffects.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/core/extensions/extensions.dart';
 import '/core/providers/reservation_provider.dart';
@@ -55,7 +55,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
 
   Future<void> _playSounds() async {
     await player.play(
-      AssetSource(Sounds.cashMoney),
+      AssetSource(SoundEffects.cashMoney),
     );
   }
 

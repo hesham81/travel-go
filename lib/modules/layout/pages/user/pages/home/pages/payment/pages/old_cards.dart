@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
-import 'package:travel_go/core/constant/sounds.dart';
+import 'package:travel_go/core/constant/soundEffects.dart';
 import 'package:travel_go/core/extensions/align.dart';
 import 'package:travel_go/core/extensions/extensions.dart';
 import 'package:travel_go/core/providers/reservation_provider.dart';
@@ -27,7 +27,7 @@ class _OldCardsState extends State<OldCards> {
 
   Future<void> _playSounds() async {
     await player.play(
-      AssetSource(Sounds.cashMoney),
+      AssetSource(SoundEffects.cashMoney),
     );
   }
 
