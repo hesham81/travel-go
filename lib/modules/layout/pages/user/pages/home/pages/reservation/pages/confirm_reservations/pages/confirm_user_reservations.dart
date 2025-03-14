@@ -17,7 +17,7 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations>
   late AnimationController controller;
   late Animation<Offset> animation;
   final AudioPlayer player = AudioPlayer();
-  bool _showLottie = false; // State variable to control Lottie visibility
+  bool _showLottie = false;
 
   Future<void> _playSounds() async {
     await player.play(

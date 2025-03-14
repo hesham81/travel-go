@@ -5,7 +5,7 @@ abstract class UsersReports {
 
   static Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
       getTotalUsersData() async {
-    return await _firestore.where("role", isEqualTo: "user").get().then(
+    return await _firestore.get().then(
           (value) => value.docs,
         );
   }

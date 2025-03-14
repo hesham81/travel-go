@@ -10,6 +10,7 @@ import 'package:travel_go/core/constant/local_storage.dart';
 import 'package:travel_go/core/providers/connections_provider.dart';
 import 'package:travel_go/core/providers/departure_provider.dart';
 import 'package:travel_go/core/providers/reservation_provider.dart';
+import 'package:travel_go/modules/layout/pages/manager/providers/manager_provider.dart';
 import '/modules/layout/pages/admin/menna/trippp/browse_selected_trip.dart';
 import '/modules/layout/pages/admin/pages/programs/pages/browse_program/pages/program_details.dart';
 import '/modules/layout/pages/admin/menna/trippp/all_programs_data.dart';
@@ -65,6 +66,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => DepartureProvider()),
         ChangeNotifierProvider(create: (context) => ReservationProvider()),
         ChangeNotifierProvider(create: (context) => ConnectionProvider()),
+        ChangeNotifierProvider(create: (context) => ManagerProvider()),
       ],
       child: const MyApp(),
     ),
