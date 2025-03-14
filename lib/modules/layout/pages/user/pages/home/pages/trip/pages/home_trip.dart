@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
-import 'package:travel_go/core/providers/reservation_provider.dart';
+import 'package:travel_go/core/constant/app_assets.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/selected_trip.dart';
 import '/models/trip_data_model.dart';
 import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
@@ -70,138 +70,186 @@ class _HomeTripState extends State<HomeTrip> {
       location: "Edinburgh,",
     ),
   ];
+  bool _isSearchEnabled = false;
+  double _opacity = 1;
+  List<TripDataModel>? searchList = [];
 
-  @override
-  void initState() {
-    super.initState();
+  _search(String query) {
+    searchList = tripList
+        .where(
+          (element) =>
+              element.tripName.toLowerCase().contains(query.toLowerCase()),
+        )
+        .toList();
+    if (searchList!.isEmpty) searchList = null;
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
 
-    return SingleChildScrollView(
-      child: SafeArea(
-        child: Column(
-          children: [
-            AppBarWidget(),
-            0.02.height.hSpace,
-            Row(
-              children: [
-                Column(
+    return RefreshIndicator(
+      onRefresh: () async {
+        setState(() {});
+      },
+      color: AppColors.newBlueColor,
+      backgroundColor: AppColors.whiteColor,
+      child: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: SafeArea(
+          child: Column(
+            children: [
+              AppBarWidget(),
+              0.02.height.hSpace,
+              if (!_isSearchEnabled)
+                AnimatedOpacity(
+                  opacity: _opacity,
+                  duration: Duration(seconds: 1),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            "Hi , ${user!.displayName}",
+                            style: theme.textTheme.titleLarge!.copyWith(
+                              color: AppColors.blackColor,
+                            ),
+                          ),
+                          0.01.height.hSpace,
+                          Text(
+                            "Let's explore the world!",
+                            style: theme.textTheme.titleMedium!.copyWith(
+                              color: AppColors.newBlueColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      IconButton(
+                        onPressed: () {
+                          _isSearchEnabled = !_isSearchEnabled;
+                          if (_opacity == 0) {
+                            _opacity = 1;
+                          } else {
+                            _opacity = 0;
+                          }
+                          setState(() {});
+                        },
+                        style: IconButton.styleFrom(
+                            backgroundColor: AppColors.newBlueColor,
+                            padding: EdgeInsets.all(12)),
+                        icon: Icon(
+                          Icons.search,
+                          color: AppColors.whiteColor,
+                        ),
+                      ),
+                      0.01.width.vSpace,
+                    ],
+                  ),
+                ),
+              if (_isSearchEnabled)
+                CupertinoSearchTextField(
+                  onChanged: _search,
+                  autocorrect: true,
+                ),
+              Visibility(
+                visible: !_isSearchEnabled,
+                child: Column(
                   children: [
-                    Text(
-                      "Hi , ${user!.displayName}",
-                      style: theme.textTheme.titleLarge!.copyWith(
-                        color: AppColors.blackColor,
+                    0.02.height.hSpace,
+                    Divider(),
+                    0.01.height.hSpace,
+                    Row(
+                      children: [
+                        Text(
+                          "Special For You",
+                          style: theme.textTheme.titleMedium!.copyWith(
+                            color: AppColors.blackColor,
+                          ),
+                        ),
+                        Spacer(),
+                        CustomTextButton(
+                          onPressed: () {},
+                          text: "Discover More",
+                        ),
+                      ],
+                    ),
+                    0.01.height.hSpace,
+                    SizedBox(
+                      height: 0.3.height,
+                      child: ListView.separated(
+                        padding: EdgeInsets.zero,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            child: RecommendedWidget(
+                              model: recommendations[index],
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, _) => 0.02.width.vSpace,
+                        itemCount: recommendations.length,
                       ),
                     ),
                     0.01.height.hSpace,
-                    Text(
-                      "Let's explore the world!",
-                      style: theme.textTheme.titleMedium!.copyWith(
-                        color: AppColors.newBlueColor,
-                      ),
-                    ),
+                    Divider(),
                   ],
                 ),
-                Spacer(),
-                CircleAvatar(
-                  backgroundColor: AppColors.newBlueColor,
-                  radius: 20,
-                  child: Icon(
-                    Icons.search,
-                    color: AppColors.whiteColor,
-                  ),
-                ),
-                0.01.width.vSpace,
-              ],
-            ),
-            0.01.height.hSpace,
-            Divider(),
-            0.01.height.hSpace,
-            Row(
-              children: [
-                Text(
-                  "Special For You",
-                  style: theme.textTheme.titleMedium!.copyWith(
-                    color: AppColors.blackColor,
-                  ),
-                ),
-                Spacer(),
-                CustomTextButton(
-                  onPressed: () {},
-                  text: "Discover More",
-                ),
-              ],
-            ),
-            0.01.height.hSpace,
-            SizedBox(
-              height: 0.3.height,
-              child: ListView.separated(
-                padding: EdgeInsets.zero,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    child: RecommendedWidget(
-                      model: recommendations[index],
-                    ),
-                  );
-                },
-                separatorBuilder: (context, _) => 0.02.width.vSpace,
-                itemCount: recommendations.length,
               ),
-            ),
-            0.01.height.hSpace,
-            Divider(),
-            0.01.height.hSpace,
-            Text(
-              "Featured Trips",
-              style: theme.textTheme.titleMedium!.copyWith(
-                color: AppColors.blackColor,
-              ),
-            ).leftBottomWidget(),
-            0.01.height.hSpace,
-            StreamBuilder(
-              stream: TripCollections.getAllTrips(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Column(
-                    children: [
-                      0.05.height.hSpace,
-                      CircularProgressIndicator(),
-                    ],
-                  );
-                }
-                if (snapshot.hasData) {
-                  tripList = snapshot.data!.docs
-                      .map(
-                        (e) => e.data(),
-                      )
-                      .toList();
-                }
-                return ListView.separated(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () => slideRightWidget(
-                      context: context,
-                      newPage: SelectedHomeScreenTrip(
-                        model: tripList[index],
+              0.01.height.hSpace,
+              Text(
+                (_isSearchEnabled) ? "Search Results" : "Featured Trips",
+                style: theme.textTheme.titleMedium!.copyWith(
+                  color: AppColors.blackColor,
+                ),
+              ).leftBottomWidget(),
+              0.01.height.hSpace,
+              StreamBuilder(
+                stream: TripCollections.getAllTrips(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Column(
+                      children: [
+                        0.05.height.hSpace,
+                        CircularProgressIndicator(),
+                      ],
+                    );
+                  }
+                  if (snapshot.hasData) {
+                    tripList = snapshot.data!.docs
+                        .map(
+                          (e) => e.data(),
+                        )
+                        .toList();
+                  }
+                  if (searchList?.isEmpty == true) searchList = tripList;
+                  if (searchList == null) {
+                    return Image.asset(AppAssets.noSearchResult);
+                  }
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () => slideRightWidget(
+                        context: context,
+                        newPage: SelectedHomeScreenTrip(
+                          model: searchList![index],
+                        ),
+                      ),
+                      child: HomeTripCartWidget(
+                        model: searchList![index],
                       ),
                     ),
-                    child: HomeTripCartWidget(
-                      model: tripList[index],
-                    ),
-                  ),
-                  separatorBuilder: (context, index) => 0.01.height.hSpace,
-                  itemCount: tripList.length,
-                );
-              },
-            ),
-            0.01.height.hSpace,
-          ],
-        ).hPadding(0.03.width),
+                    separatorBuilder: (context, index) => 0.01.height.hSpace,
+                    itemCount: searchList!.length,
+                  );
+                },
+              ),
+              0.01.height.hSpace,
+            ],
+          ).hPadding(0.03.width),
+        ),
       ),
     );
   }

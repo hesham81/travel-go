@@ -44,7 +44,7 @@ class _TripDepartureState extends State<TripDeparture> {
 
   bool _checkIsAvailable(TripDepartureDataModel model) {
     bool isAvailable = false;
-    if (model.availableSeats > 0 && model.from.day != DateTime.now().day) {
+    if (model.availableSeats > 0 && model.from.day != DateTime.now().day && DateTime.now().isBefore(model.from)) {
       isAvailable = true;
     }
     return isAvailable;
@@ -55,6 +55,14 @@ class _TripDepartureState extends State<TripDeparture> {
     return model.from.year == tomorrow.year &&
         model.from.month == tomorrow.month &&
         model.from.day == tomorrow.day;
+  }
+  bool _checkIfToday(TripDepartureDataModel model)
+  {
+    if (model.from.day == DateTime.now().day && model.from.month == DateTime.now().month && model.from.year == DateTime.now().year)
+      {
+        return true ;
+      }
+    return false ;
   }
 
   bool _checkIsThisWeek(TripDepartureDataModel model) {
@@ -84,7 +92,7 @@ class _TripDepartureState extends State<TripDeparture> {
         break;
       case 2:
         filterList =
-            departures.where((element) => !_checkIsAvailable(element)).toList();
+            departures.where((element) => _checkIfToday(element)).toList();
         setState(() {});
         break;
       case 3:
