@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/core/constant/app_assets.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/widget/model_sheet_trip_filter.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/selected_trip.dart';
 import '/models/trip_data_model.dart';
 import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
@@ -85,6 +86,92 @@ class _HomeTripState extends State<HomeTrip> {
     setState(() {});
   }
 
+  int _sortIndex = 0;
+  int _filterIndex = 0;
+
+  void _showModelSheet(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: AppColors.whiteColor,
+      isScrollControlled: true,
+      scrollControlDisabledMaxHeightRatio: 1.height,
+      context: context,
+      builder: (context) => ModelSheetTripFilter(
+        sortAToZ: _sortAtoZ,
+        sortZToA: _sortZToA,
+        sortIndex: _sortIndex,
+        bookMarked: _bookMarked,
+        sortPriceLowToHigh: _sortPriceLowToHigh,
+        sortPriceHighToLow: _sortPriceHighToLow,
+        filterIndex: _filterIndex,
+        trips: searchList!,
+        lessThanWeek: _lessThanWeek,
+      ),
+    );
+  }
+
+  void _lessThanWeek() {
+    if (searchList == null) return;
+    _filterIndex = 1;
+    searchList!.clear();
+    searchList!.addAll(tripList.where(
+      (element) => element.totalDays <= 7,
+    ));
+
+    setState(() {});
+    Navigator.pop(context);
+  }
+
+  void _sortPriceLowToHigh() {
+    if (searchList == null) return;
+
+    searchList!.sort((a, b) => a.price.compareTo(b.price));
+    _sortIndex = 2;
+    setState(() {});
+    Navigator.pop(context);
+  }
+
+  void _sortPriceHighToLow() {
+    if (searchList == null) return;
+
+    searchList!.sort((a, b) => b.price.compareTo(a.price));
+    _sortIndex = 3;
+    setState(() {});
+    Navigator.pop(context);
+  }
+
+  _bookMarked() {
+    if (searchList == null) return;
+    _filterIndex = 0;
+    searchList!.clear();
+    searchList!.addAll(tripList.where(
+      (element) =>
+          element.favourites != null && element.favourites!.contains(user!.uid),
+    ));
+
+    setState(() {});
+    Navigator.pop(context);
+  }
+
+  _sortAtoZ() {
+    if (searchList == null) return;
+    searchList!.sort(
+      (a, b) => a.tripName.toLowerCase().compareTo(b.tripName.toLowerCase()),
+    );
+    _sortIndex = 0;
+    setState(() {});
+    Navigator.pop(context);
+  }
+
+  _sortZToA() {
+    if (searchList == null) return;
+    searchList!.sort(
+      (a, b) => b.tripName.toLowerCase().compareTo(a.tripName.toLowerCase()),
+    );
+    _sortIndex = 1;
+    setState(() {});
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -149,9 +236,29 @@ class _HomeTripState extends State<HomeTrip> {
                   ),
                 ),
               if (_isSearchEnabled)
-                CupertinoSearchTextField(
-                  onChanged: _search,
-                  autocorrect: true,
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 10,
+                      child: CupertinoSearchTextField(
+                        autocorrect: true,
+                        autofocus: true,
+                        onChanged: _search,
+                        onSubmitted: (value) {},
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: IconButton(
+                        onPressed: () {
+                          _showModelSheet(context);
+                        },
+                        icon: Icon(
+                          Icons.filter_list,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               Visibility(
                 visible: !_isSearchEnabled,
