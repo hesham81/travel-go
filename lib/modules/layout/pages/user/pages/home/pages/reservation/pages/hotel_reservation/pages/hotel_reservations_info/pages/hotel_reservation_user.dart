@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/confirm_reservations/pages/confirm_user_reservations.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/confirm_hotel_reservation/pages/confirm_hotel_reservations.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/widget/hotel_accomdations_widget.dart';
 import '/core/extensions/align.dart';
@@ -296,7 +297,9 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
                     Expanded(
                       child: CustomElevatedButton(
                         text: "Confirm",
-                        onPressed: () {},
+                        onPressed: () => slideLeftWidget(
+                            newPage: ConfirmHotelReservations(),
+                            context: context),
                       ),
                     ),
                     0.01.width.vSpace,
