@@ -64,6 +64,7 @@ dependencies:
   internet_connection_checker: ^3.0.1
   animated_custom_dropdown: ^3.1.1
   fl_chart: ^0.70.2
+  flutter_expandable_fab: ^2.4.1
 
 dev_dependencies:
   flutter_test:
@@ -88,7 +89,99 @@ flutter:
     - assets/files/
     - assets/images/places/
     - assets/sounds/
+
   fonts:
+    - family: Lalezar
+      fonts:
+        - asset: assets/fonts/Lalezar/Lalezar-Regular.ttf
+
     - family: Poppins
       fonts:
-        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins/Poppins-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Poppins/Poppins-BlackItalic.ttf
+          weight: 900
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Poppins/Poppins-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Poppins/Poppins-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Poppins/Poppins-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Poppins/Poppins-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins/Poppins-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins/Poppins-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/Poppins/Poppins-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Poppins/Poppins-ThinItalic.ttf
+          weight: 100
+          style: italic
+
+    - family: ReemKufi
+      fonts:
+        - asset: assets/fonts/Reem_Kufi/static/ReemKufi-Regular.ttf
+        - asset: assets/fonts/Reem_Kufi/static/ReemKufi-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Reem_Kufi/static/ReemKufi-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Reem_Kufi/static/ReemKufi-SemiBold.ttf
+          weight: 600
+
+    - family: Roboto
+      fonts:
+        # Regular and Italic styles
+        - asset: assets/fonts/Roboto/static/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto/static/Roboto-Italic.ttf
+          style: italic
+
+        # Bold and Bold Italic styles
+        - asset: assets/fonts/Roboto/static/Roboto-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Roboto/static/Roboto-BoldItalic.ttf
+          weight: 700
+          style: italic
+
+        # Light and Light Italic styles
+        - asset: assets/fonts/Roboto/static/Roboto-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Roboto/static/Roboto-LightItalic.ttf
+          weight: 300
+          style: italic
+
+        # Medium and Medium Italic styles
+        - asset: assets/fonts/Roboto/static/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Roboto/static/Roboto-MediumItalic.ttf
+          weight: 500
+          style: italic
+
+        # Thin and Thin Italic styles
+        - asset: assets/fonts/Roboto/static/Roboto-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Roboto/static/Roboto-ThinItalic.ttf
+          weight: 100
+          style: italic

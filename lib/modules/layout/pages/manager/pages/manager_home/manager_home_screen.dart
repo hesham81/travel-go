@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/core/widget/dividers_word.dart';
 import '/core/extensions/extensions.dart';
 import '/core/widget/custom_text_button.dart';
 import '/modules/layout/pages/manager/pages/manager_home/pages/users_data/pages/users_reports_data_screen.dart';
@@ -90,7 +91,7 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
                     child: Center(
                       child: Text(
                         "Managers",
-                        style: theme.labelMedium?.copyWith(
+                        style: theme.labelSmall?.copyWith(
                           color: AppColors.blackColor,
                         ),
                       ),
@@ -145,6 +146,11 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
                 ),
                 text: "Explore All Users Data",
               ),
+              // 0.01.height.hSpace,
+              DividersWord(
+                text: "Trips",
+              ).hPadding(0.03.width),
+              0.01.height.hSpace,
             ],
           ),
         ),

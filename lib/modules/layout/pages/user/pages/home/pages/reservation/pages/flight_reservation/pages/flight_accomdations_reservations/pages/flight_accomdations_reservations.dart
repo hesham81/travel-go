@@ -136,10 +136,8 @@ class _FlightAccomdationsReservationsState
               items: classes,
               excludeSelected: true,
               canCloseOutsideBounds: false,
-
               hideSelectedFieldWhenExpanded: false,
               initialItem: classes[0],
-
               headerBuilder: (context, selectedItem, enabled) {
                 return CustomContainer(
                   child: Column(
@@ -164,9 +162,8 @@ class _FlightAccomdationsReservationsState
                               Text(
                                 classes[selectedIndex],
                                 style: theme.titleSmall!.copyWith(
-                                  color: AppColors.newBlueColor,
-                                  fontSize: 13
-                                ),
+                                    color: AppColors.newBlueColor,
+                                    fontSize: 13),
                               ),
                             ],
                           ),
@@ -200,14 +197,14 @@ class _FlightAccomdationsReservationsState
                             children: [
                               Text(
                                 item,
-                                style: theme.titleSmall!.copyWith(
+                                style: theme.labelMedium!.copyWith(
                                   color: AppColors.newBlueColor,
                                 ),
                               ),
                               0.01.height.hSpace,
                               Text(
                                 "${prices[index]} ${provider.getSelectedDeparture!.trip.currency}",
-                                style: theme.titleMedium!.copyWith(
+                                style: theme.titleSmall!.copyWith(
                                   color: Colors.green,
                                 ),
                               ),
@@ -312,16 +309,16 @@ class _FlightAccomdationsReservationsState
                           0.003.height.hSpace,
                           Row(
                             children: [
-                              0.14.width.vSpace,
+                              0.16.width.vSpace,
                               Text(
-                                "Passenger Name: ",
+                                "Name: ",
                                 style: theme.labelSmall!.copyWith(
                                   color: AppColors.newBlueColor,
                                 ),
                               ),
                               Text(
                                 provider.user!.displayName ?? "No name",
-                                style: theme.labelSmall!.copyWith(
+                                style: theme.labelMedium!.copyWith(
                                   color: AppColors.blackColor,
                                 ),
                               ),
@@ -342,9 +339,11 @@ class _FlightAccomdationsReservationsState
                     child: CustomElevatedButton(
                       text: "OK",
                       onPressed: () => slideRightWidget(
-                          newPage:(provider.getCard ==null )? CreditCardScreen(
-                            route: HotelReservationUser(),
-                          ): OldCards(),
+                          newPage: (provider.getCard == null)
+                              ? CreditCardScreen(
+                                  route: HotelReservationUser(),
+                                )
+                              : OldCards(),
                           context: context),
                     ),
                   ),
@@ -352,7 +351,10 @@ class _FlightAccomdationsReservationsState
                   Expanded(
                     child: CustomElevatedButton(
                       text: "Cancel",
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        provider.reserveFlight = false ;
+                      },
                       btnColor: AppColors.errorColor,
                     ),
                   ),

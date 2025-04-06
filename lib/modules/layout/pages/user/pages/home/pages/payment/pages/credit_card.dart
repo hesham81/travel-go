@@ -47,8 +47,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
           setState(() {
             cardData = value;
           });
-        } else {
-        }
+        } else {}
       },
     );
   }
@@ -202,6 +201,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                 if (value) {
                                   EasyLoading.dismiss();
                                   await _playSounds();
+                                  provider.reserveFlight = true;
                                   replaceWidget(
                                     newPage: widget.route,
                                     context: context,
@@ -216,7 +216,8 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                           } else {
                             EasyLoading.dismiss();
                             BotToastServices.showErrorMessage(
-                                "Card Is Not Valid");
+                              "Card Is Not Valid",
+                            );
                           }
                         },
                       ),

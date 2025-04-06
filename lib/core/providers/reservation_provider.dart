@@ -13,6 +13,9 @@ class ReservationProvider extends ChangeNotifier {
   TripDepartureDataModel? selectedDeparture;
   late User? user;
   var _valid = true;
+  bool reserveHotel = false;
+
+  bool reserveFlight = false;
 
   Location _location = Location();
   LocationData? _locationData;
@@ -20,12 +23,12 @@ class ReservationProvider extends ChangeNotifier {
   String? _address;
   CreditCardModel? card;
 
-  int calculateDistanceFromLocation()  {
+  int calculateDistanceFromLocation() {
     return calculateDistance(
-      lat1: selectedDeparture!.trip.toLat,
-      lon1: selectedDeparture!.trip.toLong,
-      lat2: _locationData!.latitude!,
-      lon2: _locationData!.longitude!,
+      lat1: selectedDeparture?.trip.toLat ?? 0,
+      lon1: selectedDeparture?.trip.toLong ?? 0,
+      lat2: _locationData?.latitude ?? 0,
+      lon2: _locationData?.longitude ?? 0,
     );
   }
 

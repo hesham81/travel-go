@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/new_hotel/pages/new_hotel.dart';
 import 'package:travel_go/modules/layout/pages/admin/task/Addflight.dart';
 
 class HotelScreen extends StatelessWidget {
   final Map<String, Widget Function()> pageRoutes = {
-    // hotel
     "Browse hotel": () => Addflight(),
-    "New hotel": () => Addflight(),
+    "New hotel": () => NewHotel(),
     "Update hotel": () => Addflight(),
     "Delete hotel": () => Addflight(),
 
@@ -18,8 +18,8 @@ class HotelScreen extends StatelessWidget {
 
   void _handleMenuSelection(BuildContext context, String value) {
     if (pageRoutes.containsKey(value)) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => pageRoutes[value]!()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => pageRoutes[value]!()));
     } else {
       print("Page not found for: $value");
     }
@@ -49,13 +49,13 @@ class HotelScreen extends StatelessWidget {
             children: menuOptions
                 .map(
                   (option) => ListTile(
-                title: Text(option, style: TextStyle(fontSize: 18)),
-                onTap: () {
-                  Navigator.pop(context);
-                  _handleMenuSelection(context, option);
-                },
-              ),
-            )
+                    title: Text(option, style: TextStyle(fontSize: 18)),
+                    onTap: () {
+                      Navigator.pop(context);
+                      _handleMenuSelection(context, option);
+                    },
+                  ),
+                )
                 .toList(),
           ),
         ),
@@ -74,7 +74,11 @@ class HotelScreen extends StatelessWidget {
       ),
       child: Text(
         title,
-        style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
@@ -86,7 +90,8 @@ class HotelScreen extends StatelessWidget {
         backgroundColor: Color(0xff0d75b4),
         title: Text(
           "Tour And Travel",
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+          style: TextStyle(
+              fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         centerTitle: true,
       ),
@@ -96,7 +101,7 @@ class HotelScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildPopupButton(context, "Hotel"),
+              _buildPopupButton(context, "hotel"),
               SizedBox(height: 12),
               _buildPopupButton(context, "Hotel Accommodation"),
             ],

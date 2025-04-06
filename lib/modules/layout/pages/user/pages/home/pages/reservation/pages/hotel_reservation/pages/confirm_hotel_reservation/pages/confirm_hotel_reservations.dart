@@ -1,12 +1,12 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
-import 'package:travel_go/core/providers/reservation_provider.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
-import 'package:travel_go/core/widget/custom_container.dart';
-import 'package:travel_go/core/widget/custom_elevated_button.dart';
-import 'package:travel_go/core/widget/labels_widget.dart';
+import '/core/extensions/extensions.dart';
+import '/core/providers/reservation_provider.dart';
+import '/core/theme/app_colors.dart';
+import '/core/widget/custom_container.dart';
+import '/core/widget/custom_elevated_button.dart';
+import '/core/widget/labels_widget.dart';
 
 class ConfirmHotelReservations extends StatefulWidget {
   const ConfirmHotelReservations({super.key});
@@ -43,6 +43,21 @@ class _ConfirmHotelReservationsState extends State<ConfirmHotelReservations> {
     var theme = Theme.of(context).textTheme;
     var provider = Provider.of<ReservationProvider>(context);
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Hotel Reservation",
+          style: theme.titleLarge!.copyWith(
+            color: AppColors.whiteColor,
+          ),
+        ),
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.whiteColor,
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
@@ -73,11 +88,12 @@ class _ConfirmHotelReservationsState extends State<ConfirmHotelReservations> {
                       value: selectedRoom ?? "No Room Selected Yet",
                     ),
                     if (selectedRoom != null) 0.01.height.hSpace,
-                    if (selectedRoom != null) LabelsWidget(
-                      label: "Room Price : ",
-                      value:
-                          "${prices[items.indexOf(selectedRoom!)]} ${provider.getSelectedDeparture!.trip.currency} Per Night",
-                    ),
+                    if (selectedRoom != null)
+                      LabelsWidget(
+                        label: "Room Price : ",
+                        value:
+                            "${prices[items.indexOf(selectedRoom!)]} ${provider.getSelectedDeparture!.trip.currency} Per Night",
+                      ),
                   ],
                 ),
               ).hPadding(0.03.width),
@@ -113,14 +129,20 @@ class _ConfirmHotelReservationsState extends State<ConfirmHotelReservations> {
                   Expanded(
                     child: CustomElevatedButton(
                       text: "OK",
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        provider.reserveHotel = true;
+                      },
                     ),
                   ),
                   0.02.width.vSpace,
                   Expanded(
                     child: CustomElevatedButton(
                       text: "Cancel",
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        provider.reserveHotel = false;
+                      },
                       btnColor: AppColors.errorColor,
                     ),
                   ),

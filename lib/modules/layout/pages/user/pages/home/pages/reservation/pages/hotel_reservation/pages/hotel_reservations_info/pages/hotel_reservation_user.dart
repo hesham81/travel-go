@@ -198,7 +198,7 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
                     ),
                     0.02.width.vSpace,
                     Text(
-                      "${provider.calculateDistanceFromLocation()} KM",
+                      "${provider.calculateDistanceFromLocation() ?? 100 } KM",
                       style: theme.titleSmall!.copyWith(
                         color: AppColors.blackColor.withAlpha(110),
                       ),
