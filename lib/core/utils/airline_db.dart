@@ -17,7 +17,7 @@ abstract class FlightAirlinesDB {
       final colRef = collectionRef();
       final querySnapshot = await colRef.get();
       final flightAirlines =
-          querySnapshot.docs.map((doc) => doc.data()).toList();
+      querySnapshot.docs.map((doc) => doc.data()).toList();
       EasyLoading.dismiss();
       return flightAirlines;
     } catch (error) {
@@ -62,10 +62,10 @@ abstract class FlightAirlinesDB {
 
   static CollectionReference<FlightAirlines> collectionRef() {
     return _firestore.collection("FlightAirLine").withConverter(
-          fromFirestore: (snapshot, _) =>
-              FlightAirlines.fromMap(snapshot.data()!),
-          toFirestore: (flightAirline, _) => flightAirline.toMap(),
-        );
+      fromFirestore: (snapshot, _) =>
+          FlightAirlines.fromMap(snapshot.data()!),
+      toFirestore: (flightAirline, _) => flightAirline.toMap(),
+    );
   }
 
   static Future<void> deleteFlightAirlineByName(String airlineName) async {

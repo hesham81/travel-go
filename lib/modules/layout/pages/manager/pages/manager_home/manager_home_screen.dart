@@ -30,7 +30,10 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
     var theme = Theme.of(context).textTheme;
     var provider = Provider.of<ManagerProvider>(context);
     return Scaffold(
-      body: SingleChildScrollView(
+
+      appBar:
+      AppBar(title: const Text('Managerial Reports',),),
+        body:  SingleChildScrollView(
         child: RefreshIndicator(
           onRefresh: () => provider.checkUsersReload(),
           color: AppColors.newBlueColor,
@@ -110,7 +113,7 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
                         color: Colors.green,
                         radius: 0.1.height,
                         title:
-                            "${(provider.totalEndUsers / provider.totalUsers * 100).round()}%",
+                            "${(provider.totalEndUsers / provider.totalUsers * 100)}%",
                         titleStyle: theme.titleLarge?.copyWith(
                           color: AppColors.blackColor,
                         ),
@@ -123,7 +126,7 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
                           color: AppColors.blackColor,
                         ),
                         title:
-                            "${(provider.totalAdminUsers / provider.totalUsers * 100).round()}%",
+                            "${(provider.totalAdminUsers / provider.totalUsers * 100)}%",
                       ),
                       PieChartSectionData(
                         value: provider.managerUsers.length.toDouble(),
@@ -133,7 +136,7 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
                           color: AppColors.blackColor,
                         ),
                         title:
-                            "${(provider.totalManagerUsers / provider.totalUsers * 100).round()}%",
+                            "${(provider.totalManagerUsers / provider.totalUsers * 100)}%",
                       ),
                     ],
                   ),
