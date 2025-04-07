@@ -1,6 +1,8 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/confirm_reservations/pages/confirm_user_reservations.dart';
 import '/core/extensions/extensions.dart';
 import '/core/providers/reservation_provider.dart';
 import '/core/theme/app_colors.dart';
@@ -130,8 +132,11 @@ class _ConfirmHotelReservationsState extends State<ConfirmHotelReservations> {
                     child: CustomElevatedButton(
                       text: "OK",
                       onPressed: () {
-                        Navigator.pop(context);
                         provider.reserveHotel = true;
+                        slideLeftWidget(
+                          newPage: ConfirmUserReservations(),
+                          context: context,
+                        );
                       },
                     ),
                   ),

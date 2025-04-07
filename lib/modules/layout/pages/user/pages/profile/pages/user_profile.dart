@@ -3,8 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
+import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/core/providers/reservation_provider.dart';
-import 'package:travel_go/modules/sign_in/pages/sign_in.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/favourite_home/page/favourite_home.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/my_location/pages/my_location.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/my_reservations/pages/my_reservations.dart';
 import '/core/constant/local_storage.dart';
 import '/core/constant/shared_preferences_keys.dart';
 import '/core/routes/route_names.dart';
@@ -26,187 +29,148 @@ class UserProfile extends StatelessWidget {
     var provider = Provider.of<ReservationProvider>(context);
     final user = ModalRoute.of(context)?.settings.arguments as User;
     return Scaffold(
-      backgroundColor: AppColors.whiteColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          color: AppColors.blackColor,
-                        ),
-                      ),
-                      Text(
-                        "Profile",
-                        style: theme.textTheme.titleMedium!.copyWith(
-                            color: AppColors.blackColor,
-                            fontWeight: FontWeight.w800,
-                            fontStyle: FontStyle.normal),
-                      ),
-                    ],
-                  ),
-                ],
+      backgroundColor: Colors.grey[200],
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: AppColors.newBlueColor,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
               ),
-              0.03.height.hSpace,
-              user.photoURL == null
-                  ? GestureDetector(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              AppAssets.noProfileImage,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 40),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      'Profile',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                CircleAvatar(
+                  radius: 35,
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.person, size: 40, color: Color(0xFF0d75b4)),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  user.displayName ?? 'No Name',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+                Text(
+                  user.email ?? 'No Email',
+                  style: TextStyle(color: Colors.white70, fontSize: 14),
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                      onTap: () => slideLeftWidget(
+                        newPage: MyLocation(location: provider.location),
+                        context: context,
+                      ),
+                      child: Column(
+                        children: [
+                          Icon(Icons.location_on, color: Colors.white),
+                          SizedBox(height: 5),
+                          Text('Location',
+                              style: TextStyle(color: Colors.white))
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () => slideLeftWidget(
+                        newPage: FavouriteHome(),
+                        context: context,
+                      ),
+                      child: Column(
+                        children: [
+                          Icon(Icons.bookmark, color: Colors.white),
+                          SizedBox(height: 5),
+                          Text('Favorites',
+                              style: TextStyle(color: Colors.white))
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () => slideLeftWidget(
+                        newPage: MyReservations(),
+                        context: context,
+                      ),
+                      child: Column(
+                        children: [
+                          Icon(Icons.event, color: Colors.white),
+                          SizedBox(height: 5),
+                          Text(
+                            'Reservations',
+                            style: TextStyle(
+                              color: Colors.white,
                             ),
-                          ),
-                          shape: BoxShape.circle,
-                        ),
-                        height: 120,
-                        width: 120,
+                          )
+                        ],
                       ),
-                    )
-                  : CircleAvatar(
-                      radius: 80,
-                      backgroundImage: CachedNetworkImageProvider(
-                        user.photoURL!,
-                        cacheKey: user.uid,
-                        errorListener: (p0) =>
-                            Image.asset(AppAssets.noProfileImage),
-                      ),
-                    ).allPadding(10),
-              0.01.height.hSpace,
-              Text(
-                user.displayName!,
-                style: theme.textTheme.titleLarge!.copyWith(
-                  color: AppColors.blackColor,
+                    ),
+                  ],
                 ),
-              ),
-              0.01.height.hSpace,
-              Text(
-                user.email!,
-                style: theme.textTheme.titleSmall!.copyWith(
-                  color: AppColors.blackColor.withAlpha(130),
-                ),
-              ),
-              0.05.height.hSpace,
-              Column(
-                children: [
-                  ChooseProfileIndex(
-                    icon: Icons.person,
-                    title: "Edit Profile",
-                    button: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: AppColors.blackColor,
-                      ),
-                    ),
-                  ),
-                  0.01.height.hSpace,
-                  ChooseProfileIndex(
-                    icon: Icons.person_4_sharp,
-                    title: "Friends",
-                    button: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: AppColors.blackColor,
-                      ),
-                    ),
-                  ),
-                  0.01.height.hSpace,
-                  ChooseProfileIndex(
-                    icon: Icons.wallet,
-                    title: "Payment Methods",
-                    button: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: AppColors.blackColor,
-                      ),
-                    ),
-                  ),
-                  0.01.height.hSpace,
-                  ChooseProfileIndex(
-                    icon: Icons.credit_card_outlined,
-                    title: "Reservations",
-                    button: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: AppColors.blackColor,
-                      ),
-                    ),
-                  ),
-                  0.01.height.hSpace,
-                  ChooseProfileIndex(
-                    icon: Icons.location_on_outlined,
-                    title: "Locations",
-                    button: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: AppColors.blackColor,
-                      ),
-                    ),
-                  ),
-                  0.01.height.hSpace,
-                  ChooseProfileIndex(
-                    icon: Icons.settings,
-                    title: "Settings",
-                    button: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: AppColors.blackColor,
-                      ),
-                    ),
-                  ),
-                  0.01.height.hSpace,
-                  ChooseProfileIndex(
-                    icon: Icons.help,
-                    title: "Help",
-                    button: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: AppColors.blackColor,
-                      ),
-                    ),
-                  ),
-                  0.01.height.hSpace,
-                  SizedBox(
-                    width: double.maxFinite,
-                    child: CustomElevatedButton(
-                      text: "LogOut",
-                      onPressed: () async {
-                        EasyLoading.show();
-                        await FirebaseAuthServices.logout().then(
-                          (value) {
-                            provider.resetToken();
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              RouteNames.signIn,
-                              (route) => false,
-                            );
-                            LocalStorageData.remove(SharedPreferencesKey.login);
-                            EasyLoading.dismiss();
-                          },
-                        );
-                      },
-                      btnColor: AppColors.errorColor,
-                    ),
-                  ),
-                  0.03.height.hSpace,
-                ],
-              ).hPadding(0.05.width)
-            ],
+              ],
+            ),
           ),
-        ),
+          SizedBox(height: 20),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              children: [
+                ListTile(
+                  leading: Icon(Icons.person_outline),
+                  title: Text('My Profile'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: Icon(Icons.language),
+                  title: Text('Languages'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: Icon(Icons.payment),
+                  title: Text('Payments'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: Icon(Icons.logout, color: Color(0xFF0d75b4)),
+                  title: Text('Logout'),
+                  onTap: () async {
+                    EasyLoading.show();
+                    await FirebaseAuthServices.logout();
+                    EasyLoading.dismiss();
+                    LocalStorageData.setString(SharedPreferencesKey.login, "");
+                    Navigator.of(context)
+                        .pushReplacementNamed(RouteNames.signIn);
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

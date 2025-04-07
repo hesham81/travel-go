@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_go/core/extensions/extensions.dart';
+import 'package:travel_go/core/services/bot_toast.dart';
+import 'package:travel_go/core/utils/reservations_collections.dart';
 import 'package:travel_go/core/widget/custom_container.dart';
 import 'package:travel_go/core/widget/custom_elevated_button.dart';
 import 'package:travel_go/core/widget/dividers_word.dart';
+import 'package:travel_go/models/reservation_model.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/home.dart';
 
 import '../../../../../../../../../../../core/providers/reservation_provider.dart';
 import '../../../../../../../../../../../core/theme/app_colors.dart';
+import '../../../../../../../../../../../core/utils/id_generator.dart';
 
 class ConfirmUserReservations extends StatelessWidget {
   const ConfirmUserReservations({super.key});
@@ -264,7 +270,42 @@ class ConfirmUserReservations extends StatelessWidget {
                           child: CustomElevatedButton(
                             borderRadius: 10,
                             text: "Confirm",
-                            onPressed: () {},
+                            onPressed: () async {
+                              EasyLoading.show();
+                              await ReservationCollections.addReservation(
+                                ReservationModel(
+                                  uid: provider.user!.uid,
+                                  id: IdGenerator.generateDepartureId(
+                                    from: provider.getSelectedDeparture!.from
+                                        .toString(),
+                                    to: provider.getSelectedDeparture!.to
+                                        .toString(),
+                                    tripName: provider
+                                        .getSelectedDeparture!.trip.tripName,
+                                  ),
+                                  trip: provider.getSelectedDeparture!,
+                                  hotel: (provider.reserveHotel)
+                                      ? provider
+                                          .getSelectedDeparture!.trip.hotel
+                                      : null,
+                                  flight: (provider.reserveFlight)
+                                      ? provider
+                                          .getSelectedDeparture!.trip.flight
+                                      : null,
+                                ),
+                              );
+                              EasyLoading.dismiss();
+                              BotToastServices.showSuccessMessage(
+                                "Reservation Confirmed",
+                              );
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Home(),
+                                ),
+                                (route) => false,
+                              );
+                            },
                           ),
                         ),
                         0.01.width.vSpace,
@@ -273,7 +314,7 @@ class ConfirmUserReservations extends StatelessWidget {
                             borderRadius: 10,
                             btnColor: Colors.red,
                             text: "Cancel",
-                            onPressed: () {},
+                            onPressed: () => Navigator.pop(context),
                           ),
                         ),
                       ],
