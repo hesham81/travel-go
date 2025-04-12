@@ -5,6 +5,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:travel_go/core/functions/calculate_distance.dart';
 import 'package:travel_go/models/credit_card_model.dart';
+import 'package:travel_go/models/reservation_model.dart';
 import '/core/utils/firebase_auth_services.dart';
 import '/core/functions/city_locations.dart';
 import '/modules/layout/pages/admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
@@ -14,6 +15,7 @@ class ReservationProvider extends ChangeNotifier {
   late User? user;
   var _valid = true;
   bool reserveHotel = false;
+  ReservationModel? reservation;
 
   bool reserveFlight = false;
 
@@ -22,6 +24,12 @@ class ReservationProvider extends ChangeNotifier {
   int totalUsers = 0;
   String? _address;
   CreditCardModel? card;
+
+  ReservationModel? get getReservation => reservation;
+  void setReservation(ReservationModel? value) {
+    reservation = value;
+    notifyListeners();
+  }
 
   int calculateDistanceFromLocation() {
     return calculateDistance(

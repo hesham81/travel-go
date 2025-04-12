@@ -42,7 +42,7 @@ class CustomViewWidget extends StatelessWidget {
                     ),
                     0.02.width.hSpace,
                     Text(
-                      model.hotelLocation.split(",").last.trim(),
+                      "model.hotelLocation.split("").last.trim()",
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,

@@ -66,11 +66,25 @@ class UserProfile extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 20),
-                CircleAvatar(
-                  radius: 35,
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.person, size: 40, color: Color(0xFF0d75b4)),
-                ),
+                (user.photoURL != null)
+                    ? Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: AppColors.greyColor,
+                            width: 4,
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage:
+                              CachedNetworkImageProvider(user.photoURL!),
+                        ),
+                      )
+                    : CircleAvatar(
+                        radius: 50,
+                        backgroundImage: AssetImage(AppAssets.profile),
+                      ),
                 SizedBox(height: 10),
                 Text(
                   user.displayName ?? 'No Name',

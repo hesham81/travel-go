@@ -12,7 +12,7 @@ import '/modules/layout/pages/admin/menna/trippp/new_trip_screen.dart';
 import '/modules/layout/pages/admin/task/Addflight.dart';
 import '/modules/layout/pages/admin/task/update_trip.dart';
 
-class Tripscreen extends StatelessWidget {
+class AdminTripScreen extends StatelessWidget {
   final Map<String, Widget Function()> pageRoutes = {
     "Browse Trip": () => BrowseTrip(),
     "New Trip": () => NewTripScreen(),

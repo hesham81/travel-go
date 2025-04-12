@@ -10,7 +10,7 @@ import 'flight/NewFlight.dart';
 import 'flight/ViewFlightToUpdate.dart';
 import 'flight/browseflight2.dart';
 
-class flightscreen extends StatelessWidget {
+class AdminFlightScreen extends StatelessWidget {
   final Map<String, Widget Function()> pageRoutes = {
     // Flight
     "Browse Flight": () => BrowseFlight2(),

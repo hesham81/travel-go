@@ -44,8 +44,9 @@ abstract class HotelsDB {
         value1: hotel.hotelName,
         value2: hotel.hotelLocation,
       );
+      hotel.id = id ;
 
-      await _firestore.collection("Hotel").doc(id).set(hotel.toMap());
+      await _firestore.collection("Hotel").doc(hotel.id).set(hotel.toMap());
       BotToastServices.showSuccessMessage(
         "Hotel Added",
       );

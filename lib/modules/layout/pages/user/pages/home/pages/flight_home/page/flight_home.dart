@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_go/core/providers/collections_provider.dart';
 import 'package:travel_go/core/providers/reservation_provider.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/flight_home/page/reservationflight.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widget/custom_container.dart';
-import '/modules/layout/pages/user/pages/home/pages/reservation/pages/flight_reservation/pages/flights_reservations_basic_info/pages/flight_reservations.dart';
 import '/modules/layout/pages/user/widget/app_bar.dart';
 
 class FlightHome extends StatefulWidget {
@@ -237,7 +236,7 @@ class _FlightHomeState extends State<FlightHome> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => FlightReservations(),
+                      builder: (context) => BookingScreen(),
                     ),
                   );
                 },
