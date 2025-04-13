@@ -137,7 +137,7 @@ class _ConfirmHotelReservationsState extends State<ConfirmHotelReservations> {
                     child: CustomElevatedButton(
                       text: "OK",
                       onPressed: () {
-                        provider.reserveHotel = true;
+                        provider.setReserveHotel(true);
                         slideLeftWidget(
                           newPage: ConfirmUserReservations(),
                           context: context,
@@ -151,7 +151,7 @@ class _ConfirmHotelReservationsState extends State<ConfirmHotelReservations> {
                       text: "Cancel",
                       onPressed: () {
                         Navigator.pop(context);
-                        provider.reserveHotel = false;
+                        provider.setReserveHotel(false);
                       },
                       btnColor: AppColors.errorColor,
                     ),

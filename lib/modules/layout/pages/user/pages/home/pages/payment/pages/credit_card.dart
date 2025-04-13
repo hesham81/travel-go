@@ -201,7 +201,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                                 if (value) {
                                   EasyLoading.dismiss();
                                   await _playSounds();
-                                  provider.reserveFlight = true;
+                                  provider.setReserveFlight(true);
                                   replaceWidget(
                                     newPage: widget.route,
                                     context: context,

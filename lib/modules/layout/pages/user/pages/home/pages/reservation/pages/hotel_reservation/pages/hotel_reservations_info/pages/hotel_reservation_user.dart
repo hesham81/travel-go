@@ -320,9 +320,13 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
                           Expanded(
                             child: CustomElevatedButton(
                               text: "Confirm",
-                              onPressed: () => slideLeftWidget(
+                              onPressed: () {
+                                provider.setReserveHotel(true);
+                                slideLeftWidget(
                                   newPage: ConfirmHotelReservations(),
-                                  context: context),
+                                  context: context,
+                                );
+                              },
                             ),
                           ),
                           0.01.width.vSpace,

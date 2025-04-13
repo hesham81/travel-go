@@ -46,4 +46,13 @@ abstract class IdGenerator {
   }) {
     return "Departure-$tripName-$from-$to";
   }
+
+  static generateReservationId({
+    required String name,
+    required DateTime date,
+    required String type,
+    required String uid ,
+  }) {
+    return "Reservation - $type-$name-${date.toString()}-$uid";
+  }
 }

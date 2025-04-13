@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/models/reservation_model.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
 import '/core/utils/company_collections.dart';
 import '/models/trip_data_model.dart';
@@ -9,6 +10,14 @@ class CollectionsProvider extends ChangeNotifier {
   List<Company> _companies = [];
   List<TripDataModel> _trips = [];
   List<TripDepartureDataModel> _departures = [];
+  ReservationModel? reservation;
+
+  void setReservation(ReservationModel? value) {
+    reservation = value;
+    notifyListeners();
+  }
+
+  ReservationModel? get getReservation => reservation;
 
   CollectionsProvider() {
     getAllCompanies();
@@ -37,7 +46,6 @@ class CollectionsProvider extends ChangeNotifier {
   getAllTrips() async {
     await TripCollections.getListOfTrips().then((value) {
       _trips = value;
-
     });
     notifyListeners();
   }

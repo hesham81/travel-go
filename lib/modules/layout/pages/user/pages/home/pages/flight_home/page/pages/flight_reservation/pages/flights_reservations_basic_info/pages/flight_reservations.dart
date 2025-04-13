@@ -77,7 +77,7 @@ class _ReserveFlightState extends State<ReserveFlight> {
               child: CustomElevatedButton(
                 text: "Skip Now",
                 onPressed: () {
-                  provider.reserveFlight = false;
+                  provider.setReserveFlight(false);
                   slideRightWidget(
                     newPage: HotelReservationUser(),
                     context: context,
@@ -231,6 +231,8 @@ class _ReserveFlightState extends State<ReserveFlight> {
                           child: CustomElevatedButton(
                               text: "OK",
                               onPressed: () {
+                                provider.setReserveFlight(true);
+
                                 slideRightWidget(
                                   newPage: FlightAccomdationsReservations(),
                                   context: context,

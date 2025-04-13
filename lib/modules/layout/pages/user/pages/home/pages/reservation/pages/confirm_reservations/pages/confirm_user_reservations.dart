@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lottie/lottie.dart';
@@ -46,6 +47,8 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
     flight = (await FlightCollections.getFlightById(
       flightId: provider.getSelectedDeparture!.trip.flightId,
     ))!;
+
+    trip = provider.getSelectedDeparture!;
 
     isLoading = false;
     setState(() {});
@@ -307,23 +310,20 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
                                     await ReservationCollections.addReservation(
                                       ReservationModel(
                                         uid: provider.user!.uid,
-                                        id: IdGenerator.generateDepartureId(
-                                          from: provider
-                                              .getSelectedDeparture!.from
-                                              .toString(),
-                                          to: provider.getSelectedDeparture!.to
-                                              .toString(),
-                                          tripName: provider
-                                              .getSelectedDeparture!
-                                              .trip
-                                              .tripName,
+                                        id: IdGenerator.generateReservationId(
+                                          name: trip.trip.tripName,
+                                          date: trip.from,
+                                          type: "Trip",
+                                          uid: FirebaseAuth
+                                              .instance.currentUser!.uid,
                                         ),
-                                        tripId: provider
-                                            .getSelectedDeparture!.id,
-                                        hotelId: (provider.reserveHotel)
+                                        totalGuests: provider.totalUsers + 1 ,
+                                        tripId:
+                                            provider.getSelectedDeparture!.id,
+                                        hotelId: (provider.getReserveHotel)
                                             ? hotel.id
                                             : null,
-                                        flightId: (provider.reserveFlight)
+                                        flightId: (provider.getReserveFlight)
                                             ? flight.flightId
                                             : null,
                                       ),

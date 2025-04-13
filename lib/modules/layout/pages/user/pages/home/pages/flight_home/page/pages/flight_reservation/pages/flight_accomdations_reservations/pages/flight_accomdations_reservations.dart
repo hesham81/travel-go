@@ -374,7 +374,7 @@ class _ReserveFlightAccomdationState extends State<ReserveFlightAccomdation> {
                             text: "Cancel",
                             onPressed: () {
                               Navigator.pop(context);
-                              provider.reserveFlight = false;
+                              provider.setReserveFlight(false);
                             },
                             btnColor: AppColors.errorColor,
                           ),

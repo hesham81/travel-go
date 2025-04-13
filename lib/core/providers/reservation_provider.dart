@@ -14,10 +14,21 @@ class ReservationProvider extends ChangeNotifier {
   TripDepartureDataModel? selectedDeparture;
   late User? user;
   var _valid = true;
-  bool reserveHotel = false;
+  late bool _reserveHotel;
   ReservationModel? reservation;
 
-  bool reserveFlight = false;
+  late bool _reserveFlight ;
+
+  bool get getReserveHotel => _reserveHotel;
+  bool get getReserveFlight => _reserveFlight;
+  void setReserveHotel(bool value) {
+    _reserveHotel = value;
+    notifyListeners();
+  }
+  void setReserveFlight(bool value) {
+    _reserveFlight = value;
+    notifyListeners();
+  }
 
   Location _location = Location();
   LocationData? _locationData;
@@ -62,6 +73,8 @@ class ReservationProvider extends ChangeNotifier {
   CreditCardModel? get getCard => card;
 
   ReservationProvider() {
+    _reserveHotel = false;
+    _reserveFlight = false;
     _getCurrentLocationData();
     user = FirebaseAuthServices.getCurrentUserData();
     print("Address From Provider : $_address");

@@ -361,13 +361,17 @@ class _FlightAccomdationsReservationsState
                         Expanded(
                           child: CustomElevatedButton(
                             text: "OK",
-                            onPressed: () => slideRightWidget(
+                            onPressed: () {
+                              provider.setReserveFlight(true);
+                              slideRightWidget(
                                 newPage: (provider.getCard == null)
                                     ? CreditCardScreen(
                                         route: HotelReservationUser(),
                                       )
                                     : OldCards(),
-                                context: context),
+                                context: context,
+                              );
+                            },
                           ),
                         ),
                         0.02.width.vSpace,
@@ -376,7 +380,7 @@ class _FlightAccomdationsReservationsState
                             text: "Cancel",
                             onPressed: () {
                               Navigator.pop(context);
-                              provider.reserveFlight = false;
+                              provider.setReserveFlight(false);
                             },
                             btnColor: AppColors.errorColor,
                           ),

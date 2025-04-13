@@ -8,6 +8,8 @@ import 'hotel_model.dart';
 class ReservationModel {
   String id;
 
+  final int totalGuests;
+
   final String uid;
 
   final String? tripId;
@@ -17,6 +19,7 @@ class ReservationModel {
   final String? flightId;
 
   ReservationModel({
+    this.totalGuests = 1 ,
     required this.uid,
     required this.id,
     required this.tripId,
@@ -26,6 +29,7 @@ class ReservationModel {
 
   factory ReservationModel.fromJson(Map<String, dynamic> json) {
     return ReservationModel(
+      totalGuests: json['totalGuests'],
       uid: json['uid'],
       id: json['id'],
       tripId: json['trip'],
@@ -36,6 +40,7 @@ class ReservationModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'totalGuests': totalGuests,
       'id': id,
       'uid': uid,
       'trip': tripId,
