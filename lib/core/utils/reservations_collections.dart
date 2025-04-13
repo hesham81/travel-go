@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:travel_go/models/reservation_model.dart';
 
-class ReservationCollections {
+abstract class ReservationCollections {
   static final _firestore =
       FirebaseFirestore.instance.collection("Reservations");
 
@@ -15,7 +15,7 @@ class ReservationCollections {
   }
 
   static Future<void> addReservation(ReservationModel reservation) async {
-    await _colRef().add(reservation);
+    await _colRef().doc(reservation.id).set(reservation);
   }
 
   static Future<void> deleteReservation(String id) async {

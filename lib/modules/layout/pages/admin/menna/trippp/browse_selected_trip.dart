@@ -138,7 +138,7 @@ class BrowseSelectedTrip extends StatelessWidget {
                     context,
                     SlideRightRoute(
                       page: FlightDetails(
-                        flight: model.flight,
+                        flight: model.flightId,
                       ),
                     ),
                   );

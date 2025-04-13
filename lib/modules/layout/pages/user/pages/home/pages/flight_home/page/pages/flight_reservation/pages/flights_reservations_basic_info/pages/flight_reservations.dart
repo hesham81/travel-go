@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/core/utils/flight_collections.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/hotel_reservations_info/pages/hotel_reservation_user.dart';
+import '../../../../../../../../../../../../../../models/flight.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/extensions.dart';
 import '/core/providers/reservation_provider.dart';
@@ -20,6 +22,26 @@ class ReserveFlight extends StatefulWidget {
 }
 
 class _ReserveFlightState extends State<ReserveFlight> {
+  Flight? flight;
+  bool isLoading = true;
+
+  Future<void> getFlight() async {
+    var provider = Provider.of<ReservationProvider>(context, listen: false);
+    flight = await FlightCollections.getFlightById(
+      flightId: provider.getSelectedDeparture!.trip.flightId,
+    );
+    isLoading = false;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    Future.wait([
+      getFlight(),
+    ]);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
@@ -55,7 +77,7 @@ class _ReserveFlightState extends State<ReserveFlight> {
               child: CustomElevatedButton(
                 text: "Skip Now",
                 onPressed: () {
-                  provider.reserveFlight = false ;
+                  provider.reserveFlight = false;
                   slideRightWidget(
                     newPage: HotelReservationUser(),
                     context: context,
@@ -66,167 +88,170 @@ class _ReserveFlightState extends State<ReserveFlight> {
           ],
         ).hPadding(0.03.width),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SafeArea(
-              child: AppBarWidget(),
-            ),
-            Image.asset(
-              AppAssets.flightReservationUsers,
-            ),
-            SourceDestinationFlightTripUser(
-              model: provider.getSelectedDeparture!.trip,
-            ),
-            0.02.height.hSpace,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.4),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      Icon(
-                        Icons.date_range,
-                        color: AppColors.blackColor.withAlpha(90),
-                      ),
-                      0.01.height.hSpace,
-                      Text(
-                        "Date",
-                        style: theme.labelLarge!.copyWith(
-                          color: AppColors.blackColor,
-                        ),
-                      ),
-                      0.01.height.hSpace,
-                      Text(
-                        "${provider.getSelectedDeparture!.from.day} ${provider.getMonthAbbreviation(provider.getSelectedDeparture!.from.month)} ${provider.getDayOfWeek(provider.getSelectedDeparture!.from).substring(0, 3)}",
-                        style: theme.labelLarge!.copyWith(
-                          color: AppColors.blackColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                0.07.width.vSpace,
-                Container(
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.4),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      Icon(
-                        Icons.person_outline,
-                        color: AppColors.blackColor.withAlpha(90),
-                      ),
-                      0.01.height.hSpace,
-                      Text(
-                        "Passengers",
-                        style: theme.labelLarge!.copyWith(
-                          color: AppColors.blackColor,
-                        ),
-                      ),
-                      0.01.height.hSpace,
-                      Text(
-                        "${provider.totalUsers + 1} Persons",
-                        style: theme.labelLarge!.copyWith(
-                          color: AppColors.blackColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ).hPadding(0.03.width),
-            0.01.height.hSpace,
-            Divider().hPadding(0.25.width),
-            0.01.height.hSpace,
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.4),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
+      body: (isLoading)
+          ? CircularProgressIndicator(
+              color: AppColors.newBlueColor,
+            )
+          : SingleChildScrollView(
               child: Column(
                 children: [
-                  LabelsWidget(
-                    label: "Airline : ",
-                    value: provider.getSelectedDeparture!.trip.flight.airline!
-                        .flighAirLineName,
+                  SafeArea(
+                    child: AppBarWidget(),
                   ),
+                  Image.asset(
+                    AppAssets.flightReservationUsers,
+                  ),
+                  SourceDestinationFlightTripUser(
+                    model: provider.getSelectedDeparture!.trip,
+                  ),
+                  0.02.height.hSpace,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.4),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.date_range,
+                              color: AppColors.blackColor.withAlpha(90),
+                            ),
+                            0.01.height.hSpace,
+                            Text(
+                              "Date",
+                              style: theme.labelLarge!.copyWith(
+                                color: AppColors.blackColor,
+                              ),
+                            ),
+                            0.01.height.hSpace,
+                            Text(
+                              "${provider.getSelectedDeparture!.from.day} ${provider.getMonthAbbreviation(provider.getSelectedDeparture!.from.month)} ${provider.getDayOfWeek(provider.getSelectedDeparture!.from).substring(0, 3)}",
+                              style: theme.labelLarge!.copyWith(
+                                color: AppColors.blackColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      0.07.width.vSpace,
+                      Container(
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.4),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.person_outline,
+                              color: AppColors.blackColor.withAlpha(90),
+                            ),
+                            0.01.height.hSpace,
+                            Text(
+                              "Passengers",
+                              style: theme.labelLarge!.copyWith(
+                                color: AppColors.blackColor,
+                              ),
+                            ),
+                            0.01.height.hSpace,
+                            Text(
+                              "${provider.totalUsers + 1} Persons",
+                              style: theme.labelLarge!.copyWith(
+                                color: AppColors.blackColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ).hPadding(0.03.width),
                   0.01.height.hSpace,
-                  LabelsWidget(
-                    label: "Flight ID : ",
-                    value: provider.getSelectedDeparture!.trip.flight.flightId,
-                  ),
+                  Divider().hPadding(0.25.width),
                   0.01.height.hSpace,
-                  LabelsWidget(
-                    label: "Duration : ",
-                    value: "8 Hours",
-                  ),
-                  0.01.height.hSpace,
-                ],
-              ),
-            ).hPadding(0.03.width),
-            0.03.height.hSpace,
-            SizedBox(
-              width: double.maxFinite,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CustomElevatedButton(
-                        text: "OK",
-                        onPressed: () {
-                          slideRightWidget(
-                            newPage: FlightAccomdationsReservations(),
-                            context: context,
-                          );
-                        }),
-                  ),
-                  0.03.width.vSpace,
-                  Expanded(
-                    child: CustomElevatedButton(
-                      text: "Cancel",
-                      btnColor: AppColors.errorColor,
-                      onPressed: () => Navigator.pop(context),
+                  Container(
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.4),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
                     ),
-                  ),
+                    child: Column(
+                      children: [
+                        LabelsWidget(
+                          label: "Airline : ",
+                          value: flight!.airline!.flighAirLineName,
+                        ),
+                        0.01.height.hSpace,
+                        LabelsWidget(
+                          label: "Flight ID : ",
+                          value: flight!.flightId,
+                        ),
+                        0.01.height.hSpace,
+                        LabelsWidget(
+                          label: "Duration : ",
+                          value: "8 Hours",
+                        ),
+                        0.01.height.hSpace,
+                      ],
+                    ),
+                  ).hPadding(0.03.width),
+                  0.03.height.hSpace,
+                  SizedBox(
+                    width: double.maxFinite,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: CustomElevatedButton(
+                              text: "OK",
+                              onPressed: () {
+                                slideRightWidget(
+                                  newPage: FlightAccomdationsReservations(),
+                                  context: context,
+                                );
+                              }),
+                        ),
+                        0.03.width.vSpace,
+                        Expanded(
+                          child: CustomElevatedButton(
+                            text: "Cancel",
+                            btnColor: AppColors.errorColor,
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ).hPadding(0.03.width),
+                  0.03.height.hSpace,
                 ],
               ),
-            ).hPadding(0.03.width),
-            0.03.height.hSpace,
-          ],
-        ),
-      ),
+            ),
     );
   }
 }

@@ -44,7 +44,7 @@ abstract class HotelsDB {
         value1: hotel.hotelName,
         value2: hotel.hotelLocation,
       );
-      hotel.id = id ;
+      hotel.id = id;
 
       await _firestore.collection("Hotel").doc(hotel.id).set(hotel.toMap());
       BotToastServices.showSuccessMessage(
@@ -139,6 +139,14 @@ abstract class HotelsDB {
                 (e) => e.data(),
               )
               .toList(),
+        );
+  }
+
+  static Future<Hotel> getHotelById({
+    required String hotelId,
+  }) async {
+    return await collectionRef().doc(hotelId).get().then(
+          (value) => value.data()!,
         );
   }
 }

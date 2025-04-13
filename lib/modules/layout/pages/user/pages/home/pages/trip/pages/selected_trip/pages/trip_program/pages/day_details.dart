@@ -33,7 +33,9 @@ class _DayDetailsState extends State<DayDetails> {
   Widget build(BuildContext context) {
     YoutubePlayerController _controller = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(
-          widget.model.attractions.first.videoUrl!)!,
+            widget.model.attractions.first.videoUrl ?? "",
+          ) ??
+          "",
     );
     var theme = Theme.of(context).textTheme;
     return Scaffold(
@@ -168,47 +170,46 @@ class _DayDetailsState extends State<DayDetails> {
                 ),
                 0.01.height.hSpace,
                 Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      LabelsWidget(
-                        label: "Name : ",
-                        value: widget.model.attractions.first.title,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LabelsWidget(
+                      label: "Name : ",
+                      value: widget.model.attractions.first.title,
+                    ),
+                    0.01.height.hSpace,
+                    Text(
+                      'Description : ',
+                      style: theme.labelLarge!.copyWith(
+                        color: AppColors.newBlueColor,
                       ),
-                      0.01.height.hSpace,
-                      Text(
-                        'Description : ',
+                    ),
+                    0.01.height.hSpace,
+                    RichReadMoreText(
+                      TextSpan(
+                        text: widget.model.attractions.first.description,
                         style: theme.labelLarge!.copyWith(
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                      settings: LineModeSettings(
+                        trimLines: 3,
+                        trimCollapsedText: 'More',
+                        trimExpandedText: 'Less',
+                        moreStyle: theme.labelLarge!.copyWith(
                           color: AppColors.newBlueColor,
                         ),
-                      ),
-                      0.01.height.hSpace,
-                      RichReadMoreText(
-                        TextSpan(
-                          text: widget.model.attractions.first.description,
-                          style: theme.labelLarge!.copyWith(
-                            color: AppColors.blackColor,
-                          ),
+                        lessStyle: theme.labelLarge!.copyWith(
+                          color: AppColors.newBlueColor,
                         ),
-                        settings: LineModeSettings(
-                          trimLines: 3,
-                          trimCollapsedText: 'More',
-                          trimExpandedText: 'Less',
-                          moreStyle: theme.labelLarge!.copyWith(
-                            color: AppColors.newBlueColor,
-                          ),
-                          lessStyle: theme.labelLarge!.copyWith(
-                            color: AppColors.newBlueColor,
-                          ),
-                          onPressReadMore: () {},
-                          onPressReadLess: () {},
-                        ),
+                        onPressReadMore: () {},
+                        onPressReadLess: () {},
                       ),
-                      0.01.height.hSpace,
-                    ],
-                  ),
+                    ),
+                    0.01.height.hSpace,
+                  ],
+                ),
                 0.01.height.hSpace,
-
               ],
             ).hPadding(0.03.width)
           ],

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/core/theme/app_colors.dart';
+import 'package:travel_go/core/utils/firebase_auth_services.dart';
 import 'package:travel_go/modules/layout/pages/admin/task/flightscreen.dart';
 import 'package:travel_go/modules/layout/pages/admin/task/hotelscreen.dart';
 import 'package:travel_go/modules/layout/pages/admin/task/tripscreen.dart';
+import 'package:travel_go/modules/sign_in/pages/sign_in.dart';
 
 import 'Addflight.dart';
 import 'attractionscreen.dart';
@@ -73,7 +76,20 @@ class AdminHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff0d75b4),
+        leading: IconButton(
+          onPressed: () async {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              SignIn.routeName,
+              (route) => false,
+            );
+            await FirebaseAuthServices.logout();
+          },
+          icon: Icon(
+            Icons.login_outlined,
+            color: AppColors.errorColor,
+          ),
+        ),
         title: Text(
           "Tour And Travel",
           style: TextStyle(

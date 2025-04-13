@@ -10,29 +10,27 @@ class ReservationModel {
 
   final String uid;
 
-  final TripDepartureDataModel? trip;
+  final String? tripId;
 
-  final Hotel? hotel;
+  final String? hotelId;
 
-  final Flight? flight;
+  final String? flightId;
 
   ReservationModel({
     required this.uid,
     required this.id,
-    required this.trip,
-    required this.hotel,
-    required this.flight,
+    required this.tripId,
+    required this.hotelId,
+    required this.flightId,
   });
 
   factory ReservationModel.fromJson(Map<String, dynamic> json) {
     return ReservationModel(
       uid: json['uid'],
       id: json['id'],
-      trip: json['trip'] != null
-          ? TripDepartureDataModel.fromMap(json['trip'])
-          : null,
-      hotel: json['hotel'] != null ? Hotel.fromMap(json['hotel']) : null,
-      flight: json['flight'] != null ? Flight.fromMap(json['flight']) : null,
+      tripId: json['trip'],
+      hotelId: json['hotel'] ,
+      flightId: json['flight'],
     );
   }
 
@@ -40,9 +38,9 @@ class ReservationModel {
     return {
       'id': id,
       'uid': uid,
-      'trip': trip?.toMap(),
-      'hotel': hotel?.toMap(),
-      'flight': flight?.toMap(),
+      'trip': tripId,
+      'hotel': hotelId,
+      'flight': flightId,
     };
   }
 }

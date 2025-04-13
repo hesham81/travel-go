@@ -27,14 +27,14 @@ class TripDataModel {
 
   final List<ProgramModel> programDetails;
 
-  final Hotel hotel;
+  final String hotelId;
 
-  final Flight flight;
+  final String flightId;
   final String source;
 
   final String destination;
   final int totalDays;
-  List<String>? favourites ;
+  List<String>? favourites;
 
   TripDataModel({
     required this.tripId,
@@ -49,13 +49,13 @@ class TripDataModel {
     required this.currency,
     required this.organizedBy,
     required this.programDetails,
-    required this.hotel,
-    required this.flight,
+    required this.hotelId,
+    required this.flightId,
     required this.totalDays,
     this.imageUrl,
     required this.source,
     required this.destination,
-    this.favourites ,
+    this.favourites,
   });
 
   Map<String, dynamic> toMap() {
@@ -72,8 +72,8 @@ class TripDataModel {
       'currency': currency,
       'organizedBy': organizedBy.toJson(),
       'programDetails': programDetails.map((x) => x.toMap()).toList(),
-      'hotel': hotel.toMap(),
-      'flight': flight.toMap(),
+      'hotelId': hotelId,
+      'flightId': flightId,
       'imageUrl': imageUrl,
       "source": source,
       "destination": destination,
@@ -102,12 +102,8 @@ class TripDataModel {
           (x) => ProgramModel.fromMap(x),
         ),
       ),
-      hotel: Hotel.fromMap(
-        map['hotel'],
-      ),
-      flight: Flight.fromMap(
-        map['flight'],
-      ),
+      hotelId: map['hotelId'],
+      flightId: map['flightId'],
       imageUrl: map['imageUrl'],
       source: map['source'],
       destination: map['destination'],

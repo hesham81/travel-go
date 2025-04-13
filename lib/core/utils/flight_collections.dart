@@ -15,14 +15,15 @@ abstract class FlightCollections {
     );
   }
 
-  static Future<bool> addFlight(BuildContext context , {required Flight flight}) async {
+  static Future<bool> addFlight(BuildContext context,
+      {required Flight flight}) async {
     try {
       await _colRef().doc(flight.flightId).set(flight);
-      return true ;
+      return true;
     } catch (error) {
       print(error.toString());
       BotToastServices.showErrorMessage(error.toString());
-      return false ;
+      return false;
     }
   }
 
@@ -38,5 +39,14 @@ abstract class FlightCollections {
 
   static Stream<QuerySnapshot<Flight>> StreamFlight() {
     return _colRef().snapshots();
+  }
+
+  static Future<Flight?> getFlightById({required String flightId}) async {
+    try {
+      return await _colRef().doc(flightId).get().then((value) => value.data());
+    } catch (error) {
+      print(error.toString());
+      return null;
+    }
   }
 }

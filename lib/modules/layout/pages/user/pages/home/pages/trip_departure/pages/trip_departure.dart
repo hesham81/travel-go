@@ -44,7 +44,9 @@ class _TripDepartureState extends State<TripDeparture> {
 
   bool _checkIsAvailable(TripDepartureDataModel model) {
     bool isAvailable = false;
-    if (model.availableSeats > 0 && model.from.day != DateTime.now().day && DateTime.now().isBefore(model.from)) {
+    if (model.availableSeats > 0 &&
+        model.from.day != DateTime.now().day &&
+        DateTime.now().isBefore(model.from)) {
       isAvailable = true;
     }
     return isAvailable;
@@ -56,13 +58,14 @@ class _TripDepartureState extends State<TripDeparture> {
         model.from.month == tomorrow.month &&
         model.from.day == tomorrow.day;
   }
-  bool _checkIfToday(TripDepartureDataModel model)
-  {
-    if (model.from.day == DateTime.now().day && model.from.month == DateTime.now().month && model.from.year == DateTime.now().year)
-      {
-        return true ;
-      }
-    return false ;
+
+  bool _checkIfToday(TripDepartureDataModel model) {
+    if (model.from.day == DateTime.now().day &&
+        model.from.month == DateTime.now().month &&
+        model.from.year == DateTime.now().year) {
+      return true;
+    }
+    return false;
   }
 
   bool _checkIsThisWeek(TripDepartureDataModel model) {
@@ -186,15 +189,16 @@ class _TripDepartureState extends State<TripDeparture> {
                         (element) => element.trip.tripId == widget.model.tripId)
                     .toList();
                 if (selectedIndex == 0) filterList = departures;
-                if (filterList.isEmpty)
+                if (filterList.isEmpty) {
                   return Image.asset(AppAssets.noSearchResult);
+                }
                 return (providerConnections.getConnectionStatus)
                     ? ListView.separated(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.zero,
                         itemBuilder: (context, index) => GestureDetector(
-                          onTap: (filterList[index  ].availableSeats > 0 &&
+                          onTap: (filterList[index].availableSeats > 0 &&
                                   filterList[index].from.day !=
                                       DateTime.now().day)
                               ? () {

@@ -117,7 +117,12 @@ class _ConfirmHotelReservationsState extends State<ConfirmHotelReservations> {
                   vertical: 0.01.height,
                   horizontal: 0.03.width,
                 ),
-                listItemBuilder: (context, item, isSelected, onItemSelect) =>
+                listItemBuilder: (
+                  context,
+                  item,
+                  isSelected,
+                  onItemSelect,
+                ) =>
                     CustomContainer(
                   child: LabelsWidget(
                     label: "",

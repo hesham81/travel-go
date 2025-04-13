@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/browse_hotels/browse_admin_hotels.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/new_hotel/pages/new_hotel.dart';
 import 'package:travel_go/modules/layout/pages/admin/task/Addflight.dart';
 
 class AdminHotelScreen extends StatelessWidget {
   final Map<String, Widget Function()> pageRoutes = {
-    "Browse hotel": () => Addflight(),
+    "Browse hotel": () => BrowseAdminHotels(),
     "New hotel": () => NewHotel(),
     "Update hotel": () => Addflight(),
     "Delete hotel": () => Addflight(),
-
-    // hotel accommodation
-    "Browse Accommodation": () => Addflight(),
-    "New Accommodation": () => Addflight(),
-    "Update Accommodation": () => Addflight(),
-    "Delete Accommodation": () => Addflight(),
   };
 
   void _handleMenuSelection(BuildContext context, String value) {
@@ -102,8 +97,6 @@ class AdminHotelScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _buildPopupButton(context, "hotel"),
-              SizedBox(height: 12),
-              _buildPopupButton(context, "Hotel Accommodation"),
             ],
           ),
         ),

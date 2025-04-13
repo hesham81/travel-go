@@ -8,6 +8,10 @@ import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/user_trip_flight/pages/user_trip_flight.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/user_trip_hotel/pages/user_trip_hotel.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/user_trip_reviews/pages/user_trip_reviews.dart';
+import '../../../../../../../../../../../core/utils/flight_collections.dart';
+import '../../../../../../../../../../../core/utils/hotels_db.dart';
+import '../../../../../../../../../../../models/flight.dart';
+import '../../../../../../../../../../../models/hotel_model.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/trip_program/pages/trip_program_home.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
@@ -32,6 +36,25 @@ class SelectedHomeScreenTrip extends StatefulWidget {
 }
 
 class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
+  late Hotel hotel;
+
+  late Flight flight;
+
+  bool isLoading = true;
+
+  Future<void> initData() async {
+    hotel = await HotelsDB.getHotelById(
+      hotelId: widget.model.hotelId,
+    );
+
+    flight = (await FlightCollections.getFlightById(
+      flightId: widget.model.flightId,
+    ))!;
+
+    isLoading = false;
+    setState(() {});
+  }
+
   List<String> buttonsItems = [
     "Utilities",
     "Program",
@@ -68,8 +91,12 @@ class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
 
   @override
   void initState() {
+
     _getAllFavouriteTrips();
     _calcTotalPlaces();
+    Future.wait([
+      initData(),
+    ]);
     super.initState();
   }
 
@@ -87,7 +114,7 @@ class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
         model: widget.model,
       ),
       UserTripFlight(
-        model: widget.model.flight,
+        model: flight,
         trip: widget.model,
       ),
       UserTripReviews(),
@@ -96,105 +123,114 @@ class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
       ),
     ];
     var theme = Theme.of(context).textTheme;
-    var provider = Provider.of<CollectionsProvider>(context);
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SafeArea(
-              child: AppBarWidget(),
-            ),
-            SizedBox(
-              height: 0.4.height,
-              child: Stack(
+      body: (isLoading)
+          ? CircularProgressIndicator(
+              color: AppColors.newBlueColor,
+            ).center
+          : SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: LoadingImageNetworkWidget(
-                      imageUrl: widget.model.imageUrl!,
+                  SafeArea(
+                    child: AppBarWidget(),
+                  ),
+                  SizedBox(
+                    height: 0.4.height,
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(25),
+                          child: LoadingImageNetworkWidget(
+                            imageUrl: widget.model.imageUrl!,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              widget.model.destination,
+                              style: theme.titleMedium!.copyWith(
+                                color: AppColors.whiteColor,
+                              ),
+                            ),
+                            Spacer(),
+                            IconButton(
+                              onPressed: () async {
+                                EasyLoading.show();
+                                if (isFavourite) {
+                                  int index = widget.model.favourites!.indexOf(
+                                      FirebaseAuthServices.getCurrentUserData()!
+                                          .uid);
+                                  widget.model.favourites!.removeAt(index);
+
+                                  await TripCollections.updateFavouriteTrip(
+                                      widget.model);
+                                  isFavourite = false;
+                                } else {
+                                  widget.model.favourites!.add(
+                                      FirebaseAuthServices.getCurrentUserData()!
+                                          .uid);
+                                  await TripCollections.updateFavouriteTrip(
+                                      widget.model);
+                                  isFavourite = true;
+                                }
+                                EasyLoading.dismiss();
+                                setState(() {});
+                              },
+                              style: IconButton.styleFrom(
+                                backgroundColor: AppColors.whiteColor,
+                                padding: EdgeInsets.zero,
+                              ),
+                              icon: (isFavourite)
+                                  ? Icon(
+                                      Icons.bookmark,
+                                      color: AppColors.newBlueColor,
+                                    )
+                                  : Icon(
+                                      Icons.bookmark_border,
+                                      color: AppColors.newBlueColor,
+                                    ),
+                            ),
+                            0.01.height.hSpace,
+                          ],
+                        )
+                            .alignBottom()
+                            .hPadding(0.02.width)
+                            .vPadding(0.01.height),
+                        BackButton(
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(
+                              AppColors.whiteColor,
+                            ),
+                          ),
+                        ).allPadding(5)
+                      ],
                     ),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        widget.model.destination,
-                        style: theme.titleMedium!.copyWith(
-                          color: AppColors.whiteColor,
-                        ),
-                      ),
-                      Spacer(),
-                      IconButton(
-                        onPressed: () async {
-                          EasyLoading.show();
-                          if (isFavourite) {
-                            int index = widget.model.favourites!.indexOf(
-                                FirebaseAuthServices.getCurrentUserData()!.uid);
-                            widget.model.favourites!.removeAt(index);
-
-                            await TripCollections.updateFavouriteTrip(
-                                widget.model);
-                            isFavourite = false;
-                          } else {
-                            widget.model.favourites!.add(
-                                FirebaseAuthServices.getCurrentUserData()!.uid);
-                            await TripCollections.updateFavouriteTrip(widget.model);
-                            isFavourite = true;
-                          }
-                          EasyLoading.dismiss();
+                  0.015.height.hSpace,
+                  SizedBox(
+                    height: 0.04.height,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => CustomTextButton(
+                        onPressed: () {
+                          selectedIndex = index;
                           setState(() {});
                         },
-                        style: IconButton.styleFrom(
-                          backgroundColor: AppColors.whiteColor,
-                          padding: EdgeInsets.zero,
-                        ),
-                        icon: (isFavourite)
-                            ? Icon(
-                                Icons.bookmark,
-                                color: AppColors.newBlueColor,
-                              )
-                            : Icon(
-                                Icons.bookmark_border,
-                                color: AppColors.newBlueColor,
-                              ),
+                        text: buttonsItems[index],
+                        textSize: 13,
+                        textColor: (selectedIndex == index)
+                            ? AppColors.blackColor
+                            : AppColors.newBlueColor,
                       ),
-                      0.01.height.hSpace,
-                    ],
-                  ).alignBottom().hPadding(0.02.width).vPadding(0.01.height),
-                  BackButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(
-                        AppColors.whiteColor,
-                      ),
+                      separatorBuilder: (context, index) => 0.08.width.vSpace,
+                      itemCount: buttonsItems.length,
                     ),
-                  ).allPadding(5)
+                  ),
+                  body[selectedIndex],
                 ],
-              ),
+              ).hPadding(0.03.width),
             ),
-            0.015.height.hSpace,
-            SizedBox(
-              height: 0.04.height,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => CustomTextButton(
-                  onPressed: () {
-                    selectedIndex = index;
-                    setState(() {});
-                  },
-                  text: buttonsItems[index],
-                  textSize: 13,
-                  textColor: (selectedIndex == index)
-                      ? AppColors.blackColor
-                      : AppColors.newBlueColor,
-                ),
-                separatorBuilder: (context, index) => 0.08.width.vSpace,
-                itemCount: buttonsItems.length,
-              ),
-            ),
-            body[selectedIndex],
-          ],
-        ).hPadding(0.03.width),
-      ),
     );
   }
 }
