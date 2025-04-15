@@ -5,6 +5,7 @@ import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/modules/layout/pages/manager/providers/manager_provider.dart';
 
+
 class HotelReportsDataScreen extends StatefulWidget {
   const HotelReportsDataScreen({super.key});
 
