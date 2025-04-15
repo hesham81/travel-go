@@ -22,191 +22,134 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    var provider = Provider.of<ReservationProvider>(context);
-    final user = ModalRoute.of(context)?.settings.arguments as User;
     return Scaffold(
-      backgroundColor: AppColors.whiteColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          color: AppColors.blackColor,
-                        ),
-                      ),
-                      Text(
-                        "Profile",
-                        style: theme.textTheme.titleMedium!.copyWith(
-                            color: AppColors.blackColor,
-                            fontWeight: FontWeight.w800,
-                            fontStyle: FontStyle.normal),
-                      ),
-                    ],
-                  ),
-                ],
+      backgroundColor: Colors.grey[200],
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Color(0xFF0d75b4),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
               ),
-              0.03.height.hSpace,
-              user.photoURL == null
-                  ? GestureDetector(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              AppAssets.noProfileImage,
-                            ),
-                          ),
-                          shape: BoxShape.circle,
-                        ),
-                        height: 120,
-                        width: 120,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 40),
+                Row(
+                  children: [
+                    Icon(Icons.arrow_back, color: Colors.white),
+                    SizedBox(width: 10),
+                    Text(
+                      'Profile',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
-                    )
-                  : CircleAvatar(
-                      radius: 80,
-                      backgroundImage: CachedNetworkImageProvider(
-                        user.photoURL!,
-                        cacheKey: user.uid,
-                        errorListener: (p0) =>
-                            Image.asset(AppAssets.noProfileImage),
-                      ),
-                    ).allPadding(10),
-              0.01.height.hSpace,
-              Text(
-                user.displayName!,
-                style: theme.textTheme.titleLarge!.copyWith(
-                  color: AppColors.blackColor,
+                    ),
+                  ],
                 ),
-              ),
-              0.01.height.hSpace,
-              Text(
-                user.email!,
-                style: theme.textTheme.titleSmall!.copyWith(
-                  color: AppColors.blackColor.withAlpha(130),
+                SizedBox(height: 20),
+                CircleAvatar(
+                  radius: 35,
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.person, size: 40, color: Color(0xFF0d75b4)),
                 ),
-              ),
-              0.05.height.hSpace,
-              Column(
-                children: [
-                  ChooseProfileIndex(
-                    icon: Icons.person,
-                    title: "Edit Profile",
-                    button: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: AppColors.blackColor,
-                      ),
+                SizedBox(height: 10),
+                Text(
+                  'Mennarahmo',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+                Text(
+                  'mennarahmo7@gmail.com',
+                  style: TextStyle(color: Colors.white70, fontSize: 14),
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Column(
+                      children: [
+                        Icon(Icons.location_on, color: Colors.white),
+                        SizedBox(height: 5),
+                        Text('Location', style: TextStyle(color: Colors.white))
+                      ],
                     ),
-                  ),
-                  0.01.height.hSpace,
-                  ChooseProfileIndex(
-                    icon: Icons.person_4_sharp,
-                    title: "Friends",
-                    button: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: AppColors.blackColor,
-                      ),
+                    Column(
+                      children: [
+                        Icon(Icons.bookmark, color: Colors.white),
+                        SizedBox(height: 5),
+                        Text('Favorites', style: TextStyle(color: Colors.white))
+                      ],
                     ),
-                  ),
-                  0.01.height.hSpace,
-                  ChooseProfileIndex(
-                    icon: Icons.wallet,
-                    title: "Payment Methods",
-                    button: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: AppColors.blackColor,
-                      ),
+                    Column(
+                      children: [
+                        Icon(Icons.event, color: Colors.white),
+                        SizedBox(height: 5),
+                        Text('Reservations', style: TextStyle(color: Colors.white))
+                      ],
                     ),
-                  ),
-                  0.01.height.hSpace,
-                  ChooseProfileIndex(
-                    icon: Icons.credit_card_outlined,
-                    title: "Reservations",
-                    button: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: AppColors.blackColor,
-                      ),
-                    ),
-                  ),
-                  0.01.height.hSpace,
-                  ChooseProfileIndex(
-                    icon: Icons.location_on_outlined,
-                    title: "Locations",
-                    button: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: AppColors.blackColor,
-                      ),
-                    ),
-                  ),
-                  0.01.height.hSpace,
-                  ChooseProfileIndex(
-                    icon: Icons.settings,
-                    title: "Settings",
-                    button: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: AppColors.blackColor,
-                      ),
-                    ),
-                  ),
-                  0.01.height.hSpace,
-                  ChooseProfileIndex(
-                    icon: Icons.help,
-                    title: "Help",
-                    button: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: AppColors.blackColor,
-                      ),
-                    ),
-                  ),
-                  0.01.height.hSpace,
-                  SizedBox(
-                    width: double.maxFinite,
-                    child: CustomElevatedButton(
-                      text: "LogOut",
-                      onPressed: () async {
-                        EasyLoading.show();
-                        await FirebaseAuthServices.logout().then(
-                          (value) {
-                            provider.resetToken();
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              RouteNames.signIn,
-                              (route) => false,
-                            );
-                            LocalStorageData.remove(SharedPreferencesKey.login);
-                            EasyLoading.dismiss();
-                          },
-                        );
-                      },
-                      btnColor: AppColors.errorColor,
-                    ),
-                  ),
-                  0.03.height.hSpace,
-                ],
-              ).hPadding(0.05.width)
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
+          SizedBox(height: 20),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              children: [
+                ListTile(
+                  leading: Icon(Icons.person_outline),
+                  title: Text('My Profile'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: Icon(Icons.language),
+                  title: Text('Languages'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: Icon(Icons.payment),
+                  title: Text('Payments'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: Icon(Icons.logout, color: Color(0xFF0d75b4)),
+                  title: Text('Logout'),
+                  onTap: () {},
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 3,
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.black,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.airplanemode_active),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person, color: Color(0xFF0d75b4)),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }

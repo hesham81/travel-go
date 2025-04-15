@@ -29,131 +29,185 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
     var provider = Provider.of<ManagerProvider>(context);
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: RefreshIndicator(
-          onRefresh: () => provider.checkUsersReload(),
-          color: AppColors.newBlueColor,
-          backgroundColor: AppColors.whiteColor,
-          child: Column(
-            children: [
-              IconButton(
-                  onPressed: () async {
-                    await FirebaseAuthServices.logout();
-                    LocalStorageData.setString(SharedPreferencesKey.login, "");
-                    slideLeftWidget(
-                      newPage: SignIn(),
-                      context: context,
-                    );
-                  },
-                  icon: Icon(Icons.logout)),
-              Text(
-                "Users Reports :",
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Tour & travel Agency'),centerTitle: true,bottom: TabBar(tabs: [
+            Tab(text: 'Financial Reports',),
+            Tab(text: 'Managerial Reports',)
+        ]),
+        ),
+      
+          body:
+          TabBarView(
+            children:[Center(child: SingleChildScrollView(
+                child:
+              Column(children:[ Text('Reservations',style: TextStyle(color: Colors.black),),
+                SizedBox(height: 20,),
+                DividersWord(
+                  text: "Payments",
+                ).hPadding(0.03.width),
+                SizedBox(height: 20,),
+                Text('Reservations',style: TextStyle(color: Colors.black),)]),
+
+             ),),
+              Center(child:
+              SingleChildScrollView(
+            child: RefreshIndicator(
+              onRefresh: () => provider.checkUsersReload(),
+              color: AppColors.newBlueColor,
+              backgroundColor: AppColors.whiteColor,
+              child: Column(
                 children: [
-                  provider.isLoading
-                      ? CircularProgressIndicator(
-                          color: AppColors.newBlueColor,
-                        )
-                      : SizedBox(),
-                  Container(
-                    height: 50,
-                    width: 70,
-                    color: Colors.green,
-                    child: Center(
-                      child: Text(
-                        "Users",
-                        style: theme.labelLarge?.copyWith(
-                          color: AppColors.blackColor,
-                        ),
-                      ),
-                    ),
+                  Align(alignment: Alignment.topCenter,
+                    child: IconButton(
+                        onPressed: () async {
+                          await FirebaseAuthServices.logout();
+                          LocalStorageData.setString(SharedPreferencesKey.login, "");
+                          slideLeftWidget(
+                            newPage: SignIn(),
+                            context: context,
+                          );
+                        },
+                        icon: Icon(Icons.logout)),
                   ),
-                  Container(
-                    height: 50,
-                    width: 70,
-                    color: Colors.yellow,
-                    child: Center(
-                      child: Text(
-                        "Admins",
-                        style: theme.labelMedium?.copyWith(
-                          color: AppColors.blackColor,
-                        ),
-                      ),
-                    ),
+                  SizedBox(
+                    height: 20,
                   ),
-                  Container(
-                    height: 50,
-                    width: 80,
-                    color: Colors.red,
-                    child: Center(
-                      child: Text(
-                        "Managers",
-                        style: theme.labelSmall?.copyWith(
-                          color: AppColors.blackColor,
-                        ),
-                      ),
-                    ),
+                  Text('User Reports:',style: TextStyle(color: Colors.black),
                   ),
-                ],
-              ).hPadding(0.05.width),
-              0.01.height.hSpace,
-              SizedBox(
-                height: 0.3.height,
-                child: PieChart(
-                  PieChartData(
-                    sections: [
-                      PieChartSectionData(
-                        value: provider.endUsers.length.toDouble(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      provider.isLoading
+                          ? CircularProgressIndicator(
+                              color: AppColors.newBlueColor,
+                            )
+                          : SizedBox(),
+                      Container(
+                        height: 50,
+                        width: 70,
                         color: Colors.green,
-                        radius: 0.1.height,
-                        title:
-                            "${(provider.totalEndUsers / provider.totalUsers * 100).round()}%",
-                        titleStyle: theme.titleLarge?.copyWith(
-                          color: AppColors.blackColor,
+                        child: Center(
+                          child: Text(
+                            "Users",
+                            style: theme.labelLarge?.copyWith(
+                              color: AppColors.blackColor,
+                            ),
+                          ),
                         ),
                       ),
-                      PieChartSectionData(
-                        value: provider.adminUsers.length.toDouble(),
+                      Container(
+                        height: 50,
+                        width: 70,
                         color: Colors.yellow,
-                        radius: 0.1.height,
-                        titleStyle: theme.titleLarge?.copyWith(
-                          color: AppColors.blackColor,
+                        child: Center(
+                          child: Text(
+                            "Admins",
+                            style: theme.labelMedium?.copyWith(
+                              color: AppColors.blackColor,
+                            ),
+                          ),
                         ),
-                        title:
-                            "${(provider.totalAdminUsers / provider.totalUsers * 100).round()}%",
                       ),
-                      PieChartSectionData(
-                        value: provider.managerUsers.length.toDouble(),
+                      Container(
+                        height: 50,
+                        width: 80,
                         color: Colors.red,
-                        radius: 0.1.height,
-                        titleStyle: theme.titleLarge?.copyWith(
-                          color: AppColors.blackColor,
+                        child: Center(
+                          child: Text(
+                            "Managers",
+                            style: theme.labelSmall?.copyWith(
+                              color: AppColors.blackColor,
+                            ),
+                          ),
                         ),
-                        title:
-                            "${(provider.totalManagerUsers / provider.totalUsers * 100).round()}%",
                       ),
                     ],
+                  ).hPadding(0.05.width),
+                  0.01.height.hSpace,
+                  SizedBox(
+                    height: 0.3.height,
+                    child: PieChart(
+                      PieChartData(
+                        sections: [
+                          PieChartSectionData(
+                            value: provider.endUsers.length.toDouble(),
+                            color: Colors.green,
+                            radius: 0.1.height,
+                            title:
+                                "${(provider.totalEndUsers / provider.totalUsers * 100).round()}%",
+                            titleStyle: theme.titleLarge?.copyWith(
+                              color: AppColors.blackColor,
+                            ),
+                          ),
+                          PieChartSectionData(
+                            value: provider.adminUsers.length.toDouble(),
+                            color: Colors.yellow,
+                            radius: 0.1.height,
+                            titleStyle: theme.titleLarge?.copyWith(
+                              color: AppColors.blackColor,
+                            ),
+                            title:
+                                "${(provider.totalAdminUsers / provider.totalUsers * 100).round()}%",
+                          ),
+                          PieChartSectionData(
+                            value: provider.managerUsers.length.toDouble(),
+                            color: Colors.red,
+                            radius: 0.1.height,
+                            titleStyle: theme.titleLarge?.copyWith(
+                              color: AppColors.blackColor,
+                            ),
+                            title:
+                                "${(provider.totalManagerUsers / provider.totalUsers * 100).round()}%",
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  CustomTextButton(
+                    onPressed: () => slideLeftWidget(
+                      newPage: UsersReportsDataScreen(),
+                      context: context,
+                    ),
+                    text: "Explore All Users Data",
+                  ),
+                  // 0.01.height.hSpace,
+                  DividersWord(
+                    text: "Hotels",
+                  ).hPadding(0.03.width),
+                  0.01.height.hSpace,
+                  Text('Hotels Reports:',style: TextStyle(color: Colors.black),),
+                  SizedBox(height:20 ,),
+                  DividersWord(
+                    text: "Trips",
+                  ).hPadding(0.03.width),
+                  0.01.height.hSpace,
+                  Text('Trips Reports:',style: TextStyle(color: Colors.black),),
+                  SizedBox(height: 20,),
+                  DividersWord(
+                    text: "Flights",
+                  ).hPadding(0.03.width),
+                  0.01.height.hSpace,
+                  Text('Flights Reports:',style: TextStyle(color: Colors.black),),
+                  SizedBox(height: 20,),
+                  DividersWord(
+                    text: "Accommodations",
+                  ).hPadding(0.03.width),
+                  0.01.height.hSpace,
+                  Text('Accommodations Reports:',style: TextStyle(color: Colors.black),),
+                  SizedBox(height: 20,),
+
+                ],
               ),
-              CustomTextButton(
-                onPressed: () => slideLeftWidget(
-                  newPage: UsersReportsDataScreen(),
-                  context: context,
-                ),
-                text: "Explore All Users Data",
+            ),
+                    ),
               ),
-              // 0.01.height.hSpace,
-              DividersWord(
-                text: "Trips",
-              ).hPadding(0.03.width),
-              0.01.height.hSpace,
-            ],
-          ),
-        ),
+            ]),
       ),
     );
   }
