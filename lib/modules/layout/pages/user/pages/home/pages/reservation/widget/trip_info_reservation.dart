@@ -67,7 +67,7 @@ class TripInfoReservation extends StatelessWidget {
           LabelsWidget(
             label: "Total Trip Price : ",
             value:
-                "${(provider.getTotalUsers == 0||provider.getTotalUsers == -1) ? provider.getSelectedDeparture!.trip.price : provider.getTotalUsers * provider.getSelectedDeparture!.trip.price} ${provider.getSelectedDeparture!.trip.currency}",
+                "${(provider.getTotalUsers == 0 || provider.getTotalUsers == -1) ? provider.getSelectedDeparture!.trip.price : provider.getTotalUsers * provider.getSelectedDeparture!.trip.price} ${provider.getSelectedDeparture!.trip.currency}",
           ),
         ],
       ),

@@ -5,15 +5,15 @@ import 'app_colors.dart';
 
 abstract class AppTheme {
   static final ThemeData lightTheme = ThemeData(
+    fontFamily: 'Poppins',
     primaryColor: AppColors.primaryColor,
     scaffoldBackgroundColor: AppColors.whiteColor,
     appBarTheme: AppBarTheme(
-      backgroundColor: AppColors.newBlueColor,
-      centerTitle: true,
-      iconTheme: IconThemeData(
-        color: AppColors.whiteColor,
-      )
-    ),
+        backgroundColor: AppColors.newBlueColor,
+        centerTitle: true,
+        iconTheme: IconThemeData(
+          color: AppColors.whiteColor,
+        )),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppColors.primaryColor,
       type: BottomNavigationBarType.fixed,

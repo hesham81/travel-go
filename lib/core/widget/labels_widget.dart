@@ -24,7 +24,6 @@ class LabelsWidget extends StatelessWidget {
           ),
         ),
         Expanded(
-
           child: Text(
             value,
             overflow: TextOverflow.ellipsis,

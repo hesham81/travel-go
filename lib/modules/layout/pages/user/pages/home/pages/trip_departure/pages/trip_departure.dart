@@ -43,9 +43,11 @@ class _TripDepartureState extends State<TripDeparture> {
   List<TripDepartureDataModel> filterList = [];
 
   bool _checkIsAvailable(TripDepartureDataModel model) {
-    print(
-        "${DateTime.now().year} ${DateTime.now().month} ${DateTime.now().day}");
-    return model.from.isAfter(DateTime.now());
+    bool isAvailable = false;
+    if (model.availableSeats > 0 && model.from.day != DateTime.now().day && DateTime.now().isBefore(model.from)) {
+      isAvailable = true;
+    }
+    return isAvailable;
   }
 
   bool _checkIsTomorrow(TripDepartureDataModel model) {
@@ -53,6 +55,14 @@ class _TripDepartureState extends State<TripDeparture> {
     return model.from.year == tomorrow.year &&
         model.from.month == tomorrow.month &&
         model.from.day == tomorrow.day;
+  }
+  bool _checkIfToday(TripDepartureDataModel model)
+  {
+    if (model.from.day == DateTime.now().day && model.from.month == DateTime.now().month && model.from.year == DateTime.now().year)
+      {
+        return true ;
+      }
+    return false ;
   }
 
   bool _checkIsThisWeek(TripDepartureDataModel model) {
@@ -82,7 +92,7 @@ class _TripDepartureState extends State<TripDeparture> {
         break;
       case 2:
         filterList =
-            departures.where((element) => !_checkIsAvailable(element)).toList();
+            departures.where((element) => _checkIfToday(element)).toList();
         setState(() {});
         break;
       case 3:
@@ -128,7 +138,7 @@ class _TripDepartureState extends State<TripDeparture> {
                   onPressed: () {
                     setState(() {
                       selectedIndex = index;
-                    _filter();
+                      _filter();
                     });
                   },
                   style: ElevatedButton.styleFrom(
@@ -176,16 +186,17 @@ class _TripDepartureState extends State<TripDeparture> {
                         (element) => element.trip.tripId == widget.model.tripId)
                     .toList();
                 if (selectedIndex == 0) filterList = departures;
-                if(filterList.isEmpty) return Image.asset(AppAssets.noSearchResult);
+                if (filterList.isEmpty)
+                  return Image.asset(AppAssets.noSearchResult);
                 return (providerConnections.getConnectionStatus)
                     ? ListView.separated(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.zero,
                         itemBuilder: (context, index) => GestureDetector(
-                          onTap: (filterList[index]
-                                  .from
-                                  .isAfter(DateTime.now()))
+                          onTap: (filterList[index  ].availableSeats > 0 &&
+                                  filterList[index].from.day !=
+                                      DateTime.now().day)
                               ? () {
                                   provider
                                       .setSelectedDeparture(filterList[index]);
@@ -197,7 +208,12 @@ class _TripDepartureState extends State<TripDeparture> {
                               : null,
                           child: TripDepartureUserWidget(
                             model: filterList[index],
-                            isAvaialble: _checkIsAvailable(filterList[index]),
+                            isAvaialble: filterList[index]
+                                    .from
+                                    .isAfter(DateTime.now()) &&
+                                filterList[index].availableSeats > 0 &&
+                                filterList[index].from.day !=
+                                    DateTime.now().day,
                           ),
                         ),
                         separatorBuilder: (context, _) => 0.01.height.hSpace,

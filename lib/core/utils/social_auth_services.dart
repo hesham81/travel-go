@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:travel_go/core/constant/local_storage.dart';
-import 'package:travel_go/core/constant/shared_preferences_keys.dart';
-import 'package:travel_go/core/services/bot_toast.dart';
-import '../../modules/layout/pages/user/pages/home/pages/home.dart';
+import '/core/constant/local_storage.dart';
+import '/core/constant/shared_preferences_keys.dart';
+import '/core/services/bot_toast.dart';
+import '/modules/layout/pages/user/pages/home/pages/home.dart';
 
 abstract class SocialAuthServices {
   static loginWithGoogle(BuildContext context) async {

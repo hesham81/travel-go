@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_go/core/providers/reservation_provider.dart';
 import 'package:travel_go/modules/sign_in/pages/sign_in.dart';
 import '/core/constant/local_storage.dart';
 import '/core/constant/shared_preferences_keys.dart';
@@ -21,6 +23,7 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var provider = Provider.of<ReservationProvider>(context);
     final user = ModalRoute.of(context)?.settings.arguments as User;
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
@@ -33,11 +36,7 @@ class UserProfile extends StatelessWidget {
                   Row(
                     children: [
                       IconButton(
-                        onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          SignIn.routeName,
-                          (route) => false,
-                        ),
+                        onPressed: () => Navigator.pop(context),
                         icon: Icon(
                           Icons.arrow_back_ios,
                           color: AppColors.blackColor,
@@ -188,6 +187,7 @@ class UserProfile extends StatelessWidget {
                         EasyLoading.show();
                         await FirebaseAuthServices.logout().then(
                           (value) {
+                            provider.resetToken();
                             Navigator.pushNamedAndRemoveUntil(
                               context,
                               RouteNames.signIn,

@@ -2,8 +2,10 @@ import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/payment/pages/credt_card.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/hotel_reservations_info/pages/hotel_reservation_user.dart';
+import 'package:travel_go/core/widget/custom_container.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/payment/pages/old_cards.dart';
+import '/modules/layout/pages/user/pages/home/pages/payment/pages/credit_card.dart';
+import '/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/hotel_reservations_info/pages/hotel_reservation_user.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/extensions.dart';
 import '/core/providers/reservation_provider.dart';
@@ -134,24 +136,10 @@ class _FlightAccomdationsReservationsState
               items: classes,
               excludeSelected: true,
               canCloseOutsideBounds: false,
-
               hideSelectedFieldWhenExpanded: false,
               initialItem: classes[0],
-
               headerBuilder: (context, selectedItem, enabled) {
-                return Container(
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.4),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                      ),
-                    ],
-                  ),
+                return CustomContainer(
                   child: Column(
                     children: [
                       Row(
@@ -165,7 +153,7 @@ class _FlightAccomdationsReservationsState
                           ),
                           Text(
                             provider.user?.displayName ?? "No name",
-                            style: theme.titleMedium!.copyWith(
+                            style: theme.titleSmall!.copyWith(
                               color: AppColors.blackColor,
                             ),
                           ),
@@ -173,10 +161,9 @@ class _FlightAccomdationsReservationsState
                             children: [
                               Text(
                                 classes[selectedIndex],
-                                style: theme.titleMedium!.copyWith(
-                                  color: AppColors.newBlueColor,
-                                  fontSize: 13
-                                ),
+                                style: theme.titleSmall!.copyWith(
+                                    color: AppColors.newBlueColor,
+                                    fontSize: 13),
                               ),
                             ],
                           ),
@@ -184,23 +171,11 @@ class _FlightAccomdationsReservationsState
                       ),
                     ],
                   ),
-                ).hPadding(0.03.width);
+                );
               },
               listItemBuilder: (context, item, isSelected, onItemSelect) {
                 int index = classes.indexOf(item);
-                return Container(
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.4),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                      ),
-                    ],
-                  ),
+                return CustomContainer(
                   child: Column(
                     children: [
                       Row(
@@ -214,7 +189,7 @@ class _FlightAccomdationsReservationsState
                           ),
                           Text(
                             provider.user?.displayName ?? "No name",
-                            style: theme.titleMedium!.copyWith(
+                            style: theme.titleSmall!.copyWith(
                               color: AppColors.blackColor,
                             ),
                           ),
@@ -222,14 +197,14 @@ class _FlightAccomdationsReservationsState
                             children: [
                               Text(
                                 item,
-                                style: theme.titleMedium!.copyWith(
+                                style: theme.labelMedium!.copyWith(
                                   color: AppColors.newBlueColor,
                                 ),
                               ),
                               0.01.height.hSpace,
                               Text(
                                 "${prices[index]} ${provider.getSelectedDeparture!.trip.currency}",
-                                style: theme.titleMedium!.copyWith(
+                                style: theme.titleSmall!.copyWith(
                                   color: Colors.green,
                                 ),
                               ),
@@ -239,13 +214,13 @@ class _FlightAccomdationsReservationsState
                       ),
                     ],
                   ),
-                ).hPadding(0.03.width);
+                );
               },
               onChanged: (p0) {
                 selectedIndex = classes.indexOf(p0!);
                 setState(() {});
               },
-            ),
+            ).hPadding(0.03.width),
             0.01.height.hSpace,
             Stack(
               children: [
@@ -334,10 +309,10 @@ class _FlightAccomdationsReservationsState
                           0.003.height.hSpace,
                           Row(
                             children: [
-                              0.14.width.vSpace,
+                              0.16.width.vSpace,
                               Text(
-                                "Passenger Name: ",
-                                style: theme.labelMedium!.copyWith(
+                                "Name: ",
+                                style: theme.labelSmall!.copyWith(
                                   color: AppColors.newBlueColor,
                                 ),
                               ),
@@ -364,9 +339,11 @@ class _FlightAccomdationsReservationsState
                     child: CustomElevatedButton(
                       text: "OK",
                       onPressed: () => slideRightWidget(
-                          newPage: CreditCardScreen(
-                            route: HotelReservationUser(),
-                          ),
+                          newPage: (provider.getCard == null)
+                              ? CreditCardScreen(
+                                  route: HotelReservationUser(),
+                                )
+                              : OldCards(),
                           context: context),
                     ),
                   ),
@@ -374,7 +351,10 @@ class _FlightAccomdationsReservationsState
                   Expanded(
                     child: CustomElevatedButton(
                       text: "Cancel",
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        provider.reserveFlight = false ;
+                      },
                       btnColor: AppColors.errorColor,
                     ),
                   ),

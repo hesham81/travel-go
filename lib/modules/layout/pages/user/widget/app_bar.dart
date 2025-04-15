@@ -20,7 +20,6 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuthServices.getCurrentUserData();
-    var provider = Provider.of<TripAdminProvider>(context);
     var theme = Theme.of(context);
     return Row(
       children: [

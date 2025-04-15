@@ -76,7 +76,7 @@ class _RecommendedWidgetState extends State<RecommendedWidget> {
           Spacer(),
           Text(
             widget.model.name,
-            style: theme.textTheme.titleLarge!.copyWith(
+            style: theme.textTheme.titleMedium!.copyWith(
               color: AppColors.whiteColor,
               fontWeight: FontWeight.bold,
             ),
