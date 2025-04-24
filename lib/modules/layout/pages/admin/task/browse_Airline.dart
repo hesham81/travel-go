@@ -21,22 +21,16 @@ class _BrowseAirlinesState extends State<BrowseAirlines> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xff0d75b4),
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
             Icons.arrow_back_ios,
-            color: Colors.white,
           ),
         ),
         title: Text(
-          "Tour And Travel ",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+          "Tour And Travel",
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+            color: AppColors.whiteColor,
           ),
         ),
         centerTitle: true,

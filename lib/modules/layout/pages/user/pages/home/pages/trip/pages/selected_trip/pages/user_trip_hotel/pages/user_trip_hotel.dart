@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/core/extensions/align.dart';
 import 'package:travel_go/core/extensions/extensions.dart';
 import 'package:travel_go/core/theme/app_colors.dart';
+import 'package:travel_go/core/widget/custom_container.dart';
 import 'package:travel_go/core/widget/custom_rating_widget.dart';
 import 'package:travel_go/core/widget/labels_widget.dart';
 import 'package:travel_go/core/widget/loading_image_network_widget.dart';
 import 'package:travel_go/models/trip_data_model.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/user_trip_hotel/pages/room_prices.dart';
 
+import '../../../../../../../../../../../../../core/providers/collections_provider.dart';
 import '../../../../../../../../../../../../../core/utils/flight_collections.dart';
 import '../../../../../../../../../../../../../core/utils/hotels_db.dart';
 import '../../../../../../../../../../../../../models/flight.dart';
@@ -106,45 +110,31 @@ class _UserTripHotelState extends State<UserTripHotel> {
                 ),
               ),
               0.02.height.hSpace,
-              Container(
-                width: double.maxFinite,
-                padding: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.4),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: const Offset(0, 5),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      "Room Prices  ",
-                      style: theme.titleMedium!.copyWith(
-                        color: AppColors.blackColor,
-                      ),
-                    ).alignTopLeft(),
-                    0.01.height.hSpace,
-                    LabelsWidget(
-                      label: "Single Room : ",
-                      value: "\$Audit 80 / \$Child 40",
-                    ),
-                    0.01.height.hSpace,
-                    LabelsWidget(
-                      label: "Double Room : ",
-                      value: "\$Audit 100 / \$Child 50",
-                    ),
-                    0.01.height.hSpace,
-                    LabelsWidget(
-                      label: "Suit Room : ",
-                      value: "\$Audit 200 / \$Child 100",
-                    ),
-                  ],
+              GestureDetector(
+                onTap: ()
+                {
+                  Provider.of<CollectionsProvider>(context, listen: false).setHotel(hotel);
+                  slideLeftWidget(
+                    newPage: RoomPrices(),
+                    context: context,
+                  );
+                },
+                child: CustomContainer(
+                  child: Row(
+                    children: [
+                      Text(
+                        "Room Prices",
+                        style: theme.titleMedium!.copyWith(
+                          color: AppColors.blackColor,
+                        ),
+                      ).alignTopLeft(),
+                      Spacer(),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.newBlueColor,
+                      )
+                    ],
+                  ),
                 ),
               ),
               0.02.height.hSpace,

@@ -66,7 +66,6 @@ class _NewAttractionState extends State<NewAttraction> {
     var provider = Provider.of<TripAdminProvider>(context);
     var collections = Provider.of<CollectionsProvider>(context);
 
-
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -136,6 +135,9 @@ class _NewAttractionState extends State<NewAttraction> {
               DropdownMenu(
                 width: double.maxFinite,
                 hintText: selectedCategory ?? "Category",
+                onSelected: (value) => setState(() {
+                  selectedCategory = value;
+                }),
                 dropdownMenuEntries: [
                   for (var category in attractionCategories)
                     DropdownMenuEntry(

@@ -109,7 +109,7 @@ class _UtilitiesTripState extends State<UtilitiesTrip> {
         SizedBox(
           width: double.maxFinite,
           child: CustomElevatedButton(
-            text: "Reserve",
+            text: "Reserve Departure",
             borderRadius: 10,
             onPressed: () {
               slideRightWidget(

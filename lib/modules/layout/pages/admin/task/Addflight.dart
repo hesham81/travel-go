@@ -1,30 +1,24 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/theme/app_colors.dart';
+
 class Addflight extends StatelessWidget {
   const Addflight({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(Icons.arrow_back_ios ,
-            color: Color(0xff0d75b4),
-
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
           ),
         ),
-
-        title:
-        Text("Travel Go" ,
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Color(0xff0d75b4),
+        title: Text(
+          "Tour And Travel",
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+            color: AppColors.whiteColor,
           ),
         ),
         centerTitle: true,
@@ -48,16 +42,12 @@ class Addflight extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20),
-
-
                 buildInputField("Flight Airline", "Enter Airline Name"),
                 buildInputField("Flight ID", "Enter Flight ID"),
                 buildInputField("Flight Name", "Enter Flight Name"),
                 buildInputField("Flight Price", "Enter Flight Price"),
                 buildInputField("Number Of Seats", "Enter Number of Seats"),
-
                 SizedBox(height: 20),
-
                 Row(
                   children: [
                     Expanded(
@@ -81,13 +71,9 @@ class Addflight extends StatelessWidget {
                     SizedBox(width: 15),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {
-
-
-                        },
+                        onPressed: () {},
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff0d75b4),
-
                           padding: EdgeInsets.symmetric(vertical: 15),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -108,6 +94,7 @@ class Addflight extends StatelessWidget {
       ),
     );
   }
+
   Widget buildInputField(String label, String hint) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15.0),
@@ -116,7 +103,10 @@ class Addflight extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xff0d75b4),
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Color(0xff0d75b4),
             ),
           ),
           SizedBox(height: 5),
@@ -135,4 +125,3 @@ class Addflight extends StatelessWidget {
     );
   }
 }
-

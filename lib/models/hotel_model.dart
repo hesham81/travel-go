@@ -3,13 +3,13 @@ import 'package:travel_go/models/hotel_accomdations_data_model.dart';
 
 class Hotel {
   String id ;
-  final int availableRooms;
+   int availableRooms;
   final String hotelLocation;
-  final String hotelName;
+   String hotelName;
   final double hotelRating;
-  final int totalRooms;
+   int totalRooms;
   final String imageUrl;
-  final List<HotelAccomdationsDataModel> accomdations;
+   List<HotelAccomdationsDataModel> accomdations;
   final double lat ;
   final double long ;
   Hotel({

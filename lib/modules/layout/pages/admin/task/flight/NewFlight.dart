@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:travel_go/core/services/bot_toast.dart';
+import '../../../../../../core/theme/app_colors.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
 import '/core/utils/airline_db.dart';
@@ -49,23 +50,17 @@ class _NewFlightState extends State<NewFlight> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xff0d75b4),
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
             Icons.arrow_back_ios,
-            color: Colors.white,
           ),
         ),
         title: Text(
-          "Tour And Travel ",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          "Tour And Travel",
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: AppColors.whiteColor,
+              ),
         ),
         centerTitle: true,
       ),

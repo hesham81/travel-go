@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel_go/models/reservation_model.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
+import '../../models/hotel_model.dart';
 import '/core/utils/company_collections.dart';
 import '/models/trip_data_model.dart';
 import '/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
@@ -11,6 +12,22 @@ class CollectionsProvider extends ChangeNotifier {
   List<TripDataModel> _trips = [];
   List<TripDepartureDataModel> _departures = [];
   ReservationModel? reservation;
+  TripDataModel? _trip;
+  Hotel? _hotel;
+
+  void setHotel(Hotel? value) {
+    _hotel = value;
+    notifyListeners();
+  }
+
+  Hotel? get getHotel => _hotel;
+
+  void setTrip(TripDataModel? value) {
+    _trip = value;
+    notifyListeners();
+  }
+
+  TripDataModel? get getTrip => _trip;
 
   void setReservation(ReservationModel? value) {
     reservation = value;

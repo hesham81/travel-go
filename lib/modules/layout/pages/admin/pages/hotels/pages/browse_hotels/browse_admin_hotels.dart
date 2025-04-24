@@ -1,13 +1,28 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/extensions/dimensions.dart';
 import 'package:travel_go/core/extensions/extensions.dart';
 import 'package:travel_go/core/theme/app_colors.dart';
 import 'package:travel_go/core/utils/hotels_db.dart';
 import 'package:travel_go/models/hotel_model.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/widgets/hotel_admin_widget.dart';
 
-class BrowseAdminHotels extends StatelessWidget {
-  const BrowseAdminHotels({super.key});
+class BrowseAdminHotels extends StatefulWidget {
+  final bool isDeleted;
+
+  final bool isUpdate;
+
+  const BrowseAdminHotels({
+    super.key,
+     this.isDeleted = true,
+     this.isUpdate = true,
+  });
+
+  @override
+  State<BrowseAdminHotels> createState() => _BrowseAdminHotelsState();
+}
+
+class _BrowseAdminHotelsState extends State<BrowseAdminHotels> {
+  List<Hotel> hotels = [];
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +46,19 @@ class BrowseAdminHotels extends StatelessWidget {
         child: Column(
           children: [
             0.01.height.hSpace,
+            CupertinoSearchTextField(),
+            0.01.height.hSpace,
             StreamBuilder(
               stream: HotelsDB.getStreamHotelsData(),
               builder: (context, snapshot) {
-                List<Hotel> hotels =
+                hotels =
                     snapshot.data?.docs.map((e) => e.data()).toList() ?? [];
                 return ListView.separated(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) => HotelAdminWidget(
+                    isDeleted: widget.isDeleted,
+                    isUpdated: widget.isUpdate,
                     model: hotels[index],
                   ),
                   separatorBuilder: (context, index) => 0.01.height.hSpace,

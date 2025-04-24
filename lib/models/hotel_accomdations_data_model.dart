@@ -1,8 +1,8 @@
 class HotelAccomdationsDataModel {
   final String roomType;
-  final double roomPrice;
+   double roomPrice;
 
-  final int roomAvailable;
+   int roomAvailable;
 
   List<String> imagesUrls = [];
 

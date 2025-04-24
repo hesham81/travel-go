@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:travel_go/core/services/bot_toast.dart';
 import 'package:travel_go/core/services/storage.dart';
@@ -203,7 +204,8 @@ class HotelAdminProvider extends ChangeNotifier {
         suiteAvailableRoomsController.text.isNotEmpty &&
         hotelNameController.text.isNotEmpty &&
         hotelRatingController.text.isNotEmpty) {
-      IdGenerator.generateHotelId(name: hotelNameController.text);
+      hotelIdController.text =
+          IdGenerator.generateHotelId(name: hotelNameController.text);
       notifyListeners();
       return true;
     }
@@ -215,7 +217,7 @@ class HotelAdminProvider extends ChangeNotifier {
       if (checkIfHotelIsValid()) {
         EasyLoading.show();
         await Storage.uploadHotels(
-          hotelIdController.text,
+          hotelNameController.text,
           _image!,
         );
         BotToastServices.showSuccessMessage(
@@ -226,6 +228,7 @@ class HotelAdminProvider extends ChangeNotifier {
             singleImages[index],
             "Single",
             index,
+            hotelNameController.text,
           );
         }
         BotToastServices.showSuccessMessage(
@@ -236,6 +239,7 @@ class HotelAdminProvider extends ChangeNotifier {
             doubleImages[index],
             "Double",
             index,
+            hotelNameController.text,
           );
         }
         BotToastServices.showSuccessMessage(
@@ -246,6 +250,7 @@ class HotelAdminProvider extends ChangeNotifier {
             suitImages[index],
             "Suit",
             index,
+            hotelNameController.text,
           );
         }
         BotToastServices.showSuccessMessage(
@@ -256,16 +261,21 @@ class HotelAdminProvider extends ChangeNotifier {
       List<String> doubleImagesUrls = [];
       List<String> suitImagesUrls = [];
       for (var i = 0; i < singleImages.length; i++) {
-        Storage.getHotelAccomdationlImage("Single", i);
-        singleImagesUrls.add(Storage.getHotelAccomdationlImage("Single", i));
+        Storage.getHotelAccomdationlImage(
+            "Single", i, hotelNameController.text);
+        singleImagesUrls.add(Storage.getHotelAccomdationlImage(
+            "Single", i, hotelNameController.text));
       }
       for (var i = 0; i < doubleImages.length; i++) {
-        Storage.getHotelAccomdationlImage("Double", i);
-        doubleImagesUrls.add(Storage.getHotelAccomdationlImage("Double", i));
+        Storage.getHotelAccomdationlImage(
+            "Double", i, hotelNameController.text);
+        doubleImagesUrls.add(Storage.getHotelAccomdationlImage(
+            "Double", i, hotelNameController.text));
       }
       for (var i = 0; i < suitImages.length; i++) {
-        Storage.getHotelAccomdationlImage("Suit", i);
-        suitImagesUrls.add(Storage.getHotelAccomdationlImage("Suit", i));
+        Storage.getHotelAccomdationlImage("Suit", i, hotelNameController.text);
+        suitImagesUrls.add(Storage.getHotelAccomdationlImage(
+            "Suit", i, hotelNameController.text));
       }
       int totalRooms = int.tryParse(singleTotalRoomsController.text)! +
           int.tryParse(doubleTotalRoomsController.text)! +
@@ -273,6 +283,9 @@ class HotelAdminProvider extends ChangeNotifier {
       int availableRooms = int.tryParse(singleAvailableRoomsController.text)! +
           int.tryParse(doubleAvailableRoomsController.text)! +
           int.tryParse(suiteAvailableRoomsController.text)!;
+      var placeMarks = await placemarkFromCoordinates(
+          _marker.first.point.latitude, _marker.first.point.longitude);
+
       HotelsDB.addHotel(
         hotel: Hotel(
           lat: _marker.first.point.latitude,
@@ -280,7 +293,7 @@ class HotelAdminProvider extends ChangeNotifier {
           id: hotelIdController.text,
           imageUrl: Storage.getHotelImage(hotelIdController.text),
           availableRooms: availableRooms,
-          hotelLocation: "hotelLocation",
+          hotelLocation: placeMarks.first.locality ?? 'Not Located',
           hotelName: hotelNameController.text,
           hotelRating: double.tryParse(hotelRatingController.text)!,
           totalRooms: totalRooms,

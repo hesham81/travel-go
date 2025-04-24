@@ -3,12 +3,18 @@ import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/browse_h
 import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/new_hotel/pages/new_hotel.dart';
 import 'package:travel_go/modules/layout/pages/admin/task/Addflight.dart';
 
+import '../../../../../core/theme/app_colors.dart';
+
 class AdminHotelScreen extends StatelessWidget {
   final Map<String, Widget Function()> pageRoutes = {
     "Browse hotel": () => BrowseAdminHotels(),
     "New hotel": () => NewHotel(),
-    "Update hotel": () => Addflight(),
-    "Delete hotel": () => Addflight(),
+    "Update hotel": () => BrowseAdminHotels(
+          isDeleted: false,
+        ),
+    "Delete hotel": () => BrowseAdminHotels(
+          isUpdate: false,
+        ),
   };
 
   void _handleMenuSelection(BuildContext context, String value) {
@@ -82,11 +88,17 @@ class AdminHotelScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff0d75b4),
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
+          ),
+        ),
         title: Text(
           "Tour And Travel",
-          style: TextStyle(
-              fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: AppColors.whiteColor,
+              ),
         ),
         centerTitle: true,
       ),

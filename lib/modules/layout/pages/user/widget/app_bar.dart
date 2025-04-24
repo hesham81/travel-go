@@ -30,9 +30,10 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           fit: BoxFit.cover,
         ),
         Text(
-          "Tour And Travel",
-          style: theme.textTheme.titleSmall!.copyWith(
+          "Travel System ",
+          style: theme.textTheme.titleMedium!.copyWith(
             color: AppColors.newBlueColor,
+            fontWeight: FontWeight.bold,
           ),
         ).hPadding(0.03.width),
         Spacer(),

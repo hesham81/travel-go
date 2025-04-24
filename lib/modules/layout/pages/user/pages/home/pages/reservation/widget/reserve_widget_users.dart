@@ -1,9 +1,23 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
-import 'package:travel_go/core/widget/custom_text_form_field.dart';
+import '/core/extensions/extensions.dart';
+import '/core/theme/app_colors.dart';
+import '/core/widget/custom_text_form_field.dart';
+import '/core/widget/numbers_text_form_field.dart';
 
-class ReserveWidgetUsers extends StatelessWidget {
+class ReserveWidgetUsers extends StatefulWidget {
   const ReserveWidgetUsers({super.key});
+
+  @override
+  State<ReserveWidgetUsers> createState() => _ReserveWidgetUsersState();
+}
+
+class _ReserveWidgetUsersState extends State<ReserveWidgetUsers> {
+  List<String> relations = [
+    "Friends",
+    "Family",
+    "Others",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +41,28 @@ class ReserveWidgetUsers extends StatelessWidget {
             hintText: "Name : ",
           ),
           0.01.height.hSpace,
-          CustomTextFormField(
-            hintText: "National ID : ",
+          NumbersTextFormField(
+            hintText: "Age : ",
           ),
+          0.01.height.hSpace,
+          CustomDropdown(
+            hintText: "RelationShip",
+            items: relations,
+            headerBuilder: (context, selectedItem, enabled) => Text(
+              selectedItem,
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                    color: AppColors.blackColor,
+                  ),
+            ),
+            listItemBuilder: (context, item, isSelected, onItemSelect) => Text(
+              item,
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                    color: AppColors.blackColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            onChanged: (p0) {},
+          )
         ],
       ),
     );

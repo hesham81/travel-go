@@ -153,9 +153,9 @@ abstract class Storage {
   }
 
   static Future<bool> uploadAttractions(
-      File file, String type, int index) async {
+      File file, String type, int index , String hotelName) async {
     try {
-      await _supabase.upload("/accomdation/$type/$index", file);
+      await _supabase.upload("$hotelName/accomdation/$type/$index", file);
       return true;
     } catch (error) {
       return false;
@@ -166,7 +166,7 @@ abstract class Storage {
     return _supabase.getPublicUrl("hotels/$path");
   }
 
-  static String getHotelAccomdationlImage( String type, int index) {
-    return _supabase.getPublicUrl("/accomdation/$type/$index");
+  static String getHotelAccomdationlImage( String type, int index, String hotelName) {
+    return _supabase.getPublicUrl("$hotelName/accomdation/$type/$index");
   }
 }

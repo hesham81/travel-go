@@ -1,6 +1,8 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_go/modules/layout/pages/admin/task/adminscreen.dart';
+
+import '../../../../../core/theme/app_colors.dart';
 //import 'package:flutter_csc_picker/flutter_csc_picker.dart';
 
 class FlightDepartureScreen extends StatefulWidget {
@@ -21,27 +23,20 @@ class _FlightDepartureScreenState extends State<FlightDepartureScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:Color(0xff0d75b4),
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
             Icons.arrow_back_ios,
-            color: Colors.white,
           ),
         ),
         title: Text(
-          "Tour And Travel ",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+          "Tour And Travel",
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+            color: AppColors.whiteColor,
           ),
         ),
         centerTitle: true,
       ),
-
       body: SingleChildScrollView(  // Add this widget to make the content scrollable
         padding: const EdgeInsets.all(16.0),
         child: Column(

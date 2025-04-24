@@ -113,18 +113,7 @@ abstract class HotelsDB {
 
   static Future<bool> updateHotel(Hotel hotel) async {
     try {
-      var querySnapshot = await collectionRef()
-          .where(
-            "HotelName ",
-            isEqualTo: hotel.hotelName,
-          )
-          .get();
-      for (var doc in querySnapshot.docs) {
-        await doc.reference.update(
-          hotel.toMap(),
-        );
-      }
-
+      await collectionRef().doc(hotel.id).set(hotel);
       return Future.value(true);
     } catch (error) {
       log("Error ${error}");
@@ -148,5 +137,9 @@ abstract class HotelsDB {
     return await collectionRef().doc(hotelId).get().then(
           (value) => value.data()!,
         );
+  }
+
+  static Future<void> delete(String hotelId) async {
+    await collectionRef().doc(hotelId).delete();
   }
 }

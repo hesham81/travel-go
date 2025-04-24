@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/core/constant/app_assets.dart';
+import 'package:travel_go/core/providers/collections_provider.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/widget/model_sheet_trip_filter.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/selected_trip.dart';
 import '/models/trip_data_model.dart';
@@ -175,6 +177,7 @@ class _HomeTripState extends State<HomeTrip> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var provider = Provider.of<CollectionsProvider>(context);
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -199,14 +202,14 @@ class _HomeTripState extends State<HomeTrip> {
                         children: [
                           Text(
                             "Hi , ${user!.displayName}",
-                            style: theme.textTheme.titleLarge!.copyWith(
+                            style: theme.textTheme.titleMedium!.copyWith(
                               color: AppColors.blackColor,
                             ),
                           ),
                           0.01.height.hSpace,
                           Text(
                             "Let's explore the world!",
-                            style: theme.textTheme.titleMedium!.copyWith(
+                            style: theme.textTheme.titleSmall!.copyWith(
                               color: AppColors.newBlueColor,
                             ),
                           ),
@@ -338,12 +341,15 @@ class _HomeTripState extends State<HomeTrip> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) => GestureDetector(
-                      onTap: () => slideRightWidget(
-                        context: context,
-                        newPage: SelectedHomeScreenTrip(
-                          model: searchList![index],
-                        ),
-                      ),
+                      onTap: () {
+                        provider.setTrip(searchList![index]);
+                        slideRightWidget(
+                          context: context,
+                          newPage: SelectedHomeScreenTrip(
+                            model: searchList![index],
+                          ),
+                        );
+                      },
                       child: HomeTripCartWidget(
                         model: searchList![index],
                       ),

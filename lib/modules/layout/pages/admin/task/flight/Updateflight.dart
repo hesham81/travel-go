@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/theme/app_colors.dart';
 import 'package:travel_go/modules/layout/pages/admin/task/flightdeaprturedetails.dart';
 
 class UpdateFlight extends StatelessWidget {
@@ -8,27 +9,21 @@ class UpdateFlight extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor:Color(0xff0d75b4),
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: Icon(
+              Icons.arrow_back_ios,
+            ),
           ),
-        ),
-        title: Text(
-          "Tour And Travel ",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+          title: Text(
+            "Tour And Travel",
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              color: AppColors.whiteColor,
+            ),
           ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),

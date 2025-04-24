@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
@@ -16,6 +18,7 @@ class ProgramWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
+    log("Length is ${model.images.length}");
     return Container(
       height: 0.21.height,
       decoration: BoxDecoration(
@@ -103,7 +106,7 @@ class ProgramWidget extends StatelessWidget {
               ),
               child: LoadingImageNetworkWidget(
                 height: 0.21.height,
-                imageUrl: model.images[0] ?? "",
+                imageUrl: model.images.last ?? "",
               ),
             ),
           ),

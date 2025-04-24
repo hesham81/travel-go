@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_go/modules/layout/pages/admin/task/flight/ViewFlightToDelete.dart';
+import '../../../../../core/theme/app_colors.dart';
 import 'Flight_departure/NewDeparture.dart';
 import 'Flight_departure/UpdateDepartureSelectAirline.dart';
 import 'Flight_departure/delete_departure.dart';
@@ -90,12 +91,20 @@ class AdminFlightScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff0d75b4),
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
+          ),
+        ),
         title: Text(
           "Tour And Travel",
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+          style: theme.titleLarge!.copyWith(
+            color: AppColors.whiteColor,
+          ),
         ),
         centerTitle: true,
       ),

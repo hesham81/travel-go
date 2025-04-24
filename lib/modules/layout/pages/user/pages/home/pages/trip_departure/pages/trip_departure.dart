@@ -33,7 +33,6 @@ class _TripDepartureState extends State<TripDeparture> {
 
   final List<String> _filterList = [
     "all",
-    "Available",
     "Today",
     "Tomorrow",
     "This Week",
@@ -88,27 +87,23 @@ class _TripDepartureState extends State<TripDeparture> {
         filterList = departures;
         setState(() {});
         break;
+
       case 1:
-        filterList =
-            departures.where((element) => _checkIsAvailable(element)).toList();
-        setState(() {});
-        break;
-      case 2:
         filterList =
             departures.where((element) => _checkIfToday(element)).toList();
         setState(() {});
         break;
-      case 3:
+      case 2:
         filterList =
             departures.where((element) => _checkIsTomorrow(element)).toList();
         setState(() {});
         break;
-      case 4:
+      case 3:
         filterList =
             departures.where((element) => _checkIsThisWeek(element)).toList();
         setState(() {});
         break;
-      case 5:
+      case 4:
         filterList =
             departures.where((element) => _checkIsThisMonth(element)).toList();
         setState(() {});
@@ -187,6 +182,12 @@ class _TripDepartureState extends State<TripDeparture> {
                     .toList()
                     .where(
                         (element) => element.trip.tripId == widget.model.tripId)
+                    .toList();
+                departures = departures
+                    .where(
+                      (element) => (element.availableSeats != 0 &&
+                          element.from.day != DateTime.now().day),
+                    )
                     .toList();
                 if (selectedIndex == 0) filterList = departures;
                 if (filterList.isEmpty) {

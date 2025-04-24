@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/core/extensions/align.dart';
 import 'package:travel_go/core/extensions/dimensions.dart';
 import 'package:travel_go/core/extensions/extensions.dart';
 import 'package:travel_go/core/providers/reservation_provider.dart';
 import 'package:travel_go/core/theme/app_colors.dart';
+import 'package:travel_go/core/utils/check_tour_guide.dart';
+import 'package:travel_go/core/widget/custom_container.dart';
+import 'package:travel_go/core/widget/custom_elevated_button.dart';
 import 'package:travel_go/core/widget/dividers_word.dart';
 import 'package:travel_go/core/widget/loading_image_network_widget.dart';
+import 'package:travel_go/models/tour_guide_data_model.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/my_reservations/pages/track_locations.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/my_reservations/widget/my_flight_reservation.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/my_reservations/widget/my_hotel_reservation.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/my_reservations/widget/my_trip_reservations.dart';
@@ -34,6 +40,10 @@ class _MySelectedReservationState extends State<MySelectedReservation> {
 
   bool isLoading = true;
 
+  bool tripStarted = false;
+
+  TourGuideDataModel? tourGuide;
+
   Future<void> initData() async {
     var provider = Provider.of<ReservationProvider>(context, listen: false);
     if (provider.reservation!.flightId != null) {
@@ -41,6 +51,11 @@ class _MySelectedReservationState extends State<MySelectedReservation> {
         flightId: provider.reservation!.flightId!,
       );
     }
+    tripStarted = (provider.getSelectedDeparture == null)
+        ? await TourGuideServices.checkIfTourGuideExists(
+            provider.getSelectedDeparture?.id ??
+                "Departure-Italy-2025:4:16-2025:4:18")
+        : false;
 
     if (provider.reservation!.hotelId != null) {
       hotel = await HotelsDB.getHotelById(
@@ -66,6 +81,19 @@ class _MySelectedReservationState extends State<MySelectedReservation> {
   Widget build(BuildContext context) {
     var provider = Provider.of<ReservationProvider>(context);
     return Scaffold(
+      bottomNavigationBar: CustomContainer(
+        child: CustomElevatedButton(
+          text: "Track Locations",
+          onPressed: (tripStarted)
+              ? () {
+                  slideLeftWidget(
+                    newPage: TrackLocations(),
+                    context: context,
+                  );
+                }
+              : null,
+        ),
+      ),
       appBar: AppBar(
         title: Text(
           "Reservations Details",
