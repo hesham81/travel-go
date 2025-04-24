@@ -35,7 +35,6 @@ class AdminTripScreen extends StatelessWidget {
     "Update fight": () => Addflight(),
     "Delete fight": () => Addflight(),
 
-
     // Trip  program
     "Browse program": () => Addflight(),
     "New program": () => Addflight(),
@@ -144,11 +143,6 @@ class AdminTripScreen extends StatelessWidget {
 
               // _buildPopupButton(context, "Trip Program"),
               // SizedBox(height: 12),
-
-              _buildPopupButton(context, "Trip Hotel"),
-              SizedBox(height: 12),
-
-              _buildPopupButton(context, "Trip Flight"),
             ],
           ),
         ),

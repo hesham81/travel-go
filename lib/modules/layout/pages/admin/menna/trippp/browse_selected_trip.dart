@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/core/routes/route_transact.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/flight_details.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trips/pages/edit_selected_hotels.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/modules/layout/pages/admin/pages/programs/pages/browse_program/pages/program_details.dart';
 import '/core/extensions/extensions.dart';
@@ -151,7 +153,11 @@ class BrowseSelectedTrip extends StatelessWidget {
               child: CustomElevatedButton(
                 text: "Hotel Details",
                 borderRadius: 10,
-                onPressed: () {},
+                onPressed: () => slideLeftWidget(
+                    newPage: EditSelectedHotels(
+                      hotelId: model.hotelId,
+                    ),
+                    context: context),
               ),
             ).hPadding(0.03.width),
             0.01.height.hSpace,

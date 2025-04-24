@@ -134,9 +134,18 @@ abstract class HotelsDB {
   static Future<Hotel> getHotelById({
     required String hotelId,
   }) async {
-    return await collectionRef().doc(hotelId).get().then(
-          (value) => value.data()!,
-        );
+   try{
+     log("Hotel Id is ${hotelId}");
+     Hotel response = await collectionRef().doc(hotelId).get().then(
+           (value) => value.data()!,
+     );
+     log("Response Id is ${response.hotelName}");
+     return await collectionRef().doc(hotelId).get().then(
+           (value) => value.data()!,
+     );
+   }catch(error){
+     throw Exception(error);
+   }
   }
 
   static Future<void> delete(String hotelId) async {
