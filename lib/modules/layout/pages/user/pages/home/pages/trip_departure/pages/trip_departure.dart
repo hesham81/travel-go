@@ -198,7 +198,7 @@ class _TripDepartureState extends State<TripDeparture> {
                       (e) => e.data(),
                     )
                     .toList()
-                    .where((element) => trip?.tripId == widget.model.tripId)
+                    .where((element) => widget.model.tripId == element.tripId)
                     .toList();
                 departures = departures
                     .where(

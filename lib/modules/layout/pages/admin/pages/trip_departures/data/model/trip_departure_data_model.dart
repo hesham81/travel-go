@@ -1,4 +1,3 @@
-import 'package:travel_go/models/trip_data_model.dart';
 
 class TripDepartureDataModel {
   final String tripId;
@@ -9,6 +8,8 @@ class TripDepartureDataModel {
    DateTime to;
 
    int availableSeats;
+
+
 
   TripDepartureDataModel({
     required this.tripId,

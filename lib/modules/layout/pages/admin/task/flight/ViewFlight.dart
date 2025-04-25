@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:travel_go/core/extensions/dimensions.dart';
+import 'package:travel_go/core/extensions/extensions.dart';
+import 'package:travel_go/core/utils/flight_collections.dart';
+import '../../../../../../models/flight.dart';
 import '/core/theme/app_colors.dart';
 import '/models/flight_airlines.dart';
 import "flight_card.dart";
@@ -26,29 +30,26 @@ class _ViewFlightsState extends State<ViewFlights> {
     "Porter Airlines": false,
     "Air Transat": false,
   };
-  final List<Map<String, String>> flights = [
-    {
-      "destination": "Sharm el sheikh",
-      "date": "26/2/2025",
-      "time": "8:00 am",
-      "price": "3,000 L.E",
-      "class": "Economy"
-    },
-    {
-      "destination": "Cairo",
-      "date": "27/2/2025",
-      "time": "9:00 am",
-      "price": "6,000 L.E",
-      "class": "First class"
-    },
-    {
-      "destination": "Alexandria",
-      "date": "27/2/2025",
-      "time": "10:30 am",
-      "price": "6,000 L.E",
-      "class": "First class"
-    },
-  ];
+  List<Flight> flights = [];
+
+  Future<void> _getAllFlights() async {
+    List<Flight> flightsList = await FlightCollections.getAllFlight();
+    flights = flightsList
+        .where((element) =>
+            element.airline!.flighAirLineName ==
+            widget.airline.flighAirLineName)
+        .toList();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    Future.wait([
+      _getAllFlights(),
+    ]);
+    super.initState();
+  }
+
   String selectedDestination = "Vancouver";
 
   DateTime? selectedStartDate;
@@ -327,88 +328,96 @@ class _ViewFlightsState extends State<ViewFlights> {
     var theme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.airline.flighAirLineName,
-          style: theme.titleLarge!.copyWith(
-            color: AppColors.whiteColor,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
           ),
         ),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text(
-              "Flights",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: AppColors.newBlueColor,
+        title: Text(
+          widget.airline.flighAirLineName,
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: AppColors.whiteColor,
               ),
-            ),
-            SizedBox(
-              height: 33,
-            ),
-            Row(
-              children: [
-                Expanded(
-                    child: TextField(
-                  decoration: InputDecoration(
-                    hintText: "Search",
-                    prefixIcon:
-                        const Icon(Icons.search, color: Color(0xff0d75b4)),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      // Border when not focused
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Color(0xff0d75b4), // Custom color
-                        width: 1.5,
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Text(
+                "Flights",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.newBlueColor,
+                ),
+              ),
+              SizedBox(
+                height: 33,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                      child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "Search",
+                      prefixIcon:
+                          const Icon(Icons.search, color: Color(0xff0d75b4)),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        // Border when not focused
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          color: Color(0xff0d75b4), // Custom color
+                          width: 1.5,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        // Border when focused
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          color: Color(0xff0d75b4), // Same color as enabled
+                          width: 2,
+                        ),
                       ),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      // Border when focused
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Color(0xff0d75b4), // Same color as enabled
-                        width: 2,
-                      ),
+                  )),
+                  SizedBox(width: 5),
+                  IconButton(
+                    icon: Icon(
+                      Icons.filter_list_alt,
+                      size: 40,
+                      color: Color(0xff0d75b4),
                     ),
-                  ),
-                )),
-                SizedBox(width: 5),
-                IconButton(
-                  icon: Icon(
-                    Icons.filter_list_alt,
-                    size: 40,
-                    color: Color(0xff0d75b4),
-                  ),
-                  onPressed: () {
-                    _showFilters();
-                  },
-                )
-              ],
-            ),
-            SizedBox(height: 16),
-            Expanded(
-              child: ListView.builder(
+                    onPressed: () {
+                      _showFilters();
+                    },
+                  )
+                ],
+              ),
+              SizedBox(height: 16),
+              ListView.separated(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                separatorBuilder: (context, index) => 0.01.height.hSpace,
                 itemCount: flights.length,
                 itemBuilder: (context, index) {
-                  final flight = flights[index];
                   return FlightCard(
-                    destination: flight["destination"]!,
-                    date: flight["date"]!,
-                    time: flight["time"]!,
-                    price: flight["price"]!,
-                    flightClass: flight["class"]!,
+                    flight: flights[index],
+                    destination: "flight[" "]!",
+                    date: "flight[" "]!",
+                    time: " flight[" "]!",
+                    price: "flight[" "]!",
+                    flightClass: ' flight["class"]!',
                   );
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

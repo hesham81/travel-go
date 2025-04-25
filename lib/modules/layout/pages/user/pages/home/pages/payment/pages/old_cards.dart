@@ -12,6 +12,7 @@ import 'package:travel_go/core/utils/credit_card_db.dart';
 import 'package:travel_go/core/widget/custom_elevated_button.dart';
 import 'package:travel_go/models/credit_card_model.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/payment/pages/credit_card.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/flight_reservation/flight_ticket_reservation/pages/flight_ticket_reservations.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/hotel_reservations_info/pages/hotel_reservation_user.dart';
 import 'package:u_credit_card/u_credit_card.dart';
 
@@ -28,20 +29,26 @@ class OldCards extends StatefulWidget {
 
 class _OldCardsState extends State<OldCards> {
   final player = AudioPlayer();
+  bool isLoading = true;
 
   Future<void> _playSounds() async {
     await player.play(
       AssetSource(SoundEffects.cashMoney),
     );
   }
+
   TripDataModel? trip;
 
   Future<void> _getCurrentTrip() async {
     TripDepartureDataModel tripDepartureDataModel =
-    Provider.of<ReservationProvider>(context, listen: false)
-        .getSelectedDeparture!;
+        Provider.of<ReservationProvider>(context, listen: false)
+            .getSelectedDeparture!;
     trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
+    setState(() {
+      isLoading = false;
+    });
   }
+
   @override
   void initState() {
     Future.wait([
@@ -50,83 +57,86 @@ class _OldCardsState extends State<OldCards> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
     var provider = Provider.of<ReservationProvider>(context);
     return Scaffold(
-      body: Column(
-        children: [
-          0.3.height.hSpace,
-          SafeArea(
-            child: CreditCardUi(
-              autoHideBalance: true,
-              bottomRightColor: AppColors.newBlueColor,
-              topLeftColor: AppColors.newBlueColor,
-              enableFlipping: true,
-              placeNfcIconAtTheEnd: true,
-              currencySymbol: trip!.currency,
-              showValidFrom: false,
-              showBalance: true,
-              balance: provider.getCard!.balance,
-              cvvNumber: provider.getCard!.cvv,
-              cardType: CardType.giftCard,
-              creditCardType: CreditCardType.mastercard,
-              cardHolderFullName: provider.getCard!.holderName,
-              cardNumber: provider.getCard!.creditNumber,
-              validThru: provider.getCard!.expiryDate,
-            ),
-          ).center,
-          Spacer(),
-          Row(
-            children: [
-              Expanded(
-                child: CustomElevatedButton(
-                  text: "OK",
-                  onPressed: () async {
-                    if (provider.getCard!.balance! >= 8000) {
-                      EasyLoading.show();
-                      await CreditCardDB.withDraw(
-                          provider.getCard!.creditNumber, 8000);
-                      await _playSounds();
-                      CreditCardModel card = CreditCardModel(
-                        creditNumber: provider.getCard!.creditNumber,
-                        cvv: provider.getCard!.cvv,
-                        expiryDate: provider.getCard!.expiryDate,
-                        holderName: provider.getCard!.holderName,
-                        userId: provider.getCard!.userId,
-                        balance: (provider.getCard!.balance! - 8000),
-                      );
-                      provider.setCard(card);
-                      EasyLoading.dismiss();
-                      replaceWidget(
-                        newPage: HotelReservationUser(),
-                        context: context,
-                      );
-                    } else {
-                      EasyLoading.showError("Your Money Is Not Enough");
-                    }
-                  },
-                ),
-              ),
-              0.02.width.vSpace,
-              Expanded(
-                child: CustomElevatedButton(
-                  text: "Another Card",
-                  btnColor: AppColors.errorColor,
-                  onPressed: () => slideLeftWidget(
-                      newPage: CreditCardScreen(
-                        route: HotelReservationUser(),
+      body: (isLoading)
+          ? CircularProgressIndicator(
+              backgroundColor: AppColors.newBlueColor,
+            )
+          : Column(
+              children: [
+                0.3.height.hSpace,
+                SafeArea(
+                  child: CreditCardUi(
+                    autoHideBalance: true,
+                    bottomRightColor: AppColors.newBlueColor,
+                    topLeftColor: AppColors.newBlueColor,
+                    enableFlipping: true,
+                    placeNfcIconAtTheEnd: true,
+                    currencySymbol: trip!.currency,
+                    showValidFrom: false,
+                    showBalance: true,
+                    balance: provider.getCard!.balance,
+                    cvvNumber: provider.getCard!.cvv,
+                    cardType: CardType.giftCard,
+                    creditCardType: CreditCardType.mastercard,
+                    cardHolderFullName: provider.getCard!.holderName,
+                    cardNumber: provider.getCard!.creditNumber,
+                    validThru: provider.getCard!.expiryDate,
+                  ),
+                ).center,
+                Spacer(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomElevatedButton(
+                        text: "OK",
+                        onPressed: () async {
+                          if (provider.getCard!.balance! >= 8000) {
+                            EasyLoading.show();
+                            await CreditCardDB.withDraw(
+                                provider.getCard!.creditNumber, 8000);
+                            await _playSounds();
+                            CreditCardModel card = CreditCardModel(
+                              creditNumber: provider.getCard!.creditNumber,
+                              cvv: provider.getCard!.cvv,
+                              expiryDate: provider.getCard!.expiryDate,
+                              holderName: provider.getCard!.holderName,
+                              userId: provider.getCard!.userId,
+                              balance: (provider.getCard!.balance! - 8000),
+                            );
+                            provider.setCard(card);
+                            EasyLoading.dismiss();
+                            replaceWidget(
+                              newPage: FlightTicketReservations(),
+                              context: context,
+                            );
+                          } else {
+                            EasyLoading.showError("Your Money Is Not Enough");
+                          }
+                        },
                       ),
-                      context: context),
-                ),
-              ),
-            ],
-          ).hPadding(0.03.width),
-          0.01.height.hSpace,
-        ],
-      ),
+                    ),
+                    0.02.width.vSpace,
+                    Expanded(
+                      child: CustomElevatedButton(
+                        text: "Another Card",
+                        btnColor: AppColors.errorColor,
+                        onPressed: () => slideLeftWidget(
+                            newPage: CreditCardScreen(
+                              route: HotelReservationUser(),
+                            ),
+                            context: context),
+                      ),
+                    ),
+                  ],
+                ).hPadding(0.03.width),
+                0.01.height.hSpace,
+              ],
+            ),
     );
   }
 }

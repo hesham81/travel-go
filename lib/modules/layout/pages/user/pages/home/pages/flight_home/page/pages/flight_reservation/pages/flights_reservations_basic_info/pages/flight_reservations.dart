@@ -36,7 +36,6 @@ class _ReserveFlightState extends State<ReserveFlight> {
     trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
   }
 
-
   Future<void> getFlight() async {
     var provider = Provider.of<ReservationProvider>(context, listen: false);
     flight = await FlightCollections.getFlightById(
@@ -51,7 +50,6 @@ class _ReserveFlightState extends State<ReserveFlight> {
     Future.wait([
       _getCurrentTrip(),
       getFlight(),
-
     ]);
     super.initState();
   }
@@ -246,11 +244,6 @@ class _ReserveFlightState extends State<ReserveFlight> {
                               text: "OK",
                               onPressed: () {
                                 provider.setReserveFlight(true);
-
-                                slideRightWidget(
-                                  newPage: FlightAccomdationsReservations(),
-                                  context: context,
-                                );
                               }),
                         ),
                         0.03.width.vSpace,

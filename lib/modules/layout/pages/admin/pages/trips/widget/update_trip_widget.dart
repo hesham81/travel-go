@@ -1,8 +1,15 @@
 import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/core/services/bot_toast.dart';
+import 'package:travel_go/core/utils/hotels_db.dart';
+import 'package:travel_go/core/widget/custom_container.dart';
+import 'package:travel_go/models/hotel_model.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/hotels/pages/update_hotel/admin_update_hotel.dart';
+import '../../../../../../../core/utils/flight_collections.dart';
+import '../../../../../../../models/flight.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widget/custom_elevated_button.dart';
@@ -38,6 +45,17 @@ class _UpdateTripWidgetState extends State<UpdateTripWidget> {
     price.text = widget.trip.price.toString();
     totalDays.text = widget.trip.totalDays.toString();
   }
+
+  Future<void> _initData() async {
+    hotel = await HotelsDB.getHotelById(hotelId: widget.trip.hotelId);
+    flight =
+        await FlightCollections.getFlightById(flightId: widget.trip.flightId);
+    setState(() {});
+  }
+
+  Hotel? hotel;
+
+  Flight? flight;
 
   _updateData(BuildContext context) async {
     EasyLoading.show();
@@ -78,6 +96,9 @@ class _UpdateTripWidgetState extends State<UpdateTripWidget> {
 
   @override
   void initState() {
+    Future.wait([
+      _initData(),
+    ]);
     _startData();
     super.initState();
   }
@@ -220,6 +241,56 @@ class _UpdateTripWidgetState extends State<UpdateTripWidget> {
                 NumbersTextFormField(
                   hintText: "${widget.trip.totalDays} Day",
                   controller: totalDays,
+                ),
+                0.01.height.hSpace,
+                GestureDetector(
+                  onTap: () => slideLeftWidget(
+                      newPage: AdminUpdateHotel(
+                        hotel: hotel!,
+                      ),
+                      context: context),
+                  child: CustomContainer(
+                    child: Row(
+                      children: [
+                        Text(
+                          "Trip Hotel",
+                          style: theme.titleMedium!.copyWith(
+                              color: AppColors.newBlueColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          color: AppColors.newBlueColor,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                0.01.height.hSpace,
+                GestureDetector(
+                  onTap: () => slideLeftWidget(
+                      newPage: AdminUpdateHotel(
+                        hotel: hotel!,
+                      ),
+                      context: context),
+                  child: CustomContainer(
+                    child: Row(
+                      children: [
+                        Text(
+                          "Trip Flight",
+                          style: theme.titleMedium!.copyWith(
+                              color: AppColors.newBlueColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          color: AppColors.newBlueColor,
+                        )
+                      ],
+                    ),
+                  ),
                 ),
                 0.01.height.hSpace,
                 Row(

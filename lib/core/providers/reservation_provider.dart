@@ -5,7 +5,10 @@ import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:travel_go/core/functions/calculate_distance.dart';
 import 'package:travel_go/models/credit_card_model.dart';
+import 'package:travel_go/models/flight_departures.dart';
 import 'package:travel_go/models/reservation_model.dart';
+import '../../models/flight.dart';
+import '../../models/seat_economy.dart';
 import '../../models/trip_data_model.dart';
 import '../../modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
 import '/core/utils/firebase_auth_services.dart';
@@ -19,14 +22,44 @@ class ReservationProvider extends ChangeNotifier {
   late bool _reserveHotel;
   ReservationModel? reservation;
 
-  late bool _reserveFlight ;
+  late bool _reserveFlight;
+
+   SeatEconomyDataModel? _seatEconomyDataModel;
+
+  SeatEconomyDataModel? get getSeatEconomyDataModel => _seatEconomyDataModel;
+
+  void setSeatEconomyDataModel(SeatEconomyDataModel value) {
+    _seatEconomyDataModel = value;
+    notifyListeners();
+  }
+
+  TripDataModel? _trip;
+
+  TripDataModel? get getTrip => _trip;
+
+  void setTrip(TripDataModel value) {
+    _trip = value;
+    notifyListeners();
+  }
+
+  Flight? _flight;
+
+  Flight? get getFlight => _flight;
+
+  void setFlight(Flight value) {
+    _flight = value;
+    notifyListeners();
+  }
 
   bool get getReserveHotel => _reserveHotel;
+
   bool get getReserveFlight => _reserveFlight;
+
   void setReserveHotel(bool value) {
     _reserveHotel = value;
     notifyListeners();
   }
+
   void setReserveFlight(bool value) {
     _reserveFlight = value;
     notifyListeners();
@@ -36,21 +69,30 @@ class ReservationProvider extends ChangeNotifier {
   LocationData? _locationData;
   int totalUsers = 0;
   String? _address;
+  FlightDeparture? _flightDeparture;
+
+  FlightDeparture? get getFlightDeparture => _flightDeparture;
+
+  void setFlightDeparture(FlightDeparture value) {
+    _flightDeparture = value;
+    notifyListeners();
+  }
+
   CreditCardModel? card;
 
   ReservationModel? get getReservation => reservation;
+
   void setReservation(ReservationModel? value) {
     reservation = value;
     notifyListeners();
   }
-  TripDataModel? _trip ;
 
-  Future<void> _getTrip()async{
+  Future<void> _getTrip() async {
     _trip = await TripCollections.getTrip(selectedDeparture!.tripId);
     notifyListeners();
   }
-  int calculateDistanceFromLocation() {
 
+  int calculateDistanceFromLocation() {
     return calculateDistance(
       lat1: _trip?.toLat ?? 0,
       lon1: _trip?.toLong ?? 0,

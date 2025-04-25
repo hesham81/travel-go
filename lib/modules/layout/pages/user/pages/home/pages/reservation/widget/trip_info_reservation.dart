@@ -22,9 +22,9 @@ class TripInfoReservation extends StatefulWidget {
 }
 
 class _TripInfoReservationState extends State<TripInfoReservation> {
-  late Hotel hotel;
+  Hotel? hotel;
 
-  late Flight flight;
+  Flight? flight;
   TripDataModel? trip;
 
   Future<void> _getCurrentTrip() async {
@@ -32,12 +32,6 @@ class _TripInfoReservationState extends State<TripInfoReservation> {
         Provider.of<ReservationProvider>(context, listen: false)
             .getSelectedDeparture!;
     trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
-  }
-
-  bool isLoading = true;
-
-  Future<void> initData() async {
-    var provider = Provider.of<ReservationProvider>(context, listen: false);
     hotel = await HotelsDB.getHotelById(
       hotelId: trip!.hotelId,
     );
@@ -45,9 +39,16 @@ class _TripInfoReservationState extends State<TripInfoReservation> {
     flight = (await FlightCollections.getFlightById(
       flightId: trip!.flightId,
     ))!;
+    Provider.of<ReservationProvider>(context, listen: false).setTrip(trip!);
 
     isLoading = false;
     setState(() {});
+  }
+
+  bool isLoading = true;
+
+  Future<void> initData() async {
+    var provider = Provider.of<ReservationProvider>(context, listen: false);
   }
 
   @override
@@ -63,7 +64,9 @@ class _TripInfoReservationState extends State<TripInfoReservation> {
   Widget build(BuildContext context) {
     var provider = Provider.of<ReservationProvider>(context);
     return (isLoading)
-        ? CircularProgressIndicator(color: AppColors.newBlueColor).center
+        ? CircularProgressIndicator(
+            color: AppColors.newBlueColor,
+          ).center
         : Container(
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
@@ -104,12 +107,12 @@ class _TripInfoReservationState extends State<TripInfoReservation> {
                 0.01.height.hSpace,
                 LabelsWidget(
                   label: "Flight : ",
-                  value: flight.flightId,
+                  value: flight!.flightId,
                 ),
                 0.01.height.hSpace,
                 LabelsWidget(
                   label: "Hotel : ",
-                  value: hotel.hotelName,
+                  value: hotel!.hotelName,
                 ),
                 0.01.height.hSpace,
                 LabelsWidget(
@@ -120,7 +123,7 @@ class _TripInfoReservationState extends State<TripInfoReservation> {
                 LabelsWidget(
                   label: "Total Trip Price : ",
                   value:
-                      "${(provider.getTotalUsers == 0 || provider.getTotalUsers == -1) ? trip!.price : provider.getTotalUsers * trip!.price} ${trip!.currency}",
+                      "${(provider.getTotalUsers == 0 || provider.getTotalUsers == -1) ? trip!.price : (provider.getTotalUsers + 1 * trip!.price)} ${trip!.currency}",
                 ),
               ],
             ),

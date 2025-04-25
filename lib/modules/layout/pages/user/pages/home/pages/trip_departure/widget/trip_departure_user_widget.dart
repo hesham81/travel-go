@@ -31,6 +31,7 @@ class _TripDepartureUserWidgetState extends State<TripDepartureUserWidget> {
 
   @override
   Widget build(BuildContext context) {
+  int difference = widget.model.from.difference(DateTime.now()).inDays;
     var theme = Theme.of(context).textTheme;
     return Stack(
       children: [
@@ -77,7 +78,7 @@ class _TripDepartureUserWidgetState extends State<TripDepartureUserWidget> {
                           ),
                         ),
                         Text(
-                          "${widget.model.from.difference(DateTime.now()).inDays} Days",
+                          "${(difference == 0 ) ? 1 : difference} Days",
                           style: theme.labelLarge!.copyWith(
                             color: AppColors.blackColor.withAlpha(80),
                           ),

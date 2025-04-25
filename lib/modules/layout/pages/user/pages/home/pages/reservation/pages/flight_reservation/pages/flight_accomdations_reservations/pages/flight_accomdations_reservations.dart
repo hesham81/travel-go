@@ -1,14 +1,20 @@
+import 'dart:developer';
+
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/core/extensions/align.dart';
 import 'package:travel_go/core/utils/flight_collections.dart';
 import 'package:travel_go/core/widget/custom_container.dart';
 import 'package:travel_go/models/flight.dart';
+import 'package:travel_go/models/flight_departures.dart';
+import 'package:travel_go/models/seat_economy.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/payment/pages/old_cards.dart';
 import '../../../../../../../../../../../../../models/trip_data_model.dart';
 import '../../../../../../../../../../admin/menna/trippp/utils/trips_collections.dart';
 import '../../../../../../../../../../admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
+import '../widget/source_destination_departure.dart';
 import '/modules/layout/pages/user/pages/home/pages/payment/pages/credit_card.dart';
 import '/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/hotel_reservations_info/pages/hotel_reservation_user.dart';
 import '/core/constant/app_assets.dart';
@@ -20,7 +26,12 @@ import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pag
 import '/modules/layout/pages/user/widget/app_bar.dart';
 
 class FlightAccomdationsReservations extends StatefulWidget {
-  const FlightAccomdationsReservations({super.key});
+  final FlightDeparture flightDeparture;
+
+  const FlightAccomdationsReservations({
+    super.key,
+    required this.flightDeparture,
+  });
 
   @override
   State<FlightAccomdationsReservations> createState() =>
@@ -33,45 +44,44 @@ class _FlightAccomdationsReservationsState
 
   bool isLoading = true;
 
-  Future<void> initData() async {
-    var provider = Provider.of<ReservationProvider>(context, listen: false);
+  Future<void> _initData() async {
+    TripDepartureDataModel tripDepartureDataModel =
+        Provider.of<ReservationProvider>(context, listen: false)
+            .getSelectedDeparture!;
+    Provider.of<ReservationProvider>(context, listen: false)
+        .setFlightDeparture(widget.flightDeparture);
 
+    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
     flight = (await FlightCollections.getFlightById(
       flightId: trip!.flightId,
     ))!;
 
+    classes = flight.seats
+        .map(
+          (e) => e.economy,
+        )
+        .toList();
+    prices = flight.seats
+        .map(
+          (e) => e.price.toString(),
+        )
+        .toList();
     isLoading = false;
     setState(() {});
   }
+
   TripDataModel? trip;
-
-  Future<void> _getCurrentTrip() async {
-    TripDepartureDataModel tripDepartureDataModel =
-    Provider.of<ReservationProvider>(context, listen: false)
-        .getSelectedDeparture!;
-    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
-  }
-
 
   @override
   void initState() {
     Future.wait([
-      _getCurrentTrip(),
-      initData(),
+      _initData(),
     ]);
     super.initState();
   }
 
-  List<String> classes = [
-    "First Class ",
-    "Business Class",
-    "Economy Class",
-  ];
-  List<String> prices = [
-    "10000",
-    "18000",
-    "28000",
-  ];
+  List<String> classes = [];
+  List<String> prices = [];
   int selectedIndex = 0;
 
   @override
@@ -80,22 +90,24 @@ class _FlightAccomdationsReservationsState
     var theme = Theme.of(context).textTheme;
     return Scaffold(
       body: (isLoading)
-          ? CircularProgressIndicator(color: AppColors.newBlueColor)
+          ? CircularProgressIndicator(color: AppColors.newBlueColor).center
           : SingleChildScrollView(
               child: Column(
                 children: [
                   SafeArea(
                     child: AppBarWidget(),
                   ),
-                  SourceDestinationFlightTripUser(
-                    model: trip!,
+                  SourceDestinationFlightDeparture(
+                    model: widget.flightDeparture,
                   ),
                   0.02.height.hSpace,
                   Row(
                     children: [
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 35, vertical: 20),
+                          horizontal: 35,
+                          vertical: 20,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8.0),
@@ -195,19 +207,21 @@ class _FlightAccomdationsReservationsState
                                 ),
                                 Text(
                                   provider.user?.displayName ?? "No name",
-                                  style: theme.titleSmall!.copyWith(
-                                    color: AppColors.blackColor,
-                                  ),
+                                  style: theme.labelMedium!.copyWith(
+                                      color: AppColors.blackColor,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                                Column(
-                                  children: [
-                                    Text(
-                                      classes[selectedIndex],
-                                      style: theme.titleSmall!.copyWith(
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        classes[selectedIndex],
+                                        style: theme.labelSmall!.copyWith(
                                           color: AppColors.newBlueColor,
-                                          fontSize: 13),
-                                    ),
-                                  ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -239,7 +253,7 @@ class _FlightAccomdationsReservationsState
                                   children: [
                                     Text(
                                       item,
-                                      style: theme.labelMedium!.copyWith(
+                                      style: theme.labelSmall!.copyWith(
                                         color: AppColors.newBlueColor,
                                       ),
                                     ),
@@ -260,6 +274,14 @@ class _FlightAccomdationsReservationsState
                     },
                     onChanged: (p0) {
                       selectedIndex = classes.indexOf(p0!);
+                      SeatEconomyDataModel model = flight.seats
+                          .where(
+                            (e) => e.economy == classes[selectedIndex],
+                          )
+                          .first;
+                      provider.setSeatEconomyDataModel(
+                        model,
+                      );
                       setState(() {});
                     },
                   ).hPadding(0.03.width),
@@ -286,6 +308,7 @@ class _FlightAccomdationsReservationsState
                                       : flight.flightId,
                                   style: theme.labelMedium!.copyWith(
                                     color: AppColors.whiteColor,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 0.01.height.hSpace,

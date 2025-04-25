@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:travel_go/core/services/bot_toast.dart';
+import '../../../../../../core/widget/custom_container.dart';
 import '/core/widget/loading_image_network_widget.dart';
 import '/models/flight.dart';
 import '/core/extensions/extensions.dart';
@@ -11,10 +13,12 @@ class FlightCard extends StatelessWidget {
   final String time;
   final String price;
   final String flightClass;
+  final Flight flight;
 
   // final Flight flight;
 
   const FlightCard({
+    required this.flight,
     super.key,
     required this.destination,
     required this.date,
@@ -29,21 +33,29 @@ class FlightCard extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Confirm Deletion"),
-          content: Text("Are you sure you want to delete ?"),
+          title: Text(
+            "Confirm Deletion",
+            style: TextStyle(color: AppColors.newBlueColor),
+          ),
+          content: Text(
+            "Are you sure you want to delete ?",
+            style: TextStyle(color: AppColors.blackColor),
+          ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close dialog
               },
-              child: Text("Cancel"),
+              child: Text(
+                "Cancel",
+                style: TextStyle(color: AppColors.newBlueColor),
+              ),
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close dialog
-                // Perform delete action here
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Item deleted")),
+                Navigator.pop(context);
+                BotToastServices.showSuccessMessage(
+                  "Item Deleted Successfully",
                 );
               },
               child: Text("Delete", style: TextStyle(color: Colors.red)),
@@ -57,10 +69,7 @@ class FlightCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+    return CustomContainer(
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
@@ -68,15 +77,14 @@ class FlightCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.network(
-                    "https://upload.wikimedia.org/wikipedia/commons/7/7d/Egypt_air_logo.jpg",
-                    width: 40),
+                LoadingImageNetworkWidget(
+                  imageUrl: flight.airline!.flightAirLineImageUrl,
+                  width: 80,
+                ),
                 const SizedBox(width: 8),
                 0.01.width.vSpace,
                 Text(
-                  "EGYPTAIR",
-
-                  // flight.airline?.flighAirLineName ?? "No Name",
+                  flight.airline!.flighAirLineName,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

@@ -55,4 +55,13 @@ abstract class IdGenerator {
   }) {
     return "Reservation - $type-$name-${date.toString()}-$uid";
   }
+  static generateFlightDepartureId({
+    required String flightId ,
+    required String departureDay ,
+    required String from ,
+    required String to ,
+
+  }) {
+    return "Flight-$flightId-$departureDay-$from-$to";
+  }
 }

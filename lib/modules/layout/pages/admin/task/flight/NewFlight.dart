@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:travel_go/core/services/bot_toast.dart';
+import 'package:travel_go/models/seat_economy.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
@@ -48,7 +49,6 @@ class _NewFlightState extends State<NewFlight> {
     flightIdController.text =
         "F-${flightAirlineController.text.trim().toLowerCase()}-${flightNameController.text.toLowerCase()}";
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
@@ -62,7 +62,6 @@ class _NewFlightState extends State<NewFlight> {
                 color: AppColors.whiteColor,
               ),
         ),
-        centerTitle: true,
       ),
       body: SafeArea(
         child: Padding(
@@ -207,10 +206,27 @@ class _NewFlightState extends State<NewFlight> {
                               await FlightCollections.addFlight(
                                 context,
                                 flight: Flight(
-                                  flightId: flightIdController.text,
-                                  flightName: flightNameController.text,
-                                  airline: airline,
-                                ),
+                                    flightId: flightIdController.text,
+                                    flightName: flightNameController.text,
+                                    airline: airline,
+                                    seats: [
+                                      SeatEconomyDataModel(
+                                        economy: "Business Class",
+                                        price: 3500,
+                                        totalSeats: 85,
+                                      ),
+                                      SeatEconomyDataModel(
+                                        economy: "First Class",
+                                        price: 7500,
+                                        totalSeats: 30,
+                                      ),
+                                      SeatEconomyDataModel(
+                                        economy: "Standard Class",
+                                        price: 8900,
+                                        totalSeats: 15,
+                                      ),
+                                    ]),
+
                               ).then(
                                 (value) {
                                   if (value) {

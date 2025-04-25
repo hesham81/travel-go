@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/core/extensions/align.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/flight_reservation/explore_flight_departures/explore_filght_departures_from_trip_reservations.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/hotel_reservations_info/pages/hotel_reservation_user.dart';
 import '../../../../../../../../../../../../../core/utils/flight_collections.dart';
 import '../../../../../../../../../../../../../models/flight.dart';
@@ -30,20 +34,16 @@ class _FlightReservationsState extends State<FlightReservations> {
   bool isLoading = true;
   TripDataModel? trip;
 
-  Future<void> _getCurrentTrip() async {
+  Future<void> _initData(BuildContext context) async {
+    var provider = Provider.of<ReservationProvider>(context, listen: false);
     TripDepartureDataModel tripDepartureDataModel =
         Provider.of<ReservationProvider>(context, listen: false)
             .getSelectedDeparture!;
     trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
-  }
-
-  Future<void> initData() async {
-    var provider = Provider.of<ReservationProvider>(context, listen: false);
 
     flight = (await FlightCollections.getFlightById(
       flightId: trip!.flightId,
     ))!;
-
     isLoading = false;
     setState(() {});
   }
@@ -51,8 +51,7 @@ class _FlightReservationsState extends State<FlightReservations> {
   @override
   void initState() {
     Future.wait([
-      _getCurrentTrip(),
-      initData(),
+      _initData(context),
     ]);
     super.initState();
   }
@@ -104,7 +103,9 @@ class _FlightReservationsState extends State<FlightReservations> {
         ).hPadding(0.03.width),
       ),
       body: (isLoading)
-          ? CircularProgressIndicator(color: AppColors.newBlueColor)
+          ? CircularProgressIndicator(
+              color: AppColors.newBlueColor,
+            ).center
           : SingleChildScrollView(
               child: Column(
                 children: [
@@ -242,13 +243,19 @@ class _FlightReservationsState extends State<FlightReservations> {
                       children: [
                         Expanded(
                           child: CustomElevatedButton(
-                              text: "OK",
-                              onPressed: () {
-                                slideRightWidget(
-                                  newPage: FlightAccomdationsReservations(),
-                                  context: context,
-                                );
-                              }),
+                            text: "OK",
+                            onPressed: () {
+                              provider.setFlight(flight);
+                              slideRightWidget(
+                                newPage:
+                                    ExploreFilghtDeparturesFromTripReservations(
+                                  flight: flight,
+                                  dest: trip!.destination,
+                                ),
+                                context: context,
+                              );
+                            },
+                          ),
                         ),
                         0.03.width.vSpace,
                         Expanded(
