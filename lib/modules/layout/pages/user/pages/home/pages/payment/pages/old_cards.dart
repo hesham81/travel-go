@@ -15,6 +15,10 @@ import 'package:travel_go/modules/layout/pages/user/pages/home/pages/payment/pag
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/hotel_reservations_info/pages/hotel_reservation_user.dart';
 import 'package:u_credit_card/u_credit_card.dart';
 
+import '../../../../../../../../../models/trip_data_model.dart';
+import '../../../../../../admin/menna/trippp/utils/trips_collections.dart';
+import '../../../../../../admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
+
 class OldCards extends StatefulWidget {
   const OldCards({super.key});
 
@@ -30,6 +34,22 @@ class _OldCardsState extends State<OldCards> {
       AssetSource(SoundEffects.cashMoney),
     );
   }
+  TripDataModel? trip;
+
+  Future<void> _getCurrentTrip() async {
+    TripDepartureDataModel tripDepartureDataModel =
+    Provider.of<ReservationProvider>(context, listen: false)
+        .getSelectedDeparture!;
+    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
+  }
+  @override
+  void initState() {
+    Future.wait([
+      _getCurrentTrip(),
+    ]);
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +66,7 @@ class _OldCardsState extends State<OldCards> {
               topLeftColor: AppColors.newBlueColor,
               enableFlipping: true,
               placeNfcIconAtTheEnd: true,
-              currencySymbol: provider.selectedDeparture!.trip.currency,
+              currencySymbol: trip!.currency,
               showValidFrom: false,
               showBalance: true,
               balance: provider.getCard!.balance,

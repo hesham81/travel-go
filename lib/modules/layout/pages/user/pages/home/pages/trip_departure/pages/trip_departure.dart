@@ -5,6 +5,7 @@ import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/core/constant/app_assets.dart';
 import 'package:travel_go/core/providers/connections_provider.dart';
 import 'package:travel_go/core/theme/app_colors.dart';
+import '../../../../../../admin/menna/trippp/utils/trips_collections.dart';
 import '/core/providers/reservation_provider.dart';
 import '/modules/layout/pages/user/pages/home/pages/reservation/pages/reservation.dart';
 import '/core/extensions/extensions.dart';
@@ -28,6 +29,23 @@ class TripDeparture extends StatefulWidget {
 
 class _TripDepartureState extends State<TripDeparture> {
   bool? isConnected;
+  TripDataModel? trip;
+
+  Future<void> _getCurrentTrip() async {
+    TripDepartureDataModel tripDepartureDataModel =
+        Provider.of<ReservationProvider>(context, listen: false)
+            .getSelectedDeparture!;
+    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    Future.wait([
+      _getCurrentTrip(),
+    ]);
+    super.initState();
+  }
 
   List<TripDepartureDataModel> departures = [];
 
@@ -180,8 +198,7 @@ class _TripDepartureState extends State<TripDeparture> {
                       (e) => e.data(),
                     )
                     .toList()
-                    .where(
-                        (element) => element.trip.tripId == widget.model.tripId)
+                    .where((element) => trip?.tripId == widget.model.tripId)
                     .toList();
                 departures = departures
                     .where(

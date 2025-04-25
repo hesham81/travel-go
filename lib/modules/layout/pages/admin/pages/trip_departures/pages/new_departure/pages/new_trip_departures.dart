@@ -214,7 +214,7 @@ class _NewTripDeparturesState extends State<NewTripDepartures> {
                                   EasyLoading.show();
                                   await TripDeparturesCollection.addDeparture(
                                     TripDepartureDataModel(
-                                      trip: departure.getSelectedTrip!,
+                                      tripId: departure.getSelectedTrip!.tripId,
                                       from: fromDate!,
                                       to: toDate!,
                                       availableSeats: departure

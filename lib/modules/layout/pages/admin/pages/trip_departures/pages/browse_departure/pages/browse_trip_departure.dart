@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:route_transitions/route_transitions.dart';
 import '/modules/layout/pages/admin/menna/trippp/model/company_model.dart';
 import '/modules/layout/pages/admin/pages/trip_departures/widget/trip_filter_bottom_sheet.dart';
 import '/core/constant/app_assets.dart';
@@ -14,7 +15,15 @@ import '/core/theme/app_colors.dart';
 import '/modules/layout/pages/admin/pages/trip_departures/pages/browse_departure/widget/trip_explorer.dart';
 
 class BrowseTripDeparture extends StatefulWidget {
-  const BrowseTripDeparture({super.key});
+  final bool isUpdate;
+
+  final bool isDelete;
+
+  const BrowseTripDeparture({
+    super.key,
+    this.isUpdate = true,
+    this.isDelete = true,
+  });
 
   @override
   State<BrowseTripDeparture> createState() => _BrowseTripDepartureState();
@@ -87,12 +96,15 @@ class _BrowseTripDepartureState extends State<BrowseTripDeparture> {
       );
     } else {
       Provider.of<CollectionsProvider>(context, listen: false).getAllTrips();
-      allList = Provider.of<CollectionsProvider>(context, listen: false).getAllTripsData;
+      allList = Provider.of<CollectionsProvider>(context, listen: false)
+          .getAllTripsData;
       searchList = allList
           .where(
             (element) =>
                 element.organizedBy.companyName == company.companyName &&
-                element.tripName.toLowerCase().contains(searchController.text.toLowerCase()),
+                element.tripName
+                    .toLowerCase()
+                    .contains(searchController.text.toLowerCase()),
           )
           .toList();
       setState(() {});
@@ -181,16 +193,15 @@ class _BrowseTripDepartureState extends State<BrowseTripDeparture> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) => GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        SlideRightRoute(
-                          page: ExploreSelectedListOfDepartures(
+                      onTap: () => slideLeftWidget(
+                          newPage: ExploreSelectedListOfDepartures(
+                            isUpdate: widget.isUpdate,
+                            isDelete: widget.isDelete,
                             model: (searchList.isNotEmpty)
                                 ? searchList[index]
                                 : provider.getAllTripsData[index],
                           ),
-                        ),
-                      ),
+                          context: context),
                       child: TripExplorer(
                         model: searchList[index],
                       ),

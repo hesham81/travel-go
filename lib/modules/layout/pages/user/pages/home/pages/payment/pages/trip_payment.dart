@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
+import '../../../../../../../../../models/trip_data_model.dart';
+import '../../../../../../admin/menna/trippp/utils/trips_collections.dart';
+import '../../../../../../admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
 import '/core/constant/soundEffects.dart';
 import '/core/extensions/extensions.dart';
 import '/core/providers/reservation_provider.dart';
@@ -32,6 +35,15 @@ class _TripPaymentState extends State<TripPayment> {
   TextEditingController cardHolderName = TextEditingController();
   TextEditingController cardValidTo = TextEditingController();
   TextEditingController cvv = TextEditingController();
+  TripDataModel? trip;
+
+  Future<void> _getCurrentTrip() async {
+    TripDepartureDataModel tripDepartureDataModel =
+    Provider.of<ReservationProvider>(context, listen: false)
+        .getSelectedDeparture!;
+    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
+  }
+
 
   double balance = 0.0;
   final player = AudioPlayer();
@@ -52,6 +64,13 @@ class _TripPaymentState extends State<TripPayment> {
     await player.play(
       AssetSource(SoundEffects.cashMoney),
     );
+  }
+  @override
+  void initState() {
+    Future.wait([
+      _getCurrentTrip(),
+    ]);
+    super.initState();
   }
 
   @override
@@ -76,7 +95,7 @@ class _TripPaymentState extends State<TripPayment> {
                       topLeftColor: AppColors.newBlueColor,
                       enableFlipping: true,
                       placeNfcIconAtTheEnd: true,
-                      currencySymbol: provider.selectedDeparture!.trip.currency,
+                      currencySymbol: trip!.currency,
                       showValidFrom: false,
                       showBalance: true,
                       balance: balance,
@@ -218,7 +237,7 @@ class _TripPaymentState extends State<TripPayment> {
                                 });
                                 await CreditCardDB.withDraw(
                                   cardNumber.text,
-                                  provider.getSelectedDeparture!.trip.price * (provider.totalUsers +1 ),
+                                  trip!.price * (provider.totalUsers +1 ),
                                 ).then(
                                   (value) async {
                                     EasyLoading.dismiss();

@@ -24,7 +24,7 @@ abstract class TripDeparturesCollection {
   }
 
   static Future<List<TripDepartureDataModel>> getTripDeparture(
-     String tripId,
+    String tripId,
   ) async {
     return await _colRef().where("tripId", isEqualTo: tripId).get().then(
       (value) {
@@ -47,5 +47,16 @@ abstract class TripDeparturesCollection {
     return await _colRef().doc(departureId).get().then(
           (value) => value.data()!,
         );
+  }
+
+  static Future<bool> deleteDeparture({
+    required String departureId,
+  }) async {
+    try {
+      await _colRef().doc(departureId).delete();
+      return true;
+    } catch (error) {
+      throw Exception(error);
+    }
   }
 }

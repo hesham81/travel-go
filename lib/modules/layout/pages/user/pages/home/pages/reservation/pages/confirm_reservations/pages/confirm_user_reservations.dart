@@ -20,6 +20,8 @@ import 'package:travel_go/modules/layout/pages/user/pages/home/pages/home.dart';
 import '../../../../../../../../../../../core/providers/reservation_provider.dart';
 import '../../../../../../../../../../../core/theme/app_colors.dart';
 import '../../../../../../../../../../../core/utils/id_generator.dart';
+import '../../../../../../../../../../../models/trip_data_model.dart';
+import '../../../../../../../../admin/menna/trippp/utils/trips_collections.dart';
 
 class ConfirmUserReservations extends StatefulWidget {
   const ConfirmUserReservations({super.key});
@@ -33,22 +35,31 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
   late Hotel hotel;
 
   late Flight flight;
+  TripDataModel? trip;
 
-  late TripDepartureDataModel trip;
+  Future<void> _getCurrentTrip() async {
+    TripDepartureDataModel tripDepartureDataModel =
+    Provider.of<ReservationProvider>(context, listen: false)
+        .getSelectedDeparture!;
+    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
+  }
+
+
+  late TripDepartureDataModel tripDeparture;
 
   bool isLoading = true;
 
   Future<void> initData() async {
     var provider = Provider.of<ReservationProvider>(context, listen: false);
     hotel = await HotelsDB.getHotelById(
-      hotelId: provider.getSelectedDeparture!.trip.hotelId,
+      hotelId: trip!.hotelId,
     );
 
     flight = (await FlightCollections.getFlightById(
-      flightId: provider.getSelectedDeparture!.trip.flightId,
+      flightId: trip!.flightId,
     ))!;
 
-    trip = provider.getSelectedDeparture!;
+    tripDeparture = provider.getSelectedDeparture!;
 
     isLoading = false;
     setState(() {});
@@ -90,7 +101,7 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
                                 ),
                               ),
                               Text(
-                                provider.getSelectedDeparture!.trip.tripName,
+                                trip!.tripName,
                                 style: theme.titleMedium!.copyWith(
                                   color: AppColors.blackColor,
                                 ),
@@ -107,7 +118,7 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
                                 ),
                               ),
                               Text(
-                                provider.getSelectedDeparture!.trip.source,
+                                trip!.source,
                                 style: theme.titleMedium!.copyWith(),
                               ),
                             ],
@@ -122,7 +133,7 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
                                 ),
                               ),
                               Text(
-                                provider.getSelectedDeparture!.trip.destination,
+                                trip!.destination,
                                 style: theme.titleMedium!.copyWith(),
                               ),
                             ],
@@ -137,7 +148,7 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
                                 ),
                               ),
                               Text(
-                                "${provider.getSelectedDeparture!.trip.totalDays} Days",
+                                "${trip!.totalDays} Days",
                                 style: theme.titleMedium!.copyWith(),
                               ),
                             ],
@@ -152,7 +163,7 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
                                 ),
                               ),
                               Text(
-                                provider.getSelectedDeparture!.trip.organizedBy
+                                trip!.organizedBy
                                     .companyName,
                                 style: theme.titleMedium!.copyWith(),
                               ),
@@ -168,7 +179,7 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
                                 ),
                               ),
                               Text(
-                                "${provider.getSelectedDeparture!.from.day}/${provider.getSelectedDeparture!.from.month}/${provider.getSelectedDeparture!.from.year}",
+                                "${tripDeparture.from.day}/${tripDeparture.from.month}/${tripDeparture.from.year}",
                                 style: theme.titleMedium!.copyWith(),
                               ),
                             ],
@@ -213,7 +224,7 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
                                 ),
                               ),
                               Text(
-                                "${provider.getSelectedDeparture!.trip.price * (provider.totalUsers + 1)} ${provider.getSelectedDeparture!.trip.currency}",
+                                "${trip!.price * (provider.totalUsers + 1)} ${trip!.currency}",
                                 style: theme.titleMedium!.copyWith(),
                               ),
                             ],
@@ -311,8 +322,8 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
                                       ReservationModel(
                                         uid: provider.user!.uid,
                                         id: IdGenerator.generateReservationId(
-                                          name: trip.trip.tripName,
-                                          date: trip.from,
+                                          name: trip!.tripName,
+                                          date: tripDeparture.from,
                                           type: "Trip",
                                           uid: FirebaseAuth
                                               .instance.currentUser!.uid,

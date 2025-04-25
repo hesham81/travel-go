@@ -5,7 +5,10 @@ import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/core/utils/flight_collections.dart';
 import 'package:travel_go/core/widget/custom_container.dart';
 import 'package:travel_go/models/flight.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/payment/pages/old_cards.dart';
+import '../../../../../../../../../../../../../../models/trip_data_model.dart';
+import '../../../../../../../../../../../admin/menna/trippp/utils/trips_collections.dart';
 import '/modules/layout/pages/user/pages/home/pages/payment/pages/credit_card.dart';
 import '/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/hotel_reservations_info/pages/hotel_reservation_user.dart';
 import '/core/constant/app_assets.dart';
@@ -26,6 +29,15 @@ class ReserveFlightAccomdation extends StatefulWidget {
 
 class _ReserveFlightAccomdationState extends State<ReserveFlightAccomdation> {
   bool isLoading = true;
+  TripDataModel? trip;
+
+  Future<void> _getCurrentTrip() async {
+    TripDepartureDataModel tripDepartureDataModel =
+        Provider.of<ReservationProvider>(context, listen: false)
+            .getSelectedDeparture!;
+    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
+  }
+
   List<String> classes = [
     "First Class ",
     "Business Class",
@@ -43,7 +55,7 @@ class _ReserveFlightAccomdationState extends State<ReserveFlightAccomdation> {
   Future<void> getFlight() async {
     var provider = Provider.of<ReservationProvider>(context, listen: false);
     flight = await FlightCollections.getFlightById(
-      flightId: provider.getSelectedDeparture!.trip.flightId,
+      flightId: trip!.flightId,
     );
     isLoading = true;
     setState(() {});
@@ -53,6 +65,7 @@ class _ReserveFlightAccomdationState extends State<ReserveFlightAccomdation> {
   void initState() {
     Future.wait([
       getFlight(),
+      _getCurrentTrip(),
     ]);
     super.initState();
   }
@@ -73,7 +86,7 @@ class _ReserveFlightAccomdationState extends State<ReserveFlightAccomdation> {
                     child: AppBarWidget(),
                   ),
                   SourceDestinationFlightTripUser(
-                    model: provider.getSelectedDeparture!.trip,
+                    model: trip!,
                   ),
                   0.02.height.hSpace,
                   Row(
@@ -230,7 +243,7 @@ class _ReserveFlightAccomdationState extends State<ReserveFlightAccomdation> {
                                     ),
                                     0.01.height.hSpace,
                                     Text(
-                                      "${prices[index]} ${provider.getSelectedDeparture!.trip.currency}",
+                                      "${prices[index]} ${trip!.currency}",
                                       style: theme.titleSmall!.copyWith(
                                         color: Colors.green,
                                       ),

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
+import '../../../../../../../../../models/trip_data_model.dart';
+import '../../../../../../admin/menna/trippp/utils/trips_collections.dart';
+import '../../../../../../admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
 import '/core/services/bot_toast.dart';
 import '/core/utils/credit_card_db.dart';
 import '/models/credit_card_model.dart';
@@ -39,6 +42,22 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
 
   double balance = 0.0;
   final player = AudioPlayer();
+  TripDataModel? trip;
+
+  Future<void> _getCurrentTrip() async {
+    TripDepartureDataModel tripDepartureDataModel =
+    Provider.of<ReservationProvider>(context, listen: false)
+        .getSelectedDeparture!;
+    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
+  }
+
+  @override
+  void initState() {
+    Future.wait([
+      _getCurrentTrip(),
+    ]);
+    super.initState();
+  }
 
   _checkCreditCardData(CreditCardModel card) async {
     await CreditCardDB.getCreditData(card.creditNumber).then(
@@ -78,7 +97,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                     topLeftColor: AppColors.newBlueColor,
                     enableFlipping: true,
                     placeNfcIconAtTheEnd: true,
-                    currencySymbol: provider.selectedDeparture!.trip.currency,
+                    currencySymbol: trip!.currency,
                     showValidFrom: false,
                     showBalance: true,
                     balance: balance,
@@ -194,7 +213,7 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
                             });
                             await CreditCardDB.withDraw(
                               cardNumber.text,
-                              provider.getSelectedDeparture!.trip.price,
+                              trip!.price,
                             ).then(
                               (value) async {
                                 EasyLoading.dismiss();

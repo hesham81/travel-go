@@ -4,6 +4,9 @@ import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/core/utils/flight_collections.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/hotel_reservations_info/pages/hotel_reservation_user.dart';
 import '../../../../../../../../../../../../../../models/flight.dart';
+import '../../../../../../../../../../../../../../models/trip_data_model.dart';
+import '../../../../../../../../../../../admin/menna/trippp/utils/trips_collections.dart';
+import '../../../../../../../../../../../admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
 import '/core/constant/app_assets.dart';
 import '/core/extensions/extensions.dart';
 import '/core/providers/reservation_provider.dart';
@@ -24,11 +27,20 @@ class ReserveFlight extends StatefulWidget {
 class _ReserveFlightState extends State<ReserveFlight> {
   Flight? flight;
   bool isLoading = true;
+  TripDataModel? trip;
+
+  Future<void> _getCurrentTrip() async {
+    TripDepartureDataModel tripDepartureDataModel =
+        Provider.of<ReservationProvider>(context, listen: false)
+            .getSelectedDeparture!;
+    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
+  }
+
 
   Future<void> getFlight() async {
     var provider = Provider.of<ReservationProvider>(context, listen: false);
     flight = await FlightCollections.getFlightById(
-      flightId: provider.getSelectedDeparture!.trip.flightId,
+      flightId: trip!.flightId,
     );
     isLoading = false;
     setState(() {});
@@ -37,7 +49,9 @@ class _ReserveFlightState extends State<ReserveFlight> {
   @override
   void initState() {
     Future.wait([
+      _getCurrentTrip(),
       getFlight(),
+
     ]);
     super.initState();
   }
@@ -102,7 +116,7 @@ class _ReserveFlightState extends State<ReserveFlight> {
                     AppAssets.flightReservationUsers,
                   ),
                   SourceDestinationFlightTripUser(
-                    model: provider.getSelectedDeparture!.trip,
+                    model: trip!,
                   ),
                   0.02.height.hSpace,
                   Row(

@@ -10,6 +10,9 @@ import '../../../../../../../../../core/utils/flight_collections.dart';
 import '../../../../../../../../../core/utils/hotels_db.dart';
 import '../../../../../../../../../models/flight.dart';
 import '../../../../../../../../../models/hotel_model.dart';
+import '../../../../../../../../../models/trip_data_model.dart';
+import '../../../../../../admin/menna/trippp/utils/trips_collections.dart';
+import '../../../../../../admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
 
 class TripInfoReservation extends StatefulWidget {
   const TripInfoReservation({super.key});
@@ -22,17 +25,25 @@ class _TripInfoReservationState extends State<TripInfoReservation> {
   late Hotel hotel;
 
   late Flight flight;
+  TripDataModel? trip;
+
+  Future<void> _getCurrentTrip() async {
+    TripDepartureDataModel tripDepartureDataModel =
+        Provider.of<ReservationProvider>(context, listen: false)
+            .getSelectedDeparture!;
+    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
+  }
 
   bool isLoading = true;
 
   Future<void> initData() async {
     var provider = Provider.of<ReservationProvider>(context, listen: false);
     hotel = await HotelsDB.getHotelById(
-      hotelId: provider.getSelectedDeparture!.trip.hotelId,
+      hotelId: trip!.hotelId,
     );
 
     flight = (await FlightCollections.getFlightById(
-      flightId: provider.getSelectedDeparture!.trip.flightId,
+      flightId: trip!.flightId,
     ))!;
 
     isLoading = false;
@@ -42,6 +53,7 @@ class _TripInfoReservationState extends State<TripInfoReservation> {
   @override
   void initState() {
     Future.wait([
+      _getCurrentTrip(),
       initData(),
     ]);
     super.initState();
@@ -70,12 +82,12 @@ class _TripInfoReservationState extends State<TripInfoReservation> {
               children: [
                 LabelsWidget(
                   label: "Trip Id : ",
-                  value: provider.getSelectedDeparture!.trip.tripId,
+                  value: trip!.tripId,
                 ),
                 0.01.height.hSpace,
                 LabelsWidget(
                   label: "Trip : ",
-                  value: provider.getSelectedDeparture!.trip.tripName,
+                  value: trip!.tripName,
                 ),
                 0.01.height.hSpace,
                 LabelsWidget(
@@ -102,14 +114,13 @@ class _TripInfoReservationState extends State<TripInfoReservation> {
                 0.01.height.hSpace,
                 LabelsWidget(
                   label: "Total Days : ",
-                  value:
-                      "${provider.getSelectedDeparture!.trip.totalDays.toString()} Days",
+                  value: "${trip!.totalDays.toString()} Days",
                 ),
                 0.01.height.hSpace,
                 LabelsWidget(
                   label: "Total Trip Price : ",
                   value:
-                      "${(provider.getTotalUsers == 0 || provider.getTotalUsers == -1) ? provider.getSelectedDeparture!.trip.price : provider.getTotalUsers * provider.getSelectedDeparture!.trip.price} ${provider.getSelectedDeparture!.trip.currency}",
+                      "${(provider.getTotalUsers == 0 || provider.getTotalUsers == -1) ? trip!.price : provider.getTotalUsers * trip!.price} ${trip!.currency}",
                 ),
               ],
             ),

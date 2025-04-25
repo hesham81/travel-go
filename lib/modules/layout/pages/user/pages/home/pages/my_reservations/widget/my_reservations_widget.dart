@@ -18,6 +18,7 @@ import 'package:travel_go/modules/layout/pages/user/pages/home/pages/my_reservat
 import '../../../../../../../../../core/theme/app_colors.dart';
 import '../../../../../../../../../core/utils/flight_collections.dart';
 import '../../../../../../../../../core/utils/hotels_db.dart';
+import '../../../../../../admin/menna/trippp/utils/trips_collections.dart';
 
 class MyReservationsWidget extends StatefulWidget {
   final ReservationModel model;
@@ -37,6 +38,15 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
   late Flight? flight;
 
   late Hotel? hotel;
+  TripDataModel? tripData;
+
+  Future<void> _getCurrentTrip() async {
+    TripDepartureDataModel tripDepartureDataModel =
+    Provider.of<ReservationProvider>(context, listen: false)
+        .getSelectedDeparture!;
+    tripData = await TripCollections.getTrip(tripDepartureDataModel.tripId);
+  }
+
 
 
   bool isLoading = true;
@@ -121,7 +131,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                             ),
                             0.01.height.hSpace,
                             Text(
-                              "${trip?.trip.price} ${trip?.trip.currency}",
+                              "${tripData!.price} ${tripData!.currency}",
                               style: Theme.of(context).textTheme.labelMedium,
                             ),
                           ],
@@ -136,7 +146,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                           ),
                           child: LoadingImageNetworkWidget(
                             height: 0.19.height,
-                            imageUrl: trip?.trip.imageUrl ??
+                            imageUrl: tripData?.imageUrl ??
                                 "https://via.placeholder.com/150",
                           ),
                         ),

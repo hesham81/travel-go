@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/confirm_reservations/pages/confirm_user_reservations.dart';
+import '../../../../../../../../../../../../../models/trip_data_model.dart';
+import '../../../../../../../../../../admin/menna/trippp/utils/trips_collections.dart';
+import '../../../../../../../../../../admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
 import '/core/extensions/extensions.dart';
 import '/core/providers/reservation_provider.dart';
 import '/core/theme/app_colors.dart';
@@ -29,6 +32,15 @@ class _ConfirmHotelReservationsState extends State<ConfirmHotelReservations> {
     "Suite Room",
   ];
   String? selectedRoom;
+  TripDataModel? trip;
+
+  Future<void> _getCurrentTrip() async {
+    TripDepartureDataModel tripDepartureDataModel =
+    Provider.of<ReservationProvider>(context, listen: false)
+        .getSelectedDeparture!;
+    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
+  }
+
   List<double> prices = [
     3000.0,
     5000.0,
@@ -39,6 +51,13 @@ class _ConfirmHotelReservationsState extends State<ConfirmHotelReservations> {
     15000.0,
     17000.0,
   ];
+  @override
+  void initState() {
+    Future.wait([
+      _getCurrentTrip(),
+    ]);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +102,7 @@ class _ConfirmHotelReservationsState extends State<ConfirmHotelReservations> {
                     LabelsWidget(
                         label: "No Of Days :",
                         value:
-                            "${provider.getSelectedDeparture!.trip.totalDays} Days"),
+                            "${trip!.totalDays} Days"),
                     0.01.height.hSpace,
                     LabelsWidget(
                       label: "Room Type : ",
@@ -94,7 +113,7 @@ class _ConfirmHotelReservationsState extends State<ConfirmHotelReservations> {
                       LabelsWidget(
                         label: "Room Price : ",
                         value:
-                            "${prices[items.indexOf(selectedRoom!)]} ${provider.getSelectedDeparture!.trip.currency} Per Night",
+                            "${prices[items.indexOf(selectedRoom!)]} ${trip!.currency} Per Night",
                       ),
                   ],
                 ),

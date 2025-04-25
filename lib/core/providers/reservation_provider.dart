@@ -6,6 +6,8 @@ import 'package:location/location.dart';
 import 'package:travel_go/core/functions/calculate_distance.dart';
 import 'package:travel_go/models/credit_card_model.dart';
 import 'package:travel_go/models/reservation_model.dart';
+import '../../models/trip_data_model.dart';
+import '../../modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
 import '/core/utils/firebase_auth_services.dart';
 import '/core/functions/city_locations.dart';
 import '/modules/layout/pages/admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
@@ -41,11 +43,17 @@ class ReservationProvider extends ChangeNotifier {
     reservation = value;
     notifyListeners();
   }
+  TripDataModel? _trip ;
 
+  Future<void> _getTrip()async{
+    _trip = await TripCollections.getTrip(selectedDeparture!.tripId);
+    notifyListeners();
+  }
   int calculateDistanceFromLocation() {
+
     return calculateDistance(
-      lat1: selectedDeparture?.trip.toLat ?? 0,
-      lon1: selectedDeparture?.trip.toLong ?? 0,
+      lat1: _trip?.toLat ?? 0,
+      lon1: _trip?.toLong ?? 0,
       lat2: _locationData?.latitude ?? 0,
       lon2: _locationData?.longitude ?? 0,
     );

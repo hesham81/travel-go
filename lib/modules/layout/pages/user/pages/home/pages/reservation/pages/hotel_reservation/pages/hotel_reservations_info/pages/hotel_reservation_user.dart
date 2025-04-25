@@ -6,6 +6,9 @@ import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/confirm_hotel_reservation/pages/confirm_hotel_reservations.dart';
 import '../../../../../../../../../../../../../core/utils/hotels_db.dart';
 import '../../../../../../../../../../../../../models/hotel_model.dart';
+import '../../../../../../../../../../../../../models/trip_data_model.dart';
+import '../../../../../../../../../../admin/menna/trippp/utils/trips_collections.dart';
+import '../../../../../../../../../../admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/widget/hotel_accomdations_widget.dart';
 import '/core/extensions/align.dart';
@@ -25,11 +28,20 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
   late Hotel hotel;
 
   bool isLoading = true;
+  TripDataModel? trip;
+
+  Future<void> _getCurrentTrip() async {
+    TripDepartureDataModel tripDepartureDataModel =
+    Provider.of<ReservationProvider>(context, listen: false)
+        .getSelectedDeparture!;
+    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
+  }
+
 
   Future<void> initData() async {
     var provider = Provider.of<ReservationProvider>(context, listen: false);
     hotel = await HotelsDB.getHotelById(
-      hotelId: provider.getSelectedDeparture!.trip.hotelId,
+      hotelId: trip!.hotelId,
     );
 
     isLoading = false;
@@ -39,6 +51,7 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
   @override
   void initState() {
     Future.wait([
+      _getCurrentTrip(),
       initData(),
     ]);
     super.initState();
