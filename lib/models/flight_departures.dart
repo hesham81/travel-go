@@ -9,7 +9,7 @@ class FlightDeparture {
   final TimeOfDay depTime;
   final TimeOfDay arrTime;
 
-  final int availableSeats;
+   int availableSeats;
   final String arrAirport;
   final String depAirport;
 

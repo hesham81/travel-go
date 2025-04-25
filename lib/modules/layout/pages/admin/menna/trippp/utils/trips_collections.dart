@@ -45,7 +45,7 @@ abstract class TripCollections {
     }
   }
 
-  static Future<void> updateFavouriteTrip(TripDataModel model) async {
+  static Future<void> updateTrip(TripDataModel model) async {
     await _colRef().doc(model.tripId).set(model);
   }
 

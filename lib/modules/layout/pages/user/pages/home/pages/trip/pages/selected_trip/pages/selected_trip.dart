@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:travel_go/core/utils/firebase_auth_services.dart';
+import 'package:travel_go/models/flight_airlines.dart';
 import 'package:travel_go/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/trip_info/pages/trip_info.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/user_trip_flight/pages/user_trip_flight.dart';
@@ -36,9 +38,9 @@ class SelectedHomeScreenTrip extends StatefulWidget {
 }
 
 class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
-  late Hotel hotel;
+  Hotel? hotel;
 
-  late Flight flight;
+  Flight? flight;
 
   bool isLoading = true;
 
@@ -91,7 +93,6 @@ class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
 
   @override
   void initState() {
-
     _getAllFavouriteTrips();
     _calcTotalPlaces();
     Future.wait([
@@ -114,7 +115,16 @@ class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
         model: widget.model,
       ),
       UserTripFlight(
-        model: flight,
+        model: flight ??
+            Flight(
+              flightId: "flightId",
+              flightName: "flightName",
+              airline: FlightAirlines(
+                flighAirLineName: "flighAirLineName",
+                flightAirLineImageUrl: "flightAirLineImageUrl",
+              ),
+              seats: [],
+            ),
         trip: widget.model,
       ),
       UserTripReviews(),
@@ -124,113 +134,109 @@ class _SelectedHomeScreenTripState extends State<SelectedHomeScreenTrip> {
     ];
     var theme = Theme.of(context).textTheme;
     return Scaffold(
-      body: (isLoading)
-          ? CircularProgressIndicator(
-              color: AppColors.newBlueColor,
-            ).center
-          : SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SafeArea(
-                    child: AppBarWidget(),
-                  ),
-                  SizedBox(
-                    height: 0.4.height,
-                    child: Stack(
+      body: SingleChildScrollView(
+        child: Skeletonizer(
+          enabled: isLoading,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SafeArea(
+                child: AppBarWidget(),
+              ),
+              SizedBox(
+                height: 0.4.height,
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(25),
+                      child: LoadingImageNetworkWidget(
+                        imageUrl: widget.model.imageUrl!,
+                      ),
+                    ),
+                    Row(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(25),
-                          child: LoadingImageNetworkWidget(
-                            imageUrl: widget.model.imageUrl!,
+                        Text(
+                          widget.model.destination,
+                          style: theme.titleMedium!.copyWith(
+                            color: AppColors.whiteColor,
                           ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              widget.model.destination,
-                              style: theme.titleMedium!.copyWith(
-                                color: AppColors.whiteColor,
-                              ),
-                            ),
-                            Spacer(),
-                            IconButton(
-                              onPressed: () async {
-                                EasyLoading.show();
-                                if (isFavourite) {
-                                  int index = widget.model.favourites!.indexOf(
-                                      FirebaseAuthServices.getCurrentUserData()!
-                                          .uid);
-                                  widget.model.favourites!.removeAt(index);
+                        Spacer(),
+                        IconButton(
+                          onPressed: () async {
+                            EasyLoading.show();
+                            if (isFavourite) {
+                              int index = widget.model.favourites!.indexOf(
+                                  FirebaseAuthServices.getCurrentUserData()!
+                                      .uid);
+                              widget.model.favourites!.removeAt(index);
 
-                                  await TripCollections.updateFavouriteTrip(
-                                      widget.model);
-                                  isFavourite = false;
-                                } else {
-                                  widget.model.favourites!.add(
-                                      FirebaseAuthServices.getCurrentUserData()!
-                                          .uid);
-                                  await TripCollections.updateFavouriteTrip(
-                                      widget.model);
-                                  isFavourite = true;
-                                }
-                                EasyLoading.dismiss();
-                                setState(() {});
-                              },
-                              style: IconButton.styleFrom(
-                                backgroundColor: AppColors.whiteColor,
-                                padding: EdgeInsets.zero,
-                              ),
-                              icon: (isFavourite)
-                                  ? Icon(
-                                      Icons.bookmark,
-                                      color: AppColors.newBlueColor,
-                                    )
-                                  : Icon(
-                                      Icons.bookmark_border,
-                                      color: AppColors.newBlueColor,
-                                    ),
-                            ),
-                            0.01.height.hSpace,
-                          ],
-                        )
-                            .alignBottom()
-                            .hPadding(0.02.width)
-                            .vPadding(0.01.height),
-                        BackButton(
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(
-                              AppColors.whiteColor,
-                            ),
+                              await TripCollections.updateTrip(
+                                  widget.model);
+                              isFavourite = false;
+                            } else {
+                              widget.model.favourites!.add(
+                                  FirebaseAuthServices.getCurrentUserData()!
+                                      .uid);
+                              await TripCollections.updateTrip(
+                                  widget.model);
+                              isFavourite = true;
+                            }
+                            EasyLoading.dismiss();
+                            setState(() {});
+                          },
+                          style: IconButton.styleFrom(
+                            backgroundColor: AppColors.whiteColor,
+                            padding: EdgeInsets.zero,
                           ),
-                        ).allPadding(5)
+                          icon: (isFavourite)
+                              ? Icon(
+                                  Icons.bookmark,
+                                  color: AppColors.newBlueColor,
+                                )
+                              : Icon(
+                                  Icons.bookmark_border,
+                                  color: AppColors.newBlueColor,
+                                ),
+                        ),
+                        0.01.height.hSpace,
                       ],
-                    ),
-                  ),
-                  0.015.height.hSpace,
-                  SizedBox(
-                    height: 0.04.height,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => CustomTextButton(
-                        onPressed: () {
-                          selectedIndex = index;
-                          setState(() {});
-                        },
-                        text: buttonsItems[index],
-                        textSize: 13,
-                        textColor: (selectedIndex == index)
-                            ? AppColors.blackColor
-                            : AppColors.newBlueColor,
+                    ).alignBottom().hPadding(0.02.width).vPadding(0.01.height),
+                    BackButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          AppColors.whiteColor,
+                        ),
                       ),
-                      separatorBuilder: (context, index) => 0.08.width.vSpace,
-                      itemCount: buttonsItems.length,
-                    ),
+                    ).allPadding(5)
+                  ],
+                ),
+              ),
+              0.015.height.hSpace,
+              SizedBox(
+                height: 0.04.height,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) => CustomTextButton(
+                    onPressed: () {
+                      selectedIndex = index;
+                      setState(() {});
+                    },
+                    text: buttonsItems[index],
+                    textSize: 13,
+                    textColor: (selectedIndex == index)
+                        ? AppColors.blackColor
+                        : AppColors.newBlueColor,
                   ),
-                  body[selectedIndex],
-                ],
-              ).hPadding(0.03.width),
-            ),
+                  separatorBuilder: (context, index) => 0.08.width.vSpace,
+                  itemCount: buttonsItems.length,
+                ),
+              ),
+              body[selectedIndex],
+            ],
+          ).hPadding(0.03.width),
+        ),
+      ),
     );
   }
 }

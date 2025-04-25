@@ -6,8 +6,10 @@ import 'package:location/location.dart';
 import 'package:travel_go/core/functions/calculate_distance.dart';
 import 'package:travel_go/models/credit_card_model.dart';
 import 'package:travel_go/models/flight_departures.dart';
+import 'package:travel_go/models/hotel_accomdations_data_model.dart';
 import 'package:travel_go/models/reservation_model.dart';
 import '../../models/flight.dart';
+import '../../models/hotel_model.dart';
 import '../../models/seat_economy.dart';
 import '../../models/trip_data_model.dart';
 import '../../modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
@@ -21,10 +23,28 @@ class ReservationProvider extends ChangeNotifier {
   var _valid = true;
   late bool _reserveHotel;
   ReservationModel? reservation;
+  Hotel? _hotel;
+
+  HotelAccomdationsDataModel? _accomdationsDataModel;
+
+  HotelAccomdationsDataModel? get getAccomdationsDataModel =>
+      _accomdationsDataModel;
+
+  void setAccomdationsDataModel(HotelAccomdationsDataModel? value) {
+    _accomdationsDataModel = value;
+    notifyListeners();
+  }
+
+  Hotel? get getHotel => _hotel;
+
+  void setHotel(Hotel value) {
+    _hotel = value;
+    notifyListeners();
+  }
 
   late bool _reserveFlight;
 
-   SeatEconomyDataModel? _seatEconomyDataModel;
+  SeatEconomyDataModel? _seatEconomyDataModel;
 
   SeatEconomyDataModel? get getSeatEconomyDataModel => _seatEconomyDataModel;
 
@@ -92,10 +112,10 @@ class ReservationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int calculateDistanceFromLocation() {
+  int calculateDistanceFromLocation(LatLng point) {
     return calculateDistance(
-      lat1: _trip?.toLat ?? 0,
-      lon1: _trip?.toLong ?? 0,
+      lat1: point.latitude,
+      lon1: point.longitude,
       lat2: _locationData?.latitude ?? 0,
       lon2: _locationData?.longitude ?? 0,
     );

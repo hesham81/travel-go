@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_go/core/extensions/align.dart';
 import 'package:travel_go/core/extensions/extensions.dart';
 import 'package:travel_go/core/services/bot_toast.dart';
 import 'package:travel_go/core/utils/flight_collections.dart';
+import 'package:travel_go/core/utils/flight_departures_collections.dart';
 import 'package:travel_go/core/utils/hotels_db.dart';
 import 'package:travel_go/core/utils/reservations_collections.dart';
 import 'package:travel_go/core/widget/custom_container.dart';
@@ -15,6 +17,7 @@ import 'package:travel_go/models/flight.dart';
 import 'package:travel_go/models/hotel_model.dart';
 import 'package:travel_go/models/reservation_model.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/data/use_case/departures.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/home.dart';
 
 import '../../../../../../../../../../../core/providers/reservation_provider.dart';
@@ -37,19 +40,15 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
   late Flight flight;
   TripDataModel? trip;
 
-  Future<void> _getCurrentTrip() async {
-    TripDepartureDataModel tripDepartureDataModel =
-    Provider.of<ReservationProvider>(context, listen: false)
-        .getSelectedDeparture!;
-    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
-  }
-
-
   late TripDepartureDataModel tripDeparture;
 
   bool isLoading = true;
 
   Future<void> initData() async {
+    TripDepartureDataModel tripDepartureDataModel =
+        Provider.of<ReservationProvider>(context, listen: false)
+            .getSelectedDeparture!;
+    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
     var provider = Provider.of<ReservationProvider>(context, listen: false);
     hotel = await HotelsDB.getHotelById(
       hotelId: trip!.hotelId,
@@ -79,7 +78,9 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
     var provider = Provider.of<ReservationProvider>(context);
     return Scaffold(
       body: (isLoading)
-          ? CircularProgressIndicator(color: AppColors.newBlueColor)
+          ? CircularProgressIndicator(
+              color: AppColors.newBlueColor,
+            ).center
           : SingleChildScrollView(
               child: SafeArea(
                 child: Column(
@@ -163,8 +164,7 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
                                 ),
                               ),
                               Text(
-                                trip!.organizedBy
-                                    .companyName,
+                                trip!.organizedBy.companyName,
                                 style: theme.titleMedium!.copyWith(),
                               ),
                             ],
@@ -328,7 +328,7 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
                                           uid: FirebaseAuth
                                               .instance.currentUser!.uid,
                                         ),
-                                        totalGuests: provider.totalUsers + 1 ,
+                                        totalGuests: provider.totalUsers + 1,
                                         tripId:
                                             provider.getSelectedDeparture!.id,
                                         hotelId: (provider.getReserveHotel)
@@ -339,6 +339,37 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
                                             : null,
                                       ),
                                     );
+                                    var departure =
+                                        provider.getSelectedDeparture;
+                                    departure!.availableSeats -=
+                                        provider.totalUsers + 1;
+                                    await TripDeparturesCollection.addDeparture(
+                                        departure);
+                                    if (provider.getReserveFlight) {
+                                      var flightDeparture =
+                                          provider.getFlightDeparture;
+                                      flightDeparture!.availableSeats -=
+                                          provider.totalUsers + 1;
+                                      await FlightDeparturesCollections
+                                          .updateDeparture(flightDeparture);
+                                    }
+                                    if (provider.getReserveHotel) {
+                                      var hotel = provider.getHotel;
+                                      hotel!.availableRooms -=
+                                          provider.totalUsers + 1;
+                                      var acc = hotel.accomdations.firstWhere(
+                                        (element) =>
+                                            element ==
+                                            provider.getAccomdationsDataModel,
+                                      );
+                                      acc.roomAvailable -=
+                                          provider.totalUsers + 1;
+                                      int index = hotel.accomdations.indexOf(
+                                          provider.getAccomdationsDataModel!);
+                                      hotel.accomdations[index] = acc ;
+                                      await HotelsDB.updateHotel(hotel);
+                                    }
+
                                     EasyLoading.dismiss();
                                     BotToastServices.showSuccessMessage(
                                       "Reservation Confirmed",

@@ -119,7 +119,7 @@ class _HomeTripCartWidgetState extends State<HomeTripCartWidget> {
                       widget.model.favourites!.removeAt(index);
                       widget.model.favourites!.remove(
                           FirebaseAuthServices.getCurrentUserData()!.uid);
-                      await TripCollections.updateFavouriteTrip(widget.model)
+                      await TripCollections.updateTrip(widget.model)
                           .then(
                         (value) => EasyLoading.dismiss(),
                       );
@@ -128,7 +128,7 @@ class _HomeTripCartWidgetState extends State<HomeTripCartWidget> {
                     } else {
                       widget.model.favourites!
                           .add(FirebaseAuthServices.getCurrentUserData()!.uid);
-                      await TripCollections.updateFavouriteTrip(widget.model)
+                      await TripCollections.updateTrip(widget.model)
                           .then(
                         (value) => EasyLoading.dismiss(),
                       );

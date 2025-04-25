@@ -110,7 +110,9 @@ class _MySelectedReservationState extends State<MySelectedReservation> {
         ),
       ),
       body: (isLoading)
-          ? CircularProgressIndicator(color: AppColors.newBlueColor).center
+          ? CircularProgressIndicator(
+              color: AppColors.newBlueColor,
+            ).center
           : SingleChildScrollView(
               child: Column(
                 children: [

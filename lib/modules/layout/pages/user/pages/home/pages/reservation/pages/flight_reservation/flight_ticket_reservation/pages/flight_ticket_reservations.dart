@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
-import 'package:travel_go/core/extensions/dimensions.dart';
 import 'package:travel_go/core/extensions/extensions.dart';
 import 'package:travel_go/core/providers/reservation_provider.dart';
 import 'package:travel_go/core/widget/custom_container.dart';

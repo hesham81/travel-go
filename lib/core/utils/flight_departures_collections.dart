@@ -31,7 +31,16 @@ abstract class FlightDeparturesCollections {
       return Future.value(error.toString());
     }
   }
-  static Stream<QuerySnapshot<FlightDeparture>> getStreamDepartures(){
+
+  static Stream<QuerySnapshot<FlightDeparture>> getStreamDepartures() {
     return _collectionReference().snapshots();
+  }
+
+  static Future<void> updateDeparture(FlightDeparture departure) async {
+    await _collectionReference().doc(departure.id).update(departure.toMap());
+  }
+
+  static Future<void> deleteDeparture(String id) async {
+    await _collectionReference().doc(id).delete();
   }
 }

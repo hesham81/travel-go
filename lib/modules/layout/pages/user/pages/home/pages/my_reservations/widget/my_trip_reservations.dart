@@ -25,9 +25,10 @@ class _MyTripReservationsState extends State<MyTripReservations> {
 
   Future<void> _getCurrentTrip() async {
     TripDepartureDataModel tripDepartureDataModel =
-    Provider.of<ReservationProvider>(context, listen: false)
-        .getSelectedDeparture!;
+        Provider.of<ReservationProvider>(context, listen: false)
+            .getSelectedDeparture!;
     tripData = await TripCollections.getTrip(tripDepartureDataModel.tripId);
+    setState(() {});
   }
 
   @override
@@ -37,6 +38,7 @@ class _MyTripReservationsState extends State<MyTripReservations> {
     ]);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -60,12 +62,14 @@ class _MyTripReservationsState extends State<MyTripReservations> {
               0.01.height.hSpace,
               LabelsWidget(
                 label: "From : ",
-                value: "${widget.trip!.from.day}/${widget.trip!.from.month}/${widget.trip!.from.year} ",
+                value:
+                    "${widget.trip!.from.day}/${widget.trip!.from.month}/${widget.trip!.from.year} ",
               ),
               0.01.height.hSpace,
               LabelsWidget(
                 label: "To : ",
-                value: "${widget.trip!.to.day}/${widget.trip!.to.month}/${widget.trip!.to.year} ",
+                value:
+                    "${widget.trip!.to.day}/${widget.trip!.to.month}/${widget.trip!.to.year} ",
               ),
               0.01.height.hSpace,
               LabelsWidget(

@@ -10,6 +10,9 @@ import '/modules/layout/pages/user/pages/home/pages/trip/widget/home_trip_cart_w
 import '/modules/layout/pages/user/widget/app_bar.dart';
 import '/core/utils/firebase_auth_services.dart';
 import '/models/trip_data_model.dart';
+import 'favourite_flights.dart';
+import 'favourite_hotels.dart';
+import 'favourite_trips.dart';
 
 class FavouriteHome extends StatefulWidget {
   const FavouriteHome({super.key});
@@ -19,41 +22,16 @@ class FavouriteHome extends StatefulWidget {
 }
 
 class _FavouriteHomeState extends State<FavouriteHome> {
-  User? user = FirebaseAuthServices.getCurrentUserData();
-  List<TripDataModel> favouriteTrips = [];
-
-  _getAllFavouriteTrips() {
-    User? user = FirebaseAuthServices.getCurrentUserData();
-    TripCollections.getAllTrips().listen(
-      (event) {
-        favouriteTrips.clear();
-        for (var element in event.docs) {
-          TripDataModel model = element.data();
-          if (model.favourites?.isNotEmpty ?? false)
-            for (String id in model.favourites!) {
-              if (id == user!.uid) {
-                favouriteTrips.add(model);
-                setState(() {});
-                break;
-              }
-            }
-        }
-      },
-    );
-  }
-
   List<String> favouriteItems = [
     "Trips",
     "Hotels",
     "Flights",
   ];
-
-  @override
-  void initState() {
-    _getAllFavouriteTrips();
-    super.initState();
-  }
-
+  List<Widget> body = [
+    FavouriteTrips(),
+    FavouriteHotels(),
+    FavouriteFlights(),
+  ];
   int selectedIndex = 0;
 
   @override
@@ -100,27 +78,7 @@ class _FavouriteHomeState extends State<FavouriteHome> {
             ),
           ),
           0.01.height.hSpace,
-          (favouriteItems.isEmpty)
-              ? Lottie.asset("assets/icons/no_favourite.json")
-              : Expanded(
-                  child: ListView.separated(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    itemBuilder: (context, index) => GestureDetector(
-                      onTap: () {
-                        slideLeftWidget(
-                          newPage: SelectedHomeScreenTrip(
-                              model: favouriteTrips[index]),
-                          context: context,
-                        );
-                      },
-                      child: HomeTripCartWidget(
-                        model: favouriteTrips[index],
-                      ),
-                    ),
-                    separatorBuilder: (context, _) => 0.01.height.hSpace,
-                    itemCount: favouriteTrips.length,
-                  ),
-                ),
+          body[selectedIndex]
         ],
       ),
     );

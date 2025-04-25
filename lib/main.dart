@@ -52,7 +52,7 @@ Future<void> main() async {
   Gemini.init(
     apiKey: AiConstants.chatBotApiKey,
   );
-  showLoading();
+  configLoading();
   Supabase.initialize(
     url: SupabaseKeys.url,
     anonKey: SupabaseKeys.anonKey,

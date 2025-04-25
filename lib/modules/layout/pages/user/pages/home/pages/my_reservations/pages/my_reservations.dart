@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
@@ -19,31 +22,6 @@ class MyReservations extends StatefulWidget {
 
 class _MyReservationsState extends State<MyReservations> {
   List<ReservationModel> reservations = [];
-  bool isLoading = true;
-
-
-  @override
-  void initState() {
-    Future.wait(
-      [
-        ReservationCollections.getReservationsByUid(
-          Provider.of<ReservationProvider>(context, listen: false).user!.uid,
-        ).then(
-          (value) {
-            reservations = value;
-            setState(() {
-
-            });
-          },
-        ),
-      ],
-    ).then(
-      (value) => setState(() {
-        isLoading = false;
-      }),
-    );
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,26 +50,39 @@ class _MyReservationsState extends State<MyReservations> {
           ),
         ),
       ),
-      body: (isLoading)
-          ? CircularProgressIndicator(
-              color: AppColors.newBlueColor,
-            ).center
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  0.01.height.hSpace,
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => MyReservationsWidget(
-                      model: reservations[index],
-                    ),
-                    separatorBuilder: (context, index) => 0.01.height.hSpace,
-                    itemCount: reservations.length,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            0.01.height.hSpace,
+            StreamBuilder(
+              stream: ReservationCollections.getReservations(),
+              builder: (context, snapshot) {
+                reservations = snapshot.data?.docs
+                        .map(
+                          (e) => e.data(),
+                        )
+                        .toList() ??
+                    [];
+                reservations = reservations
+                    .where(
+                      (element) =>
+                          element.uid == FirebaseAuth.instance.currentUser!.uid,
+                    )
+                    .toList();
+                return ListView.separated(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) => MyReservationsWidget(
+                    model: reservations[index],
                   ),
-                ],
-              ).hPadding(0.03.width),
+                  separatorBuilder: (context, index) => 0.01.height.hSpace,
+                  itemCount: reservations.length,
+                );
+              },
             ),
+          ],
+        ).hPadding(0.03.width),
+      ),
     );
   }
 }

@@ -41,11 +41,11 @@ abstract class TripDeparturesCollection {
     return _colRef().snapshots();
   }
 
-  static Future<TripDepartureDataModel> getDepartureUsingId({
+  static Future<TripDepartureDataModel?> getDepartureUsingId({
     required String departureId,
   }) async {
     return await _colRef().doc(departureId).get().then(
-          (value) => value.data()!,
+          (value) => value.data() ?? null,
         );
   }
 

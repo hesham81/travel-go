@@ -33,25 +33,21 @@ class MyReservationsWidget extends StatefulWidget {
 }
 
 class _MyReservationsWidgetState extends State<MyReservationsWidget> {
-  late TripDepartureDataModel? trip;
+   TripDepartureDataModel? trip;
 
-  late Flight? flight;
+   Flight? flight;
 
-  late Hotel? hotel;
+   Hotel? hotel;
   TripDataModel? tripData;
-
-  Future<void> _getCurrentTrip() async {
-    TripDepartureDataModel tripDepartureDataModel =
-    Provider.of<ReservationProvider>(context, listen: false)
-        .getSelectedDeparture!;
-    tripData = await TripCollections.getTrip(tripDepartureDataModel.tripId);
-  }
-
 
 
   bool isLoading = true;
 
   Future<void> initData() async {
+    TripDepartureDataModel tripDepartureDataModel =
+    Provider.of<ReservationProvider>(context, listen: false)
+        .getSelectedDeparture!;
+    tripData = await TripCollections.getTrip(tripDepartureDataModel.tripId);
     if (widget.model.flightId != null) {
       flight = await FlightCollections.getFlightById(
         flightId: widget.model.flightId!,
@@ -64,18 +60,19 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
       );
     }
     isLoading = false;
-    if(widget.model.tripId != null)
-      {
-        trip = await TripDeparturesCollection.getDepartureUsingId(
-          departureId: widget.model.tripId!,
-        );
-      }
+    if (widget.model.tripId != null) {
+      trip = await TripDeparturesCollection.getDepartureUsingId(
+        departureId: widget.model.tripId!,
+      );
+    }
     setState(() {});
   }
 
   @override
   void initState() {
-    Future.wait([initData()]);
+    Future.wait([
+      initData(),
+    ]);
     super.initState();
   }
 
@@ -131,7 +128,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                             ),
                             0.01.height.hSpace,
                             Text(
-                              "${tripData!.price} ${tripData!.currency}",
+                              "${tripData?.price} ${tripData?.currency}",
                               style: Theme.of(context).textTheme.labelMedium,
                             ),
                           ],

@@ -1,12 +1,15 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/confirm_reservations/pages/confirm_user_reservations.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/confirm_hotel_reservation/pages/confirm_hotel_reservations.dart';
-import '../../../../../../../../../../../../../core/utils/hotels_db.dart';
-import '../../../../../../../../../../../../../models/hotel_model.dart';
-import '../../../../../../../../../../../../../models/trip_data_model.dart';
+import '/modules/layout/pages/user/pages/home/pages/reservation/pages/confirm_reservations/pages/confirm_user_reservations.dart';
+import '/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/confirm_hotel_reservation/pages/confirm_hotel_reservations.dart';
+import '/core/utils/hotels_db.dart';
+import '/models/hotel_model.dart';
+import '/models/trip_data_model.dart';
 import '../../../../../../../../../../admin/menna/trippp/utils/trips_collections.dart';
 import '../../../../../../../../../../admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
 import '/core/widget/custom_elevated_button.dart';
@@ -25,24 +28,28 @@ class HotelReservationUser extends StatefulWidget {
 }
 
 class _HotelReservationUserState extends State<HotelReservationUser> {
-  late Hotel hotel;
+  Hotel? hotel;
 
   bool isLoading = true;
   TripDataModel? trip;
 
-  Future<void> _getCurrentTrip() async {
-    TripDepartureDataModel tripDepartureDataModel =
-    Provider.of<ReservationProvider>(context, listen: false)
-        .getSelectedDeparture!;
-    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
-  }
-
+  Future<void> _getCurrentTrip() async {}
 
   Future<void> initData() async {
+    TripDepartureDataModel tripDepartureDataModel =
+        Provider.of<ReservationProvider>(context, listen: false)
+            .getSelectedDeparture!;
+    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
     var provider = Provider.of<ReservationProvider>(context, listen: false);
     hotel = await HotelsDB.getHotelById(
       hotelId: trip!.hotelId,
     );
+    roomImages.clear();
+    for (var image in hotel!.accomdations) {
+      for (var im in image.imagesUrls) {
+        roomImages.add(im);
+      }
+    }
 
     isLoading = false;
     setState(() {});
@@ -67,6 +74,7 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
     Icons.spa,
     Icons.sports_gymnastics,
   ];
+  bool isLiked = false;
 
   List<String> titles = [
     "Wifi",
@@ -78,19 +86,7 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
     "Spa",
     "Gym",
   ];
-  List<String> roomImages = [
-    "https://i.pinimg.com/736x/c3/4c/46/c34c464c7e68026d9ed9d219dd45b14f.jpg",
-    "https://i.pinimg.com/736x/8e/b1/be/8eb1be5d9cdec424e2bdcbf0c6ab22a7.jpg",
-    "https://i.pinimg.com/474x/23/ea/3b/23ea3be03555947e77560a9976be0502.jpg",
-    "https://i.pinimg.com/736x/88/2a/da/882adad9d9935f53fc2d4f5448ddad93.jpg",
-    "https://i.pinimg.com/474x/53/2d/f7/532df7cee694f03868af1cec05fabd0c.jpg",
-    "https://i.pinimg.com/474x/09/22/3b/09223bade133549d8869878b9d8a1807.jpg",
-    "https://i.pinimg.com/474x/b3/a5/7e/b3a57e79c57ba36dfa73856b116e19d1.jpg",
-    "https://i.pinimg.com/474x/75/ab/e4/75abe4cf88463917085fa6654084e029.jpg",
-    "https://i.pinimg.com/474x/95/7e/12/957e12164563f3a887e7b5bb9f370d06.jpg",
-    "https://i.pinimg.com/474x/c1/02/77/c102772f2deb7e41c9b8252c077773f7.jpg",
-    "https://i.pinimg.com/474x/c9/30/27/c9302794f138bbd7fabc6066fce54331.jpg",
-  ];
+  List<String> roomImages = [];
 
   PageController pageController = PageController();
   int index = 0;
@@ -138,227 +134,244 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
           ],
         ).hPadding(0.03.width),
       ),
-      body: (isLoading)
-          ? CircularProgressIndicator(color: AppColors.newBlueColor).center
-          : SingleChildScrollView(
-              child: Column(
+      body: Skeletonizer(
+        enabled: isLoading,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
                 children: [
-                  Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        ),
-                        child: LoadingImageNetworkWidget(
-                          imageUrl: hotel.imageUrl,
-                        ),
-                      ),
-                      SafeArea(
-                        child: BackButton(
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(
-                              AppColors.whiteColor,
-                            ),
-                          ),
-                        ).allPadding(5),
-                      ),
-                      SafeArea(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              style: IconButton.styleFrom(
-                                backgroundColor: AppColors.whiteColor,
-                              ),
-                              icon: Icon(
-                                Icons.bookmark_outline,
-                              ),
-                            ),
-                            0.01.width.vSpace,
-                            CircleAvatar(
-                              backgroundColor: AppColors.whiteColor,
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.yellow,
-                                  ),
-                                  Text(
-                                    hotel.hotelRating.toString(),
-                                    style: theme.labelSmall!.copyWith(
-                                      color: AppColors.blackColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ).alignTopRight(),
-                      ).allPadding(5),
-                    ],
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                    child: LoadingImageNetworkWidget(
+                      imageUrl: hotel?.imageUrl ?? "",
+                    ),
                   ),
-                  0.01.height.hSpace,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        hotel.hotelName,
-                        style: theme.titleMedium!.copyWith(
-                          color: AppColors.blackColor,
+                  SafeArea(
+                    child: BackButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          AppColors.whiteColor,
                         ),
                       ),
-                      0.01.height.hSpace,
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_on_outlined,
-                            color: AppColors.blackColor.withAlpha(110),
+                    ).allPadding(5),
+                  ),
+                  SafeArea(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              isLiked = !isLiked;
+                            });
+                          },
+                          style: IconButton.styleFrom(
+                            backgroundColor: AppColors.whiteColor,
                           ),
-                          0.01.width.vSpace,
-                          Text(
-                            "2 Rue Scribe, 75009 Paris, France",
-                            style: theme.titleSmall!.copyWith(
-                              color: AppColors.blackColor.withAlpha(110),
-                            ),
-                          ),
-                        ],
-                      ),
-                      0.01.height.hSpace,
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_history,
-                            color: AppColors.blackColor.withAlpha(110),
-                          ),
-                          0.02.width.vSpace,
-                          Text(
-                            "${provider.calculateDistanceFromLocation() ?? 100} KM",
-                            style: theme.titleSmall!.copyWith(
-                              color: AppColors.blackColor.withAlpha(110),
-                            ),
-                          )
-                        ],
-                      ),
-                      0.01.height.hSpace,
-                      Divider().hPadding(0.1.width),
-                      Text(
-                        "Facility Place",
-                        style: theme.titleMedium!
-                            .copyWith(color: AppColors.newBlueColor),
-                      ),
-                      0.01.height.hSpace,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          HotelAccomdationsWidget(
-                            icon: icons.first,
-                            title: titles.first,
-                          ),
-                          HotelAccomdationsWidget(
-                            icon: icons[1],
-                            title: titles[1],
-                          ),
-                          HotelAccomdationsWidget(
-                            icon: icons[3],
-                            title: titles[3],
-                          ),
-                          HotelAccomdationsWidget(
-                            icon: icons[4],
-                            title: titles[4],
-                          ),
-                        ],
-                      ),
-                      0.01.height.hSpace,
-                      Divider().hPadding(0.1.width),
-                      Text(
-                        "Description",
-                        style: theme.titleMedium!.copyWith(
-                          color: AppColors.newBlueColor,
-                        ),
-                      ),
-                      0.01.height.hSpace,
-                      RichText(
-                        text: TextSpan(
-                          text:
-                              "Experience ultimate comfort at ${hotel.hotelName}, a ${hotel.hotelRating.round()}-star retreat with elegant suites, fine dining, and a rooftop pool. Enjoy world-class service and breathtaking views. Perfect for business and leisure travelers.",
-                          style: theme.titleMedium!.copyWith(
-                            color: AppColors.blackColor,
+                          icon: Icon(
+                            (isLiked) ? Icons.bookmark : Icons.bookmark_outline,
+                            color: AppColors.newBlueColor,
                           ),
                         ),
-                      ),
-                      0.01.height.hSpace,
-                      Divider().hPadding(0.1.width),
-                      Text(
-                        "Gallery",
-                        style: theme.titleMedium!.copyWith(
-                          color: AppColors.newBlueColor,
-                        ),
-                      ),
-                      0.01.height.hSpace,
-                      SizedBox(
-                        height: 0.3.height,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: PageView(
-                            controller: pageController,
-                            onPageChanged: (value) {
-                              index = value;
-                              setState(() {});
-                            },
+                        0.01.width.vSpace,
+                        CircleAvatar(
+                          backgroundColor: AppColors.whiteColor,
+                          child: Column(
                             children: [
-                              for (int i = 0; i < roomImages.length; i++)
-                                LoadingImageNetworkWidget(
-                                  imageUrl: roomImages[i],
+                              Icon(
+                                Icons.star,
+                                color: Colors.yellow,
+                              ),
+                              Text(
+                                hotel?.hotelRating.toString() ?? "",
+                                style: theme.labelSmall!.copyWith(
+                                  color: AppColors.blackColor,
                                 ),
+                              ),
                             ],
                           ),
                         ),
-                      ),
-                      0.01.height.hSpace,
-                      SmoothPageIndicator(
-                        controller: pageController,
-                        count: roomImages.length,
-                        axisDirection: Axis.horizontal,
-                        effect: WormEffect(
-                          activeDotColor: AppColors.newBlueColor,
-                          dotWidth: 10,
-                          dotHeight: 10,
-                        ),
-                      ).center,
-                      0.02.height.hSpace,
-                      Row(
-                        children: [
-                          Expanded(
-                            child: CustomElevatedButton(
-                              text: "Confirm",
-                              onPressed: () {
-                                provider.setReserveHotel(true);
-                                slideLeftWidget(
-                                  newPage: ConfirmHotelReservations(),
-                                  context: context,
-                                );
-                              },
-                            ),
-                          ),
-                          0.01.width.vSpace,
-                          Expanded(
-                            child: CustomElevatedButton(
-                              text: "Cancel",
-                              onPressed: () => Navigator.pop(context),
-                              btnColor: AppColors.errorColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      0.03.height.hSpace,
-                    ],
-                  ).hPadding(0.03.width),
-                  0.01.height.hSpace,
+                      ],
+                    ).alignTopRight(),
+                  ).allPadding(5),
                 ],
               ),
-            ),
+              0.01.height.hSpace,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    hotel?.hotelName ?? "",
+                    style: theme.titleMedium!.copyWith(
+                      color: AppColors.blackColor,
+                    ),
+                  ),
+                  0.01.height.hSpace,
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.location_on_outlined,
+                        color: AppColors.blackColor.withAlpha(110),
+                      ),
+                      0.01.width.vSpace,
+                      Text(
+                        hotel?.hotelLocation ?? "",
+                        style: theme.titleSmall!.copyWith(
+                          color: AppColors.blackColor.withAlpha(110),
+                        ),
+                      ),
+                    ],
+                  ),
+                  0.01.height.hSpace,
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.location_history,
+                        color: AppColors.blackColor.withAlpha(110),
+                      ),
+                      0.02.width.vSpace,
+                      Text(
+                        "${provider.calculateDistanceFromLocation(
+                              LatLng(
+                                hotel?.lat ?? 0,
+                                hotel?.long ?? 0,
+                              ),
+                            ) ?? 100} KM",
+                        style: theme.titleSmall!.copyWith(
+                          color: AppColors.blackColor.withAlpha(110),
+                        ),
+                      )
+                    ],
+                  ),
+                  0.01.height.hSpace,
+                  Divider().hPadding(0.1.width),
+                  Text(
+                    "Facility Place",
+                    style: theme.titleMedium!
+                        .copyWith(color: AppColors.newBlueColor),
+                  ),
+                  0.01.height.hSpace,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      HotelAccomdationsWidget(
+                        icon: icons.first,
+                        title: titles.first,
+                      ),
+                      HotelAccomdationsWidget(
+                        icon: icons[1],
+                        title: titles[1],
+                      ),
+                      HotelAccomdationsWidget(
+                        icon: icons[3],
+                        title: titles[3],
+                      ),
+                      HotelAccomdationsWidget(
+                        icon: icons[4],
+                        title: titles[4],
+                      ),
+                    ],
+                  ),
+                  0.01.height.hSpace,
+                  Divider().hPadding(0.1.width),
+                  Text(
+                    "Description",
+                    style: theme.titleMedium!.copyWith(
+                      color: AppColors.newBlueColor,
+                    ),
+                  ),
+                  0.01.height.hSpace,
+                  RichText(
+                    text: TextSpan(
+                      text:
+                          "Experience ultimate comfort at ${hotel?.hotelName}, a ${hotel?.hotelRating.round()}-star retreat with elegant suites, fine dining, and a rooftop pool. Enjoy world-class service and breathtaking views. Perfect for business and leisure travelers.",
+                      style: theme.titleMedium!.copyWith(
+                        color: AppColors.blackColor,
+                      ),
+                    ),
+                  ),
+                  0.01.height.hSpace,
+                  Divider().hPadding(0.1.width),
+                  Text(
+                    "Gallery",
+                    style: theme.titleMedium!.copyWith(
+                      color: AppColors.newBlueColor,
+                    ),
+                  ),
+                  0.01.height.hSpace,
+                  SizedBox(
+                    height: 0.3.height,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: CarouselSlider(
+                        items: roomImages
+                            .map(
+                              (item) => Builder(
+                                builder: (context) => LoadingImageNetworkWidget(
+                                  imageUrl: item,
+                                  height: 0.7.height,
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        options: CarouselOptions(
+                          height: 0.7.height,
+                          aspectRatio: 16 / 9,
+                          viewportFraction: 0.8,
+                          initialPage: 0,
+                          enableInfiniteScroll: true,
+                          reverse: false,
+                          autoPlay: true,
+                          autoPlayInterval: Duration(seconds: 3),
+                          autoPlayAnimationDuration:
+                              Duration(milliseconds: 800),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          enlargeCenterPage: true,
+                          enlargeFactor: 0.3,
+                          scrollDirection: Axis.horizontal,
+                        ),
+                      ),
+                    ),
+                  ),
+                  0.05.height.hSpace,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomElevatedButton(
+                          text: "Confirm",
+                          onPressed: () {
+                            provider.setReserveHotel(true);
+                            slideLeftWidget(
+                              newPage: ConfirmHotelReservations(
+                                hotel: hotel!,
+                              ),
+                              context: context,
+                            );
+                          },
+                        ),
+                      ),
+                      0.01.width.vSpace,
+                      Expanded(
+                        child: CustomElevatedButton(
+                          text: "Cancel",
+                          onPressed: () => Navigator.pop(context),
+                          btnColor: AppColors.errorColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  0.03.height.hSpace,
+                ],
+              ).hPadding(0.03.width),
+              0.01.height.hSpace,
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
