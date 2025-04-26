@@ -320,7 +320,8 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
                                     EasyLoading.show();
                                     await ReservationCollections.addReservation(
                                       ReservationModel(
-                                        uid: provider.user!.uid,
+                                        uid: FirebaseAuth
+                                            .instance.currentUser!.uid,
                                         id: IdGenerator.generateReservationId(
                                           name: trip!.tripName,
                                           date: tripDeparture.from,
@@ -366,7 +367,7 @@ class _ConfirmUserReservationsState extends State<ConfirmUserReservations> {
                                           provider.totalUsers + 1;
                                       int index = hotel.accomdations.indexOf(
                                           provider.getAccomdationsDataModel!);
-                                      hotel.accomdations[index] = acc ;
+                                      hotel.accomdations[index] = acc;
                                       await HotelsDB.updateHotel(hotel);
                                     }
 

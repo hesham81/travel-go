@@ -1,22 +1,22 @@
 class HotelFavouritesDataModel {
-  final String hotelId;
+  final String userId;
 
-  List<String> users;
+  List<String> hotels;
 
   HotelFavouritesDataModel({
-    required this.hotelId,
-    required this.users,
+    required this.userId,
+    required this.hotels,
   });
 
   factory HotelFavouritesDataModel.fromJson(Map<String, dynamic> json) =>
       HotelFavouritesDataModel(
-        hotelId: json["hotelId"],
-        users: List<String>.from(json["users"].map((x) => x)),
+        userId: json["userId"],
+        hotels: List<String>.from(json["hotels"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
-        "hotelId": hotelId,
-        "users": List<dynamic>.from(users.map((x) => x)),
+        "userId": userId,
+        "hotels": List<dynamic>.from(hotels.map((x) => x)),
       };
 
   @override
@@ -24,9 +24,9 @@ class HotelFavouritesDataModel {
       identical(this, other) ||
       other is HotelFavouritesDataModel &&
           runtimeType == other.runtimeType &&
-          hotelId == other.hotelId &&
-          users == other.users;
+          userId == other.userId &&
+          hotels == other.hotels;
 
   @override
-  int get hashCode => hotelId.hashCode ^ users.hashCode;
+  int get hashCode => userId.hashCode ^ hotels.hashCode;
 }

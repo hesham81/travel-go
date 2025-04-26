@@ -2,48 +2,46 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
-import 'package:route_transitions/route_transitions.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:travel_go/core/utils/hotel_favourites_collections.dart';
-import '/modules/layout/pages/user/pages/home/pages/reservation/pages/confirm_reservations/pages/confirm_user_reservations.dart';
-import '/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/pages/confirm_hotel_reservation/pages/confirm_hotel_reservations.dart';
-import '/core/utils/hotels_db.dart';
-import '/models/hotel_model.dart';
-import '/models/trip_data_model.dart';
-import '../../../../../../../../../../admin/menna/trippp/utils/trips_collections.dart';
-import '../../../../../../../../../../admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
-import '/core/widget/custom_elevated_button.dart';
-import '/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/widget/hotel_accomdations_widget.dart';
-import '/core/extensions/align.dart';
-import '/core/extensions/extensions.dart';
-import '/core/theme/app_colors.dart';
-import '/core/providers/reservation_provider.dart';
-import '/core/widget/loading_image_network_widget.dart';
+import 'package:travel_go/core/extensions/align.dart';
+import 'package:travel_go/core/extensions/extensions.dart';
+import 'package:travel_go/core/theme/app_colors.dart';
+import 'package:travel_go/core/widget/custom_container.dart';
+import 'package:travel_go/core/widget/loading_image_network_widget.dart';
 
-class HotelReservationUser extends StatefulWidget {
-  const HotelReservationUser({super.key});
+import '../../../../../../../../../core/providers/collections_provider.dart';
+import '../../../../../../../../../core/providers/reservation_provider.dart';
+import '../../../../../../../../../core/utils/hotel_favourites_collections.dart';
+import '../../../../../../../../../core/utils/hotels_db.dart';
+import '../../../../../../../../../core/widget/custom_elevated_button.dart';
+import '../../../../../../../../../models/hotel_model.dart';
+import '../../../../../../../../../models/trip_data_model.dart';
+import '../../../../../../admin/menna/trippp/utils/trips_collections.dart';
+import '../../../../../../admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
+import '../../reservation/pages/hotel_reservation/widget/hotel_accomdations_widget.dart';
+
+class HotelDetailsScreen extends StatefulWidget {
+  final String hotelId;
+
+  const HotelDetailsScreen({
+    super.key,
+    required this.hotelId,
+  });
 
   @override
-  State<HotelReservationUser> createState() => _HotelReservationUserState();
+  State<HotelDetailsScreen> createState() => _HotelDetailsScreenState();
 }
 
-class _HotelReservationUserState extends State<HotelReservationUser> {
+class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
   Hotel? hotel;
 
   bool isLoading = true;
-  TripDataModel? trip;
 
-  Future<void> _getCurrentTrip() async {}
 
   Future<void> initData() async {
-    TripDepartureDataModel tripDepartureDataModel =
-        Provider.of<ReservationProvider>(context, listen: false)
-            .getSelectedDeparture!;
-    trip = await TripCollections.getTrip(tripDepartureDataModel.tripId);
-    var provider = Provider.of<ReservationProvider>(context, listen: false);
+
     hotel = await HotelsDB.getHotelById(
-      hotelId: trip!.hotelId,
+      hotelId: widget.hotelId,
     );
     roomImages.clear();
     for (var image in hotel!.accomdations) {
@@ -60,7 +58,6 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
   @override
   void initState() {
     Future.wait([
-      _getCurrentTrip(),
       initData(),
     ]);
     super.initState();
@@ -98,44 +95,6 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
     var theme = Theme.of(context).textTheme;
     var provider = Provider.of<ReservationProvider>(context);
     return Scaffold(
-      bottomNavigationBar: Container(
-        height: 0.1.height,
-        decoration: BoxDecoration(
-          color: AppColors.whiteColor,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(1),
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: const Offset(0, 3),
-            ),
-          ],
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-        ),
-        child: Row(
-          children: [
-            Text(
-              "You Don't Need Hotel ? ",
-              style: theme.labelLarge!.copyWith(
-                color: AppColors.newBlueColor,
-              ),
-            ),
-            0.01.width.vSpace,
-            Expanded(
-              child: CustomElevatedButton(
-                text: "Skip Now",
-                onPressed: () => slideLeftWidget(
-                  newPage: ConfirmUserReservations(),
-                  context: context,
-                ),
-              ),
-            ),
-          ],
-        ).hPadding(0.03.width),
-      ),
       body: Skeletonizer(
         enabled: isLoading,
         child: SingleChildScrollView(
@@ -240,11 +199,11 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
                       0.02.width.vSpace,
                       Text(
                         "${provider.calculateDistanceFromLocation(
-                              LatLng(
-                                hotel?.lat ?? 0,
-                                hotel?.long ?? 0,
-                              ),
-                            ) ?? 100} KM",
+                          LatLng(
+                            hotel?.lat ?? 0,
+                            hotel?.long ?? 0,
+                          ),
+                        ) ?? 100} KM",
                         style: theme.titleSmall!.copyWith(
                           color: AppColors.blackColor.withAlpha(110),
                         ),
@@ -292,7 +251,7 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
                   RichText(
                     text: TextSpan(
                       text:
-                          "Experience ultimate comfort at ${hotel?.hotelName}, a ${hotel?.hotelRating.round()}-star retreat with elegant suites, fine dining, and a rooftop pool. Enjoy world-class service and breathtaking views. Perfect for business and leisure travelers.",
+                      "Experience ultimate comfort at ${hotel?.hotelName}, a ${hotel?.hotelRating.round()}-star retreat with elegant suites, fine dining, and a rooftop pool. Enjoy world-class service and breathtaking views. Perfect for business and leisure travelers.",
                       style: theme.titleMedium!.copyWith(
                         color: AppColors.blackColor,
                       ),
@@ -315,12 +274,12 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
                         items: roomImages
                             .map(
                               (item) => Builder(
-                                builder: (context) => LoadingImageNetworkWidget(
-                                  imageUrl: item,
-                                  height: 0.7.height,
-                                ),
-                              ),
-                            )
+                            builder: (context) => LoadingImageNetworkWidget(
+                              imageUrl: item,
+                              height: 0.7.height,
+                            ),
+                          ),
+                        )
                             .toList(),
                         options: CarouselOptions(
                           height: 0.7.height,
@@ -332,7 +291,7 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
                           autoPlay: true,
                           autoPlayInterval: Duration(seconds: 3),
                           autoPlayAnimationDuration:
-                              Duration(milliseconds: 800),
+                          Duration(milliseconds: 800),
                           autoPlayCurve: Curves.fastOutSlowIn,
                           enlargeCenterPage: true,
                           enlargeFactor: 0.3,
@@ -342,33 +301,6 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
                     ),
                   ),
                   0.05.height.hSpace,
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomElevatedButton(
-                          text: "Confirm",
-                          onPressed: () {
-                            provider.setReserveHotel(true);
-                            slideLeftWidget(
-                              newPage: ConfirmHotelReservations(
-                                hotel: hotel!,
-                              ),
-                              context: context,
-                            );
-                          },
-                        ),
-                      ),
-                      0.01.width.vSpace,
-                      Expanded(
-                        child: CustomElevatedButton(
-                          text: "Cancel",
-                          onPressed: () => Navigator.pop(context),
-                          btnColor: AppColors.errorColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  0.03.height.hSpace,
                 ],
               ).hPadding(0.03.width),
               0.01.height.hSpace,
@@ -379,3 +311,5 @@ class _HotelReservationUserState extends State<HotelReservationUser> {
     );
   }
 }
+
+

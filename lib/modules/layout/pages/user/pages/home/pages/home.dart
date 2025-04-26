@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '/modules/layout/pages/user/pages/home/pages/flight_home/page/flight_home.dart';
-import '/modules/layout/pages/user/pages/home/pages/hotel_home/page/hotel_home.dart';
+import '/modules/layout/pages/user/pages/home/pages/hotel_home/page/hotel_home_details.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/pages/home_trip.dart';
 import '/models/recommend_model.dart';
 import '/core/theme/app_colors.dart';
@@ -8,6 +8,7 @@ import '/core/utils/firebase_auth_services.dart';
 import '/models/trip_model.dart';
 import 'chat_bot_home/page/chat_bot_home.dart';
 import 'favourite_home/page/favourite_home.dart';
+import 'hotel_home/page/hotel_home.dart';
 
 class Home extends StatefulWidget {
   static const routeName = '/home';

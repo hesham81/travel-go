@@ -37,49 +37,51 @@ class _FavouriteHomeState extends State<FavouriteHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          SafeArea(
-            child: AppBarWidget(),
-          ),
-          SizedBox(
-            height: 0.05.height,
-            child: ListView.separated(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    selectedIndex = index;
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: (selectedIndex == index)
-                      ? AppColors.newBlueColor
-                      : AppColors.whiteColor,
-                  side: BorderSide(
-                    color: (selectedIndex == index)
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SafeArea(
+              child: AppBarWidget(),
+            ),
+            SizedBox(
+              height: 0.05.height,
+              child: ListView.separated(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) => ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: (selectedIndex == index)
                         ? AppColors.newBlueColor
-                        : AppColors.newBlueColor,
-                    width: 1,
+                        : AppColors.whiteColor,
+                    side: BorderSide(
+                      color: (selectedIndex == index)
+                          ? AppColors.newBlueColor
+                          : AppColors.newBlueColor,
+                      width: 1,
+                    ),
+                  ),
+                  child: Text(
+                    favouriteItems[index],
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: (selectedIndex == index)
+                              ? AppColors.whiteColor
+                              : AppColors.blackColor,
+                        ),
                   ),
                 ),
-                child: Text(
-                  favouriteItems[index],
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: (selectedIndex == index)
-                            ? AppColors.whiteColor
-                            : AppColors.blackColor,
-                      ),
-                ),
+                separatorBuilder: (context, _) => 0.02.width.vSpace,
+                itemCount: favouriteItems.length,
               ),
-              separatorBuilder: (context, _) => 0.02.width.vSpace,
-              itemCount: favouriteItems.length,
             ),
-          ),
-          0.01.height.hSpace,
-          body[selectedIndex]
-        ],
+            0.01.height.hSpace,
+            body[selectedIndex]
+          ],
+        ),
       ),
     );
   }

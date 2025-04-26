@@ -49,23 +49,23 @@ class _FavouriteTripsState extends State<FavouriteTrips> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.separated(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        itemBuilder: (context, index) => GestureDetector(
-          onTap: () {
-            slideLeftWidget(
-              newPage: SelectedHomeScreenTrip(model: favouriteTrips[index]),
-              context: context,
-            );
-          },
-          child: HomeTripCartWidget(
-            model: favouriteTrips[index],
-          ),
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      itemBuilder: (context, index) => GestureDetector(
+        onTap: () {
+          slideLeftWidget(
+            newPage: SelectedHomeScreenTrip(model: favouriteTrips[index]),
+            context: context,
+          );
+        },
+        child: HomeTripCartWidget(
+          model: favouriteTrips[index],
         ),
-        separatorBuilder: (context, _) => 0.01.height.hSpace,
-        itemCount: favouriteTrips.length,
       ),
+      separatorBuilder: (context, _) => 0.01.height.hSpace,
+      itemCount: favouriteTrips.length,
     );
   }
 }

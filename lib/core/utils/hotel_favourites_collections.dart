@@ -1,71 +1,74 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:travel_go/models/hotel_favourites_data_model.dart';
+import 'package:travel_go/models/hotel_favourites_data_model.dart';
+import 'package:travel_go/models/hotel_favourites_data_model.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/favourite_home/page/favourite_hotels.dart';
 
 abstract class HotelFavouritesCollections {
   static final _firestore =
-      FirebaseFirestore.instance.collection("Favourite_Hotels");
-
+      FirebaseFirestore.instance.collection("Hotel_Favourites");
   static final String userId = FirebaseAuth.instance.currentUser!.uid;
 
-  static CollectionReference<HotelFavouritesDataModel> _collectionReference() =>
-      _firestore.withConverter(
-        fromFirestore: (snapshot, options) => HotelFavouritesDataModel.fromJson(
-          snapshot.data()!,
-        ),
-        toFirestore: (value, options) => value.toJson(),
-      );
-
-  static Future<void> updateHotelStatus({
-    required HotelFavouritesDataModel favourite,
-  }) async {
-    await _collectionReference().doc(favourite.hotelId).set(favourite);
+  static CollectionReference<HotelFavouritesDataModel> _colRef() {
+    return _firestore.withConverter<HotelFavouritesDataModel>(
+      fromFirestore: (snapshot, options) =>
+          HotelFavouritesDataModel.fromJson(snapshot.data()!),
+      toFirestore: (value, options) => value.toJson(),
+    );
   }
 
-  static Future<bool> _checkIfExist({
+  static Future<void> _checkIfExist() async {
+    HotelFavouritesDataModel? response = await _colRef().doc(userId).get().then(
+          (value) => value.data(),
+        );
+    if (response == null) {
+      log("Not Available");
+      HotelFavouritesDataModel model = HotelFavouritesDataModel(
+        userId: userId,
+        hotels: [],
+      );
+      await _colRef().doc(userId).set(model);
+    }
+  }
+
+  static Future<void> addHotel(String hotelId) async {
+    HotelFavouritesDataModel hotel = await getHotelsIds();
+    log(hotel.userId);
+    if (hotel.hotels.contains(hotelId)) {
+      hotel.hotels.remove(hotelId);
+      log("Removed");
+    } else {
+      hotel.hotels.add(hotelId);
+      log("Added");
+    }
+    await _colRef().doc(userId).set(hotel);
+  }
+
+  static Future<bool> checkIfFound({
     required String hotelId,
   }) async {
     try {
-      var response = await _collectionReference().doc(hotelId).get().then(
-            (value) => value.data(),
-          );
-      if (response == null) {
-        await updateHotelStatus(
-          favourite: HotelFavouritesDataModel(
-            hotelId: hotelId,
-            users: [],
-          ),
-        );
-        return Future.value(false);
-      }
-      return Future.value(true);
+      HotelFavouritesDataModel hotel = await getHotelsIds();
+      return hotel.hotels.contains(hotelId);
     } catch (error) {
       throw Exception(error);
     }
   }
 
-  static Future<HotelFavouritesDataModel> getHotelStatus({
-    required String hotelId,
-  }) async {
-    await _checkIfExist(hotelId: hotelId);
-    return await _collectionReference().doc(hotelId).get().then(
+  static Stream<QuerySnapshot<HotelFavouritesDataModel>> getHotelsId() {
+    _checkIfExist().then(
+      (value) => value,
+    );
+    return _colRef().snapshots();
+  }
+
+  static Future<HotelFavouritesDataModel> getHotelsIds() async {
+    await _checkIfExist();
+    return await _colRef().doc(userId).get().then(
           (value) => value.data()!,
         );
-  }
-
-  static Future<bool> checkIfFavouriteOrNot({
-    required String hotelId,
-  }) async {
-    try {
-      await _checkIfExist(hotelId: hotelId);
-      var model = await getHotelStatus(hotelId: hotelId);
-      if (model.users.contains(userId)) {
-        return Future.value(true);
-      } else {
-        return Future.value(false);
-      }
-    } catch (error) {
-      throw Exception(error);
-    }
   }
 }
