@@ -279,10 +279,10 @@ class _HomeTripState extends State<HomeTrip> {
                           ),
                         ),
                         Spacer(),
-                        CustomTextButton(
-                          onPressed: () {},
-                          text: "Discover More",
-                        ),
+                        // CustomTextButton(
+                        //   onPressed: () {},
+                        //   text: "Discover More",
+                        // ),
                       ],
                     ),
                     0.01.height.hSpace,

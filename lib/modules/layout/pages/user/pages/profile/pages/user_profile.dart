@@ -8,6 +8,7 @@ import 'package:travel_go/core/providers/reservation_provider.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/favourite_home/page/favourite_home.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/my_location/pages/my_location.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/my_reservations/pages/my_reservations.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/profile/pages/my_profile.dart';
 import '/core/constant/local_storage.dart';
 import '/core/constant/shared_preferences_keys.dart';
 import '/core/routes/route_names.dart';
@@ -157,7 +158,10 @@ class UserProfile extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.person_outline),
                   title: Text('My Profile'),
-                  onTap: () {},
+                  onTap: () => slideLeftWidget(
+                    newPage: MyProfile(),
+                    context: context,
+                  ),
                 ),
                 ListTile(
                   leading: Icon(Icons.language),

@@ -4,7 +4,7 @@ import 'flight_airlines.dart';
 
 class Flight {
   final String flightId;
-  final String flightName;
+   String flightName;
   final FlightAirlines airline;
   List<SeatEconomyDataModel> seats;
   int totalSeats;

@@ -42,7 +42,7 @@ abstract class HotelsDB {
     try {
       String id = IdGenerator.generateId(
         value1: hotel.hotelName,
-        value2: hotel.hotelLocation,
+        value2: DateTime.now().toString(),
       );
       hotel.id = id;
 

@@ -8,24 +8,12 @@ import '/core/theme/app_colors.dart';
 import '/modules/layout/pages/admin/task/flight/Updateflight.dart';
 
 class FlightCard extends StatelessWidget {
-  final String destination;
-  final String date;
-  final String time;
-  final String price;
-  final String flightClass;
-  final Flight flight;
+  final Flight flight ;
 
-  // final Flight flight;
 
   const FlightCard({
     required this.flight,
     super.key,
-    required this.destination,
-    required this.date,
-    required this.time,
-    required this.price,
-    required this.flightClass,
-    // required this.flight,
   });
 
   void _showDeleteConfirmationDialog(BuildContext context) {
@@ -110,7 +98,7 @@ class FlightCard extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => UpdateFlight(),
+                        builder: (context) => UpdateFlight(flight: flight,),
                       ),
                     );
                   },

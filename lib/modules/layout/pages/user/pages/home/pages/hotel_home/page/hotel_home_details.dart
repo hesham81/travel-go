@@ -2,14 +2,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
+import 'package:route_transitions/route_transitions.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:travel_go/core/extensions/align.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
-import 'package:travel_go/core/widget/custom_container.dart';
-import 'package:travel_go/core/widget/loading_image_network_widget.dart';
-
-import '../../../../../../../../../core/providers/collections_provider.dart';
+import '/core/extensions/align.dart';
+import '/core/extensions/extensions.dart';
+import '/core/theme/app_colors.dart';
+import '/core/widget/custom_container.dart';
+import '/core/widget/loading_image_network_widget.dart';
+import '/modules/layout/pages/user/pages/home/pages/hotel_home/page/hotel_reservation/pages/selected_home_hotel_reservation.dart';
 import '../../../../../../../../../core/providers/reservation_provider.dart';
 import '../../../../../../../../../core/utils/hotel_favourites_collections.dart';
 import '../../../../../../../../../core/utils/hotels_db.dart';
@@ -17,7 +17,6 @@ import '../../../../../../../../../core/widget/custom_elevated_button.dart';
 import '../../../../../../../../../models/hotel_model.dart';
 import '../../../../../../../../../models/trip_data_model.dart';
 import '../../../../../../admin/menna/trippp/utils/trips_collections.dart';
-import '../../../../../../admin/pages/trip_departures/data/model/trip_departure_data_model.dart';
 import '../../reservation/pages/hotel_reservation/widget/hotel_accomdations_widget.dart';
 
 class HotelDetailsScreen extends StatefulWidget {
@@ -36,10 +35,9 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
   Hotel? hotel;
 
   bool isLoading = true;
-
+  List<TripDataModel> _trips = [];
 
   Future<void> initData() async {
-
     hotel = await HotelsDB.getHotelById(
       hotelId: widget.hotelId,
     );
@@ -51,6 +49,8 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
     }
     isLiked = await HotelFavouritesCollections.checkIfFound(hotelId: hotel!.id);
 
+    _trips = await TripCollections.getListOfTrips();
+    _trips = _trips.where((element) => element.hotelId == hotel!.id).toList();
     isLoading = false;
     setState(() {});
   }
@@ -94,10 +94,20 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
     var provider = Provider.of<ReservationProvider>(context);
-    return Scaffold(
-      body: Skeletonizer(
-        enabled: isLoading,
-        child: SingleChildScrollView(
+    return Skeletonizer(
+      enabled: isLoading,
+      child: Scaffold(
+        bottomNavigationBar: CustomContainer(
+          child: CustomElevatedButton(
+            text: "Booking Now",
+            onPressed: () => slideLeftWidget(
+                newPage: SelectedHomeHotelReservation(
+                  hotel: hotel,
+                ),
+                context: context),
+          ),
+        ),
+        body: SingleChildScrollView(
           child: Column(
             children: [
               Stack(
@@ -199,11 +209,11 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                       0.02.width.vSpace,
                       Text(
                         "${provider.calculateDistanceFromLocation(
-                          LatLng(
-                            hotel?.lat ?? 0,
-                            hotel?.long ?? 0,
-                          ),
-                        ) ?? 100} KM",
+                              LatLng(
+                                hotel?.lat ?? 0,
+                                hotel?.long ?? 0,
+                              ),
+                            ) ?? 100} KM",
                         style: theme.titleSmall!.copyWith(
                           color: AppColors.blackColor.withAlpha(110),
                         ),
@@ -251,7 +261,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                   RichText(
                     text: TextSpan(
                       text:
-                      "Experience ultimate comfort at ${hotel?.hotelName}, a ${hotel?.hotelRating.round()}-star retreat with elegant suites, fine dining, and a rooftop pool. Enjoy world-class service and breathtaking views. Perfect for business and leisure travelers.",
+                          "Experience ultimate comfort at ${hotel?.hotelName}, a ${hotel?.hotelRating.round()}-star retreat with elegant suites, fine dining, and a rooftop pool. Enjoy world-class service and breathtaking views. Perfect for business and leisure travelers.",
                       style: theme.titleMedium!.copyWith(
                         color: AppColors.blackColor,
                       ),
@@ -274,12 +284,12 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                         items: roomImages
                             .map(
                               (item) => Builder(
-                            builder: (context) => LoadingImageNetworkWidget(
-                              imageUrl: item,
-                              height: 0.7.height,
-                            ),
-                          ),
-                        )
+                                builder: (context) => LoadingImageNetworkWidget(
+                                  imageUrl: item,
+                                  height: 0.7.height,
+                                ),
+                              ),
+                            )
                             .toList(),
                         options: CarouselOptions(
                           height: 0.7.height,
@@ -291,7 +301,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                           autoPlay: true,
                           autoPlayInterval: Duration(seconds: 3),
                           autoPlayAnimationDuration:
-                          Duration(milliseconds: 800),
+                              Duration(milliseconds: 800),
                           autoPlayCurve: Curves.fastOutSlowIn,
                           enlargeCenterPage: true,
                           enlargeFactor: 0.3,
@@ -303,7 +313,7 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                   0.05.height.hSpace,
                 ],
               ).hPadding(0.03.width),
-              0.01.height.hSpace,
+              0.03.height.hSpace,
             ],
           ),
         ),
@@ -311,5 +321,3 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
     );
   }
 }
-
-

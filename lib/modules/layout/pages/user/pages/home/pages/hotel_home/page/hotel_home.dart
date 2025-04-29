@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/hotel_home/widget/find_hotels_locations.dart';
 import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/hotel_reservation/widget/hotel_item_widget.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/widget/home_trip_cart_widget.dart';
+import '../../../../../../../../../models/trip_data_model.dart';
 import '/core/extensions/extensions.dart';
 import '/core/utils/hotels_db.dart';
 import '/core/widget/loading_image_network_widget.dart';
@@ -76,8 +79,7 @@ class _HotelHomeState extends State<HotelHome> {
                   );
                 },
               ),
-              0.01.height.hSpace,
-            ],
+              0.01.height.hSpace,],
           ).hPadding(0.03.width),
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:travel_go/core/extensions/dimensions.dart';
 import 'package:travel_go/core/extensions/extensions.dart';
 import 'package:travel_go/core/widget/custom_container.dart';
+import 'package:travel_go/modules/layout/pages/admin/task/flight/NewFlight.dart';
 
 import '../../../../../../core/theme/app_colors.dart';
 import 'Updateflight.dart';
@@ -525,7 +526,7 @@ class FlightCard extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => UpdateFlight()),
+                        MaterialPageRoute(builder: (context) => NewFlight()),
                       );
                     },
                     icon: const Icon(Icons.edit)),

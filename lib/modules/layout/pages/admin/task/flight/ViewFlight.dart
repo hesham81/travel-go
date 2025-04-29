@@ -408,11 +408,7 @@ class _ViewFlightsState extends State<ViewFlights> {
                 itemBuilder: (context, index) {
                   return FlightCard(
                     flight: flights[index],
-                    destination: "flight[" "]!",
-                    date: "flight[" "]!",
-                    time: " flight[" "]!",
-                    price: "flight[" "]!",
-                    flightClass: ' flight["class"]!',
+
                   );
                 },
               ),

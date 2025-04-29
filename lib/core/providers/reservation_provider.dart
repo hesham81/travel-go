@@ -20,6 +20,43 @@ import '/modules/layout/pages/admin/pages/trip_departures/data/model/trip_depart
 class ReservationProvider extends ChangeNotifier {
   TripDepartureDataModel? selectedDeparture;
   late User? user;
+  int _totalHotelGuests = 1;
+
+  int get getTotalHotelGuests => _totalHotelGuests;
+
+  void addGuestsOnHotelReservation() {
+    _totalHotelGuests++;
+    notifyListeners();
+  }
+
+  void removeGuestsOnHotelReservation() {
+    _totalHotelGuests--;
+  }
+
+  CreditCardModel? _creditCard;
+
+  void setCreditCard(CreditCardModel value) {
+    _creditCard = value;
+    notifyListeners();
+  }
+
+  bool _isHotelPaymentCompleted = false;
+
+  bool get getIsHotelPaymentCompleted => _isHotelPaymentCompleted;
+
+  void setIsHotelPaymentCompleted(bool value) {
+    _isHotelPaymentCompleted = value;
+    notifyListeners();
+  }
+  CreditCardModel? _hotelCard;
+  CreditCardModel? get getHotelCard => _hotelCard;
+  void setHotelCard(CreditCardModel value) {
+    _hotelCard = value;
+    notifyListeners();
+  }
+
+  CreditCardModel? get creditCard => _creditCard;
+
   var _valid = true;
   late bool _reserveHotel;
   ReservationModel? reservation;

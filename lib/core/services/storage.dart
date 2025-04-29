@@ -145,7 +145,7 @@ abstract class Storage {
 
   static Future<bool> uploadHotels(String path, File file) async {
     try {
-      await _supabase.upload("/hotels/", file);
+      await _supabase.upload("/hotels/hotel images/$path", file);
       return true;
     } catch (error) {
       return false;
@@ -163,7 +163,7 @@ abstract class Storage {
   }
 
   static String getHotelImage(String path) {
-    return _supabase.getPublicUrl("hotels/$path");
+    return _supabase.getPublicUrl("/hotels/hotel images/$path");
   }
 
   static String getHotelAccomdationlImage( String type, int index, String hotelName) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';import '../../../core/utils/social_auth_services.dart';
+
 import '/core/widget/social_media_login.dart';
 import '/core/constant/app_assets.dart';
 import '/core/utils/firebase_auth_services.dart';
@@ -143,10 +144,15 @@ class _SignUpState extends State<SignUp> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
-                  child: SocialMediaLogin(
-                    text: "Continue With Google",
-                    imagePath: AppAssets.googleICN,
-                    onTap: () {},
+                  child: IconButton(
+                    onPressed: () =>
+                        SocialAuthServices.loginWithGoogle(context),
+                    style: IconButton.styleFrom(),
+                    icon: Image.asset(
+                      AppAssets.googleICN,
+                      height: 30,
+                      width: 30,
+                    ),
                   ),
                 ),
               ],

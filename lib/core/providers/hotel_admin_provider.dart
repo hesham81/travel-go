@@ -291,7 +291,7 @@ class HotelAdminProvider extends ChangeNotifier {
           lat: _marker.first.point.latitude,
           long: _marker.first.point.longitude,
           id: hotelIdController.text,
-          imageUrl: Storage.getHotelImage(hotelIdController.text),
+          imageUrl: Storage.getHotelImage(hotelNameController.text),
           availableRooms: availableRooms,
           hotelLocation: placeMarks.first.locality ?? 'Not Located',
           hotelName: hotelNameController.text,
