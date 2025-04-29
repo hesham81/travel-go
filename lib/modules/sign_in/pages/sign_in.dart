@@ -94,7 +94,8 @@ class _SignInState extends State<SignIn> {
                     );
                     EasyLoading.dismiss();
                     if (role == "user") {
-                      await LocalStorageData.setString(SharedPreferencesKey.login, "user");
+                      await LocalStorageData.setString(
+                          SharedPreferencesKey.login, "user");
                       BotToastServices.showSuccessMessage("Welcome Back");
                       Navigator.pushNamedAndRemoveUntil(
                         context,
@@ -102,7 +103,8 @@ class _SignInState extends State<SignIn> {
                         (route) => false,
                       );
                     } else if (role == "admin") {
-                      await LocalStorageData.setString(SharedPreferencesKey.login, "admin");
+                      await LocalStorageData.setString(
+                          SharedPreferencesKey.login, "admin");
                       BotToastServices.showSuccessMessage("Welcome Back");
                       Navigator.pushAndRemoveUntil(
                         context,
@@ -112,7 +114,8 @@ class _SignInState extends State<SignIn> {
                         (route) => false,
                       );
                     } else if (role == "manager") {
-                      await LocalStorageData.setString(SharedPreferencesKey.login, "Manager");
+                      await LocalStorageData.setString(
+                          SharedPreferencesKey.login, "Manager");
                       BotToastServices.showSuccessMessage("Welcome Back");
                       Navigator.pushNamedAndRemoveUntil(
                         context,
@@ -145,20 +148,19 @@ class _SignInState extends State<SignIn> {
                   ),
                 ],
               ),
-              DividersWord(
-                text: "Or Sign in With",
-              ),
-              0.02.height.hSpace,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: SocialMediaLogin(
-                      text: "Login With Google",
-                      imagePath: AppAssets.googleICN,
-                      onTap: () {
-                        SocialAuthServices.loginWithGoogle(context);
-                      },
+                    child: IconButton(
+                      onPressed: () =>
+                          SocialAuthServices.loginWithGoogle(context),
+                      style: IconButton.styleFrom(),
+                      icon: Image.asset(
+                        AppAssets.googleICN,
+                        height: 30,
+                        width: 30,
+                      ),
                     ),
                   ),
                 ],

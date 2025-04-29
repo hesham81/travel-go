@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/core/widget/custom_container.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/pages/delete_departure/pages/delete_trip_departure.dart';
+import 'package:travel_go/modules/layout/pages/admin/pages/trip_departures/pages/update_departure/pages/update_departure.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widget/labels_widget.dart';
@@ -6,20 +10,20 @@ import '/modules/layout/pages/admin/pages/trip_departures/data/model/trip_depart
 
 class TripDepartureItemWidget extends StatelessWidget {
   final TripDepartureDataModel model;
+  final bool isUpdate;
+
+  final bool isDelete;
 
   const TripDepartureItemWidget({
     super.key,
     required this.model,
+    this.isUpdate = true,
+    this.isDelete = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      decoration: BoxDecoration(
-        color: AppColors.greyColor,
-        borderRadius: BorderRadius.circular(12),
-      ),
+    return CustomContainer(
       child: Row(
         children: [
           0.01.height.hSpace,
@@ -38,13 +42,64 @@ class TripDepartureItemWidget extends StatelessWidget {
                 ),
                 0.01.height.hSpace,
                 LabelsWidget(
-                  label: "Available Seats : ",
-                  value: "${model.availableSeats} Seat",
+                  label: "${model.availableSeats} Seats",
+                  value: "",
                 ),
               ],
             ),
           ),
           0.01.width.vSpace,
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                (isUpdate)
+                    ? Expanded(
+                        child: IconButton(
+                          onPressed: () => slideLeftWidget(
+                              newPage: UpdateDeparture(
+                                departureDataModel: model,
+                              ),
+                              context: context),
+                          style: IconButton.styleFrom(
+                            backgroundColor: AppColors.newBlueColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                          icon: Icon(
+                            Icons.edit,
+                            color: AppColors.greyColor,
+                          ),
+                        ),
+                      )
+                    : SizedBox(),
+                0.01.width.vSpace,
+                (isDelete)
+                    ? Expanded(
+                        child: IconButton(
+                          onPressed: () => slideLeftWidget(
+                            newPage: DeleteTripDeparture(
+                              tripDepartureDataModel: model,
+                            ),
+                            context: context,
+                          ),
+                          style: IconButton.styleFrom(
+                            backgroundColor: AppColors.errorColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                          icon: Icon(
+                            Icons.delete,
+                            color: AppColors.greyColor,
+                          ),
+                        ),
+                      )
+                    : SizedBox(),
+              ],
+            ),
+          )
         ],
       ).allPadding(8),
     );

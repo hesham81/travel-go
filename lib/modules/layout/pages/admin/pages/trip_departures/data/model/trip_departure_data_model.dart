@@ -1,17 +1,18 @@
-import 'package:travel_go/models/trip_data_model.dart';
 
 class TripDepartureDataModel {
-  final TripDataModel trip;
+  final String tripId;
   final String id;
 
-  final DateTime from;
+   DateTime from;
 
-  final DateTime to;
+   DateTime to;
 
    int availableSeats;
 
+
+
   TripDepartureDataModel({
-    required this.trip,
+    required this.tripId,
     required this.from,
     required this.to,
     required this.availableSeats,
@@ -20,7 +21,7 @@ class TripDepartureDataModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'trip': trip.toMap(),
+      'tripId': tripId,
       'from': from.millisecondsSinceEpoch,
       'to': to.millisecondsSinceEpoch,
       'availableSeats': availableSeats,
@@ -30,7 +31,7 @@ class TripDepartureDataModel {
 
   factory TripDepartureDataModel.fromMap(Map<String, dynamic> map) {
     return TripDepartureDataModel(
-      trip: TripDataModel.fromMap(map['trip']),
+      tripId: map['tripId'],
       from: DateTime.fromMillisecondsSinceEpoch(map['from']),
       to: DateTime.fromMillisecondsSinceEpoch(map['to']),
       availableSeats: map['availableSeats'],

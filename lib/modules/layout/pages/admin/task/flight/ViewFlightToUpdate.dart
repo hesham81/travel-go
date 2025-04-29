@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:travel_go/core/extensions/dimensions.dart';
+import 'package:travel_go/core/extensions/extensions.dart';
+import 'package:travel_go/core/widget/custom_container.dart';
+import 'package:travel_go/modules/layout/pages/admin/task/flight/NewFlight.dart';
 
+import '../../../../../../core/theme/app_colors.dart';
 import 'Updateflight.dart';
 
-
-
 class ViewFlightsToUpdate extends StatefulWidget {
-
   ViewFlightsToUpdate({super.key});
 
   @override
@@ -48,7 +50,9 @@ class _ViewFlightsToUpdateState extends State<ViewFlightsToUpdate> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Filters", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text("Filters",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)),
 
                     SizedBox(height: 20),
 
@@ -79,8 +83,10 @@ class _ViewFlightsToUpdateState extends State<ViewFlightsToUpdate> {
                                 selectedDestination = "Vancouver";
                               });
                             },
-                            style: TextButton.styleFrom(backgroundColor: Colors.grey[300]),
-                            child: Text("Reset", style: TextStyle(color: Colors.black)),
+                            style: TextButton.styleFrom(
+                                backgroundColor: Colors.grey[300]),
+                            child: Text("Reset",
+                                style: TextStyle(color: Colors.black)),
                           ),
                         ),
                         SizedBox(width: 10),
@@ -95,21 +101,34 @@ class _ViewFlightsToUpdateState extends State<ViewFlightsToUpdate> {
 
                               // Prepare filter data to send to the database
                               Map<String, dynamic> filterData = {
-                                "min_price": minPriceController.text.isEmpty ? null : int.parse(minPriceController.text),
-                                "max_price": maxPriceController.text.isEmpty ? null : int.parse(maxPriceController.text),
+                                "min_price": minPriceController.text.isEmpty
+                                    ? null
+                                    : int.parse(minPriceController.text),
+                                "max_price": maxPriceController.text.isEmpty
+                                    ? null
+                                    : int.parse(maxPriceController.text),
                                 "selected_airlines": selectedAirlines,
-                                "start_date": selectedStartDate != null ? DateFormat('yyyy-MM-dd').format(selectedStartDate!) : null,
-                                "departure_time": selectedDepartureTime == "Any Time" ? null : selectedDepartureTime,
+                                "start_date": selectedStartDate != null
+                                    ? DateFormat('yyyy-MM-dd')
+                                        .format(selectedStartDate!)
+                                    : null,
+                                "departure_time":
+                                    selectedDepartureTime == "Any Time"
+                                        ? null
+                                        : selectedDepartureTime,
                                 "destination": selectedDestination,
                               };
 
                               Navigator.pop(context);
                             },
-                            style: ElevatedButton.styleFrom(backgroundColor: Color(0xff0d75b4)),
-                            child: Text("Show Flights" , style: TextStyle(
-                              color: Colors.white,
-
-                            ),),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xff0d75b4)),
+                            child: Text(
+                              "Show Flights",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -128,7 +147,8 @@ class _ViewFlightsToUpdateState extends State<ViewFlightsToUpdate> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Price Range (CAD)", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text("Price Range (CAD)",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         SizedBox(height: 10),
         Row(
           children: [
@@ -136,7 +156,8 @@ class _ViewFlightsToUpdateState extends State<ViewFlightsToUpdate> {
               child: TextField(
                 controller: minPriceController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: "Min Price", border: OutlineInputBorder()),
+                decoration: InputDecoration(
+                    labelText: "Min Price", border: OutlineInputBorder()),
               ),
             ),
             SizedBox(width: 10),
@@ -144,7 +165,8 @@ class _ViewFlightsToUpdateState extends State<ViewFlightsToUpdate> {
               child: TextField(
                 controller: maxPriceController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: "Max Price", border: OutlineInputBorder()),
+                decoration: InputDecoration(
+                    labelText: "Max Price", border: OutlineInputBorder()),
               ),
             ),
           ],
@@ -157,7 +179,8 @@ class _ViewFlightsToUpdateState extends State<ViewFlightsToUpdate> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Airlines", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text("Airlines",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         Column(
           children: airlines.keys.map((airline) {
             return CheckboxListTile(
@@ -179,7 +202,8 @@ class _ViewFlightsToUpdateState extends State<ViewFlightsToUpdate> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Start Date", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text("Start Date",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         SizedBox(height: 10),
         GestureDetector(
           onTap: () async {
@@ -217,7 +241,8 @@ class _ViewFlightsToUpdateState extends State<ViewFlightsToUpdate> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Departure Time", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text("Departure Time",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         SizedBox(height: 10),
         GestureDetector(
           onTap: () async {
@@ -238,7 +263,9 @@ class _ViewFlightsToUpdateState extends State<ViewFlightsToUpdate> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
-              selectedDepartureTime == "Any Time" ? "Select Time" : selectedDepartureTime,
+              selectedDepartureTime == "Any Time"
+                  ? "Select Time"
+                  : selectedDepartureTime,
               style: TextStyle(fontSize: 16),
             ),
           ),
@@ -251,7 +278,8 @@ class _ViewFlightsToUpdateState extends State<ViewFlightsToUpdate> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Destination", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text("Destination",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         SizedBox(height: 10),
         DropdownButtonFormField<String>(
           value: selectedDestination,
@@ -300,81 +328,80 @@ class _ViewFlightsToUpdateState extends State<ViewFlightsToUpdate> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:Color(0xff0d75b4),
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
             Icons.arrow_back_ios,
-            color: Colors.white,
           ),
         ),
         title: Text(
-          "Tour And Travel ",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          "Tour And Travel",
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: AppColors.whiteColor,
+              ),
         ),
-        centerTitle: true,
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-
           children: [
-            Text("Flights" ,
+            Text(
+              "Flights",
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: Color(0xff0d75b4),
               ),
             ),
-            SizedBox(height: 33,),
-
+            SizedBox(
+              height: 33,
+            ),
             Row(
               children: [
                 Expanded(
-                    child:
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: "Search",
-                        prefixIcon: const Icon(Icons.search, color: Color(0xff0d75b4)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        enabledBorder: OutlineInputBorder( // Border when not focused
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xff0d75b4), // Custom color
-                            width: 1.5,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder( // Border when focused
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xff0d75b4), // Same color as enabled
-                            width: 2,
-                          ),
-                        ),
+                    child: TextField(
+                  decoration: InputDecoration(
+                    hintText: "Search",
+                    prefixIcon:
+                        const Icon(Icons.search, color: Color(0xff0d75b4)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      // Border when not focused
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Color(0xff0d75b4), // Custom color
+                        width: 1.5,
                       ),
-                    )
-                ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      // Border when focused
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Color(0xff0d75b4), // Same color as enabled
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                )),
                 SizedBox(width: 5),
                 IconButton(
-                  icon:  Icon(Icons.filter_list_alt, size: 40 , color: Color(0xff0d75b4),),
+                  icon: Icon(
+                    Icons.filter_list_alt,
+                    size: 40,
+                    color: Color(0xff0d75b4),
+                  ),
                   onPressed: () {
-                    _showFilters ();
+                    _showFilters();
                   },
                 )
               ],
             ),
             SizedBox(height: 16),
             Expanded(
-              child: ListView.builder(
+              child: ListView.separated(
+                separatorBuilder: (context, index) => 0.01.height.hSpace,
                 itemCount: flights.length,
                 itemBuilder: (context, index) {
                   final flight = flights[index];
@@ -394,6 +421,7 @@ class _ViewFlightsToUpdateState extends State<ViewFlightsToUpdate> {
     );
   }
 }
+
 void _showDeleteConfirmationDialog(BuildContext context) {
   showDialog(
     context: context,
@@ -442,8 +470,7 @@ class FlightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    return CustomContainer(
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
@@ -471,11 +498,20 @@ class FlightCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 6),
-            Text(destination,
-                style: const TextStyle(
-                    fontSize: 18, fontWeight: FontWeight.bold)),
+            Text(
+              destination,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: 4),
-            Text("Date: $date", style: const TextStyle(color: Colors.grey)),
+            Text(
+              "Date: $date",
+              style: const TextStyle(
+                color: Colors.grey,
+              ),
+            ),
             Text("Departure Time: $time",
                 style: const TextStyle(color: Colors.grey)),
             const SizedBox(height: 6),
@@ -490,8 +526,7 @@ class FlightCard extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => UpdateFlight()),
+                        MaterialPageRoute(builder: (context) => NewFlight()),
                       );
                     },
                     icon: const Icon(Icons.edit)),

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:route_transitions/route_transitions.dart';
-import 'package:travel_go/core/extensions/extensions.dart';
-import 'package:travel_go/core/routes/route_transact.dart';
-import 'package:travel_go/core/theme/app_colors.dart';
-import 'package:travel_go/core/widget/custom_elevated_button.dart';
-import 'package:travel_go/models/trip_data_model.dart';
-import 'package:travel_go/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/set_map_location.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/reservation/pages/reservation.dart';
-import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip_departure/pages/trip_departure.dart';
+import '/core/extensions/extensions.dart';
+import '/core/theme/app_colors.dart';
+import '/core/widget/custom_elevated_button.dart';
+import '/models/trip_data_model.dart';
+import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/widget/set_map_location.dart';
+import '/modules/layout/pages/user/pages/home/pages/trip_departure/pages/trip_departure.dart';
 
 class UtilitiesTrip extends StatefulWidget {
   final TripDataModel model;
@@ -111,7 +109,7 @@ class _UtilitiesTripState extends State<UtilitiesTrip> {
         SizedBox(
           width: double.maxFinite,
           child: CustomElevatedButton(
-            text: "Reserve",
+            text: "Reserve Departure",
             borderRadius: 10,
             onPressed: () {
               slideRightWidget(

@@ -161,6 +161,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.7"
+  babylonjs_viewer:
+    dependency: "direct main"
+    description:
+      name: babylonjs_viewer
+      sha256: df5b6bd201dd7f572d780b90fe87f9604daa2ac6caab68a6fd27f4ca03bf608f
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -201,6 +209,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  calendar_date_picker2:
+    dependency: "direct main"
+    description:
+      name: calendar_date_picker2
+      sha256: "293020a283210ccefff669499178c127acbb5e77ae13864f992c8a3e68a8aca1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -353,6 +369,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.21"
+  custom_calender_picker:
+    dependency: "direct main"
+    description:
+      name: custom_calender_picker
+      sha256: afabf848d1e6c22a458fd4e3281a7baa40a3a4d5ac1334ce5d21a67671162300
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   dart_earcut:
     dependency: transitive
     description:
@@ -385,6 +409,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.11"
+  dchs_motion_sensors:
+    dependency: transitive
+    description:
+      name: dchs_motion_sensors
+      sha256: "2a6eec0c47fd59d0f923aa758286ded0d74ae79519dec560d003e6d0797877e2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   diacritic:
     dependency: transitive
     description:
@@ -545,6 +577,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  fl_chart:
+    dependency: "direct main"
+    description:
+      name: fl_chart
+      sha256: "5276944c6ffc975ae796569a826c38a62d2abcf264e26b88fa6f482e107f4237"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.70.2"
   flexi_chip:
     dependency: transitive
     description:
@@ -574,6 +614,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.14"
+  flutter_cube:
+    dependency: transitive
+    description:
+      name: flutter_cube
+      sha256: "71cf679a251166eb97f86751c56582b09abdbf859485fbf60524948813914c3b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   flutter_easyloading:
     dependency: "direct main"
     description:
@@ -582,6 +630,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.5"
+  flutter_expandable_fab:
+    dependency: "direct main"
+    description:
+      name: flutter_expandable_fab
+      sha256: "4d03f54e5384897e32606e9959cef5e7857e5a203e24684f95dfbb5f7fb9b88e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
   flutter_gemini:
     dependency: "direct main"
     description:
@@ -675,6 +731,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.1.0"
+  flutter_map_location_marker:
+    dependency: "direct main"
+    description:
+      name: flutter_map_location_marker
+      sha256: "44c486edb1fa52a59dbe6683c1a315bf92712729f2633615d36b3bb720671bcc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "10.0.0"
   flutter_markdown:
     dependency: transitive
     description:
@@ -707,6 +771,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.1"
+  flutter_rotation_sensor:
+    dependency: transitive
+    description:
+      name: flutter_rotation_sensor
+      sha256: "7944dbadf3d05be128a81cb0f37b2ba2b53247fef22b85f8096c60b06c1e50a4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   flutter_spinkit:
     dependency: transitive
     description:
@@ -716,13 +788,13 @@ packages:
     source: hosted
     version: "5.2.1"
   flutter_svg:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_svg
-      sha256: c200fd79c918a40c5cd50ea0877fa13f81bdaf6f0a5d3dbcc2a13e3285d6aa1b
+      sha256: d44bf546b13025ec7353091516f6881f1d4c633993cb109c3916c3a0159dadf1
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.17"
+    version: "2.1.0"
   flutter_swipe_action_cell:
     dependency: "direct main"
     description:
@@ -789,6 +861,54 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
+  geolocator:
+    dependency: transitive
+    description:
+      name: geolocator
+      sha256: f62bcd90459e63210bbf9c35deb6a51c521f992a78de19a1fe5c11704f9530e2
+      url: "https://pub.dev"
+    source: hosted
+    version: "13.0.4"
+  geolocator_android:
+    dependency: transitive
+    description:
+      name: geolocator_android
+      sha256: fcb1760a50d7500deca37c9a666785c047139b5f9ee15aa5469fae7dbbe3170d
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.6.2"
+  geolocator_apple:
+    dependency: transitive
+    description:
+      name: geolocator_apple
+      sha256: dbdd8789d5aaf14cf69f74d4925ad1336b4433a6efdf2fce91e8955dc921bf22
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.13"
+  geolocator_platform_interface:
+    dependency: transitive
+    description:
+      name: geolocator_platform_interface
+      sha256: "30cb64f0b9adcc0fb36f628b4ebf4f731a2961a0ebd849f4b56200205056fe67"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.6"
+  geolocator_web:
+    dependency: transitive
+    description:
+      name: geolocator_web
+      sha256: b1ae9bdfd90f861fde8fd4f209c37b953d65e92823cb73c7dee1fa021b06f172
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.3"
+  geolocator_windows:
+    dependency: transitive
+    description:
+      name: geolocator_windows
+      sha256: "175435404d20278ffd220de83c2ca293b73db95eafbdc8131fe8609be1421eb6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.5"
   google_gemini:
     dependency: "direct main"
     description:
@@ -965,6 +1085,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1+1"
+  imageview360:
+    dependency: "direct main"
+    description:
+      name: imageview360
+      sha256: "1ba87d2e88745db9aeeb3aa79c44d013f3a1e66e86f8f69bf55c28c67f26a5d3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.0"
   internet_connection_checker:
     dependency: "direct main"
     description:
@@ -981,6 +1109,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.19.0"
+  ionicons:
+    dependency: "direct main"
+    description:
+      name: ionicons
+      sha256: "5496bc65a16115ecf05b15b78f494ee4a8869504357668f0a11d689e970523cf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.2"
   jwt_decode:
     dependency: transitive
     description:
@@ -1133,6 +1269,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  motion_sensors:
+    dependency: transitive
+    description:
+      name: motion_sensors
+      sha256: "4e2734a76cd6da633013bcdc68a9efe9fbbcff906e6d6c45040932edda3fa5d6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
+  native_device_orientation:
+    dependency: transitive
+    description:
+      name: native_device_orientation
+      sha256: "0c330c068575e4be72cce5968ca479a3f8d5d1e5dfce7d89d5c13a1e943b338c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3"
   nested:
     dependency: transitive
     description:
@@ -1157,6 +1309,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  panorama:
+    dependency: "direct main"
+    description:
+      name: panorama
+      sha256: "9e8b0908c3e4e2a223aff9a7d11670783179aa0ed18a84747b9d92a71aaeeccc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.1"
+  panorama_viewer:
+    dependency: "direct main"
+    description:
+      name: panorama_viewer
+      sha256: "8e8d46604cde75f18ff7019da8dfec4a731cff073841e8d65eabd4feecbe40da"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.4"
   path:
     dependency: transitive
     description:
@@ -1233,10 +1401,10 @@ packages:
     dependency: "direct main"
     description:
       name: phone_form_field
-      sha256: "2392a12085f54ba839e1d907153de8666c862fbcd9bae747e89df01c1c661cf1"
+      sha256: "4a7e741626e8f2157c8bf2d41228665dd950e9cf829a9d91f77a173817caa0a7"
       url: "https://pub.dev"
     source: hosted
-    version: "10.0.4"
+    version: "10.0.6"
   phone_numbers_parser:
     dependency: transitive
     description:
@@ -1353,10 +1521,10 @@ packages:
     dependency: "direct main"
     description:
       name: searchfield
-      sha256: "9d091c2731868926e2aeb9ac551d1b9116a4533a424373119509d754ae0d0f45"
+      sha256: "05794aebf2309dec591b0fba493c06336285137bd3ef50cd48d1a94edd6b709f"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.4"
+    version: "1.2.6"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -1538,14 +1706,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.8.3"
-  syncfusion_flutter_charts:
-    dependency: "direct main"
-    description:
-      name: syncfusion_flutter_charts
-      sha256: c91e9c48c14d2a947e3fd733bd7e2d9eddb2e67ffc60d8db5385b260f7df910d
-      url: "https://pub.dev"
-    source: hosted
-    version: "28.2.6"
   syncfusion_flutter_core:
     dependency: transitive
     description:
@@ -1794,6 +1954,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  webview_flutter:
+    dependency: transitive
+    description:
+      name: webview_flutter
+      sha256: caf0f5a1012aa3c2d33c4215adc72dc1194bb59a2d3ed901f457965626805e66
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.11.0"
+  webview_flutter_android:
+    dependency: transitive
+    description:
+      name: webview_flutter_android
+      sha256: "6b0eae02b7604954b80ee9a29507ac38f5de74b712faa6fee33abc1cdedc1b21"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.4.2"
+  webview_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: webview_flutter_platform_interface
+      sha256: "18b1640839cf6546784a524c72aded5b6e86b23e7167dc2311cc96f7658b64bd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.11.0"
+  webview_flutter_wkwebview:
+    dependency: transitive
+    description:
+      name: webview_flutter_wkwebview
+      sha256: c9f9be526fa0d3347374ceaa05c4b3acb85f4f112abd62f7d74b7d301fa515ff
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.20.0"
   widget_event:
     dependency: transitive
     description:

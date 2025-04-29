@@ -1,6 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/core/constant/app_assets.dart';
+import 'package:travel_go/core/providers/collections_provider.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/trip/widget/model_sheet_trip_filter.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/pages/selected_trip/pages/selected_trip.dart';
 import '/models/trip_data_model.dart';
 import '/modules/layout/pages/admin/menna/trippp/utils/trips_collections.dart';
@@ -68,134 +73,296 @@ class _HomeTripState extends State<HomeTrip> {
       location: "Edinburgh,",
     ),
   ];
+  bool _isSearchEnabled = false;
+  double _opacity = 1;
+  List<TripDataModel>? searchList = [];
 
-  // List<TripDataModel> favouriteTrips = [];
+  _search(String query) {
+    searchList = tripList
+        .where(
+          (element) =>
+              element.tripName.toLowerCase().contains(query.toLowerCase()),
+        )
+        .toList();
+    if (searchList!.isEmpty) searchList = null;
+    setState(() {});
+  }
+
+  int _sortIndex = 0;
+  int _filterIndex = 0;
+
+  void _showModelSheet(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: AppColors.whiteColor,
+      isScrollControlled: true,
+      scrollControlDisabledMaxHeightRatio: 1.height,
+      context: context,
+      builder: (context) => ModelSheetTripFilter(
+        sortAToZ: _sortAtoZ,
+        sortZToA: _sortZToA,
+        sortIndex: _sortIndex,
+        bookMarked: _bookMarked,
+        sortPriceLowToHigh: _sortPriceLowToHigh,
+        sortPriceHighToLow: _sortPriceHighToLow,
+        filterIndex: _filterIndex,
+        trips: searchList!,
+        lessThanWeek: _lessThanWeek,
+      ),
+    );
+  }
+
+  void _lessThanWeek() {
+    if (searchList == null) return;
+    _filterIndex = 1;
+    searchList!.clear();
+    searchList!.addAll(tripList.where(
+      (element) => element.totalDays <= 7,
+    ));
+
+    setState(() {});
+    Navigator.pop(context);
+  }
+
+  void _sortPriceLowToHigh() {
+    if (searchList == null) return;
+
+    searchList!.sort((a, b) => a.price.compareTo(b.price));
+    _sortIndex = 2;
+    setState(() {});
+    Navigator.pop(context);
+  }
+
+  void _sortPriceHighToLow() {
+    if (searchList == null) return;
+
+    searchList!.sort((a, b) => b.price.compareTo(a.price));
+    _sortIndex = 3;
+    setState(() {});
+    Navigator.pop(context);
+  }
+
+  _bookMarked() {
+    if (searchList == null) return;
+    _filterIndex = 0;
+    searchList!.clear();
+    searchList!.addAll(tripList.where(
+      (element) =>
+          element.favourites != null && element.favourites!.contains(user!.uid),
+    ));
+
+    setState(() {});
+    Navigator.pop(context);
+  }
+
+  _sortAtoZ() {
+    if (searchList == null) return;
+    searchList!.sort(
+      (a, b) => a.tripName.toLowerCase().compareTo(b.tripName.toLowerCase()),
+    );
+    _sortIndex = 0;
+    setState(() {});
+    Navigator.pop(context);
+  }
+
+  _sortZToA() {
+    if (searchList == null) return;
+    searchList!.sort(
+      (a, b) => b.tripName.toLowerCase().compareTo(a.tripName.toLowerCase()),
+    );
+    _sortIndex = 1;
+    setState(() {});
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    return SingleChildScrollView(
-      child: SafeArea(
-        child: Column(
-          children: [
-            AppBarWidget(),
-            0.02.height.hSpace,
-            Row(
-              children: [
-                Column(
+    var provider = Provider.of<CollectionsProvider>(context);
+
+    return RefreshIndicator(
+      onRefresh: () async {
+        setState(() {});
+      },
+      color: AppColors.newBlueColor,
+      backgroundColor: AppColors.whiteColor,
+      child: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: SafeArea(
+          child: Column(
+            children: [
+              AppBarWidget(),
+              0.02.height.hSpace,
+              if (!_isSearchEnabled)
+                AnimatedOpacity(
+                  opacity: _opacity,
+                  duration: Duration(seconds: 1),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            "Hi , ${user!.displayName}",
+                            style: theme.textTheme.titleMedium!.copyWith(
+                              color: AppColors.blackColor,
+                            ),
+                          ),
+                          0.01.height.hSpace,
+                          Text(
+                            "Let's explore the world!",
+                            style: theme.textTheme.titleSmall!.copyWith(
+                              color: AppColors.newBlueColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      IconButton(
+                        onPressed: () {
+                          _isSearchEnabled = !_isSearchEnabled;
+                          if (_opacity == 0) {
+                            _opacity = 1;
+                          } else {
+                            _opacity = 0;
+                          }
+                          setState(() {});
+                        },
+                        style: IconButton.styleFrom(
+                            backgroundColor: AppColors.newBlueColor,
+                            padding: EdgeInsets.all(12)),
+                        icon: Icon(
+                          Icons.search,
+                          color: AppColors.whiteColor,
+                        ),
+                      ),
+                      0.01.width.vSpace,
+                    ],
+                  ),
+                ),
+              if (_isSearchEnabled)
+                Row(
                   children: [
-                    Text(
-                      "Hi , ${user!.displayName}",
-                      style: theme.textTheme.titleLarge!.copyWith(
-                        color: AppColors.blackColor,
+                    Expanded(
+                      flex: 10,
+                      child: CupertinoSearchTextField(
+                        autocorrect: true,
+                        autofocus: true,
+                        onChanged: _search,
+                        onSubmitted: (value) {},
                       ),
                     ),
-                    0.01.height.hSpace,
-                    Text(
-                      "Let's explore the world!",
-                      style: theme.textTheme.titleMedium!.copyWith(
-                        color: AppColors.newBlueColor,
+                    Expanded(
+                      flex: 1,
+                      child: IconButton(
+                        onPressed: () {
+                          _showModelSheet(context);
+                        },
+                        icon: Icon(
+                          Icons.filter_list,
+                        ),
                       ),
                     ),
                   ],
                 ),
-                Spacer(),
-                CircleAvatar(
-                  backgroundColor: AppColors.newBlueColor,
-                  radius: 20,
-                  child: Icon(
-                    Icons.search,
-                    color: AppColors.whiteColor,
-                  ),
-                ),
-                0.01.width.vSpace,
-              ],
-            ),
-            0.01.height.hSpace,
-            Divider(),
-            0.01.height.hSpace,
-            Row(
-              children: [
-                Text(
-                  "Special For You",
-                  style: theme.textTheme.titleMedium!.copyWith(
-                    color: AppColors.blackColor,
-                  ),
-                ),
-                Spacer(),
-                CustomTextButton(
-                  onPressed: () {},
-                  text: "Discover More",
-                ),
-              ],
-            ),
-            0.01.height.hSpace,
-            SizedBox(
-              height: 0.3.height,
-              child: ListView.separated(
-                padding: EdgeInsets.zero,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    child: RecommendedWidget(
-                      model: recommendations[index],
+              Visibility(
+                visible: !_isSearchEnabled,
+                child: Column(
+                  children: [
+                    0.02.height.hSpace,
+                    Divider(),
+                    0.01.height.hSpace,
+                    Row(
+                      children: [
+                        Text(
+                          "Special For You",
+                          style: theme.textTheme.titleMedium!.copyWith(
+                            color: AppColors.blackColor,
+                          ),
+                        ),
+                        Spacer(),
+                        // CustomTextButton(
+                        //   onPressed: () {},
+                        //   text: "Discover More",
+                        // ),
+                      ],
                     ),
-                  );
-                },
-                separatorBuilder: (context, _) => 0.02.width.vSpace,
-                itemCount: recommendations.length,
-              ),
-            ),
-            0.01.height.hSpace,
-            Divider(),
-            0.01.height.hSpace,
-            Text(
-              "Featured Trips",
-              style: theme.textTheme.titleMedium!.copyWith(
-                color: AppColors.blackColor,
-              ),
-            ).leftBottomWidget(),
-            0.01.height.hSpace,
-            StreamBuilder(
-              stream: TripCollections.getAllTrips(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Column(
-                    children: [
-                      0.05.height.hSpace,
-                      CircularProgressIndicator(),
-                    ],
-                  );
-                }
-                if (snapshot.hasData) {
-                  tripList = snapshot.data!.docs
-                      .map(
-                        (e) => e.data(),
-                      )
-                      .toList();
-                }
-                return ListView.separated(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () => slideRightWidget(
-                      context: context,
-                      newPage: SelectedHomeScreenTrip(
-                        model: tripList[index],
+                    0.01.height.hSpace,
+                    SizedBox(
+                      height: 0.3.height,
+                      child: ListView.separated(
+                        padding: EdgeInsets.zero,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            child: RecommendedWidget(
+                              model: recommendations[index],
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, _) => 0.02.width.vSpace,
+                        itemCount: recommendations.length,
                       ),
                     ),
-                    child: HomeTripCartWidget(
-                      model: tripList[index],
+                    0.01.height.hSpace,
+                    Divider(),
+                  ],
+                ),
+              ),
+              0.01.height.hSpace,
+              Text(
+                (_isSearchEnabled) ? "Search Results" : "Featured Trips",
+                style: theme.textTheme.titleMedium!.copyWith(
+                  color: AppColors.blackColor,
+                ),
+              ).leftBottomWidget(),
+              0.01.height.hSpace,
+              StreamBuilder(
+                stream: TripCollections.getAllTrips(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Column(
+                      children: [
+                        0.05.height.hSpace,
+                        CircularProgressIndicator(),
+                      ],
+                    );
+                  }
+                  if (snapshot.hasData) {
+                    tripList = snapshot.data!.docs
+                        .map(
+                          (e) => e.data(),
+                        )
+                        .toList();
+                  }
+                  if (searchList?.isEmpty == true) searchList = tripList;
+                  if (searchList == null) {
+                    return Image.asset(AppAssets.noSearchResult);
+                  }
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () {
+                        provider.setTrip(searchList![index]);
+                        slideRightWidget(
+                          context: context,
+                          newPage: SelectedHomeScreenTrip(
+                            model: searchList![index],
+                          ),
+                        );
+                      },
+                      child: HomeTripCartWidget(
+                        model: searchList![index],
+                      ),
                     ),
-                  ),
-                  separatorBuilder: (context, index) => 0.01.height.hSpace,
-                  itemCount: tripList.length,
-                );
-              },
-            ),
-            0.01.height.hSpace,
-          ],
-        ).hPadding(0.03.width),
+                    separatorBuilder: (context, index) => 0.01.height.hSpace,
+                    itemCount: searchList!.length,
+                  );
+                },
+              ),
+              0.01.height.hSpace,
+            ],
+          ).hPadding(0.03.width),
+        ),
       ),
     );
   }

@@ -27,6 +27,12 @@ abstract class IdGenerator {
     return "Trip-$tripOrganizedBy-${tripTitle.trim()}";
   }
 
+  static generateHotelId({
+    required String name,
+  }) {
+    return "Trip-${DateTime.now().year}-$name";
+  }
+
   static generateAttractionId({
     required String attractionTitle,
   }) {
@@ -39,5 +45,23 @@ abstract class IdGenerator {
     required String to,
   }) {
     return "Departure-$tripName-$from-$to";
+  }
+
+  static generateReservationId({
+    required String name,
+    required DateTime date,
+    required String type,
+    required String uid ,
+  }) {
+    return "Reservation - $type-$name-${date.toString()}-$uid";
+  }
+  static generateFlightDepartureId({
+    required String flightId ,
+    required String departureDay ,
+    required String from ,
+    required String to ,
+
+  }) {
+    return "Flight-$flightId-$departureDay-$from-$to";
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../../core/theme/app_colors.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/browse_attractions/pages/browse_attractions.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/delete_attractions/pages/delete_attraction.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/new_attractions/pages/new_attraction.dart';
@@ -87,11 +88,17 @@ class Attraction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff0d75b4),
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
+          ),
+        ),
         title: Text(
           "Tour And Travel",
-          style: TextStyle(
-              fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+            color: AppColors.whiteColor,
+          ),
         ),
         centerTitle: true,
       ),

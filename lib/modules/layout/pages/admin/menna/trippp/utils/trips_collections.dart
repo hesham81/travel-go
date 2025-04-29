@@ -44,4 +44,14 @@ abstract class TripCollections {
       return false;
     }
   }
+
+  static Future<void> updateTrip(TripDataModel model) async {
+    await _colRef().doc(model.tripId).set(model);
+  }
+
+  static Future<TripDataModel> getTrip(String tripId) async {
+    return _colRef().doc(tripId).get().then(
+          (value) => value.data()!,
+        );
+  }
 }

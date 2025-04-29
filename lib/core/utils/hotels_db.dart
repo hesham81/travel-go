@@ -42,10 +42,11 @@ abstract class HotelsDB {
     try {
       String id = IdGenerator.generateId(
         value1: hotel.hotelName,
-        value2: hotel.hotelLocation,
+        value2: DateTime.now().toString(),
       );
+      hotel.id = id;
 
-      await _firestore.collection("Hotel").doc(id).set(hotel.toMap());
+      await _firestore.collection("Hotel").doc(hotel.id).set(hotel.toMap());
       BotToastServices.showSuccessMessage(
         "Hotel Added",
       );
@@ -112,18 +113,7 @@ abstract class HotelsDB {
 
   static Future<bool> updateHotel(Hotel hotel) async {
     try {
-      var querySnapshot = await collectionRef()
-          .where(
-            "HotelName ",
-            isEqualTo: hotel.hotelName,
-          )
-          .get();
-      for (var doc in querySnapshot.docs) {
-        await doc.reference.update(
-          hotel.toMap(),
-        );
-      }
-
+      await collectionRef().doc(hotel.id).set(hotel);
       return Future.value(true);
     } catch (error) {
       log("Error ${error}");
@@ -139,5 +129,26 @@ abstract class HotelsDB {
               )
               .toList(),
         );
+  }
+
+  static Future<Hotel> getHotelById({
+    required String hotelId,
+  }) async {
+   try{
+     log("Hotel Id is ${hotelId}");
+     Hotel response = await collectionRef().doc(hotelId).get().then(
+           (value) => value.data()!,
+     );
+     log("Response Id is ${response.hotelName}");
+     return await collectionRef().doc(hotelId).get().then(
+           (value) => value.data()!,
+     );
+   }catch(error){
+     throw Exception(error);
+   }
+  }
+
+  static Future<void> delete(String hotelId) async {
+    await collectionRef().doc(hotelId).delete();
   }
 }

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/payment/pages/trip_payment.dart';
 import '/core/services/bot_toast.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widget/custom_elevated_button.dart';
 import '/core/widget/numbers_text_form_field.dart';
 import '/main.dart';
-import '/modules/layout/pages/user/pages/home/pages/reservation/pages/flight_reservation/pages/flights_reservations_basic_info/pages/flight_reservations.dart';
 import '/modules/layout/pages/user/pages/home/pages/reservation/widget/reserve_widget_users.dart';
 import '/modules/layout/pages/user/pages/home/pages/reservation/widget/trip_info_reservation.dart';
 import '/modules/layout/pages/user/pages/home/pages/reservation/widget/reserve_total_info_widget.dart';
@@ -64,9 +64,10 @@ class _ReservationState extends State<Reservation> {
                       onTap: () => setState(() => moreGuests = !moreGuests),
                       child: Text(
                         " More Guests",
-                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: AppColors.newBlueColor,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: AppColors.newBlueColor,
+                                ),
                       ),
                     ),
                     0.01.width.vSpace,
@@ -106,65 +107,66 @@ class _ReservationState extends State<Reservation> {
                   ),
                 ),
                 0.02.height.hSpace,
-                if(moreGuests == true)(provider.getTotalUsers + 1 != 0 && provider.getValid)
-                    ? ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (context, index) => ReserveWidgetUsers(),
-                        separatorBuilder: (context, index) =>
-                            0.01.height.hSpace,
-                        itemCount: provider.getTotalUsers,
-                      )
-                    : Container(
-                        padding: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                          color: AppColors.whiteColor,
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(
-                            color: AppColors.errorColor,
-                            width: 1,
+                if (moreGuests == true)
+                  (provider.getTotalUsers + 1 != 0 && provider.getValid)
+                      ? ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (context, index) => ReserveWidgetUsers(),
+                          separatorBuilder: (context, index) =>
+                              0.01.height.hSpace,
+                          itemCount: provider.getTotalUsers,
+                        )
+                      : Container(
+                          padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: AppColors.whiteColor,
+                            borderRadius: BorderRadius.circular(8.0),
+                            border: Border.all(
+                              color: AppColors.errorColor,
+                              width: 1,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.4),
+                                spreadRadius: 1,
+                                blurRadius: 5,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.4),
-                              spreadRadius: 1,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3),
-                            ),
-                          ],
+                          child: Row(
+                            children: [
+                              Lottie.asset(
+                                "assets/icons/error.json",
+                                height: 50,
+                                animate: true,
+                                repeat: false,
+                              ),
+                              0.1.width.vSpace,
+                              (provider.getValid == false)
+                                  ? Text(
+                                      "No enough seats",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!
+                                          .copyWith(
+                                            color: Colors.red,
+                                          ),
+                                    )
+                                  : Text(
+                                      "No guest",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!
+                                          .copyWith(
+                                            color: Colors.red,
+                                          ),
+                                    ),
+                            ],
+                          ),
                         ),
-                        child: Row(
-                          children: [
-                            Lottie.asset(
-                              "assets/icons/error.json",
-                              height: 50,
-                              animate: true,
-                              repeat: false,
-                            ),
-                            0.1.width.vSpace,
-                            (provider.getValid == false)
-                                ? Text(
-                                    "No enough seats",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleLarge!
-                                        .copyWith(
-                                          color: Colors.red,
-                                        ),
-                                  )
-                                : Text(
-                                    "No guest",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleLarge!
-                                        .copyWith(
-                                          color: Colors.red,
-                                        ),
-                                  ),
-                          ],
-                        ),
-                      ),
                 0.02.height.hSpace,
                 SizedBox(
                   width: double.maxFinite,
@@ -174,10 +176,10 @@ class _ReservationState extends State<Reservation> {
                         child: CustomElevatedButton(
                           text: "OK",
                           onPressed: () {
-                            if(moreGuests == false) provider.totalUsers = 0 ;
+                            if (moreGuests == false) provider.totalUsers = 0;
                             if (provider.getValid) {
                               slideRightWidget(
-                                newPage: FlightReservations(),
+                                newPage: TripPayment(),
                                 context: context,
                               );
                             } else {

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:travel_go/modules/layout/pages/admin/task/adminscreen.dart';
 import 'package:travel_go/modules/layout/pages/admin/task/updateflight.dart';
 
+import '../../../../../core/theme/app_colors.dart';
+
 class FlightDepartureUpdate extends StatefulWidget {
   @override
   _FlightDepartureUpdateState createState() => _FlightDepartureUpdateState();
@@ -20,13 +22,16 @@ class _FlightDepartureUpdateState extends State<FlightDepartureUpdate> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_ios, color: Color(0xff0d75b4)),
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
+          ),
+        ),
         title: Text(
-          "Travel Go",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Color(0xff0d75b4),
+          "Tour And Travel",
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+            color: AppColors.whiteColor,
           ),
         ),
         centerTitle: true,

@@ -10,10 +10,14 @@ import '/models/trip_data_model.dart';
 
 class ExploreSelectedListOfDepartures extends StatefulWidget {
   final TripDataModel model;
+  final bool isUpdate;
+  final bool isDelete;
 
   const ExploreSelectedListOfDepartures({
     super.key,
     required this.model,
+    required this.isUpdate ,
+    required this.isDelete ,
   });
 
   @override
@@ -61,7 +65,7 @@ class _ExploreSelectedListOfDeparturesState
                         (e) => e.data(),
                       )
                       .where(
-                        (element) => element.trip.tripId == widget.model.tripId,
+                        (element) => element.tripId == widget.model.tripId,
                       )
                       .toList();
                 }
@@ -69,6 +73,8 @@ class _ExploreSelectedListOfDeparturesState
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) => TripDepartureItemWidget(
+                    isUpdate: widget.isUpdate,
+                    isDelete: widget.isDelete,
                     model: departures[index],
                   ),
                   separatorBuilder: (context, _) => 0.01.height.hSpace,

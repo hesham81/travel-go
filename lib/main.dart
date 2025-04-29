@@ -6,10 +6,12 @@ import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:google_gemini/google_gemini.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:travel_go/core/constant/local_storage.dart';
-import 'package:travel_go/core/providers/connections_provider.dart';
-import 'package:travel_go/core/providers/departure_provider.dart';
-import 'package:travel_go/core/providers/reservation_provider.dart';
+import '/core/constant/local_storage.dart';
+import '/core/providers/connections_provider.dart';
+import '/core/providers/departure_provider.dart';
+import '/core/providers/hotel_admin_provider.dart';
+import '/core/providers/reservation_provider.dart';
+import '/modules/layout/pages/manager/providers/manager_provider.dart';
 import '/modules/layout/pages/admin/menna/trippp/browse_selected_trip.dart';
 import '/modules/layout/pages/admin/pages/programs/pages/browse_program/pages/program_details.dart';
 import '/modules/layout/pages/admin/menna/trippp/all_programs_data.dart';
@@ -31,7 +33,6 @@ import '/modules/layout/pages/user/pages/profile/pages/user_profile.dart';
 import '/modules/splash_screen/pages/splash_screen.dart';
 import '/modules/layout/pages/admin/pages/flights/pages/selected_airline.dart';
 import '/core/constant/supabase_key.dart';
-import '/modules/layout/pages/admin/pages/hotels/pages/add_hotel.dart';
 import '/modules/layout/pages/admin/pages/profile/profile.dart';
 import '/modules/layout/pages/admin/pages/trips/pages/selected_trip.dart';
 import '/core/services/easy_loading.dart';
@@ -51,7 +52,7 @@ Future<void> main() async {
   Gemini.init(
     apiKey: AiConstants.chatBotApiKey,
   );
-  showLoading();
+  configLoading();
   Supabase.initialize(
     url: SupabaseKeys.url,
     anonKey: SupabaseKeys.anonKey,
@@ -65,6 +66,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => DepartureProvider()),
         ChangeNotifierProvider(create: (context) => ReservationProvider()),
         ChangeNotifierProvider(create: (context) => ConnectionProvider()),
+        ChangeNotifierProvider(create: (context) => ManagerProvider()),
+        ChangeNotifierProvider(create: (context) => HotelAdminProvider()),
       ],
       child: const MyApp(),
     ),
@@ -95,7 +98,6 @@ class MyApp extends StatelessWidget {
         Home.routeName: (context) => Home(),
         NewPassword.routeName: (context) => NewPassword(),
         AdminProfile.routeName: (context) => AdminProfile(),
-        AddHotel.routeName: (context) => AddHotel(),
         SelectedAdminTrip.routeName: (context) => SelectedAdminTrip(),
         SelectedAirline.routeName: (context) => SelectedAirline(),
         UserProfile.routeName: (context) => UserProfile(),

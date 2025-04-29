@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:route_transitions/route_transitions.dart';
+import 'package:travel_go/core/widget/custom_container.dart';
 import 'package:travel_go/modules/layout/pages/admin/pages/trips/widget/update_trip_widget.dart';
 import '/core/routes/route_transact.dart';
 import '/modules/layout/pages/admin/menna/delete_selected_trip.dart';
@@ -19,12 +21,9 @@ class TripCartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).textTheme;
-    return Container(
+    return CustomContainer(
+      padding: EdgeInsets.zero,
       height: 0.2.height,
-      decoration: BoxDecoration(
-        color: AppColors.greyColor,
-        borderRadius: BorderRadius.circular(25),
-      ),
       child: Row(
         children: [
           Expanded(
@@ -154,13 +153,11 @@ class TripCartWidget extends StatelessWidget {
                       Expanded(
                         child: IconButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              SlideRightRoute(
-                                page: UpdateTripWidget(
-                                  trip: model,
-                                ),
+                            slideLeftWidget(
+                              newPage: UpdateTripWidget(
+                                trip: model,
                               ),
+                              context: context,
                             );
                           },
                           style: IconButton.styleFrom(
@@ -183,15 +180,9 @@ class TripCartWidget extends StatelessWidget {
           ),
           Expanded(
             flex: 7,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(25),
-                bottomRight: Radius.circular(25),
-              ),
-              child: LoadingImageNetworkWidget(
-                imageUrl: model.imageUrl!,
-                height: 0.2.height,
-              ),
+            child: LoadingImageNetworkWidget(
+              imageUrl: model.imageUrl!,
+              height: 0.2.height,
             ),
           ),
         ],

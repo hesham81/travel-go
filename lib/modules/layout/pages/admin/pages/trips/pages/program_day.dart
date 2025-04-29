@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/core/constant/app_assets.dart';
@@ -18,6 +20,7 @@ class ProgramDay extends StatelessWidget {
   Widget build(BuildContext context) {
     var provider = Provider.of<TripAdminProvider>(context);
     var style = Theme.of(context).textTheme;
+    log("Length Of List is ${provider.listOfPrograms.length}");
     return Scaffold(
       appBar: AppBar(
         title: Text(

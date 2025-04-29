@@ -5,14 +5,14 @@ import '/modules/layout/pages/admin/pages/attractions/pages/delete_attractions/p
 import '/modules/layout/pages/admin/pages/attractions/pages/new_attractions/pages/new_attraction.dart';
 import '/modules/layout/pages/admin/pages/attractions/pages/update_attractions/pages/update_attraction.dart';
 
-class Attractions extends StatefulWidget {
-  const Attractions({super.key});
+class AdminAttractions extends StatefulWidget {
+  const AdminAttractions({super.key});
 
   @override
-  State<Attractions> createState() => _AttractionsState();
+  State<AdminAttractions> createState() => _AdminAttractionsState();
 }
 
-class _AttractionsState extends State<Attractions> {
+class _AdminAttractionsState extends State<AdminAttractions> {
   int selectedIndex = 0;
 
   _onPageChanged(int index) {

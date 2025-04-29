@@ -29,12 +29,17 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(Duration(seconds: 4), () {
       User? user = FirebaseAuthServices.getCurrentUserData();
       (user?.uid == null)
-          ? Navigator.pushReplacementNamed(
+          ? Navigator.pushNamedAndRemoveUntil(
               context,
               RouteNames.signIn,
+              (route) => false,
             )
           : (LocalStorageData.getString(SharedPreferencesKey.login) == "user")
-              ? Navigator.pushReplacementNamed(context, Home.routeName)
+              ? Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Home.routeName,
+                  (route) => false,
+                )
               : (LocalStorageData.getString(SharedPreferencesKey.login) ==
                       "admin")
                   ? slideLeftWidget(newPage: AdminHome(), context: context)

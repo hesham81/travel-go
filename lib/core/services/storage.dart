@@ -113,7 +113,7 @@ abstract class Storage {
   static Future<bool> uploadProgramAttractionsImages(
     List<File> images,
     String programId,
-      TripAdminProvider provider ,
+    TripAdminProvider provider,
   ) async {
     try {
       for (var i = 0; i < images.length; i++) {
@@ -141,5 +141,32 @@ abstract class Storage {
     } catch (error) {
       return false;
     }
+  }
+
+  static Future<bool> uploadHotels(String path, File file) async {
+    try {
+      await _supabase.upload("/hotels/hotel images/$path", file);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  static Future<bool> uploadAttractions(
+      File file, String type, int index , String hotelName) async {
+    try {
+      await _supabase.upload("$hotelName/accomdation/$type/$index", file);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  static String getHotelImage(String path) {
+    return _supabase.getPublicUrl("/hotels/hotel images/$path");
+  }
+
+  static String getHotelAccomdationlImage( String type, int index, String hotelName) {
+    return _supabase.getPublicUrl("$hotelName/accomdation/$type/$index");
   }
 }

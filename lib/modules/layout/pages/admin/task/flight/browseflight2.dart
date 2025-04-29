@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_go/core/widget/loading_image_network_widget.dart';
+import 'package:travel_go/models/flight.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/airline_db.dart';
@@ -16,31 +17,28 @@ class BrowseFlight2 extends StatefulWidget {
 
 class _BrowseFlight2State extends State<BrowseFlight2> {
   List<FlightAirlines> airlines = [];
+  List<Flight> flights = [];
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xff0d75b4),
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
             Icons.arrow_back_ios,
-            color: Colors.white,
           ),
         ),
         title: Text(
-          "Tour And Travel ",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+          "Tour And Travel",
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+            color: AppColors.whiteColor,
           ),
         ),
-        centerTitle: true,
       ),
       body: SafeArea(
         child: SingleChildScrollView(

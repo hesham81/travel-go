@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '/modules/layout/pages/user/pages/home/pages/flight_home/page/flight_home.dart';
-import '/modules/layout/pages/user/pages/home/pages/hotel_home/page/hotel_home.dart';
+import '/modules/layout/pages/user/pages/home/pages/hotel_home/page/hotel_home_details.dart';
 import '/modules/layout/pages/user/pages/home/pages/trip/pages/home_trip.dart';
 import '/models/recommend_model.dart';
 import '/core/theme/app_colors.dart';
@@ -8,6 +8,7 @@ import '/core/utils/firebase_auth_services.dart';
 import '/models/trip_model.dart';
 import 'chat_bot_home/page/chat_bot_home.dart';
 import 'favourite_home/page/favourite_home.dart';
+import 'hotel_home/page/hotel_home.dart';
 
 class Home extends StatefulWidget {
   static const routeName = '/home';
@@ -67,7 +68,6 @@ class _HomeState extends State<Home> {
   var user = FirebaseAuthServices.getCurrentUserData();
   int selectedIndex = 0;
 
-
   var searchController = TextEditingController();
   List<TripModel> searchList = [];
   String searchQueryText = "";
@@ -79,7 +79,6 @@ class _HomeState extends State<Home> {
     FavouriteHome(),
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,14 +87,24 @@ class _HomeState extends State<Home> {
         margin: EdgeInsets.all(20),
         width: double.maxFinite,
         decoration: BoxDecoration(
-          color: AppColors.newBlueColor,
           borderRadius: BorderRadius.circular(25),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(25),
           child: BottomNavigationBar(
-            showSelectedLabels: false,
+            showSelectedLabels: true,
+            selectedLabelStyle: TextStyle(
+              color: AppColors.whiteColor,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+            unselectedLabelStyle: TextStyle(
+              color: AppColors.whiteColor,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
             showUnselectedLabels: false,
+            fixedColor: AppColors.whiteColor,
             backgroundColor: AppColors.newBlueColor,
             onTap: (index) {
               selectedIndex = index;
@@ -112,7 +121,7 @@ class _HomeState extends State<Home> {
                   Icons.home,
                   color: AppColors.whiteColor,
                 ),
-                label: "Home",
+                label: "Trip",
               ),
               BottomNavigationBarItem(
                 icon: Icon(
@@ -134,7 +143,7 @@ class _HomeState extends State<Home> {
                   Icons.apartment,
                   color: AppColors.whiteColor,
                 ),
-                label: "Favourite",
+                label: "Hotel",
               ),
               BottomNavigationBarItem(
                 icon: Icon(

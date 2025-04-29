@@ -1,15 +1,21 @@
-import '/models/hotel_accomdations.dart';
+import 'package:travel_go/models/hotel_accomdations_data_model.dart';
+
 
 class Hotel {
-  final int availableRooms;
+  String id ;
+   int availableRooms;
   final String hotelLocation;
-  final String hotelName;
+   String hotelName;
   final double hotelRating;
-  final int totalRooms;
+   int totalRooms;
   final String imageUrl;
-  final List<HotelAccomdations> accomdations;
-
+   List<HotelAccomdationsDataModel> accomdations;
+  final double lat ;
+  final double long ;
   Hotel({
+    required this.lat,
+    required this.long,
+    this.id = "",
     required this.imageUrl,
     required this.availableRooms,
     required this.hotelLocation,
@@ -21,6 +27,9 @@ class Hotel {
 
   Map<String, dynamic> toMap() {
     return {
+      'lat': lat,
+      'long': long,
+      'id': id,
       'AvailableRooms ': availableRooms,
       'HotelLocation ': hotelLocation,
       'HotelName ': hotelName,
@@ -28,21 +37,27 @@ class Hotel {
       'TotalRooms ': totalRooms,
       'imageUrl': imageUrl,
       'accomdations':
-          accomdations.map((accomdation) => accomdation.toMap()).toList(),
+          accomdations.map((accomdation) => accomdation.toJson()).toList(),
     };
   }
 
   factory Hotel.fromMap(Map<String, dynamic> map) {
     return Hotel(
+      lat: map['lat'],
+      long: map['long'],
+      id: map['id'],
       availableRooms: map['AvailableRooms '],
       hotelLocation: map['HotelLocation '],
       hotelName: map['HotelName '],
       hotelRating: map['HotelRating '],
       totalRooms: map['TotalRooms '],
       imageUrl: map['imageUrl'],
-      accomdations: List<HotelAccomdations>.from(
-        map['accomdations']
-            .map((accomdation) => HotelAccomdations.fromMap(accomdation)),
+      accomdations: List<HotelAccomdationsDataModel>.from(
+        map['accomdations'].map(
+          (accomdation) => HotelAccomdationsDataModel.fromJson(
+            accomdation,
+          ),
+        ),
       ),
     );
   }

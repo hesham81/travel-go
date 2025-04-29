@@ -24,9 +24,9 @@ abstract class TripDeparturesCollection {
   }
 
   static Future<List<TripDepartureDataModel>> getTripDeparture(
-    TripDataModel trip,
+    String tripId,
   ) async {
-    return await _colRef().where("tripId", isEqualTo: trip.tripId).get().then(
+    return await _colRef().where("tripId", isEqualTo: tripId).get().then(
       (value) {
         return value.docs
             .map(
@@ -39,5 +39,24 @@ abstract class TripDeparturesCollection {
 
   static Stream<QuerySnapshot<TripDepartureDataModel>> getStreamDepartures() {
     return _colRef().snapshots();
+  }
+
+  static Future<TripDepartureDataModel?> getDepartureUsingId({
+    required String departureId,
+  }) async {
+    return await _colRef().doc(departureId).get().then(
+          (value) => value.data() ?? null,
+        );
+  }
+
+  static Future<bool> deleteDeparture({
+    required String departureId,
+  }) async {
+    try {
+      await _colRef().doc(departureId).delete();
+      return true;
+    } catch (error) {
+      throw Exception(error);
+    }
   }
 }

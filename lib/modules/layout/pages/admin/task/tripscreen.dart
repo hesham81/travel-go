@@ -12,7 +12,7 @@ import '/modules/layout/pages/admin/menna/trippp/new_trip_screen.dart';
 import '/modules/layout/pages/admin/task/Addflight.dart';
 import '/modules/layout/pages/admin/task/update_trip.dart';
 
-class Tripscreen extends StatelessWidget {
+class AdminTripScreen extends StatelessWidget {
   final Map<String, Widget Function()> pageRoutes = {
     "Browse Trip": () => BrowseTrip(),
     "New Trip": () => NewTripScreen(),
@@ -21,8 +21,8 @@ class Tripscreen extends StatelessWidget {
 
     "Browse departure": () => BrowseTripDeparture(),
     "New departure": () => NewTripDepartures(),
-    "Update departure": () => UpdateDeparture(),
-    "Delete departure": () => DeleteTripDeparture(),
+    "Update departure": () => BrowseTripDeparture(isDelete: false,),
+    "Delete departure": () => BrowseTripDeparture(isUpdate: false,),
 
     "Browse hotel": () => Addflight(),
     "New hotel": () => Addflight(),
@@ -34,7 +34,6 @@ class Tripscreen extends StatelessWidget {
     "New fight": () => Addflight(),
     "Update fight": () => Addflight(),
     "Delete fight": () => Addflight(),
-
 
     // Trip  program
     "Browse program": () => Addflight(),
@@ -141,14 +140,6 @@ class Tripscreen extends StatelessWidget {
               SizedBox(height: 12),
               _buildPopupButton(context, "departure"),
               SizedBox(height: 12),
-
-              // _buildPopupButton(context, "Trip Program"),
-              // SizedBox(height: 12),
-
-              _buildPopupButton(context, "Trip Hotel"),
-              SizedBox(height: 12),
-
-              _buildPopupButton(context, "Trip Flight"),
             ],
           ),
         ),

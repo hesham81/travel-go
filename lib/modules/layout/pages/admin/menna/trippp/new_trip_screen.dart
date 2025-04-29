@@ -430,8 +430,8 @@ class _NewTripScreenState extends State<NewTripScreen> {
                             currency: provider.getCurrency!.code,
                             organizedBy: provider.getSelectedCompany!,
                             programDetails: provider.listOfPrograms,
-                            hotel: provider.getSelectionHotel!,
-                            flight: provider.getSelectionFlight!,
+                            hotelId: provider.getSelectionHotel!.id,
+                            flightId: provider.getSelectionFlight!.flightId,
                           );
                           await TripCollections.addTrip(trip).then(
                             (value) {

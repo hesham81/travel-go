@@ -45,17 +45,7 @@ class _NumbersTextFormFieldState extends State<NumbersTextFormField> {
       onChanged: widget.onChanged,
       readOnly: widget.isReadOnly,
       onSubmitted: widget.onComplete,
-      keyboardType: TextInputType.numberWithOptions(
-        decimal: true,
-      ),
-      inputFormatters: <TextInputFormatter>[
-        FilteringTextInputFormatter.digitsOnly,
-        FilteringTextInputFormatter.allow(
-          RegExp(
-            r'^\d*\.?\d*',
-          ),
-        ),
-      ],
+      keyboardType:TextInputType.number ,
       controller: widget.controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(

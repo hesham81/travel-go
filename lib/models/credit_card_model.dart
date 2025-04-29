@@ -4,10 +4,9 @@ class CreditCardModel {
   final String cvv;
 
   final String expiryDate;
-
   final String holderName;
   final String userId ;
-  final double balance;
+  final double? balance;
 
   CreditCardModel({
     required this.creditNumber,
@@ -15,7 +14,7 @@ class CreditCardModel {
     required this.expiryDate,
     required this.holderName,
     required this.userId,
-    required this.balance,
+    this.balance,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,7 +24,7 @@ class CreditCardModel {
       'expiryDate': expiryDate,
       'holderName': holderName,
       'userId': userId,
-      'balance': balance,
+      'balance': balance ?? 0,
     };
   }
 
