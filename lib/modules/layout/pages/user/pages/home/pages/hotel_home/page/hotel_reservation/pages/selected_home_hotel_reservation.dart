@@ -3,7 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:imageview360/imageview360.dart';
+
 import 'package:ionicons/ionicons.dart';
+import 'package:panorama/panorama.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
 import 'package:travel_go/core/widget/custom_container.dart';
@@ -355,9 +357,9 @@ class _SelectedHomeHotelReservationState
                         ),
                       ],
                     ),
-
                   ],
                 ),
+                0.01.height.hSpace,
               ],
             ).hPadding(0.03.width)
           ],

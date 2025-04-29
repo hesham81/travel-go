@@ -4,6 +4,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:travel_go/modules/layout/pages/user/pages/home/pages/hotel_home/page/hotel_reservation/pages/view_hotel_room.dart';
 import '/core/extensions/align.dart';
 import '/core/extensions/extensions.dart';
 import '/core/theme/app_colors.dart';
@@ -284,9 +285,16 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                         items: roomImages
                             .map(
                               (item) => Builder(
-                                builder: (context) => LoadingImageNetworkWidget(
-                                  imageUrl: item,
-                                  height: 0.7.height,
+                                builder: (context) => GestureDetector(
+                                  onTap: () => slideLeftWidget(
+                                      newPage: ViewHotelRoom(
+                                        imageUrl: item,
+                                      ),
+                                      context: context),
+                                  child: LoadingImageNetworkWidget(
+                                    imageUrl: item,
+                                    height: 0.7.height,
+                                  ),
                                 ),
                               ),
                             )
